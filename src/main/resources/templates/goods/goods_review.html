@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>달다구리스</title>
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<style>
+	.card-main{
+		margin-top: 88px; 
+		padding-left: 186px; 
+		padding-right: 186px;
+	}
+	.dropdown-menu {
+		display: none;
+		position: absolute;
+		background-color: #f9f9f9;
+		border: 1px solid #ddd;
+	}
+	.dropdown-menu a:hover {
+		background-color: #f1f1f1;
+	}
+	.show {
+		display: block;
+	}
+	#goods_info{
+		padding-top: 80px;
+		margin-left: 30%;
+		margin-right: 30%;
+	}
+	#info{
+		padding-top: 15px;
+		margin-left: 30%;
+		margin-right: 30%;
+	}
+	#review_info{
+		padding-top: 20px;
+		margin-left: 30%;
+		margin-right: 30%;
+	}
+	
+</style>
+</head>
+<body>
+
+<!-- 상단메뉴 -->
+<nav class="navbar navbar-expand-md bg-light navbar-light fixed-top shadow-lg">
+    <a class="navbar-brand" href="/main.html">&nbsp;✨DalDa_Cu✨</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu"
+        aria-controls="navMenu" aria-expanded="true" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <!-- 카테고리 -->
+    <div class="btn-group dropped">
+        &emsp;
+        <button id="dropdownButton" type="button" class="btn btn-outline-info dropdown-toggle" aria-expanded="false">
+            전체카테고리
+        </button>
+        
+        <ul id="dropdownMenu" class="dropdown-menu">
+            <li><a href="#">&emsp;goods_tag 1</a></li>
+            <li><a href="#">&emsp;goods_tag 2</a></li>
+            <li><a href="#">&emsp;goods_tag 3</a></li>
+            <li><a href="#">&emsp;goods_tag 4</a></li>
+            <li><a href="../board/board_list.html">&emsp;board_list</a></li>
+        </ul>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var dropdownButton = document.getElementById('dropdownButton');
+            var dropdownMenu = document.getElementById('dropdownMenu');
+            
+            dropdownButton.addEventListener('click', function () {
+                dropdownMenu.classList.toggle('show');
+            });
+            
+            // 문서 전체 클릭 시 드롭다운 메뉴 닫기
+            document.addEventListener('click', function (event) {
+                if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    dropdownMenu.classList.remove('show');
+                }
+            });
+        });
+    </script>
+    
+    <form class="d-flex ml-auto" style="margin-left:60%; width: 32%;">
+        &emsp;
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search" />
+        &nbsp;
+        <button class="btn btn-outline-info" type="submit">검색</button>
+    </form>
+    
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a href="../user/login.html" class="btn btn-outline-info" style="margin-right: 5px;">로그인</a>
+        </li>
+        
+        <li class="nav-item">
+            <a href="../user/join.html" class="btn btn-outline-info" style="margin-right: 5px;">회원가입</a>
+        </li>
+        
+        <li class="nav-item">
+            <a href="/main.html" class="btn btn-outline-info" style="margin-right: 5px;" onclick="logout()">로그아웃</a>
+            <script>
+                function logout() {
+                    alert("로그아웃되었습니다.");
+                    location.href= "main.html";
+                }
+            </script>
+        </li>    
+    </ul>
+    
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a href="../user/user_page.html" class="btn btn-outline-warning" style="border-color: #edcd8e;" onclick="message_info()">내정보</a> &ensp;
+            <script>
+                function message_info() {
+                    alert("로그인해주세요.");
+                }
+            </script>
+        </li>
+    </ul>
+</nav>
+<br />
+	
+	<!-- 상품 요약 -->
+	<div class="container mt-4" id="goods_info">
+		<div class="row">
+			<div class="col-md-10" style="max-width: 732px;">
+				<div class="card">
+				<div class="card-header"><strong>상품정보</strong></div>
+
+					<div class="card-body d-flex align-items-center">
+						&emsp;
+						<!-- 상품사진 -->
+						 <div class="card-item" style="flex: 1; text-align: center;">
+							<div class="card">
+								<img src="../../static/img/sample4.jpg" width="100%" alt=".."/>
+							</div>
+						</div>
+						&emsp;
+						
+						<!-- 상품정보 -->
+						 <div class="card-item" style="flex: 6; text-align: left;">
+							<div class="card border-light">
+								<div class="card-body">
+									상품명: <span>goods_name</span> <br />
+									금액: <span><b>goods_price</b></span>
+								</div>
+							</div>
+						</div>
+						&emsp;&ensp;
+						
+						<!-- 버튼 -->
+						<div class="card-item" style="flex: 1; text-align: center;">
+							<a href="goods_page.html" class="btn btn-outline-info">상품페이지</a>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br /> <hr />
+	
+	<!-- 리뷰 정보1 -->
+	<div class="container" id="info">
+		<h5 style="margin-bottom: 20px;">《상품리뷰》</h5>
+		<div class="card mb-12" style="max-width: 700px;">
+			<div class="row g-0">
+			
+			<div class="col-md-8">
+				<div class="card-body">
+					<h5 class="card-title">user_name</h5>
+					<span>★★★★★(goods_grade)</span> &nbsp;
+					<span><small>review_date</small></span>
+					<hr />
+					<p class="card-text" class="text-body-secondary">: review_text</p>
+				</div>
+				<br />
+			</div>
+			
+			<div class="col-md-4">
+				<img src="../../static/img/sample5.jpg" class="img-fluid rounded-start" alt="" />
+			</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 리뷰 정보2 -->
+	<div class="container" id="review_info">
+		<div class="card mb-12" style="max-width: 700px;">
+			<div class="row g-0">
+			
+			<div class="col-md-8">
+				<div class="card-body">
+					<h5 class="card-title">user_name</h5>
+					<span>★★★★★(goods_grade)</span> &nbsp;
+					<span><small>review_date</small></span>
+					<hr />
+					<p class="card-text" class="text-body-secondary">: review_text</p>
+				</div>
+				<br />
+			</div>
+			
+			<div class="col-md-4">
+				<img src="../../static/img/sample5.jpg" class="img-fluid rounded-start" alt="" />
+			</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 리뷰 정보3 -->
+	<div class="container" id="review_info">
+		<div class="card mb-12" style="max-width: 700px;">
+			<div class="row g-0">
+			
+			<div class="col-md-8">
+				<div class="card-body">
+					<h5 class="card-title">user_name</h5>
+					<span>★★★★★(goods_grade)</span> &nbsp;
+					<span><small>review_date</small></span>
+					<hr />
+					<p class="card-text" class="text-body-secondary">: review_text</p>
+				</div>
+				<br />
+			</div>
+			
+			<div class="col-md-4">
+				<img src="../../static/img/sample5.jpg" class="img-fluid rounded-start" alt="" />
+			</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 리뷰 정보3 -->
+	<div class="container" id="review_info">
+		<div class="card mb-12" style="max-width: 700px;">
+			<div class="row g-0">
+			
+			<div class="col-md-8">
+				<div class="card-body">
+					<h5 class="card-title">user_name</h5>
+					<span>★★★★★(goods_grade)</span> &nbsp;
+					<span><small>review_date</small></span>
+					<hr />
+					<p class="card-text" class="text-body-secondary">: review_text</p>
+				</div>
+				<br />
+			</div>
+			
+			<div class="col-md-4">
+				<img src="../../static/img/sample5.jpg" class="img-fluid rounded-start" alt="" />
+			</div>
+			</div>
+		</div>
+	</div> <br />
+	
+	<!-- 페이지 -->
+	<div class="d-none d-md-block">
+		<ul class="pagination justify-content-center">
+			<li class="page-item">
+				<a href="#" class="page-link">&laquo;</a>
+			</li>
+			<li class="page-item">
+				<a href="#" class="page-link">1</a>
+			</li>
+			<li class="page-item">
+				<a href="#" class="page-link">2</a>
+			</li>
+			<li class="page-item">
+				<a href="#" class="page-link">3</a>
+			</li>
+			<li class="page-item">
+				<a href="#" class="page-link">&raquo;</a>
+			</li>
+		</ul>
+	</div>
+	<hr />
+	
+	<!-- 상품추천 -->
+	<div class="container mt-4" id="sample">
+		<h6><b>‼상품추천‼ 이런상품은 어때요?</b></h6>
+		<div class="row">
+			<div class="col-md-3">
+				<div class="card" style="width: 100%;">
+					<img src="../../static/img/sample3.jpg" class="card-img-top" alt="image" />
+					<div class="card-body">
+							<h5 class="card-title">goods_name</h5>
+						<p class="card-text">goods_price</p>
+						<a href="goods_page.html" class="btn btn-outline-info">상품보기</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-3">
+				<div class="card" style="width: 100%;">
+					<img src="../../static/img/sample3.jpg" class="card-img-top" alt="image" />
+					<div class="card-body">
+						<h5 class="card-title">goods_name</h5>
+						<p class="card-text">goods_price</p>
+						<a href="goods_page.html" class="btn btn-outline-info">상품보기</a>
+					</div>
+				</div>	
+			</div>
+			
+			<div class="col-md-3">
+				<div class="card" style="width: 100%;">
+					<img src="../../static/img/sample3.jpg" class="card-img-top" alt="image" />
+					<div class="card-body">
+						<h5 class="card-title">goods_name</h5>
+						<p class="card-text">goods_price</p>
+						<a href="goods_page.html" class="btn btn-outline-info">상품보기</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-3">
+				<div class="card" style="width: 100%;">
+					<img src="../../static/img/sample3.jpg" class="card-img-top" alt="image" />
+					<div class="card-body">
+						<h5 class="card-title">goods_name</h5>
+						<p class="card-text">goods_price</p>
+						<a href="goods_page.html" class="btn btn-outline-info">상품보기</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<hr />
+	
+	<!-- 하단 -->
+	<div class="container-fluid light text-gray" style="margin-top:30px; padding-bottom:30px">
+		<div class="container">
+			✨DalDa_Cu✨
+			<p>http://www.DalDaCu.co.kr</p>
+			대표이사: 김희진 <br />
+			서울 종로구12길 15 종로코아빌딩 8층, 801호 <br />
+			사업자 등록번호: 801-94-96-98 <br />
+			대표번호: 1994-9698 <p />
+			<br />
+			달다구리는 통신판매중개자이며 통신판매의 당사자가 아닙니다. <br />
+			따라서 달다구리는 상품 거래정보 및 거래에 대하여 책임을 지지 않습니다.
+		</div>
+	</div>
+	
+</body>
+</html>

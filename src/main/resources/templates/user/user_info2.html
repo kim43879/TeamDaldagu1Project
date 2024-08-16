@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>달다구리스</title>
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<style>
+	.card-main{
+		margin-top: 88px; 
+		padding-left: 186px; 
+		padding-right: 186px;
+	}
+	.dropdown-menu {
+		display: none;
+		position: absolute;
+		background-color: #f9f9f9;
+		border: 1px solid #ddd;
+	} 
+	.dropdown-menu a:hover {
+		background-color: #f1f1f1;
+	}
+	.show {
+		display: block;
+	}
+	.card-profile{
+		margin-top: 88px; padding-left: 50px;
+	}
+	.card-wrapper {
+		margin-top: 20px;
+	}
+	#card1 {
+		width: 90%;
+		margin-top: -1050px; margin-left:250px; margin-left:60px; padding-left: 50px;
+	}
+	.container {
+		position: relative;
+	}
+	.fixed-bottom-right {
+		position: absolute;
+		bottom: 140px;
+		right: 30px;
+	}
+	
+</style>
+</head>
+<body>
+
+<!-- 상단메뉴 -->
+<div id="header">
+	<div th:replace="page_header/header.html :: header-head"></div>
+	<div th:replace="page_header/header.html :: header-body"></div>
+</div>
+<br /><hr />
+	
+	<!-- 유저프로필 라인 -->
+<div id="profile">
+	<div th:replace="page_profile/profile.html :: profile-body"></div>
+</div>
+	
+	<!-- 정보수정 -->
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-3"></div>
+				<div class="col-sm-6">
+					<div class="card-shadow"id="card1">
+						<div class="card-body">
+							<form action="login.html" method="post">
+								<div class="form-group">
+									<label for="user_name">*이름</label>
+									<input type="text" id="user_name" name="user_name" class="form-control" disabled="disabled" value="김희진"/>			
+								</div>
+								
+								<div class="form-group">
+									<label for="user_name">*아이디</label>
+									<input type="text" id="user_id" name="user_id" class="form-control" disabled="disabled" value="kk1234"/>
+								</div>
+	
+								<div class="form-group">
+									<label for="user_pw">*비밀번호</label>
+									<input type="password" id="user_pw" name="user_pw" class="form-control" />
+								</div>
+								
+								<div class="form-group">
+									<label for="user_pw2">*비밀번호 확인</label>
+									<input type="password" id="user_pw2" name="user_pw2" class="form-control" />
+								</div>
+								
+								<div class="form-group">
+									<label for="user_addr">*이메일</label>
+									<input type="email" id="user_addr" name="user_email" class="form-control" />
+								</div>
+								
+								<div class="form-group">
+									<label for="user_birth">*생년월일</label>
+									<input type="text" id="user_birth" name="user_birth" class="form-control" disabled="disabled" value="1996-03-28"/>
+								</div>
+								
+								<div class="form-group">
+									<label for="user_post" class="mb-0 me-2">*우편번호</label>
+									<div class="d-flex align-items-center">
+										<input type="text" id="user_post" name=user_post class="form-control me-2" />
+										&nbsp;
+										<button type="button" class="btn btn-outline-info" onclick="searchAddr()">우편번호 검색</button>
+									</div>
+								</div>
+								
+								<script>
+								function searchAddr() {
+									new daum.PostCode({
+										oncomplete: function(data) {
+											
+											document.getElememtById("user_post").value = data.zonecode;
+										}
+										
+									}).open();
+								}
+								</script>
+								
+								<div class="form-group">
+									<label for="user_addr">*상세주소</label>
+									<input type="text" id="user_addr" name="user_addr" class="form-control" />
+								</div>
+								
+								<div class="form-group">
+									<label for="user_phone">*연락처</label>
+									<input type="text" id="user_phone" name="user_phone" class="form-control" />
+								</div>
+								
+								<div class="form-group">
+									<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+										<button type="submit" class="btn btn-outline-primary me-md-2">뒤로가기</button> &ensp;
+										<a href="user_page.html" class="btn btn-outline-success" role="button" data-bs-toggle="button">수정완료</a>
+									</div>
+									<br />
+									<hr />
+									
+									<div class="form-group">
+										<button type="submit" class="btn btn-outline-danger btn-sm fixed-bottom-right" onclick="drop_id()">회원탈퇴</button> &ensp;
+									</div>
+									
+									<script>
+										function drop_id() {
+											alert("탈퇴되었습니다.");
+										}
+									</script>
+									
+								</div>
+								
+							</form>
+						</div>
+						
+					</div>
+				</div>
+				<div class="col-sm-3"></div>
+			</div>
+		</div>
+	<hr />
+	
+	<!-- 하단 -->
+<div id="footer">
+	<div th:replace="page_footer/footer.html :: footer-head"></div>
+	<div th:replace="page_footer/footer.html :: footer-body"></div>
+</div>
+	
+</body>
+</html>

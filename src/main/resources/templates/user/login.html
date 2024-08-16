@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>달다구리스</title>
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<style>
+	.card-main{
+		margin-top: 88px; 
+		padding-left: 186px; 
+		padding-right: 186px;
+	}
+	.dropdown-menu {
+		display: none;
+		position: absolute;
+		background-color: #f9f9f9;
+		border: 1px solid #ddd;
+	}
+	.dropdown-menu a:hover {
+		background-color: #f1f1f1;
+	}
+	.show {
+		display: block;
+	}
+	
+</style>
+</head>
+<body>
+
+<!-- 상단메뉴 -->
+<div id="header">
+	<div th:replace="page_header/header.html :: header-head"></div>
+	<div th:replace="page_header/header.html :: header-body"></div>
+</div>
+<br /><hr />
+	
+	<!-- 로그인 -->
+	<div class="container" style="margin-top:60px">
+		<div class="row">
+			<div class="col-sm-3"></div>
+			<div class="col-sm-6">
+				<div class="card-shadow">
+					<div class="card-body">
+						<div class="alert alert-primary">
+							<br />
+							<h4>⛔로그인 실패⛔</h4>
+							<p>아이디 비밀번호를 확인해주세요.</p>
+							<h6>처음이신가요? 달다구리의 회원이 되어주세요!</h6>
+							<br />
+						</div>
+						
+						<form action="main.html" method="post">
+							<div class="form-group">	<!-- user_id -->
+								<label for="user_id">아이디</label>
+								<input type="text" id="user_id" name="user_id" class="form-control" />
+							</div>
+							<div class="form-group">	<!-- user_pw -->
+								<label for="user_pw">비밀번호</label>
+								<input type="password" id="user_pw" name="user_pw" class="form-control" />
+							</div>
+							<div class="d-grid gap-2 col-6 mx-auto">
+								<button type="submit" class="btn btn-outline-info" role="button" data-bs-toggle="button">로그인</button>
+								&ensp;
+								<a href="join.html" class="btn btn-outline-success" role="button" data-bs-toggle="button">회원가입</a>
+							</div>
+							&ensp;
+							
+							<!-- 카카오 로그인 -->
+							<div class="d-grid gap-2 col-6 mx-auto">
+							
+								<script src="https://developers.kakao.com/sdk/js/kakao.js">
+									integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4" crossorigin="anonymous">
+								</script>
+								
+								<script>
+									Kakao.init('1af9d3870d1996629e6e56328754216d');
+								</script>
+							
+								<a id="kakao-login-btn" href="javascript:loginWithKakao()">
+									<img th:src="@{/img/kakao_login_medium_narrow.png}"/>
+								</a>
+								<p id="token-result"></p>
+								
+								<script>
+									function loginWithKakao() {
+										Kakao.Auth.authorize({
+											redirectUri: 'https://developers.kakao.com/tool/demo/oauth',
+										});	
+									}
+									//데모용 UI 코드
+									displayToken()
+									function displayToken() {
+										var token = getCookie('authorize-access-token');
+										
+										
+										if(token) {
+											Kakao.Auth.setAccessToken(token);
+											Kakao.Auth.getStatusInfo().then(function(res) {
+												if(res.status === 'connected') {
+													document.getElementById('token-result').innerText
+													= 'login success, token: ' + Kakao.Auth.getAccessToken();
+												}
+											})
+											.catch(function(err) {
+												kakao.Auth.setAccessToken(null);
+											});
+										}
+									}
+									function getCookie(name) {
+										var parts = document.cookie.split(name + '=');
+										if (parts.length === 2) { 
+											return parts[1].split(';')[0];
+										}
+									}
+								</script>
+								
+							</div>
+						</form>
+						
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-3"></div>
+		</div>
+	</div>
+	<hr />
+	
+	<!-- 하단 -->
+<div id="footer">
+	<div th:replace="page_footer/footer.html :: footer-head"></div>
+	<div th:replace="page_footer/footer.html :: footer-body"></div>
+</div>
+	
+</body>
+</html>

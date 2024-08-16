@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>달다구리스</title>
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<style>
+	.card-main{
+		margin-top: 88px; 
+		padding-left: 186px; 
+		padding-right: 186px;
+	}
+	.dropdown-menu {
+		display: none;
+		position: absolute;
+		background-color: #f9f9f9;
+		border: 1px solid #ddd;
+	}
+	.dropdown-menu a:hover {
+		background-color: #f1f1f1;
+	}
+	.show {
+		display: block;
+	}
+	.card-profile{
+		margin-top: 88px; padding-left: 50px;
+	}
+	.card-wrapper {
+		margin-top: 20px;
+	}
+	#card1{
+		width: 90%;
+		margin-top: -1050px; margin-left:250px; padding-left: 20px; padding-right: 20px;		
+	}
+	#card2 {
+		width: 90%;
+		margin-top: -830px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+	}
+	#card3 {
+		width: 90%;
+		margin-top: -560px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+	}
+	#card4{
+		width: 90%;
+		margin-top: -290px; margin-left:250px; padding-left: 20px; padding-right: 20px;		
+	}
+	
+</style>
+</head>
+<body>
+
+<!-- 상단메뉴 -->
+<div id="header">
+	<div th:replace="page_header/header.html :: header-head"></div>
+	<div th:replace="page_header/header.html :: header-body"></div>
+</div>
+<br /><hr />
+	
+	<!-- 유저프로필 라인 -->
+	<div id="profile">
+		<div th:replace="page_profile/profile.html :: profile-body"></div>
+	</div>
+
+   <!-- 주문현황 -->
+   <div class="container mt-4 card-wrapper">
+      <div class="row">
+         <div class="col-md-10">
+            <div class="card-wrapper1">
+               <div class="card" id="card1">
+               <h5 style="margin-top: 10px;">《나의 정보》</h5>
+                  <div class="card-body d-flex justify-content-between">
+                  
+                     <!-- 주문배송 -->
+                     <div class="card-item text-center">
+                        <div class="card">
+                           <div class="card-body">
+                              <h6>&nbsp;주문배송&nbsp;</h6>
+                              <hr />
+                              <a href="#">7</a>
+                           </div>
+                        </div>
+                     </div>
+                     
+                     <!-- 장바구니 -->
+                     <div class="card-item text-center">
+                        <div class="card">
+                           <div class="card-body">
+                              <h6>&nbsp;장바구니&nbsp;</h6>
+                              <hr />
+                              <a href="#">0</a>
+                           </div>
+                        </div>
+                     </div>
+                     
+                     <!-- 리뷰작성 -->
+                     <div class="card-item text-center">
+                        <div class="card">
+                           <div class="card-body">
+                              <h6>&nbsp;리뷰작성&nbsp;</h6>
+                              <hr />
+                              <a href="#">1</a>
+                           </div>
+                        </div>
+                     </div>
+                     
+                     <!-- 쿠폰 -->
+                     <div class="card-item text-center">
+                        <div class="card">
+                           <div class="card-body">
+                              <h6>&nbsp;보유쿠폰&nbsp;</h6>
+                              <hr />
+                              <a href="#">3</a>
+                           </div>
+                        </div>
+                     </div>
+                     
+                     <!-- 적립금 -->
+                     <div class="card-item text-center">
+                        <div class="card">
+                           <div class="card-body">
+                              <h6>&emsp;적립금&emsp;</h6>
+                              <hr />
+                              <a href="#">7,299</a>
+                           </div>
+                        </div>
+                     </div>
+                     
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+   </div>
+
+
+	<!-- 정보1 -->
+	<div class="container mt-2 card-wrapper">
+		<div class="row">
+			<div class="col-md-10">
+				<div class="card" id="card2">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>최근 주문 정보</th>
+							<th scope="col">주문일</th>
+							<th scope="col">상품명</th>
+	 						<th scope="col">금액</th>
+						</tr>
+					</thead>
+					
+					<tbody class="table-group-divider">
+						<tr>
+							<th scope="row">3</th>
+							<td>2023.11.18</td>
+							<td><a href="../goods/goods_page.html">루안</a></td>
+							<td>1,212,980</td>
+						</tr>
+						<tr>
+							<th scope="row">2</th>
+							<td>2023.04.20</td>
+							<td><a href="../goods/goods_page.html">희사</a></td>
+							<td>358,000</td>
+						</tr>
+						<tr>
+							<th scope="row">1</th>
+							<td>2023.03.10</td>
+							<td><a href="../goods/goods_page.html">카이엔</a></td>
+							<td>163,000</td>
+						</tr>
+					</tbody>
+				</table>
+				
+					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+						<a href="user_order.html" class="btn btn-outline-info" role="button" data-bs-toggle="button" aria-pressed="true">더보기</a>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 정보2 -->
+	<div class="container mt-2 card-wrapper">
+		<div class="row">
+			<div class="col-md-10" >
+				<div class="card" id="card3">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>최근 등록글</th>
+							<th scope="col">작성일</th>
+							<th scope="col">작성자</th>
+	 						<th scope="col">제목</th>
+						</tr>
+					</thead>
+					
+					<tbody class="table-group-divider">
+						<tr>
+							<th scope="row">3</th>
+							<td>2024.08.08</td>
+							<td>전동석</td>
+							<td><a href="../board/board_list.html">이제는 후회해도</a></td>
+						</tr>
+						<tr>
+							<th scope="row">2</th>
+							<td>2024.08.08</td>
+							<td>전동석</td>
+							<td><a href="../board/board_list.html">되돌릴 수가 없어</a></td>
+						</tr>
+						<tr>
+							<th scope="row">1</th>
+							<td>2024.08.08</td>
+							<td>전동석</td>
+							<td><a href="../board/board_list.html">용서받지 못할</a></td>
+						</tr>
+					</tbody>
+				</table>
+				
+					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+						<a href="user_board.html" class="btn btn-outline-info" role="button" data-bs-toggle="button" aria-pressed="true">더보기</a>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 정보3 -->
+	<div class="container mt-2 card-wrapper">
+		<div class="row">
+			<div class="col-md-10" >
+				<div class="card" id="card4">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>관심 상품 정보</th>
+							<th scope="col">등록일</th>
+							<th scope="col">상품명</th>
+	 						<th scope="col">금액</th>
+						</tr>
+					</thead>
+					
+					<tbody class="table-group-divider">
+						<tr>
+							<th scope="row">3</th>
+							<td>2024.08.08</td>
+							<td><a href="../goods/goods_page.html">뮤지컬 프랑켄슈타인</a></td>
+							<td>172,000</td>
+						</tr>
+						<tr>
+							<th scope="row">2</th>
+							<td>2024.08.08</td>
+							<td><a href="../goods/goods_page.html">뮤지컬 프랑켄슈타인</a></td>
+							<td>172,000</td>
+						</tr>
+						<tr>
+							<th scope="row">1</th>
+							<td>2024.08.08</td>
+							<td><a href="../goods/goods_page.html">뮤지컬 프랑켄슈타인</a></td>
+							<td>172,000</td>
+						</tr>
+						
+					</tbody>
+				</table>
+				
+				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+					<a href="user_wish.html" class="btn btn-outline-info" role="button" data-bs-toggle="button" aria-pressed="true">더보기</a>
+				</div>
+			
+				</div>
+			</div>
+		</div>
+	</div>
+	<hr />
+	
+	<!-- 하단 -->
+<div id="footer">
+	<div th:replace="page_footer/footer.html :: footer-head"></div>
+	<div th:replace="page_footer/footer.html :: footer-body"></div>
+</div>
+	
+</body>
+</html>

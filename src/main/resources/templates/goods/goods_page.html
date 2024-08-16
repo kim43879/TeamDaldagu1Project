@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>달다구리스</title>
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<style>
+	.card-main{
+		margin-top: 88px;
+		padding-left: 186px;
+		padding-right: 186px;
+	}
+	.dropdown-menu {
+		display: none;
+		position: absolute;
+		background-color: #f9f9f9;
+		border: 1px solid #ddd;
+	}
+	.dropdown-menu a:hover {
+		background-color: #f1f1f1;
+	}
+	#quantityInput{
+		width: 75px;
+	}
+	.show {
+		display: block;
+	}
+    #cardd{
+		width: 80%;
+		padding-top: 70px; padding-left: 25px;
+	}
+	#cardd1{
+		padding-left: 50px;
+	}
+	#card1{
+		margin-top: -80px;
+		margin-bottom: 10px;
+	}
+	.mb-12 {
+		height: 200px;
+	}
+	#img{
+		margin-left: 40px; height: 72%;
+	}
+	#sample{
+		padding-top: 10px;
+	}
+	.resize{
+		width: 35%;
+		height: auto;
+	}
+	#text{
+		text-align: center;
+	}
+	.offcanvas {
+		display: none;
+	}
+    
+</style>
+</head>
+<body>
+
+<!-- 상단메뉴 -->
+<div id="header">
+	<div th:replace="page_header/header.html :: header-head"></div>
+	<div th:replace="page_header/header.html :: header-body"></div>
+</div>
+<br /><hr />
+
+	<!-- 목록1 -->
+	<div class="container mt-4" id="cardd">
+		<div class="row">
+			<div class="col-sm-6 mb-3 mb-sm-0">
+				<div class="card">
+					<div class="card-body">
+						<img src="sample4.jpg" class="card-img-top" style="height: 50%;" />
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-sm-6" id="cardd1">
+				<div class="card">
+					<div class="card-body">
+						<a href="goods_seller.html">판매자1</a> <br />	<!-- user_name(seller) -->
+						<h5>상품명: <b>goods_name</b></h5>
+						<hr />
+						<h6>상품코드: goods_idx</h6>
+						<h6>금액: <strong>goods_price</strong></h6>
+						<h6>적립금: point</h6>
+						<hr />
+					
+					<!-- 제품 옵션 -->
+					<div class="select-group">
+						<div class="mb-3">
+						<div class="form-group">
+							<label for="select_option">옵션1 </label>
+							&nbsp;
+							
+							<select class="btn border-secondary dropdown-toggle" id="select_option" onchange="OptionCh(this);">
+								<option selected="selected">[필수] 옵션을 선택해주세요.</option>
+								<option value="option1">option1(+2,000) &nbsp;</option>
+								<option value="option2">option2(+3,000) &nbsp;</option>
+								<option value="option3">option3(+1,000) &nbsp;</option>
+							</select>
+
+						</div>
+
+						<div class="form-group">
+							<label for="select_option">옵션2 </label>
+							&nbsp;
+							
+							<select class="btn border-secondary dropdown-toggle" id="option_list" onchange="change()">
+								<option value="" selected="selected">[필수] 옵션을 선택해주세요.</option>
+								<option value="option1">option1(+3,000) &nbsp;</option>
+								<option value="option2">option2(+4,000) &nbsp;</option>
+								<option value="option3">option3(+5,000) &nbsp;</option>
+							</select>
+
+						</div>
+							
+						</div>
+					</div>
+					<hr />
+							
+					<div class="item" id="item">
+						<b>goods_name</b>
+							<img src="btn_price_delete.gif" style="cursor:pointer; margin-left: 70%;" class="delete_btn" onclick="remove_div()"/> <br />
+							
+							<div id="result1">
+							-옵션: option1(+2,000) / option2(+3,000)&nbsp;
+							</div>
+							
+							&nbsp;<input type="number" class="btn border-secondary btn-sm" value="1" min="1" max="5" style="margin-top:3px; width: 50px;">
+							&ensp;<b>20,000원</b>
+							
+						<hr />
+					</div>
+					
+					<div class="item" id="item">
+						<b>goods_name</b>
+							<img src="btn_price_delete.gif" style="cursor:pointer; margin-left: 70%;" class="delete_btn" onclick="remove_div()"/> <br />
+							
+							<div id="result2">
+								-옵션: option1(+2,000)&nbsp;
+							</div>
+							
+							&nbsp;<input type="number" class="btn border-secondary btn-sm" value="1" min="1" max="5" style="margin-top:3px; width: 50px;">
+							&ensp;<b>17,000원</b>
+							
+						<hr />
+					</div>
+					
+					<script>
+						function remove_div() {
+							const div = document.getElementById('item');
+							
+							div.remove();
+						}
+					</script>
+					
+					
+					<p>*총 상품금액(수량): <strong>37,000원</strong>(2개)</p>
+					<hr />
+					
+					<button class="btn btn-outline-primary position-relative" type="button" id="cartButton">장바구니</button>
+						&ensp;
+						<a href="goods_send.html" class="btn btn-outline-success" onclick="buy()">선물하기</a>
+						&ensp;
+						<a href="goods_buy.html" class="btn btn-outline-info" onclick="buy()">구매하기</a>
+						
+						<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+							<div class="offcanvas-header">
+								<h6 class="offcanvas-title" id="offcanvasRightLabel">장바구니에 상품이 담겼습니다.</h6>
+									<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+									<div class="offcanvas-body">
+										<div class="card">
+											<img src="cart.jpg" class="img-fluid" />
+										</div>
+									</div>
+									
+									<a href="user_cart.html" class="btn btn-outline-primary">장바구니 가기</a>
+							</div>
+							
+						<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+						
+						<script>
+							document.addEventListener('DOMContentLoaded', function() {
+								const cartButton = document.getElementById('cartButton');
+								const offcanvasElement = document.getElementById('offcanvasRight');
+								const bootstrapOffcanvas = new bootstrap.Offcanvas(offcanvasElement);
+								
+								// 버튼 클릭 시 오프캔버스 토글
+								cartButton.addEventListener('click', function() {
+									offcanvasElement.style.display = 'block'; // Offcanvas 표시
+									bootstrapOffcanvas.show(); // Offcanvas 열기
+							
+								});
+								
+								// Offcanvas 닫기 버튼 클릭 시 Offcanvas 숨기기
+								offcanvasElement.querySelector('.btn-close').addEventListener('click', function() {
+									offcanvasElement.style.display = 'none'; // Offcanvas 숨기기
+								});
+							});
+							
+						</script>
+						
+						<script>
+							function buy() {
+								alert("상품 옵션 및 수량 선택해주세요.")
+							}
+						</script>
+					</div>
+				
+				</div>
+			</div>
+		</div>
+		</div>
+	</div> <br />
+	<hr />
+	
+	<!-- 상품 상세 -->
+	<div class="container" id="text">
+		<div class="col-sm-8"></div>
+			<div class="col-sm-12">
+				<div class="card-body">
+					<p>
+					<img class="resize" src="asd.jpg" alt="" />
+					</p>
+					
+					<!-- goods_text -->
+					위대한 생명창조의 역사가 시작된다 <br />
+					인간의 한계를 극복하려는 강한 의지 <br />
+					창조주의 섭리에 맞서 굴복 당했던 <br />
+					인간의 허물을 벗는 순간 <br />
+					이 순간부터 나를 창조주라 부를지어다 <br />
+					
+					<br />
+					
+					내면에 감춰진 두려움 외면하고 <br />
+					한발짝 다가서는 신의 은밀한 비밀 <br />
+					죽음의 천사를 잠재우는 그 열쇠 <br />
+					태초에 그랬던 것처럼 <br />
+					빛이 있으리니 천둥번개여 휘몰아쳐라 <br />
+					
+					<br />
+			
+					신이여 축복을 아니면 차라리 <br />
+					내게 저주를 퍼부어라 <br />
+					신과 맞서 싸운 나는 프랑켄슈타인 <br />
+					
+					<br />
+					
+					생명은 어차피 우연의 소산물 <br />
+					신의 섭리 같은 운명따윈 없다 <br />
+					살인 전쟁 목적 없는 파괴 <br />
+					자멸하는 인간들의 선택 <br />
+					발전 없이 반복되는 역사 <br />
+					피해갈 수 없는 멸종 위기 <br />
+					빠져드는 미신들의 유혹 <br />
+					파렴치한 종교인의 위선 <br />
+					출구없는 치정자의 억압 <br />
+					숨막히는 세상을 벗어나 <br />
+					
+					<br />
+					
+					붉은피 솟구쳐 온몸을 불태워라 <br />
+					얼어붙은 심장박동쳐 맥박이 뛴다 <br />
+					결박된 사지에 터지는 강한 전율 <br />
+					태초에 그랬던 것처럼 <br />
+					어둠 속의 정적을 깨고 <br />
+					한줄기 빛 서서히 스며들어 숨을 쉰다 <br />
+					
+					<br />
+					
+					이제 눈을 떠 새로운 세상을 보아라 <br />
+					일어나리라 <br />
+					내게 저주를 퍼부어라 <br />
+					신과 맞서 싸워 난 정복하리라 <br />
+					새생명의 시대 <br />
+					
+					<br />
+					
+					"눈을 떠, 제발, 제발 깨어나" <br />
+					
+					<br />
+					
+					지옥을 탈출한 영혼이여 <br />
+					번개가 내리친 생명체여 <br />
+					너의 창조주가 명하노니 <br />
+					눈을 떠라 일어나라 깨어나 <br />
+					
+				</div>
+			</div>
+	</div>
+	<hr />
+	
+	<!-- 상품리뷰 -->
+	<div  class="container" >
+		<h6><b>《상품 리뷰》</b></h6>
+		<div class="card mb-12">
+			<div class="row" id="review">
+			
+			<div class="col-md-8">
+				<div class="card-body" style="text-align: center;">
+				&emsp;<b>등록된 리뷰가 없습니다.</b>
+				</div>
+			</div>
+			
+			</div>
+		</div> <br />
+		
+		<div class="card mb-12">
+			<div class="row">
+			
+			<div class="col-md-3">
+				<img src="sample5.jpg" id="img" class="img-fluid rounded-start"/>
+			</div>
+			
+			<div class="col-md-8">
+				<div class="card-body">
+					<h6 class="card-title">user_name</h6>
+					<span>★★★★★(goods_grade)</span> &nbsp;
+					<span><small>review_date</small></span>
+					<hr />
+					<p class="card-text" class="text-body-secondary">: review_text</p>
+				</div>
+				<br />
+			</div>
+			
+			</div>
+		</div> <br />
+		
+		<div class="card mb-12">
+			<div class="row">
+			
+			<div class="col-md-3" style="width: 5%;">
+				<img src="sample5.jpg" id="img" class="img-fluid rounded-start"/>
+			</div>
+			
+			<div class="col-md-8">
+				<div class="card-body">
+					<h6 class="card-title">user_name</h6>
+					<span>★★★★★(goods_grade)</span> &nbsp;
+					<span><small>review_date</small></span>
+					<hr />
+					<p class="card-text" class="text-body-secondary">: review_text</p>
+				</div>
+				<br />
+			</div>
+			
+			</div>
+		</div> <br />
+		
+		<div class="card mb-12">
+			<div class="row">
+			
+			<div class="col-md-3" style="width: 5%;">
+				<img src="sample5.jpg"  id="img" class="img-fluid rounded-start"/>
+			</div>
+			
+			<div class="col-md-8">
+				<div class="card-body">
+					<h6 class="card-title">user_name</h6>
+					<span>★★★★★(goods_grade)</span> &nbsp;
+					<span><small>review_date</small></span>
+					<hr />
+					<p class="card-text" class="text-body-secondary">: review_text</p>
+				</div>
+				<br />
+			</div>
+			
+			</div>
+		</div> <br />
+		
+		<!-- 페이지 -->
+		<div class="d-none d-md-block">
+			<ul class="pagination justify-content-center">
+				<li class="page-item">
+					<a href="#" class="page-link">&laquo;</a>
+				</li>
+				<li class="page-item">
+					<a href="#" class="page-link">1</a>
+				</li>
+				<li class="page-item">
+					<a href="#" class="page-link">2</a>
+				</li>
+					<li class="page-item">
+					<a href="#" class="page-link">3</a>
+				</li>
+				<li class="page-item">
+					<a href="#" class="page-link">4</a>
+				</li>
+				<li class="page-item">
+					<a href="#" class="page-link">5</a>
+				</li>
+				<li class="page-item">
+					<a href="#" class="page-link">&raquo;</a>
+				</li>
+			</ul>
+		</div>
+		
+	</div>
+	<br /> <hr />
+	
+	<!-- 상품추천 -->
+	<div class="container mt-4" id="sample">
+		<h6><b>‼상품추천‼ 이런상품은 어때요?</b></h6>
+		<div class="row">
+			<div class="col-md-3">
+				<div class="card" style="width: 100%;">
+					<img src="sample3.jpg" class="card-img-top" alt="image" />
+					<div class="card-body">
+							<h5 class="card-title">goods_name</h5>
+						<p class="card-text">goods_price</p>
+						<a href="goods_page.html" class="btn btn-outline-info">상품보기</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-3">
+				<div class="card" style="width: 100%;">
+					<img src="sample3.jpg" class="card-img-top" alt="image" />
+					<div class="card-body">
+						<h5 class="card-title">goods_name</h5>
+						<p class="card-text">goods_price</p>
+						<a href="goods_page.html" class="btn btn-outline-info">상품보기</a>
+					</div>
+				</div>	
+			</div>
+			
+			<div class="col-md-3">
+				<div class="card" style="width: 100%;">
+					<img src="sample3.jpg" class="card-img-top" alt="image" />
+					<div class="card-body">
+						<h5 class="card-title">goods_name</h5>
+						<p class="card-text">goods_price</p>
+						<a href="goods_page.html" class="btn btn-outline-info">상품보기</a>
+					</div>
+				</div>
+			</div>
+			
+			<div class="col-md-3">
+				<div class="card" style="width: 100%;">
+					<img src="sample3.jpg" class="card-img-top" alt="image" />
+					<div class="card-body">
+						<h5 class="card-title">goods_name</h5>
+						<p class="card-text">goods_price</p>
+						<a href="goods_page.html" class="btn btn-outline-info">상품보기</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<hr />
+	
+	<!-- 하단 -->
+<div id="footer">
+	<div th:replace="page_footer/footer.html :: footer-head"></div>
+	<div th:replace="page_footer/footer.html :: footer-body"></div>
+</div>
+	
+<!-- Bootstrap JS, Popper.js, jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>

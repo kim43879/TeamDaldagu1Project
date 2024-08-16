@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>달다구리스</title>
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<style>
+	.card-main{
+		margin-top: 88px; 
+		padding-left: 186px; 
+		padding-right: 186px;
+	}
+	.dropdown-menu {
+		display: none;
+		position: absolute;
+		background-color: #f9f9f9;
+		border: 1px solid #ddd;
+	}
+	.dropdown-menu a:hover {
+		background-color: #f1f1f1;
+	}
+	.show {
+		display: block;
+	}   
+	.card-profile {
+		margin-top: 88px;
+		padding-left: 50px;
+	}
+	.card-item {
+		margin-left: 10px;
+		margin-right: 10px;
+		flex: 0 0 auto;
+	}
+	#pay_info{
+		margin-top: 80px;
+		padding-left: 12%;
+	}
+	#review_info{
+		margin-top: 30px;
+		padding-left: 12%;
+	}
+	
+</style>
+</head>
+<body>
+
+<!-- 상단메뉴 -->
+<div id="header">
+	<div th:replace="page_header/header.html :: header-head"></div>
+	<div th:replace="page_header/header.html :: header-body"></div>
+</div>
+<br /><hr />
+
+	<!-- 상품구매 정보 -->
+<div id="profile">
+	<div th:replace="page_profile/profile.html :: profile-body"></div>
+</div>
+
+	<!-- 리뷰 작성 -->
+	<div class="container mt-12" id="review_info">
+		<div class="row g-0">
+			<div class="col-md-10">
+			<h6 class="card-title"><b>&ensp;《리뷰작성》</b></h6>
+			<div class="card">
+				<div class="card-body">
+					<form action="user_page.html" method="post">
+					
+					<div class="form-group">
+						<label for="user_id">이름</label>
+						<input type="text" id="user_id" class="form-control" value="user_name" readonly />
+					</div>
+					
+					<div class="form-group">
+						<label for="board_title">*제목</label>
+						<input type="text" id="board_title" class="form-control"/>
+					</div>
+					
+					<div class="form-group">
+						<label for="board_text">*내용</label>
+						<textarea id="board_text" class="form-control" rows="10" style="resize:none"></textarea>
+					</div>
+					
+					<div class="form-group">
+						<label for="board_file">첨부 이미지</label>
+						<input type="file" id="board_file" class="form-control" accept="image/*"/>
+					</div>
+					
+					<div class="form-group">
+						<div class="text-right">
+							<a href="user_review.html" class="btn btn-outline-warning">뒤로가기</a>
+							&nbsp;
+							<a href="../goods/goods_review.html" class="btn btn-outline-primary" onclick="message()">작성하기</a>
+							
+							<script>
+								function message() {
+								alert("작성이 완료되었습니다.");
+								}
+							</script>
+							
+						</div>
+					</div>
+				</form>
+				</div>
+			</div>
+		</div>
+         
+		</div>
+	</div>
+	<br /><hr />
+	
+   <!-- 하단 -->
+<div id="footer">
+	<div th:replace="page_footer/footer.html :: footer-head"></div>
+	<div th:replace="page_footer/footer.html :: footer-body"></div>
+</div>
+
+</body>
+</html>

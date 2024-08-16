@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>달다구리스</title>
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<style>
+	.card-main{
+		margin-top: 88px; 
+		padding-left: 186px; 
+		padding-right: 186px;
+	}
+	.dropdown-menu {
+		display: none;
+		position: absolute;
+		background-color: #f9f9f9;
+		border: 1px solid #ddd;
+	}
+	.dropdown-menu a:hover {
+		background-color: #f1f1f1;
+	}
+	.show {
+		display: block;
+	}
+	.card-profile{
+		margin-top: 88px; padding-left: 50px;
+	}
+	.card-wrapper {
+		margin-top: 20px;
+	}
+	#card1 {
+		width: 90%;
+		margin-top: -1050px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+	}
+	
+</style>
+</head>
+<body>
+
+<!-- 상단메뉴 -->
+<div id="header">
+	<div th:replace="page_header/header.html :: header-head"></div>
+	<div th:replace="page_header/header.html :: header-body"></div>
+</div>
+<br /><hr />
+	
+	<!-- 유저프로필 라인 -->
+<div id="profile">
+	<div th:replace="page_profile/profile.html :: profile-body"></div>
+</div>
+	
+	<!-- 배송지 정보 -->
+	<div class="container mt-2 card-wrapper">
+		<div class="row">
+		<div class="col-md-8" id="card1">
+		&ensp;《배송지 관리》
+			<ol class="list-group list-group-numbered">
+				<li class="list-group-item d-flex justify-content-between align-items-start">
+					<div class="ms-2 me-auto">
+					<span class="badge text-bg-primary rounded-pill">*기본배송지</span>
+						<div class="fw-bold"><b>김희진</b></div>
+						010-1111-1111 <br />
+						(04399) 서울 용산구 이태원로294, 블루스퀘어 1층</div>
+						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+							&emsp;&emsp;&emsp;
+							<button type="submit" class="btn btn-outline-warning btn-sm-sm-sm-sm" onclick="addr_delete()">삭제</button> &nbsp;
+							
+								<script>
+									function addr_delete() {
+										alert("삭제되었습니다.");
+									}
+								</script>
+							
+							<a href="../user/user_addr2.html" class="btn btn-outline-success btn-sm-sm-sm-sm" role="button" data-bs-toggle="button">수정</a>
+						</div>
+				</li>
+						
+				<li class="list-group-item d-flex justify-content-between align-items-start">
+					<div class="ms-2 me-auto">
+					<span class="badge text-bg-primary rounded-pill">-</span>
+						<div class="fw-bold"><b>김희진</b></div>
+						010-1111-1111 <br />
+						(04399) 서울 용산구 이태원로294, 블루스퀘어 2층</div>
+						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+						&emsp;&emsp;&emsp;
+						<button type="submit" class="btn btn-outline-warning btn-sm-sm-sm-sm" onclick="addr_delete()">삭제</button> &nbsp;
+						
+							<script>
+								function addr_delete() {
+									alert("삭제되었습니다.");
+								}
+							</script>
+						
+						<a href="../user/user_addr2.html" class="btn btn-outline-success btn-sm-sm-sm-sm" role="button" data-bs-toggle="button">수정</a>
+					</div>
+				</li>
+						
+				<li class="list-group-item d-flex justify-content-between align-items-start">
+					<div class="ms-2 me-auto">
+					<span class="badge text-bg-primary rounded-pill">-</span>
+						<div class="fw-bold"><b>김희진</b></div>
+						010-1111-1111 <br />
+						(44444) 북극의 가장 높은 곳</div>
+						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+						&emsp;&emsp;&emsp;
+						<button type="submit" class="btn btn-outline-warning btn-sm-sm-sm-sm" onclick="addr_delete()">삭제</button> &nbsp;
+						
+							<script>
+								function addr_delete() {
+									alert("삭제되었습니다.");
+								}
+							</script>
+							
+						<a href="../user/user_addr2.html" class="btn btn-outline-success btn-sm-sm-sm-sm" role="button" data-bs-toggle="button">수정</a>
+					</div>
+				</li>
+			</ol>
+			<br />
+					
+			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+				<a href="user_page.html" class="btn btn-outline-primary" role="button" data-bs-toggle="button" aria-pressed="true">돌아가기</a>
+			</div>
+		</div>
+		</div>
+	</div>
+	<hr />
+
+	<!-- 하단 -->
+<div id="footer">
+	<div th:replace="page_footer/footer.html :: footer-head"></div>
+	<div th:replace="page_footer/footer.html :: footer-body"></div>
+</div>
+	
+</body>
+</html>

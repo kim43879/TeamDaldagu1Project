@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:fragment="header-head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <style>
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+        }
+        .show {
+            display: block;
+        }
+    </style>
+</head>
+<body th:fragment="header-body">
+<nav class="navbar navbar-expand-md bg-light navbar-light fixed-top shadow-lg">
+    <a class="navbar-brand" href="/">&nbsp;✨DalDa_Cu✨</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu"
+            aria-controls="navMenu" aria-expanded="true" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- 카테고리 -->
+    <div class="btn-group dropped">
+        &emsp;
+        <button id="dropdownButton" type="button" class="btn btn-outline-info dropdown-toggle" aria-expanded="false">
+            전체카테고리
+        </button>
+
+        <ul id="dropdownMenu" class="dropdown-menu">
+            <li><a href="#">&emsp;goods_tag 1</a></li>
+            <li><a href="#">&emsp;goods_tag 2</a></li>
+            <li><a href="#">&emsp;goods_tag 3</a></li>
+            <li><a href="#">&emsp;goods_tag 4</a></li>
+            <li><a href="board/board_list.html">&emsp;board_list</a></li>
+        </ul>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var dropdownButton = document.getElementById('dropdownButton');
+            var dropdownMenu = document.getElementById('dropdownMenu');
+
+            dropdownButton.addEventListener('click', function () {
+                dropdownMenu.classList.toggle('show');
+            });
+
+            // 문서 전체 클릭 시 드롭다운 메뉴 닫기
+            document.addEventListener('click', function (event) {
+                if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                    dropdownMenu.classList.remove('show');
+                }
+            });
+        });
+    </script>
+
+    <!-- link rel="import" href="파일경로" -->
+
+    <form class="d-flex ml-auto" style="margin-left:60%; width: 32%;">
+        &emsp;
+        <input class="form-control" type="search" placeholder="Search" aria-label="Search" />
+        &nbsp;
+        <button class="btn btn-outline-info" type="submit">검색</button>
+    </form>
+
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+            <a href="/user/login" class="btn btn-outline-info" style="margin-right: 5px;">로그인</a>
+        </li>
+
+        <li class="nav-item">
+            <a href="/user/join" class="btn btn-outline-info" style="margin-right: 5px;">회원가입</a>
+        </li>
+
+        <li class="nav-item">
+            <a href="/" class="btn btn-outline-info" style="margin-right: 5px;" onclick="logout()" >로그아웃</a>
+            <script>
+                function logout() {
+                    alert("로그아웃되었습니다.");
+                    location.href= "/main";
+                }
+            </script>
+        </li>
+    </ul>
+
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a href="/user/user_page" class="btn btn-outline-warning" style="border-color: #edcd8e;" onclick="message_info()">내정보</a> &ensp;
+            <script>
+                function message_info() {
+                    alert("로그인해주세요.");
+                }
+            </script>
+        </li>
+    </ul>
+</nav>
+<br /><hr />
+</body>
+</html>

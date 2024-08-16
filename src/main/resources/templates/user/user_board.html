@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>달다구리스</title>
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+
+<style>
+	.card-main{
+		margin-top: 88px; 
+		padding-left: 186px; 
+		padding-right: 186px;
+	}
+	.dropdown-menu {
+		display: none;
+		position: absolute;
+		background-color: #f9f9f9;
+		border: 1px solid #ddd;
+	}
+	.dropdown-menu a:hover {
+		background-color: #f1f1f1;
+	}
+	.show {
+		display: block;
+	}
+	.card-profile{
+		margin-top: 88px; padding-left: 50px;
+	}
+	.card-wrapper {
+		margin-top: 20px;
+	}
+	#card1 {
+		width: 90%;
+		margin-top: -1050px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+	}
+	#card2 {
+		width: 90%;
+		margin-top: -790px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+	}
+	       
+</style>
+</head>
+<body>
+
+<!-- 상단메뉴 -->
+<div id="profile">
+	<div th:replace="page_profile/profile.html :: profile-body"></div>
+</div>
+	
+   <!-- 주문현황 -->
+   <div class="container mt-4 card-wrapper">
+      <div class="row">
+         <div class="col-md-10">
+            <div class="card-wrapper1">
+               <div class="card" id="card1">
+                  <h5 style="margin-top: 10px;">《나의 주문처리 현황》
+                  <span style="font-size: 60%">&nbsp;(최근 <em>3개월</em> 기준)</span>
+                  </h5>
+                  <div class="card-body d-flex justify-content-between">
+                     <!-- 입금전 -->
+                     <div class="card-item text-center">
+                        <div class="card">
+                           <div class="card-body">
+                              <h6>&emsp;입금전&emsp;</h6>
+                              <hr />
+                              <a href="#">0</a>
+                           </div>
+                        </div>
+                     </div>
+                     
+                     <!-- 배송준비중 -->
+                     <div class="card-item text-center">
+                        <div class="card">
+                           <div class="card-body">
+                              <h6>배송준비중</h6>
+                              <hr />
+                              <a href="#">2</a>
+                           </div>
+                        </div>
+                     </div>
+                     
+                     <!-- 배송중 -->
+                     <div class="card-item text-center">
+                        <div class="card">
+                           <div class="card-body">
+                              <h6>&emsp;배송중&emsp;</h6>
+                              <hr />
+                              <a href="#">1</a>
+                           </div>
+                        </div>
+                     </div>
+                     
+                     <!-- 배송완료 -->
+                     <div class="card-item text-center">
+                        <div class="card">
+                           <div class="card-body">
+                              <h6>&nbsp;배송완료&nbsp;</h6>
+                              <hr />
+                              <a href="#">5</a>
+                           </div>
+                        </div>
+                     </div>
+                     
+                     <!-- 기타 -->
+                     <div class="card-item text-center">
+                        <div class="card">
+                           <div class="card-body">
+								&emsp;-취소: &nbsp;<a href="#">0</a>&emsp;&nbsp;&nbsp; <br />
+								&emsp;-교환: &nbsp;<a href="#">0</a>&emsp;&nbsp;&nbsp; <br />
+								&emsp;-반품: &nbsp;<a href="#">0</a>&emsp;&nbsp;&nbsp; <br />
+                           </div>
+                        </div>
+                     </div>
+                     
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+
+   </div>
+
+	<!-- 정보1 -->
+	<div class="container mt-2 card-wrapper">
+		<div class="row">
+			<div class="col-md-10" >
+				<div class="card" id="card2">
+				<table class="table">
+					<thead>
+						<tr>
+							<th>전체 작성 게시글</th>
+							<th scope="col">작성일</th>
+							<th scope="col">작성자</th>
+	 						<th scope="col">제목</th>
+						</tr>
+					</thead>
+					
+					<tbody class="table-group-divider">
+						<tr>
+							<th scope="row">3</th>
+							<td>2024.08.08</td>
+							<td>전동석</td>
+							<td><a href="../board/board_list.html">이제는 후회해도</a></td>
+						</tr>
+						<tr>
+							<th scope="row">2</th>
+							<td>2024.08.08</td>
+							<td>전동석</td>
+							<td><a href="../board/board_list.html">되돌릴 수가 없어</a></td>
+						</tr>
+						<tr>
+							<th scope="row">1</th>
+							<td>2024.08.08</td>
+							<td>전동석</td>
+							<td><a href="../board/board_list.html">용서받지 못할</a></td>
+						</tr>
+						<tr>
+							<th scope="row">1</th>
+							<td>2024.08.08</td>
+							<td>전동석</td>
+							<td><a href="../board/board_list.html">내 실수를</a></td>
+						</tr>						
+						<tr>
+							<th scope="row">1</th>
+							<td>2024.08.08</td>
+							<td>전동석</td>
+							<td><a href="../board/board_list.html">신이 계신다면 들으소서</a></td>
+						</tr>
+						<tr>
+							<th scope="row">1</th>
+							<td>2024.08.08</td>
+							<td>전동석</td>
+							<td><a href="../board/board_list.html">나약했던 한 인간의</a></td>
+						</tr>		
+							<tr>
+							<th scope="row">1</th>
+							<td>2024.08.08</td>
+							<td>전동석</td>
+							<td><a href="../board/board_list.html">외로운 싸움을</a></td>
+						</tr>
+						<tr>
+							<th scope="row">1</th>
+							<td>2024.08.08</td>
+							<td>전동석</td>
+							<td><a href="../board/board_list.html">고독한 진실을</a></td>
+						</tr>
+						<tr>
+							<th scope="row">1</th>
+							<td>2024.08.08</td>
+							<td>전동석</td>
+							<td><a href="../board/board_list.html">발버둥 치려 했던</a></td>
+						</tr>				
+						<tr>
+							<th scope="row">1</th>
+							<td>2024.08.08</td>
+							<td>전동석</td>
+							<td><a href="../board/board_list.html">내 운명을</a></td>
+						</tr>	
+					</tbody>
+				</table>
+				<br />
+				
+				<div class="d-none d-md-block">
+					<ul class="pagination justify-content-center">
+						<li class="page-item">
+							<a href="#" class="page-link">&laquo;</a>
+						</li>
+						
+						<li class="page-item">
+							<a href="#" class="page-link">1</a>
+						</li>						
+						<li class="page-item">
+							<a href="#" class="page-link">2</a>
+						</li>
+						<li class="page-item">
+							<a href="#" class="page-link">3</a>
+						</li>
+						<li class="page-item">
+							<a href="#" class="page-link">4</a>
+						</li>
+						<li class="page-item">
+							<a href="#" class="page-link">5</a>
+						</li>
+						<li class="page-item">
+							<a href="#" class="page-link">6</a>
+						</li>
+						<li class="page-item">
+							<a href="#" class="page-link">7</a>
+						</li>
+						<li class="page-item">
+							<a href="#" class="page-link">8</a>
+						</li>
+						<li class="page-item">
+							<a href="#" class="page-link">9</a>
+						</li>
+						<li class="page-item">
+							<a href="#" class="page-link">10</a>
+						</li>
+						
+						<li class="page-item">
+							<a href="#" class="page-link">&raquo;</a>
+						</li>
+					</ul>
+				</div>
+				
+				<div class="d-block d-md-none">
+					<ul class="pagination justify-content-center">
+						<li class="page-item">
+							<a href="#" class="page-link">이전</a>
+						</li>
+						<li class="page-item">
+							<a href="#" class="page-link">다음</a>
+						</li>
+					</ul>
+				</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<hr />
+
+	<!-- 하단 -->
+<div id="footer">
+	<div th:replace="page_footer/footer.html :: footer-head"></div>
+	<div th:replace="page_footer/footer.html :: footer-body"></div>
+</div>
+	
+</body>
+</html>
