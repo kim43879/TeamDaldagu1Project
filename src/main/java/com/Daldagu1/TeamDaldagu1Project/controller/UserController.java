@@ -20,7 +20,6 @@ public class UserController {
 
     @PostMapping("/user/login_pro")
     public String login_pro(){
-
         return "main";
     }
 

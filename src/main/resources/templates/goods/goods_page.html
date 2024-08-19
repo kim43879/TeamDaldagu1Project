@@ -74,7 +74,7 @@
 			<div class="col-sm-6 mb-3 mb-sm-0">
 				<div class="card">
 					<div class="card-body">
-						<img src="sample4.jpg" class="card-img-top" style="height: 50%;" />
+						<img th:src="@{/img/sample4.jpg}" class="card-img-top" style="height: 50%;" />
 					</div>
 				</div>
 			</div>
@@ -123,7 +123,7 @@
 					</div>
 					<hr />
 							
-					<div class="item" id="item">
+					<div class="item" id="item1">
 						<b>goods_name</b>
 							<img src="btn_price_delete.gif" style="cursor:pointer; margin-left: 70%;" class="delete_btn" onclick="remove_div()"/> <br />
 							
@@ -137,7 +137,7 @@
 						<hr />
 					</div>
 					
-					<div class="item" id="item">
+					<div class="item" id="item2">
 						<b>goods_name</b>
 							<img src="btn_price_delete.gif" style="cursor:pointer; margin-left: 70%;" class="delete_btn" onclick="remove_div()"/> <br />
 							
@@ -167,7 +167,7 @@
 						&ensp;
 						<a href="goods_send.html" class="btn btn-outline-success" onclick="buy()">선물하기</a>
 						&ensp;
-						<a href="goods_buy.html" class="btn btn-outline-info" onclick="buy()">구매하기</a>
+						<a href="/goods/goods_buy" class="btn btn-outline-info" onclick="buy()">구매하기</a>
 						
 						<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
 							<div class="offcanvas-header">
@@ -175,11 +175,11 @@
 									<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 									<div class="offcanvas-body">
 										<div class="card">
-											<img src="cart.jpg" class="img-fluid" />
+											<img th:src="@{/img/cart.jpg}" class="img-fluid" />
 										</div>
 									</div>
 									
-									<a href="user_cart.html" class="btn btn-outline-primary">장바구니 가기</a>
+									<a href="/user/user_cart" class="btn btn-outline-primary">장바구니 가기</a>
 							</div>
 							
 						<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
@@ -225,7 +225,7 @@
 			<div class="col-sm-12">
 				<div class="card-body">
 					<p>
-					<img class="resize" src="asd.jpg" alt="" />
+					<img class="resize" th:src="@{/img/asd.jpg}" alt="" />
 					</p>
 					
 					<!-- goods_text -->
@@ -314,7 +314,7 @@
 			<div class="row">
 			
 			<div class="col-md-3">
-				<img src="sample5.jpg" id="img" class="img-fluid rounded-start"/>
+				<img th:src="@{/img/sample5.jpg}" id="img1" class="img-fluid rounded-start"/>
 			</div>
 			
 			<div class="col-md-8">
@@ -323,7 +323,7 @@
 					<span>★★★★★(goods_grade)</span> &nbsp;
 					<span><small>review_date</small></span>
 					<hr />
-					<p class="card-text" class="text-body-secondary">: review_text</p>
+					<p class="card-text text-body-secondary">: review_text</p>
 				</div>
 				<br />
 			</div>
@@ -335,7 +335,7 @@
 			<div class="row">
 			
 			<div class="col-md-3" style="width: 5%;">
-				<img src="sample5.jpg" id="img" class="img-fluid rounded-start"/>
+				<img th:src="@{/img/sample5.jpg}" id="img2" class="img-fluid rounded-start"/>
 			</div>
 			
 			<div class="col-md-8">
@@ -344,7 +344,7 @@
 					<span>★★★★★(goods_grade)</span> &nbsp;
 					<span><small>review_date</small></span>
 					<hr />
-					<p class="card-text" class="text-body-secondary">: review_text</p>
+					<p class="card-text text-body-secondary">: review_text</p>
 				</div>
 				<br />
 			</div>
@@ -356,7 +356,7 @@
 			<div class="row">
 			
 			<div class="col-md-3" style="width: 5%;">
-				<img src="sample5.jpg"  id="img" class="img-fluid rounded-start"/>
+				<img th:src="@{/img/sample5.jpg}"  id="img" class="img-fluid rounded-start"/>
 			</div>
 			
 			<div class="col-md-8">
@@ -365,7 +365,7 @@
 					<span>★★★★★(goods_grade)</span> &nbsp;
 					<span><small>review_date</small></span>
 					<hr />
-					<p class="card-text" class="text-body-secondary">: review_text</p>
+					<p class="card-text text-body-secondary">: review_text</p>
 				</div>
 				<br />
 			</div>
@@ -409,44 +409,44 @@
 		<div class="row">
 			<div class="col-md-3">
 				<div class="card" style="width: 100%;">
-					<img src="sample3.jpg" class="card-img-top" alt="image" />
+					<img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image" />
 					<div class="card-body">
 							<h5 class="card-title">goods_name</h5>
 						<p class="card-text">goods_price</p>
-						<a href="goods_page.html" class="btn btn-outline-info">상품보기</a>
+						<a href="/goods/good_page" class="btn btn-outline-info">상품보기</a>
 					</div>
 				</div>
 			</div>
 			
 			<div class="col-md-3">
 				<div class="card" style="width: 100%;">
-					<img src="sample3.jpg" class="card-img-top" alt="image" />
+					<img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image" />
 					<div class="card-body">
 						<h5 class="card-title">goods_name</h5>
 						<p class="card-text">goods_price</p>
-						<a href="goods_page.html" class="btn btn-outline-info">상품보기</a>
+						<a href="/goods/good_page" class="btn btn-outline-info">상품보기</a>
 					</div>
 				</div>	
 			</div>
 			
 			<div class="col-md-3">
 				<div class="card" style="width: 100%;">
-					<img src="sample3.jpg" class="card-img-top" alt="image" />
+					<img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image" />
 					<div class="card-body">
 						<h5 class="card-title">goods_name</h5>
 						<p class="card-text">goods_price</p>
-						<a href="goods_page.html" class="btn btn-outline-info">상품보기</a>
+						<a href="/goods/good_page" class="btn btn-outline-info">상품보기</a>
 					</div>
 				</div>
 			</div>
 			
 			<div class="col-md-3">
 				<div class="card" style="width: 100%;">
-					<img src="sample3.jpg" class="card-img-top" alt="image" />
+					<img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image" />
 					<div class="card-body">
 						<h5 class="card-title">goods_name</h5>
 						<p class="card-text">goods_price</p>
-						<a href="goods_page.html" class="btn btn-outline-info">상품보기</a>
+						<a href="/goods/good_page" class="btn btn-outline-info">상품보기</a>
 					</div>
 				</div>
 			</div>
