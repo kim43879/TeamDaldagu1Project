@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>달다구리스</title>
+<!-- bootstrap -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<style>
+.card-profile {
+	margin-top: 88px;
+	padding-left: 50px;
+}
+
+.card-wrapper {
+	margin-top: 20px;
+}
+
+#card1 {
+	width: 90%;
+	margin-top: -990px;
+	margin-left: 250px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+#card2 {
+	width: 90%;
+	margin-top: -690px;
+	margin-left: 250px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+#card3 {
+	width: 90%;
+	margin-top: -390px;
+	margin-left: 250px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+</style>
+</head>
+<body>
+
+	<!-- 상단메뉴 -->
+	<div id="header">
+		<div th:replace="page_header/header.html :: header-head"></div>
+		<div th:replace="page_header/header.html :: header-body"></div>
+	</div>
+	<br />
+	<hr />
+
+	<!-- 유저프로필 라인 -->
+	<div id="profile">
+		<div th:replace="page_profile/profile.html :: profile-body"></div>
+	</div>
+
+
+	<!-- 판매자 메인 -->
+	<main>
+		<div class="container mt-2 card-wrapper">
+			<div class="row">
+				<div class="col-md-9 text-center" id="card1">
+					<br /> <br />
+					<h1 class="display-5 fw-normal text-left">판매자 MyPage</h1>
+					<br />
+					<div class="btn-group" role="group"
+						aria-label="Basic outlined example">
+						<button type="button" class="btn btn-outline-secondary"
+							onclick="location.href='seller_page.html' ">MyPage</button>
+						<button type="button" class="btn btn-outline-secondary"
+							onclick="location.href='seller_order.html' ">주문 현황</button>
+						<button type="button" class="btn btn-outline-secondary"
+							onclick="location.href='seller_regular.html' ">단골 관리</button>
+						<button type="button" class="btn btn-secondary"
+							onclick="location.href='seller_product_insert.html' ">상품 등록</button>
+						<button type="button" class="btn btn-outline-secondary"
+							onclick="location.href='seller_list.html' ">상품 조회</button>
+						<button type="button" class="btn btn-outline-secondary"
+							onclick="location.href='seller_blacklist.html' ">블랙리스트</button>
+					</div>
+					<hr />
+					<br />
+					<!-- 디자인 수정하기 -->
+					<div class="container admin_container">
+						<h1 class="display-5 fw-normal text-left">상품 등록</h1>
+						<hr />
+
+						<div class="row ">
+							<div class="col-md-7 col-lg-8 text-center" style="margin: 0 auto;">
+								<div class="form-group hidden-xs" id="fileDrop">
+									<img src="sample3.jpg" class="img-thumbnail" alt="...">
+									<!-- 지울거 -->
+									<label>업로드 할 이미지 파일을 드랍하세요.</label>
+									<div class="fileDrop"></div>
+									<ul class="clearfix uploadedList col-xs-12"></ul>
+								</div>
+
+								<div class="form-group productInfo text-left">
+									<form action="/admin/product/insert" method="post">
+										<div class="row g-3">
+										<div class="col-sm-6">
+												<label>상품 ID</label> <input name="productId"
+													value="${productInfo.productId}"
+													class="form-control productId" required>
+											</div>
+											<br />
+											<div class="col-sm-6">
+												<label>상품명</label> <input name="productName"
+													value="${productInfo.productName}" class="form-control"
+													required>
+											</div>
+											<br />
+											<div class="col-sm-6">
+												<label>상품가격</label> <input name="price"
+													value="${productInfo.price}" class="form-control" required>
+											</div>
+											<br />
+											<div class="col-sm-6">
+												<label>상품분류</label>
+												<div class="form-inline">
+													<select class="form-control" id="productDist">
+														<option value="outer">1. 외투</option>
+														<option value="top">2. 상의</option>
+														<option value="bottom">3. 하의</option>
+														<option value="bag">4. 가방</option>
+														<option value="acc">5. 액세서리</option>
+													</select>
+													<button class="btn btn-outline-secondary btn_productDist">입력</button>
+													<input name="productDist"
+														value="${productInfo.productDist}" class="form-control"
+														readonly>
+												</div>
+											</div>
+											<br />
+											<div class="col-sm-6">
+												<label>재고</label> <input name="stock"
+													value="${productInfo.stock}" class="form-control" required>
+											</div>
+											<br />
+											<div class="col-sm-6">
+												<label>상품정보</label> <input name="productInfo" value="${productInfo.productInfo}" class="form-control" required>
+											</div>
+											</div>
+											<br />
+											<div class="btns text-center">
+												<button class="btn btn-outline-secondary" id="btn_product_insert">상품 등록</button>
+												<button class="btn btn-outline-secondary" id="btn_product_back">상품 조회</button>
+											</div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- class = row -->
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<!-- 하단 -->
+	<div id="footer">
+		<div th:replace="page_footer/footer.html :: footer-head"></div>
+		<div th:replace="page_footer/footer.html :: footer-body"></div>
+	</div>
+
+</body>
+</html>

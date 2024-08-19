@@ -1,11 +1,17 @@
 package com.Daldagu1.TeamDaldagu1Project.controller;
 
+import com.Daldagu1.TeamDaldagu1Project.beans.UserBean;
+import com.Daldagu1.TeamDaldagu1Project.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller()
 public class UserController {
+
+    @Autowired
+    UserService userService;
 
     @GetMapping("/user/login")
     public String login(){

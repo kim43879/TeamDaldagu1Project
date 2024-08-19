@@ -1,0 +1,190 @@
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>달다구리스</title>
+<!-- bootstrap -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<style>
+.card-profile {
+	margin-top: 88px;
+	padding-left: 50px;
+}
+
+.card-wrapper {
+	margin-top: 20px;
+}
+
+#card1 {
+	width: 90%;
+	margin-top: -990px;
+	margin-left: 250px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+#card2 {
+	width: 90%;
+	margin-top: -690px;
+	margin-left: 250px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+#card3 {
+	width: 90%;
+	margin-top: -390px;
+	margin-left: 250px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+</style>
+</head>
+<body>
+
+	<!-- 상단메뉴 -->
+	<div id="header">
+		<div th:replace="page_header/header.html :: header-head"></div>
+		<div th:replace="page_header/header.html :: header-body"></div>
+	</div>
+	<br />
+	<hr />
+
+	<!-- 유저프로필 라인 -->
+	<div id="profile">
+		<div th:replace="page_profile/profile.html :: profile-body"></div>
+	</div>
+
+
+	<!-- 판매자 메인 -->
+	<main>
+		<div class="container mt-2 card-wrapper">
+			<div class="row">
+				<div class="col-md-9 text-center" id="card1">
+					<br /> <br />
+					<h1 class="display-5 fw-normal text-left">판매자 MyPage</h1>
+					<br />
+
+					<div class="btn-group" role="group"
+						aria-label="Basic outlined example">
+						<button type="button" class="btn btn-outline-secondary"
+							onclick="location.href='seller_page.html' ">MyPage</button>
+						<button type="button" class="btn btn-outline-secondary"
+							onclick="location.href='seller_order.html' ">주문 현황</button>
+						<button type="button" class="btn btn-outline-secondary"
+							onclick="location.href='seller_regular.html' ">단골 관리</button>
+						<button type="button" class="btn btn-outline-secondary"
+							onclick="location.href='seller_product_insert.html' ">상품
+							등록</button>
+						<button type="button" class="btn btn-secondary"
+							onclick="location.href='seller_list.html' ">상품 조회</button>
+						<button type="button" class="btn btn-outline-secondary"
+							onclick="location.href='seller_blacklist.html' ">블랙리스트</button>
+					</div>
+					<hr />
+					<br />
+					<!-- 디자인 수정하기 버튼클릭하면 색 차오르는거 유지 -->
+
+					<div class="container admin_container">
+						<h1 class="display-5 fw-normal text-left">상품 리스트</h1>
+						<hr />
+						<!-- 검색창 넣어 말어 -->
+						<div class="row">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>상품ID</th>
+										<th>상품명</th>
+										<th>상품가격</th>
+										<th>재고</th>
+										<th>상품분류</th>
+										<th>상품정보</th>
+										<th>상품 등록일</th>
+										<th>최종 수정일</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:forEach items="${productList}" var="dto">
+										<!-- th로 수정 -->
+										<tr onClick="location.href='seller_product_read.html'">
+											<td>12345</td>
+											<td>티셔츠</td>
+											<td>₩20,000</td>
+											<td>200</td>
+											<td>상의</td>
+											<td>파란티셔츠(동대문)</td>
+											<td><fmt:formatDate value="${dto.regDate}" type="date"
+													pattern="yyyy-MM-dd" />ex)2023-05-08</td>
+											<td><fmt:formatDate value="${dto.updateDate}"
+													type="date" pattern="yyyy-MM-dd" />ex)2024-06-17</td>
+										</tr>
+
+										<tr onClick="location.href='seller_product_read.html'">
+											<!-- 참고용ㅇ 복붙 -->
+											<td>12345</td>
+											<td>티셔츠</td>
+											<td>₩20,000</td>
+											<td>200</td>
+											<td>상의</td>
+											<td>파란티셔츠(동대문)</td>
+											<td><fmt:formatDate value="${dto.regDate}" type="date"
+													pattern="yyyy-MM-dd" />ex)2023-05-08</td>
+											<td><fmt:formatDate value="${dto.updateDate}"
+													type="date" pattern="yyyy-MM-dd" />ex)2024-06-17</td>
+										</tr>
+
+										<tr onClick="location.href='seller_product_read.html'">
+											<!-- 참고용ㅇ 복붙 -->
+											<td>12345</td>
+											<td>티셔츠</td>
+											<td>₩20,000</td>
+											<td>200</td>
+											<td>상의</td>
+											<td>파란티셔츠(동대문)</td>
+											<td><fmt:formatDate value="${dto.regDate}" type="date"
+													pattern="yyyy-MM-dd" />ex)2023-05-08</td>
+											<td><fmt:formatDate value="${dto.updateDate}"
+													type="date" pattern="yyyy-MM-dd" />ex)2024-06-17</td>
+										</tr>
+										<!-- <tr onClick="location.href='링크링크'">
+							<td>${dto.productId}</td>
+							<td>${dto.productName}</td>
+							<td>${dto.price}</td>
+							<td>${dto.stock}</td>
+							<td>${dto.productDist}</td>
+							<td>${dto.productInfo}</td>
+							<td><fmt:formatDate value="${dto.regDate}" type="date" pattern="yyyy-MM-dd"/> </td>
+							<td><fmt:formatDate value="${dto.updateDate}" type="date" pattern="yyyy-MM-dd"/></td>
+						</tr> -->
+
+									</c:forEach>
+
+
+								</tbody>
+							</table>
+						</div>
+						<!-- class = row -->
+					</div>
+
+
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<!-- 하단 -->
+	<div id="footer">
+		<div th:replace="page_footer/footer.html :: footer-head"></div>
+		<div th:replace="page_footer/footer.html :: footer-body"></div>
+	</div>
+
+</body>
+</html>

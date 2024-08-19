@@ -47,46 +47,12 @@
 <br /><hr />
 
 	<!-- 유저프로필 라인 -->
-	<div class="card-profile" style="width: 18rem;">
-		<img src="../../static/img/profile.jpg" class="card-img-top" alt="...">
-		<div class="card-body">
-			<h5 class="card-title">짱쎈개발자</h5>
-				<p class="card-text">동쑦이 15주년 데뷔축하링~</p>
-		</div>
-		<ul class="list-group list-group-flush">
-			<li class="list-group-item"><b>마이페이지</b></li>
-    	</ul>
-    	
-		<div class="card-body">
-			<h6 style="border: thin;"><b>-주문관리</b></h6>
-			<a href="../user/user_order.html" class="card-link">주문/배송 내역</a> <br /><br />
-			
-			<h6 style="border: thin;"><b>-나의 알림</b></h6>
-			<a href="#" class="card-link">알림</a> <br />
-			<a href="#" class="card-link">메시지</a> <br />
-			<a href="../board/board_list.html">게시글</a> <br /><br />
-			
-			<h6 style="border: thin;"><b>-선물함</b></h6>
-			<a href="../user/user_present.html" class="card-link">선물보기</a> <br /><br />
-			
-			<h6 style="border: thin;"><b>-구매상품</b></h6>
-			<a href="../user/user_review.html" class="card-link">리뷰작성</a> <br /><br />
-			
-			<h6 style="border: thin;"><b>-관심상품</b></h6>
-			<a href="../user/user_wish.html" class="card-link">찜한상품</a> <br />
-			<a href="../user/user_cart.html" class="card-link">장바구니</a> <br /><br />
-			
-			<h6 style="border: thin;"><b>-나의 정보</b></h6>
-			<a href="../user/user_info.html" class="card-link">회원정보 관리</a> <br />
-			<a href="../user/user_addr.html" class="card-link">배송지 관리</a> <br />
-			<a href="../user/user_pay.html" class="card-link">결제수단 관리</a> <br />
-			<hr />
-			
-			<a href="seller_join.html" class="card-link">브랜드 등록</a>
-		</div>
-	</div>
-	
-	<!-- 판매자 등록 -->
+<div id="profile">
+	<div th:replace="page_profile/profile.html :: profile-body"></div>
+</div>
+
+
+<!-- 판매자 등록 -->
 		<div class="container">
 			<div class="row">
 				<div class="col-sm-3"></div>
