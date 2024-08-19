@@ -84,11 +84,11 @@
 							</div>
 							
 							<div class="form-group">	<!-- user_post -->
-								<label for="user_post" class="mb-0 me-2">*우편번호</label>
+								<label for="user_post_btn" class="mb-0 me-2">*우편번호</label>
 								<div class="d-flex align-items-center">
-									<input type="button" id="user_post1" class="form-control me-2" required/>
+									<input type="text" id="user_post" class="form-control me-2" required/>
 									&nbsp;
-									<input type="button" class="btn btn-outline-info" id="user_post" onclick="kakaopost()" value="우편번호검색" />
+									<input type="button" class="btn btn-outline-info" id="user_post_btn" onclick="kakaopost()" value="우편번호검색" />
 								</div>
 							</div>
 
@@ -104,11 +104,14 @@
 							<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 							<script>
 								function kakaopost() {
+									console.log('start1');
 									// Set a same-site cookie for first-party contexts
-									document.cookie = 'cookie1=value1; SameSite=Lax';
+									document.cookie = 'cookie1=value1; SameSite=None';
 								    new daum.Postcode({
 								    	oncomplete: function(data) {
+								    		console.log('start');
 											var addr = ''; //주소변수
+											var extraAddr = '';
 											
 											//사용자가 선택한 주소타입에 따라
 											if(data.userSelectedType === 'R') { //도로명
@@ -138,7 +141,9 @@
 											}
 											//우편번호와 주소 정보를 해당 필드에 주입
 											document.getElementById("user_post").value = data.zonecode;
+											console.log(data.zonecode);
 											document.getElementById("user_addr").value = addr;
+											console.log(addr);
 											
 											//커서를 주소 필드로 이동
 											document.getElementById("user_addr_detail").focus();
