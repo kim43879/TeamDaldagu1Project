@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,12 +53,10 @@
 <body>
 
 <!-- 상단메뉴 -->
-<nav class="navbar navbar-expand-md bg-light navbar-light fixed-top shadow-lg">
-    <a class="navbar-brand" href="/main.html">&nbsp;✨DalDa_Cu✨</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMenu"
-        aria-controls="navMenu" aria-expanded="true" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<div id="header">
+	<div th:replace="page_header/header.html :: header-head"></div>
+	<div th:replace="page_header/header.html :: header-body"></div>
+</div>
     
     <!-- 카테고리 -->
     <div class="btn-group dropped">
