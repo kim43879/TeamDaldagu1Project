@@ -13,4 +13,6 @@ public class GoodsBean {
     private String goods_img;
     private int goods_stock;
     private char goods_available;
+
+    private boolean selling_true;
 }
