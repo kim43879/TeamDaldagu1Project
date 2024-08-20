@@ -14,6 +14,6 @@ public class WishBean {
     private String goods_name;
     private int goods_price;
     private String goods_img;
-    private char goods_available;
+    private String goods_available;
     private String goods_tag;
 }

@@ -1,5 +1,6 @@
 package com.Daldagu1.TeamDaldagu1Project.beans;
 
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,8 +13,8 @@ public class UserBean {
     private String user_name;
     private String user_email;
     private String user_phone;
-    private char user_role;
-    private char user_available;
+    private String user_role;       //일반유저 = D, 판매자유저 = S
+    private String user_available;
     private int user_daily;
     private int user_membership_idx;
 

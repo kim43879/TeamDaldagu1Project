@@ -6,8 +6,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OrderGoodsBean {
-    private int order_goods_idx;
-    private int order_goods_number;
-    private int goods_idx;
-    private int order_idx;
+    private int order_goods_idx;        //주문상품 기본키
+    private int order_goods_number;     //주문수량
+    private int goods_idx;              //상품 기본키
+    private int order_idx;              //주문 기본키
 }
