@@ -33,11 +33,11 @@
 	}
 	#card1 {
 		width: 90%;
-		margin-top: -1050px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+		margin-top: -950px; margin-left:250px; padding-left: 20px; padding-right: 20px;
 	}
 	#card2 {
 		width: 90%;
-		margin-top: -830px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+		margin-top: -730px; margin-left:250px; padding-left: 20px; padding-right: 20px;
 	}
 	.card-item {
 		margin-left: 10px;
@@ -57,6 +57,7 @@
 
    <!-- 유저프로필 라인 -->
 <div id="profile">
+   <div th:replace="page_profile/profile.html :: profile-head"></div>
     <div th:replace="page_profile/profile.html :: profile-body"></div>
 </div>
 

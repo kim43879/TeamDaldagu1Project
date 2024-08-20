@@ -32,19 +32,23 @@
 	}
 	#card1{
 		width: 90%;
-		margin-top: -1050px; margin-left:250px; padding-left: 20px; padding-right: 20px;		
+		margin-top: -950px; margin-left:250px; padding-left: 20px; padding-right: 20px;
 	}
 	#card2 {
 		width: 90%;
-		margin-top: -830px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+		margin-top: -730px; margin-left:250px; padding-left: 20px; padding-right: 20px;
 	}
 	#card3 {
 		width: 90%;
-		margin-top: -560px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+		margin-top: -460px; margin-left:250px; padding-left: 20px; padding-right: 20px;
 	}
 	#card4{
 		width: 90%;
-		margin-top: -290px; margin-left:250px; padding-left: 20px; padding-right: 20px;		
+		margin-top: -190px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+	}
+	a {
+		color: #343434;
+		text-decoration: none;
 	}
 	
 </style>
@@ -59,6 +63,7 @@
 	
 	<!-- 유저프로필 라인 -->
 	<div id="profile">
+		<div th:replace="page_profile/profile.html :: profile-head"></div>
 		<div th:replace="page_profile/profile.html :: profile-body"></div>
 	</div>
 
@@ -270,6 +275,7 @@
 				</div>
 			
 				</div>
+				<br /> <br />
 			</div>
 		</div>
 	</div>

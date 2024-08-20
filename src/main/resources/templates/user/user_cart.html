@@ -32,7 +32,7 @@
 	}
 	#card1 {
 		width: 90%;
-		margin-top: -1020px; margin-left:350px; padding-left: 8%; padding-right: 8%;
+		margin-top: -920px; margin-left:350px; padding-left: 8%; padding-right: 8%;
 	}
 	.img-fluid rounded-start {
 		width: 25%;
@@ -50,6 +50,7 @@
 	
 	<!-- 유저프로필 라인 -->
 <div id="profile">
+	<div th:replace="page_profile/profile.html :: profile-head"></div>
 	<div th:replace="page_profile/profile.html :: profile-body"></div>
 </div>
 
