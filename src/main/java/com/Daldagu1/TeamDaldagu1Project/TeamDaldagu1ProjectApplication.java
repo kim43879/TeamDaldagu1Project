@@ -9,5 +9,4 @@ public class TeamDaldagu1ProjectApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(TeamDaldagu1ProjectApplication.class, args);
 	}
-
 }

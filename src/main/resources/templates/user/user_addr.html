@@ -49,82 +49,107 @@
 <div id="profile">
 	<div th:replace="page_profile/profile.html :: profile-body"></div>
 </div>
-	
-	<!-- 배송지 정보 -->
-	<div class="container mt-2 card-wrapper">
-		<div class="row">
+
+<!-- 배송지 정보 -->
+<div class="container mt-2 card-wrapper">
+	<div class="row">
 		<div class="col-md-8" id="card1">
-		&ensp;《배송지 관리》
-			<ol class="list-group list-group-numbered">
+			&ensp;《배송지 관리》
+			<ol class="list-group list-group-numbered" id="addr-list">
 				<li class="list-group-item d-flex justify-content-between align-items-start">
 					<div class="ms-2 me-auto">
-					<span class="badge text-bg-primary rounded-pill">*기본배송지</span>
+						<span class="badge text-bg-primary rounded-pill">*기본배송지</span>
 						<div class="fw-bold"><b>김희진</b></div>
 						010-1111-1111 <br />
 						(04399) 서울 용산구 이태원로294, 블루스퀘어 1층</div>
-						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-							&emsp;&emsp;&emsp;
-							<button type="submit" class="btn btn-outline-warning btn-sm-sm-sm-sm" onclick="addr_delete()">삭제</button> &nbsp;
-							
-								<script>
-									function addr_delete() {
-										alert("삭제되었습니다.");
-									}
-								</script>
-							
-							<a href="../user/user_addr2.html" class="btn btn-outline-success btn-sm-sm-sm-sm" role="button" data-bs-toggle="button">수정</a>
-						</div>
+					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+						&emsp;&emsp;&emsp;
+						<button type="submit" class="btn btn-outline-warning btn-sm-sm-sm-sm" onclick="addr_delete(this)">삭제</button> &nbsp;
+
+						<a href="user_addr2.html" class="btn btn-outline-success btn-sm-sm-sm-sm" role="button" data-bs-toggle="button">수정</a>
+					</div>
+
+					<script>
+						function addr_delete(button) {
+							const list = button.closest('li');
+
+							if(list) {
+								alert("삭제되었습니다.");
+								list.remove();
+							}
+						}
+					</script>
 				</li>
-						
+
 				<li class="list-group-item d-flex justify-content-between align-items-start">
 					<div class="ms-2 me-auto">
-					<span class="badge text-bg-primary rounded-pill">-</span>
+						<span class="badge text-bg-primary rounded-pill">-</span>
 						<div class="fw-bold"><b>김희진</b></div>
 						010-1111-1111 <br />
 						(04399) 서울 용산구 이태원로294, 블루스퀘어 2층</div>
-						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 						&emsp;&emsp;&emsp;
-						<button type="submit" class="btn btn-outline-warning btn-sm-sm-sm-sm" onclick="addr_delete()">삭제</button> &nbsp;
-						
-							<script>
-								function addr_delete() {
-									alert("삭제되었습니다.");
-								}
-							</script>
-						
-						<a href="../user/user_addr2.html" class="btn btn-outline-success btn-sm-sm-sm-sm" role="button" data-bs-toggle="button">수정</a>
-					</div>
-				</li>
-						
-				<li class="list-group-item d-flex justify-content-between align-items-start">
-					<div class="ms-2 me-auto">
-					<span class="badge text-bg-primary rounded-pill">-</span>
-						<div class="fw-bold"><b>김희진</b></div>
-						010-1111-1111 <br />
-						(44444) 북극의 가장 높은 곳</div>
-						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-						&emsp;&emsp;&emsp;
-						<button type="submit" class="btn btn-outline-warning btn-sm-sm-sm-sm" onclick="addr_delete()">삭제</button> &nbsp;
-						
-							<script>
-								function addr_delete() {
-									alert("삭제되었습니다.");
-								}
-							</script>
+						<button type="submit" class="btn btn-outline-warning btn-sm-sm-sm-sm" onclick="addr_delete(this)">삭제</button> &nbsp;
 
-						<a href="../user/user_addr2.html" class="btn btn-outline-success btn-sm-sm-sm-sm" role="button" data-bs-toggle="button">수정</a>
+						<a href="user_addr2.html" class="btn btn-outline-success btn-sm-sm-sm-sm" role="button" data-bs-toggle="button">수정</a>
 					</div>
+
+					<script>
+						function addr_delete(button) {
+                            const list = button.closest('li');
+
+                            if(list) {
+                                alert("삭제되었습니다.");
+                                list.remove();
+                            }
+                        }
+					</script>
+				</li>
+
+				<li class="list-group-item d-flex justify-content-between align-items-start">
+					<div class="form-group ms-2 me-auto">
+						<span class="badge text-bg-primary rounded-pill">-</span>
+						<div class="fw-bold"><b>김희진</b></div> <!--user_name-->
+						010-2222-2222<br />
+						(44444)
+						북극, 북극의 가장 높은 곳
+					</div>
+
+					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+						&emsp;&emsp;&emsp;
+						<button type="submit" class="btn btn-outline-warning btn-sm-sm-sm-sm" onclick="addr_delete(this)">삭제</button> &nbsp;
+
+						<button class="btn btn-outline-success" id="user_post1" onclick="addr_modify()" value="">수정</button>
+					</div>
+
+					<script>
+						function addr_delete(button) {
+                            const list = button.closest('li');
+
+                            if(list) {
+                                alert("삭제되었습니다.");
+                                list.remove();
+                            }
+                        }
+					</script>
+
+					<script>
+						 function addr_modify() {
+							window.open("/user_addr2.html", "", 'width=600,height=450');
+						}
+					</script>
+
 				</li>
 			</ol>
 			<br />
-					
+
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 				<a href="user_page.html" class="btn btn-outline-primary" role="button" data-bs-toggle="button" aria-pressed="true">돌아가기</a>
 			</div>
 		</div>
-		</div>
 	</div>
-	<hr />
+</div>
+<hr />
 
 	<!-- 하단 -->
 <div id="footer">
