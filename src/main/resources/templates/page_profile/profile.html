@@ -25,6 +25,8 @@
         }
         .card-profile{
             margin-top: 88px; padding-left: 50px;
+            position: relative;
+            display: inline-block;
         }
         .card-wrapper {
             margin-top: 20px;
@@ -35,6 +37,22 @@
         }
         #img_size{
             width: 25%;
+        }
+        #img{
+            display: block;
+        }
+        .hidden-button {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
         }
 
     </style>
@@ -50,7 +68,28 @@
 </head>
 <body th:fragment="profile-body">
 <div class="card-profile" style="width: 18rem;">
-    <img th:src="@{/img/profile.jpg}" class="card-img-top" alt="...">
+    <img th:src="@{/img/profile.jpg}" class="card-img-top" id="img">
+    <button class="btn btn-outline-primary hidden-button">이미지 변경</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var cardProfile = document.querySelector('.card-profile');
+            var hiddenButton = document.querySelector('.hidden-button');
+
+            cardProfile.addEventListener('mouseover', function() {
+                hiddenButton.style.opacity = '1';
+            });
+
+            cardProfile.addEventListener('mouseout', function() {
+                hiddenButton.style.opacity = '0';
+            });
+
+            hiddenButton.addEventListener('click', function() {
+
+
+    </script>
+
+
     <div class="card-body">
         <h5 class="card-title">짱쎈개발자</h5>
         <p class="card-text">동쑦이 15주년 데뷔축하링~</p>

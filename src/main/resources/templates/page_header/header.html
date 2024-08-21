@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head th:fragment="header-head">
+<head>
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
@@ -19,6 +19,17 @@
         }
 
     </style>
+
+    <style th:fragment="header-head">
+        .card-link {
+            color: #343434;
+            text-decoration: none;
+        }
+        a:hover {
+            color: #f1c232;
+        }
+    </style>
+
 </head>
 <body th:fragment="header-body">
 <nav class="navbar navbar-expand-md bg-light navbar-light fixed-top shadow-lg">
