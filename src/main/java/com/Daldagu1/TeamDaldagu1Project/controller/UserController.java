@@ -21,13 +21,28 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/user/login")
-    public String login(){
+    public String login(Model model){
+        model.addAttribute("userBean", new UserBean());
+
         return "user/login";
     }
 
     @PostMapping("/user/login_pro")
-    public String login_pro(){
-        return "main";
+    public String login_pro(@ModelAttribute("userBean") UserBean userBean){
+
+        UserBean tempUserBean = userService.getUserbyId(userBean.getUser_id());
+
+        if(tempUserBean != null){
+            if(tempUserBean.getUser_pw().equals(userBean.getUser_pw())){
+
+                return "user/status/login_success";
+            }else {
+
+                return "user/login";
+            }
+        }else {
+            return "user/login";
+        }
     }
 
     @GetMapping("/user/join")

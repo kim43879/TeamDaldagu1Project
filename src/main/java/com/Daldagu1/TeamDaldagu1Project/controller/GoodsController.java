@@ -16,4 +16,8 @@ public class GoodsController {
     public String goodsBuy() {
         return "goods/goods_buy";
     }
+    @GetMapping("/goods_seller")
+    public String goodsSeller() {
+        return "goods/goods_seller";
+    }
 }

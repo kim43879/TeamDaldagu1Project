@@ -12,7 +12,7 @@ public interface UserMapper {
             " 'D', 'T', 0,0,#{user_birth})")
     void addUser(UserBean userBean);
 
-    @Insert("insert into addr_table values (addr_seq.nextval, #{user_idx}, #{user_addr}, #{user_post})")
+    @Insert("insert into addr_table values (addr_seq.nextval, #{user_idx}, #{user_addr}, #{user_post}, 'T')")
     void addAddr(AddrBean addrBean);
 
     @Select("select user_idx from user_table where user_id=#{user_id}")
@@ -20,4 +20,10 @@ public interface UserMapper {
 
     @Select("select user_id from user_table where user_id = #{user_id}")
     String getUserId(String user_id);
+
+    @Select("select * from user_table where user_idx = #{user_idx}")
+    UserBean getUserbyIdx(int user_idx);
+
+    @Select("select * from user_table where user_id = #{user_id}")
+    UserBean getUserbyId(String user_id);
 }

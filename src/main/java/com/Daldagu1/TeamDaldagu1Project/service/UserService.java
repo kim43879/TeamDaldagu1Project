@@ -20,11 +20,16 @@ public class UserService {
     private UserMapper userMapper;
 
     public void addUser(UserBean userBean){
+        System.out.println(userBean.getUser_phone());
+        String phone1 = userBean.getUser_phone().substring(0,3);
+        String phone2 = userBean.getUser_phone().substring(3,7);
+        String phone3 = userBean.getUser_phone().substring(7,11);
+        String phone = phone1 + "-" + phone2 + "-" + phone3;
 
-        String phone = userBean.getUser_phone().substring(0,2) + "-" + userBean.getUser_phone().substring(3,6) + "-" + userBean.getUser_phone().substring(7,10);
-
+        System.out.println(phone1);
+        System.out.println(phone2);
+        System.out.println(phone3);
         userBean.setUser_phone(phone);
-
         userMapper.addUser(userBean);
 
         AddrBean addrBean = new AddrBean();
@@ -43,6 +48,13 @@ public class UserService {
 
     public String getUserId(String user_id){
         return userMapper.getUserId(user_id);
+    }
+
+    public UserBean getUserbyIdx(int user_idx){
+        return userMapper.getUserbyIdx(user_idx);
+    }
+    public UserBean getUserbyId(String user_id){
+        return userMapper.getUserbyId(user_id);
     }
 
 }

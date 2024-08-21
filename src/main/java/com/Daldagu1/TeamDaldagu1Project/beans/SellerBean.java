@@ -11,4 +11,7 @@ public class SellerBean {
     private String calc_account;
     private String selling_page_title;
     private int user_idx;
+
+    //DB 없음
+    private String img;
 }
