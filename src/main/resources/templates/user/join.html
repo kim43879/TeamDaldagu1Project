@@ -8,6 +8,7 @@
 <!-- Bootstrap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 	.card-main{
 		margin-top: 88px; 
@@ -29,6 +30,9 @@
 	.user_post{
 		background-color: white;
 	}
+	.error-message {
+		color: red;
+	}
 
 </style>
 </head>
@@ -49,58 +53,93 @@
 					<div class="card-body">
 					
 					
-						<form action="/user/join_pro" method="post">
+						<form action="/user/join_pro" method="post" th:object="${userBean}">
 						
 							<div class="form-group">
 								<label for="user_name">*이름</label>
-								<input type="text" id="user_name" name="user_name" class="form-control" required/>
+								<input type="text" id="user_name" th:field="*{user_name}" class="form-control"/>
+								<span class="error-message" th:if="${#fields.hasErrors('user_name')}" th:errors="*{user_name}">Incorrect data</span>
 							</div>
 							
 							<div class="form-group">	<!-- user_id -->
 								<label for="user_id" class="mb-0 me-2">*아이디</label>
 								<div class="d-flex align-items-center">
-									<input type="text" id="user_id" class="form-control me-2" required/>
-									&nbsp;
-									<button type="button" class="btn btn-outline-info">중복확인</button>
+									<input type="text" id="user_id" th:field="*{user_id}" class="form-control me-2" oninput="initCheckField()"/><br>
+									<button type="button" class="btn btn-outline-info" onclick="checkIdDuplicate()">중복확인</button>
+									<script>
+										function checkIdDuplicate(){
+											if($("#user_id").val() == ""){
+                                                alert("아이디를 입력하세요.");
+                                                return;
+                                            }
+                                            $.ajax({
+                                                type: "post",
+                                                url: "/rest/idCheck",
+                                                data: {user_id: $("#user_id").val()},
+                                                success: function(data){
+                                                    if(data == "true"){
+                                                        alert("사용할 수 있는 아이디입니다.");
+                                                        $("#checkId").val("true");
+                                                    } else {
+                                                        alert("중복된 아이디입니다.");
+                                                        $("#checkId").val("");
+                                                    }
+                                                }
+                                            });
+                                        }
+
+										function initCheckField(){
+											$("#checkId").val("");
+										}
+									</script>
 								</div>
+								<input type="hidden" id="checkId" th:field="*{id_check}" value="">
+								<span class="error-message" th:if="${#fields.hasErrors('user_id')}" th:errors="*{user_id}">Incorrect data</span>
+								<br>
+								<span class="error-message" th:if="${#fields.hasErrors('id_check')}" th:errors="*{id_check}">Incorrect data</span>
 							</div>
 
 							<div class="form-group">	<!-- user_pw -->
 								<label for="user_pw">*비밀번호</label>
-								<input type="password" id="user_pw" class="form-control" required/>
+								<input type="password" id="user_pw" th:field="*{user_pw}" class="form-control"/>
+								<span class="error-message" th:if="${#fields.hasErrors('user_pw')}" th:errors="*{user_pw}">Incorrect data</span>
 							</div>
 							
 							<div class="form-group">	<!-- user_pw2 -->
 								<label for="user_pw2">*비밀번호 확인</label>
-								<input type="password" id="user_pw2" class="form-control" required/>
+								<input type="password" id="user_pw2" th:field="*{user_pw2}" class="form-control"/>
+								<span class="error-message" th:if="${#fields.hasErrors('user_pw2')}" th:errors="*{user_pw2}">Incorrect data</span>
 							</div>
 							
 							<div class="form-group">	<!-- user_email -->
 								<label for="user_email">*이메일</label>
-								<input type="email" id="user_email" class="form-control" required/>
+								<input type="email" id="user_email" th:field="*{user_email}" class="form-control"/>
+								<span class="error-message" th:if="${#fields.hasErrors('user_email')}" th:errors="*{user_email}">Incorrect data</span>
 							</div>
 							
 							<div class="form-group">	<!-- user_birth -->
 								<label for="user_birth">*생년월일</label>
-								<input type="text" id="user_birth" class="form-control" required/>
+								<input type="text" id="user_birth" th:field="*{user_birth}" class="form-control"/>
+								<span class="error-message" th:if="${#fields.hasErrors('user_birth')}" th:errors="*{user_birth}">Incorrect data</span>
 							</div>
 							
 							<div class="form-group">	<!-- user_post -->
-								<label for="user_post" class="mb-0 me-2">*우편번호</label>
+								<label for="user_post1" class="mb-0 me-2">*우편번호</label>
 								<div class="d-flex align-items-center">
-									<input type="button" id="user_post1" class="form-control me-2" required/>
+									<input type="text" id="user_post" th:field="*{user_post}" class="form-control me-2" readonly/>
 									&nbsp;
-									<input type="button" class="btn btn-outline-info" id="user_post" onclick="kakaopost()" value="우편번호검색" />
+									<input type="button" class="btn btn-outline-info" id="user_post1" onclick="kakaopost()" value="우편번호검색" />
 								</div>
 							</div>
 
 							<div class="form-group">	<!-- user_addr -->
 								<label for="user_addr">*주소</label>
-								<input type="text" id="user_addr" class="form-control" disabled style="background-color: white;"/> <br />
-								
+								<input type="text" id="user_addr" th:field="*{user_addr1}" class="form-control"  style="background-color: white;" readonly/> <br />
+								<span class="error-message" th:if="${#fields.hasErrors('user_addr1')}" th:errors="*{user_addr1}">Incorrect data</span>
+								<br>
 								<!-- user_addr -->
 								<label for="user_addr_detail">*상세주소</label>
-								<input type="text" id="user_addr_detail" class="form-control" />
+								<input type="text" id="user_addr_detail" th:field="*{user_addr2}" class="form-control" />
 							</div>
 							
 							<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -153,20 +192,14 @@
 							
 							<div class="form-group">	<!-- user_phone -->
 								<label for="user_phone">*연락처</label>
-								<input type="text" id="user_phone" name="user_phone" class="form-control" />
+								<input type="text" id="user_phone" th:field="*{user_phone}" class="form-control" />
+								<span class="error-message" th:if="${#fields.hasErrors('user_phone')}" th:errors="*{user_phone}">Incorrect data</span>
 							</div> <br />
 							
 							<div class="form-group">
 								<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 									<a href="/" class="btn btn-outline-warning me-md-2">뒤로가기</a> &ensp;
 									<button type="submit" class="btn btn-outline-success" onclick="join()">회원가입</button>
-									
-										<script>
-											function join() {
-												alert("회원가입이 완료되었습니다.");
-											}
-										</script>
-									
 								</div>
 							</div>
 							

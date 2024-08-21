@@ -2,10 +2,17 @@ package com.Daldagu1.TeamDaldagu1Project.controller;
 
 import com.Daldagu1.TeamDaldagu1Project.beans.UserBean;
 import com.Daldagu1.TeamDaldagu1Project.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.Map;
 
 @Controller()
 public class UserController {
@@ -24,14 +31,20 @@ public class UserController {
     }
 
     @GetMapping("/user/join")
-    public String join(){
+    public String join(Model model){
+        model.addAttribute("userBean", new UserBean());
         return "user/join";
     }
 
     @PostMapping("/user/join_pro")
-    public String join_pro(){
+    public String join_pro(@Valid @ModelAttribute("userBean") UserBean userBean, BindingResult result,Model model){
+        if(result.hasErrors()){
+            model.addAttribute("userBean", userBean);
 
-        return "login";
+            return "user/join";
+        }
+        userService.addUser(userBean);
+        return "user/status/join_success";
     }
 
     @GetMapping("/user/user_page")
