@@ -32,7 +32,7 @@
 	}
 	#card1 {
 		width: 90%;
-		margin-top: -1030px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+		margin-top: -930px; margin-left:250px; padding-left: 20px; padding-right: 20px;
 	}
 	#pay_info{
 		margin-top: 80px;
@@ -55,6 +55,7 @@
 
 	<!-- 유저프로필 라인 -->
 <div id="profile">
+	<div th:replace="page_profile/profile.html :: profile-head"></div>
 	<div th:replace="page_profile/profile.html :: profile-body"></div>
 </div>
 	
@@ -67,19 +68,19 @@
 				<li class="list-group-item d-flex justify-content-between align-items-start">
 					<div class="ms-2 me-auto">
 					<span class="badge text-bg-primary rounded-pill">*주문일: order_date</span>
-						<div class="fw-bold">상품명: <a href="../goods/goods_page.html"><b>goods_name</b></a></div>
-						판매자: <a href="../goods/goods_seller.html">seller_page</a></div>
+						<div class="fw-bold">상품명: <a href="../goods/goods_page.html" class="card-link"><b>goods_name</b></a></div>
+						판매자: <a href="../goods/goods_seller.html" class="card-link">seller_page</a></div>
 						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 						&emsp;&emsp;&emsp;
-						<a href="review_write.html" class="btn btn-outline-success btn-sm-sm-sm-sm" role="button" data-bs-toggle="button">리뷰작성</a>						
+						<a href="review_write.html" class="btn btn-outline-success btn-sm-sm" role="button" data-bs-toggle="button">리뷰작성</a>
 					</div>
 				</li>
 				
 				<li class="list-group-item d-flex justify-content-between align-items-start">
 					<div class="ms-2 me-auto">
 					<span class="badge text-bg-primary rounded-pill">*주문일: order_date</span>
-						<div class="fw-bold">상품명: <a href="../goods/goods_page.html"><b>goods_name</b></a></div>
-						판매자: <a href="../goods/goods_seller.html">seller_page</a></div>
+						<div class="fw-bold">상품명: <a href="../goods/goods_page.html" class="card-link"><b>goods_name</b></a></div>
+						판매자: <a href="../goods/goods_seller.html" class="card-link">seller_page</a></div>
 						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 						&emsp;&emsp;&emsp;
 						<a href="review_write.html" class="btn btn-outline-success btn-sm-sm-sm-sm" role="button" data-bs-toggle="button">리뷰작성</a>						
@@ -89,8 +90,8 @@
 				<li class="list-group-item d-flex justify-content-between align-items-start">
 					<div class="ms-2 me-auto">
 					<span class="badge text-bg-primary rounded-pill">*주문일: order_date</span>
-						<div class="fw-bold">상품명: <a href="../goods/goods_page.html"><b>goods_name</b></a></div>
-						판매자: <a href="../goods/goods_seller.html">seller_page</a></div>
+						<div class="fw-bold">상품명: <a href="../goods/goods_page.html" class="card-link"><b>goods_name</b></a></div>
+						판매자: <a href="../goods/goods_seller.html" class="card-link">seller_page</a></div>
 						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 						&emsp;&emsp;&emsp;
 						<a href="review_write.html" class="btn btn-outline-success btn-sm-sm-sm-sm" role="button" data-bs-toggle="button">리뷰작성</a>						
@@ -100,8 +101,8 @@
 				<li class="list-group-item d-flex justify-content-between align-items-start">
 					<div class="ms-2 me-auto">
 					<span class="badge text-bg-primary rounded-pill">*주문일: order_date</span>
-						<div class="fw-bold">상품명: <a href="../goods/goods_page.html"><b>goods_name</b></a></div>
-						판매자: <a href="../goods/goods_seller.html">seller_page</a></div>
+						<div class="fw-bold">상품명: <a href="../goods/goods_page.html" class="card-link"><b>goods_name</b></a></div>
+						판매자: <a href="../goods/goods_seller.html" class="card-link">seller_page</a></div>
 						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 						&emsp;&emsp;&emsp;
 						<a href="review_write.html" class="btn btn-outline-success btn-sm-sm-sm-sm" role="button" data-bs-toggle="button">리뷰작성</a>						
@@ -111,8 +112,8 @@
 				<li class="list-group-item d-flex justify-content-between align-items-start">
 					<div class="ms-2 me-auto">
 					<span class="badge text-bg-primary rounded-pill">*주문일: order_date</span>
-						<div class="fw-bold">상품명: <a href="../goods/goods_page.html"><b>goods_name</b></a></div>
-						판매자: <a href="../goods/goods_seller.html">seller_page</a></div>
+						<div class="fw-bold">상품명: <a href="../goods/goods_page.html" class="card-link"><b>goods_name</b></a></div>
+						판매자: <a href="../goods/goods_seller.html" class="card-link">seller_page</a></div>
 						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 						&emsp;&emsp;&emsp;
 						<a href="review_write.html" class="btn btn-outline-success btn-sm-sm-sm-sm" role="button" data-bs-toggle="button">리뷰작성</a>						
@@ -122,8 +123,8 @@
 				<li class="list-group-item d-flex justify-content-between align-items-start">
 					<div class="ms-2 me-auto">
 					<span class="badge text-bg-primary rounded-pill">*주문일: order_date</span>
-						<div class="fw-bold">상품명: <a href="../goods/goods_page.html"><b>goods_name</b></a></div>
-						판매자: <a href="../goods/goods_seller.html">seller_page</a></div>
+						<div class="fw-bold">상품명: <a href="../goods/goods_page.html" class="card-link"><b>goods_name</b></a></div>
+						판매자: <a href="../goods/goods_seller.html" class="card-link">seller_page</a></div>
 						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 						&emsp;&emsp;&emsp;
 						<a href="review_write.html" class="btn btn-outline-success btn-sm-sm-sm-sm" role="button" data-bs-toggle="button">리뷰작성</a>						
@@ -133,8 +134,8 @@
 				<li class="list-group-item d-flex justify-content-between align-items-start">
 					<div class="ms-2 me-auto">
 					<span class="badge text-bg-primary rounded-pill">*주문일: order_date</span>
-						<div class="fw-bold">상품명: <a href="../goods/goods_page.html"><b>goods_name</b></a></div>
-						판매자: <a href="../goods/goods_seller.html">seller_page</a></div>
+						<div class="fw-bold">상품명: <a href="../goods/goods_page.html" class="card-link"><b>goods_name</b></a></div>
+						판매자: <a href="../goods/goods_seller.html" class="card-link">seller_page</a></div>
 						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 						&emsp;&emsp;&emsp;
 						<a href="review_write.html" class="btn btn-outline-success btn-sm-sm-sm-sm" role="button" data-bs-toggle="button">리뷰작성</a>						
@@ -144,8 +145,8 @@
 				<li class="list-group-item d-flex justify-content-between align-items-start">
 					<div class="ms-2 me-auto">
 					<span class="badge text-bg-primary rounded-pill">*주문일: order_date</span>
-						<div class="fw-bold">상품명: <a href="../goods/goods_page.html"><b>goods_name</b></a></div>
-						판매자: <a href="../goods/goods_seller.html">seller_page</a></div>
+						<div class="fw-bold">상품명: <a href="../goods/goods_page.html" class="card-link"><b>goods_name</b></a></div>
+						판매자: <a href="../goods/goods_seller.html" class="card-link">seller_page</a></div>
 						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 						&emsp;&emsp;&emsp;
 						<a href="review_write.html" class="btn btn-outline-success btn-sm-sm-sm-sm" role="button" data-bs-toggle="button">리뷰작성</a>						
@@ -155,8 +156,8 @@
 				<li class="list-group-item d-flex justify-content-between align-items-start">
 					<div class="ms-2 me-auto">
 					<span class="badge text-bg-primary rounded-pill">*주문일: order_date</span>
-						<div class="fw-bold">상품명: <a href="../goods/goods_page.html"><b>goods_name</b></a></div>
-						판매자: <a href="../goods/goods_seller.html">seller_page</a></div>
+						<div class="fw-bold">상품명: <a href="../goods/goods_page.html" class="card-link"><b>goods_name</b></a></div>
+						판매자: <a href="../goods/goods_seller.html" class="card-link">seller_page</a></div>
 						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 						&emsp;&emsp;&emsp;
 						<a href="review_write.html" class="btn btn-outline-success btn-sm-sm-sm-sm" role="button" data-bs-toggle="button">리뷰작성</a>						
@@ -166,8 +167,8 @@
 				<li class="list-group-item d-flex justify-content-between align-items-start">
 					<div class="ms-2 me-auto">
 					<span class="badge text-bg-primary rounded-pill">*주문일: order_date</span>
-						<div class="fw-bold">상품명: <a href="../goods/goods_page.html"><b>goods_name</b></a></div>
-						판매자: <a href="../goods/goods_seller.html">seller_page</a></div>
+						<div class="fw-bold">상품명: <a href="../goods/goods_page.html" class="card-link"><b>goods_name</b></a></div>
+						판매자: <a href="../goods/goods_seller.html" class="card-link">seller_page</a></div>
 						<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 						&emsp;&emsp;&emsp;
 						<a href="review_write.html" class="btn btn-outline-success btn-sm-sm-sm-sm" role="button" data-bs-toggle="button">리뷰작성</a>						

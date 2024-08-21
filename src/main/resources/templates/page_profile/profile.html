@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -24,9 +25,11 @@
         }
         .card-profile{
             margin-top: 88px; padding-left: 50px;
+            position: relative;
+            display: inline-block;
         }
         .card-wrapper {
-            margin-top: 20px; /* 카드 위쪽 여백을 20px로 설정 */
+            margin-top: 20px;
         }
         #card1 {
             width: 90%;
@@ -35,11 +38,58 @@
         #img_size{
             width: 25%;
         }
+        #img{
+            display: block;
+        }
+        .hidden-button {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+    </style>
+    <style th:fragment="profile-head">
+        .card-link {
+            color: #343434;
+            text-decoration: none;
+        }
+        .card-link:hover {
+            color: #f1c232;
+        }
     </style>
 </head>
 <body th:fragment="profile-body">
 <div class="card-profile" style="width: 18rem;">
-    <img th:src="@{/img/profile.jpg}" class="card-img-top" alt="...">
+    <img th:src="@{/img/profile.jpg}" class="card-img-top" id="img">
+    <button class="btn btn-outline-primary hidden-button">이미지 변경</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var cardProfile = document.querySelector('.card-profile');
+            var hiddenButton = document.querySelector('.hidden-button');
+
+            cardProfile.addEventListener('mouseover', function() {
+                hiddenButton.style.opacity = '1';
+            });
+
+            cardProfile.addEventListener('mouseout', function() {
+                hiddenButton.style.opacity = '0';
+            });
+
+            hiddenButton.addEventListener('click', function() {
+
+
+    </script>
+
+
     <div class="card-body">
         <h5 class="card-title">짱쎈개발자</h5>
         <p class="card-text">동쑦이 15주년 데뷔축하링~</p>
@@ -49,25 +99,22 @@
     </ul>
 
     <div class="card-body">
-        <h6 style="border: thin;"><b>-주문관리</b></h6>
+        <h6 style="border: thin;"><b>주문관리</b></h6>
         <a href="/user/user_order" class="card-link">주문/배송 내역</a> <br/><br/>
 
-        <h6 style="border: thin;"><b>-나의 알림</b></h6>
+        <h6 style="border: thin;"><b>나의 알림</b></h6>
         <a href="#" class="card-link">알림</a> <br/>
         <a href="#" class="card-link">메시지</a> <br/>
-        <a href="/board/board_list">게시글</a> <br/><br/>
+        <a href="/board/board_list" class="card-link">게시글</a> <br/><br/>
 
-        <h6 style="border: thin;"><b>-선물함</b></h6>
-        <a href="/user/user_present" class="card-link">선물보기</a> <br/><br/>
-
-        <h6 style="border: thin;"><b>-구매상품</b></h6>
+        <h6 style="border: thin;"><b>구매상품</b></h6>
         <a href="/user/user_review" class="card-link">리뷰작성</a> <br/><br/>
 
-        <h6 style="border: thin;"><b>-관심상품</b></h6>
+        <h6 style="border: thin;"><b>관심상품</b></h6>
         <a href="/user/user_wish" class="card-link">찜한상품</a> <br/>
         <a href="/user/user_cart" class="card-link">장바구니</a> <br/><br/>
 
-        <h6 style="border: thin;"><b>-나의 정보</b></h6>
+        <h6 style="border: thin;"><b>나의 정보</b></h6>
         <a href="/user/user_info" class="card-link">회원정보 관리</a> <br/>
         <a href="/user/user_addr" class="card-link">배송지 관리</a> <br/>
         <a href="/user/user_pay" class="card-link">결제수단 관리</a> <br/>

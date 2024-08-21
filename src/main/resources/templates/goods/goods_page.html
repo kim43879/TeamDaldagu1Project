@@ -82,7 +82,7 @@
 			<div class="col-sm-6" id="cardd1">
 				<div class="card">
 					<div class="card-body">
-						<a href="goods_seller.html">판매자1</a> <br />	<!-- user_name(seller) -->
+						<a href="/goods/goods_seller.html" style="text-decoration: none;">판매자1</a> <br />	<!-- user_name(seller) -->
 						<h5>상품명: <b>goods_name</b></h5>
 						<hr />
 						<h6>상품코드: goods_idx</h6>
@@ -125,7 +125,7 @@
 							
 					<div class="item" id="item1">
 						<b>goods_name</b>
-							<img src="btn_price_delete.gif" style="cursor:pointer; margin-left: 70%;" class="delete_btn" onclick="remove_div()"/> <br />
+							<img th:src="@{/img/btn_price_delete.gif}" style="cursor:pointer; margin-left: 70%;" class="delete_btn" onclick="remove_div()"/> <br />
 							
 							<div id="result1">
 							-옵션: option1(+2,000) / option2(+3,000)&nbsp;
@@ -139,7 +139,7 @@
 					
 					<div class="item" id="item2">
 						<b>goods_name</b>
-							<img src="btn_price_delete.gif" style="cursor:pointer; margin-left: 70%;" class="delete_btn" onclick="remove_div()"/> <br />
+							<img th:src="@{/img/btn_price_delete.gif}" style="cursor:pointer; margin-left: 70%;" class="delete_btn" onclick="remove_div()"/> <br />
 							
 							<div id="result2">
 								-옵션: option1(+2,000)&nbsp;
@@ -165,9 +165,8 @@
 					
 					<button class="btn btn-outline-primary position-relative" type="button" id="cartButton">장바구니</button>
 						&ensp;
-						<a href="goods_send.html" class="btn btn-outline-success" onclick="buy()">선물하기</a>
-						&ensp;
 						<a href="/goods/goods_buy" class="btn btn-outline-info" onclick="buy()">구매하기</a>
+						&ensp;
 						
 						<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
 							<div class="offcanvas-header">

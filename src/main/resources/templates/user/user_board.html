@@ -33,11 +33,11 @@
 	}
 	#card1 {
 		width: 90%;
-		margin-top: -1050px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+		margin-top: -950px; margin-left:250px; padding-left: 20px; padding-right: 20px;
 	}
 	#card2 {
 		width: 90%;
-		margin-top: -790px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+		margin-top: -690px; margin-left:250px; padding-left: 20px; padding-right: 20px;
 	}
 	       
 </style>
@@ -45,7 +45,14 @@
 <body>
 
 <!-- 상단메뉴 -->
+<div id="header">
+	<div th:replace="page_header/header.html :: header-head"></div>
+	<div th:replace="page_profile/profile.html :: profile-body"></div>
+</div>
+
+<!-- 유저프로필 라인 -->
 <div id="profile">
+	<div th:replace="page_profile/profile.html :: profile-head"></div>
 	<div th:replace="page_profile/profile.html :: profile-body"></div>
 </div>
 	
