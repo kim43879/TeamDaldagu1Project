@@ -1,5 +1,6 @@
 package com.Daldagu1.TeamDaldagu1Project.controller;
 
+import com.Daldagu1.TeamDaldagu1Project.beans.GoodsBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.SellerBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.SellerInfoBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.UserBean;
@@ -8,12 +9,10 @@ import com.Daldagu1.TeamDaldagu1Project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller()
+@RequestMapping("/seller")
 public class SellerController {
 
     @Autowired
@@ -22,7 +21,7 @@ public class SellerController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/seller/seller_join")
+    @GetMapping("/seller_join")
     public String sellerJoinForm(@RequestParam("user_idx") int user_idx, Model model){
 
         UserBean userBean = userService.getUserbyIdx(user_idx);
@@ -38,11 +37,52 @@ public class SellerController {
         return "seller/seller_join";
     }
 
-    @PostMapping("/seller/seller_join_pro")
+    @PostMapping("/seller_join_pro")
     public String sellerJoinPro(@ModelAttribute("sellerInfoBean") SellerInfoBean sellerInfoBean){
 
         sellerService.addSellerJoinInfo(sellerInfoBean);
 
+        return "user/user_page";
+    }
+
+    @GetMapping("/seller_page")
+    public String sellerPage(@RequestParam("seller_idx") int seller_idx, Model model){
+        model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(seller_idx));
+
         return "seller/seller_page";
+    }
+
+    @GetMapping("/seller_product_insert")
+    public String sellerProductInsertForm(@RequestParam("seller_idx") int seller_idx, Model model){
+        model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(seller_idx));
+        model.addAttribute("goodsBean", new GoodsBean());
+        return "seller/seller_product_insert";
+    }
+
+    @GetMapping("/seller_order")
+    public String sellerOrder(@RequestParam("seller_idx") int seller_idx, Model model){
+        model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(seller_idx));
+        return "seller/seller_order";
+    }
+
+    @GetMapping("/seller_list")
+    public String sellerPresent(@RequestParam("seller_idx") int seller_idx, Model model){
+        model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(seller_idx));
+        return "seller/seller_list";
+    }
+    @GetMapping("/seller_regular")
+    public String sellerReview(@RequestParam("seller_idx") int seller_idx, Model model){
+        model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(seller_idx));
+        return "seller/seller_regular";
+    }
+
+    @GetMapping("/seller_product_read")
+    public String sellerProductRead(@RequestParam("seller_idx") int seller_idx, Model model){
+        model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(seller_idx));
+        return "seller/seller_product_read";
+    }
+    @GetMapping("/seller_product_delete")
+    public String sellerProductDelete(){
+        return "seller/seller_product_delete";
     }
 }

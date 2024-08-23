@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>달다구리스</title>
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+	<style>
+		.card-main{
+            margin-top: 88px;
+            padding-left: 186px;
+            padding-right: 186px;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+        }
+        .show {
+            display: block;
+        }
+        .card-profile{
+            margin-top: 88px; padding-left: 50px;
+        }
+        #tab1{
+            width: 90%;
+            margin-top: -1020px; margin-left:200px; padding-left: 20px; padding-right: 20px;
+        }
+		#tab2{
+			width: 90%;
+			margin-left:200px; padding-left: 20px; padding-right: 20px;
+		}
+		#tab3{
+			width: 90%;
+			margin-left:205px; padding-left: 20px; padding-right: 20px;
+		}
+        .container-list {
+            max-width: 980px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+        }
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .filter select, .filter input[type="date"], .filter button {
+            margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+		.empty-row {
+            text-align: center;
+            padding: 20px;
+        }
+	</style>
+</head>
+<body>
+<!-- 상단메뉴 -->
+<div id="header">
+	<div th:replace="page_header/header.html :: header-head"></div>
+	<div th:replace="page_header/header.html :: header-body"></div>
+</div>
+
+<!-- 유저프로필 라인 -->
+<div id="profile">
+	<div th:replace="page_profile/profile.html :: profile-head"></div>
+	<div th:replace="page_profile/profile.html :: profile-body"></div>
+</div>
+
+<!-- 상품구매 정보 -->
+<div class="container-list">
+	<div class="tabs" id="tab1">
+		<h6><b>《주문조회》</b></h6>
+		<hr />
+
+	</div>
+
+	<div class="filter" id="tab2">
+		<select>
+			<option>입금전</option>
+		</select>
+		<input type="date" value="2024-05-24" style="text-align: center;">
+		~ &nbsp;
+		<input type="date" value="2024-08-22" style="text-align: center;">
+		<button class="btn btn-outline-info">조회</button>
+	</div>
+	<br />
+
+	<div class="card" id="tab3">
+		<table class="table">
+			<thead>
+			<tr>
+				<th> 주문일자<br>[주문번호]</th>
+				<th>상품정보</th>
+				<th>수량</th>
+				<th>상품구매금액</th>
+				<th>주문처리상태</th>
+				<th>취소/교환/반품</th>
+			</tr>
+			</thead>
+
+			<tbody>
+			<tr>
+				<td colspan="6" class="empty-row">주문 내역이 없습니다.</td>
+			</tr>
+			</tbody>
+
+		</table>
+	</div>
+</div>
+<hr />
+
+<!-- 하단 -->
+<div id="footer">
+	<div th:replace="page_footer/footer.html :: footer-head"></div>
+	<div th:replace="page_footer/footer.html :: footer-body"></div>
+</div>
+
+</body>
+</html>

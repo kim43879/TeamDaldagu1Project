@@ -9,13 +9,19 @@ import lombok.Setter;
 public class UserBean {
     private int user_idx;
 
+    public UserBean(){}
+
+    public UserBean(boolean loginCheck){
+        this.loginCheck = loginCheck;
+    }
+
     @NotBlank(message = "아이디는 필수로 입력해야합니다.")
     @Size(min=2, max=10, message = "아이디는 2글자 이상, 10글자 이하여야합니다.")
     @Pattern(regexp = "[a-zA-Z0-9]*", message = "아이디는 영문 대소문자 및 숫자만 사용가능합니다.")
     private String user_id;
 
     @NotBlank(message = "비밀번호는 필수로 입력해야합니다.")
-    @Pattern(regexp = " ^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{8,16}$\n",
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{8,20}$",
             message = "비밀번호는 8글자 이상 20글자 이하이어야하며 대문자/숫자/특수문자가 반드시 1개이상 포함되어야합니다.")
     private String user_pw;
 
@@ -37,8 +43,7 @@ public class UserBean {
 
     //DB 이외
     @NotBlank(message = "비밀번호 확인은 필수로 입력해야합니다.")
-    @Size(min=8, max=20, message = "비밀번호는 8글자 이상, 20글자 이하여야합니다.")
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{8,16}$\n",
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{8,20}$",
             message = "비밀번호는 8글자 이상 20글자 이하이어야하며 대문자/숫자/특수문자가 반드시 1개이상 포함되어야합니다.")
     private String user_pw2;
 
@@ -49,6 +54,10 @@ public class UserBean {
 
     @NotBlank(message = "아이디 중복확인을 해야합니다.")
     private String id_check;
+
+    private boolean loginCheck;
+
+    private int seller_idx;
 
 }
 

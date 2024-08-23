@@ -68,22 +68,10 @@
 			<div class="row">
 				<div class="col-md-9 text-center" id="card1">
 					<br /> <br />
-					<h1 class="display-5 fw-normal text-left">판매자 MyPage</h1>
+					<h1 class="display-5 fw-normal text-left" th:text="${sellerBean.selling_page_title}">판매자 MyPage</h1>
 					<br />
 					<div class="btn-group" role="group"
-						aria-label="Basic outlined example">
-						<button type="button" class="btn btn-outline-secondary"
-							onclick="location.href='seller_page.html' ">MyPage</button>
-						<button type="button" class="btn btn-outline-secondary"
-							onclick="location.href='seller_order.html' ">주문 현황</button>
-						<button type="button" class="btn btn-outline-secondary"
-							onclick="location.href='seller_regular.html' ">단골 관리</button>
-						<button type="button" class="btn btn-secondary"
-							onclick="location.href='seller_product_insert.html' ">상품 등록</button>
-						<button type="button" class="btn btn-outline-secondary"
-							onclick="location.href='seller_list.html' ">상품 조회</button>
-						<button type="button" class="btn btn-outline-secondary"
-							onclick="location.href='seller_blacklist.html' ">블랙리스트</button>
+						 aria-label="Basic outlined example" th:replace="seller/import/menu_bar.html :: menu(flag=4,seller_idx=${sellerBean.seller_idx})">
 					</div>
 					<hr />
 					<br />
@@ -94,32 +82,26 @@
 
 						<div class="row ">
 							<div class="col-md-7 col-lg-8 text-center" style="margin: 0 auto;">
-								<div class="form-group hidden-xs" id="fileDrop">
-									<img src="sample3.jpg" class="img-thumbnail" alt="...">
-									<!-- 지울거 -->
-									<label>업로드 할 이미지 파일을 드랍하세요.</label>
-									<div class="fileDrop"></div>
-									<ul class="clearfix uploadedList col-xs-12"></ul>
-								</div>
+
 
 								<div class="form-group productInfo text-left">
-									<form action="/admin/product/insert" method="post">
+									<form action="/seller/add_goods_pro" method="post" th:object="${goodsBean}" enctype="multipart/form-data">
+
+										<div class="form-group hidden-xs" id="fileDrop">
+											<img th:src="@{/img/defaultImg.jpg}" class="img-thumbnail" alt="...">
+											<!-- 지울거 -->
+											<label for="input-img">파일 업로드.</label>
+											<input id="input-img" th:field="*{goods_img}" type="file" accept="image/*">
+										</div>
+
 										<div class="row g-3">
-										<div class="col-sm-6">
-												<label>상품 ID</label> <input name="productId"
-													value="${productInfo.productId}"
-													class="form-control productId" required>
+											<div class="col-sm-6">
+												<label>상품명</label>
+												<input name="productName" th:field="*{goods_name}" class="form-control" required>
 											</div>
 											<br />
 											<div class="col-sm-6">
-												<label>상품명</label> <input name="productName"
-													value="${productInfo.productName}" class="form-control"
-													required>
-											</div>
-											<br />
-											<div class="col-sm-6">
-												<label>상품가격</label> <input name="price"
-													value="${productInfo.price}" class="form-control" required>
+												<label>상품가격</label> <input name="price" th:field="*{goods_price}" class="form-control" required>
 											</div>
 											<br />
 											<div class="col-sm-6">
@@ -132,16 +114,14 @@
 														<option value="bag">4. 가방</option>
 														<option value="acc">5. 액세서리</option>
 													</select>
-													<button class="btn btn-outline-secondary btn_productDist">입력</button>
-													<input name="productDist"
-														value="${productInfo.productDist}" class="form-control"
-														readonly>
+													<button type="button" class="btn btn-outline-secondary btn_productDist" onclick="inputGoodsTag()">입력</button>
+													<input name="productDist" th:field="*{goods_tag}" class="form-control" readonly>
 												</div>
 											</div>
 											<br />
 											<div class="col-sm-6">
-												<label>재고</label> <input name="stock"
-													value="${productInfo.stock}" class="form-control" required>
+												<label>재고</label>
+												<input name="stock" class="form-control">
 											</div>
 											<br />
 											<div class="col-sm-6">
@@ -150,8 +130,8 @@
 											</div>
 											<br />
 											<div class="btns text-center">
-												<button class="btn btn-outline-secondary" id="btn_product_insert">상품 등록</button>
-												<button class="btn btn-outline-secondary" id="btn_product_back">상품 조회</button>
+												<button type="submit" class="btn btn-outline-secondary" id="btn_product_insert">상품 등록</button>
+												<button type="button" class="btn btn-outline-secondary" id="btn_product_back">상품 조회</button>
 											</div>
 									</form>
 								</div>
@@ -170,6 +150,12 @@
 		<div th:replace="page_footer/footer.html :: footer-head"></div>
 		<div th:replace="page_footer/footer.html :: footer-body"></div>
 	</div>
-
+	<script>
+		function inputGoodsTag() {
+            let productDist = document.getElementById('productDist').value;
+            let productTag = document.getElementById('productDist').nextElementSibling.nextElementSibling;
+            productTag.value = productDist;
+        }
+	</script>
 </body>
 </html>

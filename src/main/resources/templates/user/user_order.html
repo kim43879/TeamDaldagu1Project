@@ -33,11 +33,11 @@
 	}
 	#card1 {
 		width: 90%;
-		margin-top: -950px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+		margin-top: -1050px; margin-left:250px; padding-left: 20px; padding-right: 20px;
 	}
 	#card2 {
 		width: 90%;
-		margin-top: -730px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+		margin-top: -830px; margin-left:250px; padding-left: 20px; padding-right: 20px;
 	}
 	.card-item {
 		margin-left: 10px;
@@ -76,7 +76,7 @@
                            <div class="card-body">
                               <h6>&emsp;<b>입금전</b>&emsp;</h6>
                               <hr />
-                              <a href="#" class="card-link">0</a>
+                              <a href="/order/order_before_check" class="card-link">0</a>
                            </div>
                         </div>
                      </div>
@@ -87,7 +87,7 @@
                            <div class="card-body">
                               <h6><b>배송준비중</b></h6>
                               <hr />
-                              <a href="#" class="card-link">2</a>
+                              <a href="/order/order_ready" class="card-link">2</a>
                            </div>
                         </div>
                      </div>
@@ -98,7 +98,7 @@
                            <div class="card-body">
                               <h6>&emsp;<b>배송중</b>&emsp;</h6>
                               <hr />
-                              <a href="#" class="card-link">1</a>
+                              <a href="/order/order_delivering" class="card-link">1</a>
                            </div>
                         </div>
                      </div>
@@ -109,7 +109,7 @@
                            <div class="card-body">
                               <h6>&nbsp;<b>배송완료</b>&nbsp;</h6>
                               <hr />
-                              <a href="#" class="card-link">5</a>
+                              <a href="/order/order_finished" class="card-link">5</a>
                            </div>
                         </div>
                      </div>
@@ -142,7 +142,7 @@
                <table class="table">
                   <thead>
                      <tr>
-                        <th>전체 주문 정보</th>
+                        <th>주문번호</th>
                         <th scope="col">주문일</th>
                         <th scope="col">상품명</th>
                         <th scope="col">금액</th>
@@ -150,46 +150,11 @@
                   </thead>
 
                   <tbody class="table-group-divider">
-                     <tr>
+                     <tr th:each="order : ${testOrderList}">
                         <th scope="row">3</th>
                         <td>2023.11.18</td>
-                        <td><a href="../goods/goods_page.html" class="card-link">루안</a></td>
-                        <td>1,212,980</td>
-                     </tr>
-
-                     <tr>
-                        <th scope="row">2</th>
-                        <td>2023.04.20</td>
-                        <td><a href="../goods/goods_page.html" class="card-link">희사</a></td>
-                        <td>358,000</td>
-                     </tr>
-
-                     <tr>
-                        <th scope="row">1</th>
-                        <td>2023.03.10</td>
-                        <td><a href="../goods/goods_page.html" class="card-link">카이엔</a></td>
-                        <td>163,000</td>
-                     </tr>
-
-                     <tr>
-                        <th scope="row">1</th>
-                        <td>2022.01.01</td>
-                        <td><a href="../goods/goods_page.html" class="card-link">뮤지컬 프랑켄슈타인</a></td>
-                        <td>172,000</td>
-                     </tr>
-
-                     <tr>
-                        <th scope="row">1</th>
-                        <td>2022.01.01</td>
-                        <td><a href="../goods/goods_page.html" class="card-link">뮤지컬 프랑켄슈타인</a></td>
-                        <td>172,000</td>
-                     </tr>
-
-                     <tr>
-                        <th scope="row">1</th>
-                        <td>2022.01.01</td>
-                        <td><a href="../goods/goods_page.html" class="card-link">뮤지컬 프랑켄슈타인</a></td>
-                        <td>172,000</td>
+                        <td><a href="../goods/goods_page.html" class="card-link" th:text="${order.goods_name}"></a></td>
+                        <td th:text="${order.goods_price}"></td>
                      </tr>
 
                      <tr>

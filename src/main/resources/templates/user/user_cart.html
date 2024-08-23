@@ -31,13 +31,17 @@
 		margin-top: 20px;
 	}
 	#card1 {
-		width: 90%;
-		margin-top: -920px; margin-left:350px; padding-left: 8%; padding-right: 8%;
+		width: 100%;
+		margin-top: -1020px; margin-left:300px; padding-left: 8%; padding-right: 8%;
 	}
 	.img-fluid rounded-start {
 		width: 25%;
 	}
-	
+	.empty-row {
+    	text-align: center;
+		padding: 20px;
+	}
+
 </style>
 </head>
 <body>
@@ -54,165 +58,145 @@
 	<div th:replace="page_profile/profile.html :: profile-body"></div>
 </div>
 
-	<!-- 장바구니 목록 -->	
-	<div class="container" id="card1">
-		<h5 style="margin-bottom: 5px;">《장바구니》</h5>
-		<div class="row g-0">
-			<div class="card" style="max-width: 800px;">
-				<table class="table">
-					<thead>
-						<tr>
-							<th scope="col"style="text-align: center;">상품정보</th>
-							<th scope="col" style="text-align: center;">금액</th>
-							<th scope="col" style="text-align: center;">수량</th>
-							<th scope="col">&emsp;&emsp;선택</th>
-						</tr>
-					</thead>
-					
-					<tbody class="table-group-divider">
-						<tr>
-							<th scope="row">
-								<input type="checkbox" style="margin-left: 10px;" checked/>
-								&emsp;
-								<img src="../../static/img/sample5.jpg" class="img-fluid rounded-start"/>
-								<a href="../goods/goods_page.html" style="margin-left: 20px;">goods_name</a>
-							</th>
-							<td style="padding-top: 45px;">goods_price</td>
-							<td style="padding-top: 45px;">goods_amount</td>
-							<td style="padding-top: 25px;">
-								<a href="../goods/goods_buy.html" class="btn btn-outline-info">상품주문</a>
-								<button class="btn btn-outline-secondary" onclick="goods_remove()">상품삭제</button>
-							</td>
-						</tr>
-						
-						<tr>
-							<th scope="row">
-								<input type="checkbox" style="margin-left: 10px;"/>
-								&emsp;
-								<img src="../../static/img/sample5.jpg" class="img-fluid rounded-start"/>
-								<a href="../goods/goods_page.html" style="margin-left: 20px;">goods_name</a>
-							</th>
-							<td style="padding-top: 45px;">goods_price</td>
-							<td style="padding-top: 45px;">goods_amount</td>
-							<td style="padding-top: 25px;">
-								<a href="../goods/goods_buy.html" class="btn btn-outline-info">상품주문</a>
-								<button class="btn btn-outline-secondary" onclick="goods_remove()">상품삭제</button>
-							</td>
-						</tr>
+<!-- 장바구니 목록 -->
+<div class="container mt-2 card-wrapper">
+	<div class="row">
+		<div class="col-md-8" id="card1">
+			&ensp;《장바구니》
+			<ol class="list-group list-group-numbered" id="cart-list">
+				<div class="card">
+					<table class="table" id="table">
+						<thead>
+							<tr>
+								<th scope="col" style="text-align: center;">상품정보</th>
+								<th scope="col" style="text-align: center;">금액</th>
+								<th scope="col" style="text-align: center;">수량</th>
+								<th scope="col">&emsp;&emsp;선택</th>
+							</tr>
+						</thead>
 
-						<tr>
-							<th scope="row">
-								<input type="checkbox" style="margin-left: 10px;"/>
-								&emsp;
-								<img src="../../static/img/sample5.jpg" class="img-fluid rounded-start"/>
-								<a href="../goods/goods_page.html" style="margin-left: 20px;">goods_name</a>
-							</th>
-							<td style="padding-top: 45px;">goods_price</td>
-							<td style="padding-top: 45px;">goods_amount</td>
-							<td style="padding-top: 25px;">
-								<a href="../goods/goods_buy.html" class="btn btn-outline-info">상품주문</a>
-								<button class="btn btn-outline-secondary" onclick="goods_remove()">상품삭제</button>
-							</td>
-						</tr>
-						
-						<tr>
-							<th scope="row">
-								<input type="checkbox" style="margin-left: 10px;"/>
-								&emsp;
-								<img src="../../static/img/sample5.jpg" class="img-fluid rounded-start"/>
-								<a href="../goods/goods_page.html" style="margin-left: 20px;">goods_name</a>
-							</th>
-							<td style="padding-top: 45px;">goods_price</td>
-							<td style="padding-top: 45px;">goods_amount</td>
-							<td style="padding-top: 25px;">
-								<a href="../goods/goods_buy.html" class="btn btn-outline-info">상품주문</a>
-								<button class="btn btn-outline-secondary" onclick="goods_remove()">상품삭제</button>
-							</td>
-						</tr>
-						
-						<tr>
-							<th scope="row">
-								<input type="checkbox" style="margin-left: 10px;"/>
-								&emsp;
-								<img src="../../static/img/sample5.jpg" class="img-fluid rounded-start"/>
-								<a href="../goods/goods_page.html" style="margin-left: 20px;">goods_name</a>
-							</th>
-							<td style="padding-top: 45px;">goods_price</td>
-							<td style="padding-top: 45px;">goods_amount</td>
-							<td style="padding-top: 25px;">
-								<a href="../goods/goods_buy.html" class="btn btn-outline-info">상품주문</a>
-								<button class="btn btn-outline-secondary" onclick="goods_remove()">상품삭제</button>
-							</td>
-						</tr>
-						
-						<tr>
-							<th scope="row">
-								<input type="checkbox" style="margin-left: 10px;"/>
-								&emsp;
-								<img src="../../static/img/sample5.jpg" class="img-fluid rounded-start"/>
-								<a href="../goods/goods_page.html" style="margin-left: 20px;">goods_name</a>
-							</th>
-							<td style="padding-top: 45px;">goods_price</td>
-							<td style="padding-top: 45px;">goods_amount</td>
-							<td style="padding-top: 25px;">
-								<a href="../goods/goods_buy.html" class="btn btn-outline-info">상품주문</a>
-								<button class="btn btn-outline-secondary" onclick="goods_remove()">상품삭제</button>
-							</td>
-						</tr>
-						
-						<tr>
-							<th scope="row">
-								<input type="checkbox" style="margin-left: 10px;"/>
-								&emsp;
-								<img src="../../static/img/sample5.jpg" class="img-fluid rounded-start"/>
-								<a href="../goods/goods_page.html" style="margin-left: 20px;">goods_name</a>
-							</th>
-							<td style="padding-top: 45px;">goods_price</td>
-							<td style="padding-top: 45px;">goods_amount</td>
-							<td style="padding-top: 25px;">
-								<a href="../goods/goods_buy.html" class="btn btn-outline-info">상품주문</a>
-								<button class="btn btn-outline-secondary" onclick="goods_remove()">상품삭제</button>
-							</td>
-						</tr>					
-					</tbody>
-					
-				</table>
-				
-					<script>
-						function goods_remove() {
-							alert("선택하신 상품이 삭제되었습니다.");
-						}
-					</script>
-			</div>
-		</div> <br />
-		
-		<!-- 페이지 -->
-		<div class="d-none d-md-block">
-			<ul class="pagination justify-content-center">
-				<li class="page-item">
-					<a href="#" class="page-link">&laquo;</a>
-				</li>
-				<li class="page-item">
-					<a href="#" class="page-link">1</a>
-				</li>
-				<li class="page-item">
-					<a href="#" class="page-link">2</a>
-				</li>
-				<li class="page-item">
-					<a href="#" class="page-link">&raquo;</a>
-				</li>
-			</ul>
-		</div>
-		
+						<tbody class="table-group-divider">
+							<tr>
+								<th scope="row">
+									<div class="check">
+										<input type="checkbox" style="margin-left: 10px;" checked/>
+										&emsp;
+										<a href="/goods/goods_page" style="margin-left: 20px;">goods_name</a>
+									</div>
+								</th>
+								<td style="padding-top: 45px;">goods_price</td>
+								<td style="padding-top: 45px;">goods_amount</td>
+								<td style="padding-top: 25px;">
+									<a href="/goods/goods_buy" class="btn btn-outline-info">상품주문</a>
+									<button class="btn btn-outline-secondary" onclick="goods_remove(this)">상품삭제</button>
+								</td>
+							</tr>
+
+							<tr>
+								<th scope="row">
+									<input type="checkbox" style="margin-left: 10px;" />
+									&emsp;
+									<a href="/goods/goods_page" style="margin-left: 20px;">goods_name</a>
+								</th>
+								<td style="padding-top: 45px;">goods_price</td>
+								<td style="padding-top: 45px;">goods_amount</td>
+								<td style="padding-top: 25px;">
+									<a href="/goods/goods_buy" class="btn btn-outline-info">상품주문</a>
+									<button class="btn btn-outline-secondary" onclick="goods_remove(this)">상품삭제</button>
+								</td>
+							</tr>
+
+							<tr>
+								<th scope="row">
+									<input type="checkbox" style="margin-left: 10px;" />
+									&emsp;
+									<a href="/goods/goods_page" style="margin-left: 20px;">goods_name</a>
+								</th>
+								<td style="padding-top: 45px;">goods_price</td>
+								<td style="padding-top: 45px;">goods_amount</td>
+								<td style="padding-top: 25px;">
+									<a href="/goods/goods_buy" class="btn btn-outline-info">상품주문</a>
+									<button class="btn btn-outline-secondary" onclick="goods_remove(this)">상품삭제</button>
+								</td>
+							</tr>
+
+							<tr>
+								<th scope="row">
+									<input type="checkbox" style="margin-left: 10px;" />
+									&emsp;
+									<a href="/goods/goods_page" style="margin-left: 20px;">goods_name</a>
+								</th>
+								<td style="padding-top: 45px;">goods_price</td>
+								<td style="padding-top: 45px;">goods_amount</td>
+								<td style="padding-top: 25px;">
+									<a href="/goods/goods_buy" class="btn btn-outline-info">상품주문</a>
+									<button class="btn btn-outline-secondary" onclick="goods_remove(this)">상품삭제</button>
+								</td>
+							</tr>
+
+							<tr>
+								<th scope="row">
+									<input type="checkbox" style="margin-left: 10px;" />
+									&emsp;
+									<a href="/goods/goods_page" style="margin-left: 20px;">goods_name</a>
+								</th>
+								<td style="padding-top: 45px;">goods_price</td>
+								<td style="padding-top: 45px;">goods_amount</td>
+								<td style="padding-top: 25px;">
+									<a href="/goods/goods_buy" class="btn btn-outline-info">상품주문</a>
+									<button class="btn btn-outline-secondary" onclick="goods_remove(this)">상품삭제</button>
+								</td>
+							</tr>
+
+							<tr>
+								<td colspan="4" class="empty-row"><b>주문 내역이 없습니다.</b></td>
+							</tr>
+
+						</tbody>
+
+						<script>
+							function goods_remove(button) {
+								var td = button.parentElement;
+								var tr = td.parentElement;
+
+								alert("선택하신 상품이 삭제되었습니다.");
+
+								tr.remove();
+							}
+						</script>
+
+					</table>
+				</div>
+
+			</ol>
+	</div>
+</div>
+
+<!-- 페이지 -->
+	<div class="d-none d-md-block">
+		<ul class="pagination justify-content-center">
+			<li class="page-item">
+				<a href="#" class="page-link">&laquo;</a>
+			</li>
+			<li class="page-item">
+				<a href="#" class="page-link">1</a>
+			</li>
+			<li class="page-item">
+				<a href="#" class="page-link">2</a>
+			</li>
+			<li class="page-item">
+				<a href="#" class="page-link">&raquo;</a>
+			</li>
+		</ul>
 	</div>
 	<div class="d" style="margin-top: 88px;"></div>
 	<hr />
 
 	<!-- 하단 -->
-<div id="footer">
-	<div th:replace="page_footer/footer.html :: footer-head"></div>
-	<div th:replace="page_footer/footer.html :: footer-body"></div>
+	<div id="footer">
+		<div th:replace="page_footer/footer.html :: footer-head"></div>
+		<div th:replace="page_footer/footer.html :: footer-body"></div>
+	</div>
 </div>
-	
 </body>
 </html>

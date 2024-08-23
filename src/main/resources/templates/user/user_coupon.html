@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>달다구리스</title>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+  <style>
+      .card-main{
+          margin-top: 88px;
+          padding-left: 186px;
+          padding-right: 186px;
+      }
+      .dropdown-menu {
+          display: none;
+          position: absolute;
+          background-color: #f9f9f9;
+          border: 1px solid #ddd;
+      }
+      .dropdown-menu a:hover {
+          background-color: #f1f1f1;
+      }
+      .show {
+          display: block;
+      }
+      .card-profile{
+          margin-top: 88px; padding-left: 50px;
+      }
+      #tab1{
+          width: 100%;
+          margin-top: -1020px; margin-left:200px; padding-left: 20px; padding-right: 20px;
+      }
+      #tab2{
+          width: 100%;
+          margin-left:200px; padding-left: 20px; padding-right: 20px;
+      }
+      .container-list {
+          max-width: 980px;
+          margin: 0 auto;
+          background-color: #fff;
+          padding: 20px;
+      }
+      .card {
+          border: 1px solid #ddd;
+          border-radius: 5px;
+      }
+      .table {
+        text-align:center;
+      }
+
+  </style>
+</head>
+<body>
+
+<!-- 상단메뉴 -->
+<div id="header">
+  <div th:replace="page_header/header.html :: header-head"></div>
+  <div th:replace="page_header/header.html :: header-body"></div>
+</div>
+
+<!-- 유저프로필 라인 -->
+<div id="profile">
+  <div th:replace="page_profile/profile.html :: profile-head"></div>
+  <div th:replace="page_profile/profile.html :: profile-body"></div>
+</div>
+
+<!--적립금-->
+<div class="container-list">
+    <div class="tabs" id="tab1">
+        <h6><b>《쿠폰》</b></h6>
+        <hr />
+
+    </div>
+
+    <div class="card" id="tab2">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>쿠폰번호</th>
+                    <th>쿠폰명</th>
+                    <th>적용품목</th>
+                    <th>사용가능금액</th>
+                    <th>할인액(%) 적립액(%)</th>
+                    <th>사용기간</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td>18192480</td>
+                    <td>8월 멤버쉽 쿠폰(플래티넘)</td>
+                    <td>전상품</td>
+                    <td>제한없음</td>
+                    <td>할인율 5%</td>
+                    <td>2024-08-01~2024-08-31</td>
+                </tr>
+
+                <tr>
+                  <td>18192480</td>
+                  <td>8월 멤버쉽 쿠폰(플래티넘)</td>
+                  <td>전상품</td>
+                  <td>제한없음</td>
+                  <td>할인율 5%</td>
+                  <td>2024-08-01~2024-08-31</td>
+                </tr>
+
+                <tr>
+                  <td>18192480</td>
+                  <td>8월 멤버쉽 쿠폰(플래티넘)</td>
+                  <td>전상품</td>
+                  <td>제한없음</td>
+                  <td>할인율 5%</td>
+                  <td>2024-08-01~2024-08-31</td>
+                </tr>
+
+                <tr>
+                  <td>18192480</td>
+                  <td>8월 멤버쉽 쿠폰(플래티넘)</td>
+                  <td>전상품</td>
+                  <td>제한없음</td>
+                  <td>할인율 5%</td>
+                  <td>2024-08-01~2024-08-31</td>
+                </tr>
+
+                <tr>
+                  <td>18192480</td>
+                  <td>8월 멤버쉽 쿠폰(플래티넘)</td>
+                  <td>전상품</td>
+                  <td>제한없음</td>
+                  <td>할인율 5%</td>
+                  <td>2024-08-01~2024-08-31</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<hr />
+
+<!-- 하단 -->
+<div id="footer">
+  <div th:replace="page_footer/footer.html :: footer-head"></div>
+  <div th:replace="page_footer/footer.html :: footer-body"></div>
+</div>
+
+</body>
+</html>

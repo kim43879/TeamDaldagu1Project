@@ -35,4 +35,7 @@ public class SellerService {
         sellerMapper.deleteSellerJoinInfo(user_idx);
     }
 
+    public SellerBean getSellerbyUserIdx(int seller_idx){
+        return sellerMapper.getSellerByIdx(seller_idx);
+    }
 }

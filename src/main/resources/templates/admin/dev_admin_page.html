@@ -40,14 +40,16 @@
   </thead>
   <tbody>
   <tr th:each="info : ${sellerInfoList}">
-    <td th:text="${info.seller_idx}"></td>
+    <td th:text="${info.info_idx}"></td>
     <td th:text="${info.seller_name}"></td>
     <td th:text="${info.seller_id}"></td>
     <td th:text="${info.seller_email}"></td>
     <td th:text="${info.seller_phone}"></td>
     <td th:text="${info.seller_page_title}"></td>
     <td th:text="${info.goods_tag}"></td>
-    <td th:text="${info.sample_img}"></td>
+    <td>
+      <img th:src="@{'/img/info/' + ${info.sample_img}}">
+    </td>
     <td>
       <input type="hidden" id="user_idx" th:value="${info.user_idx}">
       <button onclick="submit()">승인</button>/

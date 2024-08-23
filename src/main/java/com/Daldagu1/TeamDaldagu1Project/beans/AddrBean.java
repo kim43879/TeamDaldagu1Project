@@ -11,4 +11,8 @@ public class AddrBean {
     private String user_addr;   //주소명
     private String user_post;   //우편번호
 
+    //추가
+    private String addr_phone;
+    private String addr_name; //
+    private String addr_main; //기본배송지 여부(t/f)
 }

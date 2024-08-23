@@ -101,24 +101,11 @@
 			<div class="row">
 				<div class="col-md-9 text-center" id="card1">
 					<br /> <br />
-					<h1 class="display-5 fw-normal text-left">판매자 MyPage</h1>
+					<h1 class="display-5 fw-normal text-left" th:text="${sellerBean.selling_page_title}">판매자 MyPage</h1>
 					<br />
 
 					<div class="btn-group" role="group"
-						aria-label="Basic outlined example">
-						<button type="button" class="btn btn-secondary"
-							onclick="location.href='seller_page.html' ">MyPage</button>
-						<button type="button" class="btn btn-outline-secondary"
-							onclick="location.href='seller_order.html' ">주문 현황</button>
-						<button type="button" class="btn btn-outline-secondary"
-							onclick="location.href='regular.html' ">단골 관리</button>
-						<button type="button" class="btn btn-outline-secondary"
-							onclick="location.href='seller_product_insert.html' ">상품
-							등록</button>
-						<button type="button" class="btn btn-outline-secondary"
-							onclick="location.href='seller_list.html' ">상품 조회</button>
-						<button type="button" class="btn btn-outline-secondary"
-							onclick="location.href='seller_blacklist.html' ">블랙리스트</button>
+						aria-label="Basic outlined example" th:replace="seller/import/menu_bar.html :: menu(flag=1,seller_idx=${sellerBean.seller_idx})">
 					</div>
 					<hr />
 					<br />

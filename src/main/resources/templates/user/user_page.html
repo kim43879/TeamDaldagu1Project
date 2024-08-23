@@ -44,7 +44,7 @@
 	}
 	#card4{
 		width: 90%;
-		margin-top: -190px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+		margin-top: -290px; margin-left:250px; padding-left: 20px; padding-right: 20px;
 	}
 	a {
 		color: #343434;
@@ -63,6 +63,7 @@
 	
 	<!-- 유저프로필 라인 -->
 	<div id="profile">
+		<div th:replace="page_profile/profile.html :: profile-head"></div>
 		<div th:replace="page_profile/profile.html :: profile-body"></div>
 	</div>
 
@@ -81,7 +82,7 @@
                            <div class="card-body">
                               <h6>&nbsp;주문배송&nbsp;</h6>
                               <hr />
-                              <a href="#" class="card-link">7</a>
+                              <a href="/user/user_order" class="card-link">7</a>
                            </div>
                         </div>
                      </div>
@@ -92,7 +93,7 @@
                            <div class="card-body">
                               <h6>&nbsp;장바구니&nbsp;</h6>
                               <hr />
-                              <a href="#" class="card-link">0</a>
+                              <a href="/user/user_cart" class="card-link">0</a>
                            </div>
                         </div>
                      </div>
@@ -103,7 +104,7 @@
                            <div class="card-body">
                               <h6>&nbsp;리뷰작성&nbsp;</h6>
                               <hr />
-                              <a href="#" class="card-link">1</a>
+                              <a href="/user/review_write" class="card-link">1</a>
                            </div>
                         </div>
                      </div>
@@ -114,7 +115,7 @@
                            <div class="card-body">
                               <h6>&nbsp;보유쿠폰&nbsp;</h6>
                               <hr />
-                              <a href="#" class="card-link">3</a>
+                              <a href="/user/user_coupon" class="card-link">3</a>
                            </div>
                         </div>
                      </div>
@@ -125,7 +126,7 @@
                            <div class="card-body">
                               <h6>&emsp;적립금&emsp;</h6>
                               <hr />
-                              <a href="#" class="card-link">7,299</a>
+                              <a href="/user/user_point" class="card-link">7,299</a>
                            </div>
                         </div>
                      </div>

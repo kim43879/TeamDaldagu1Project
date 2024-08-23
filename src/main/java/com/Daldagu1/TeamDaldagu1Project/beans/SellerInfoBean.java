@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SellerInfoBean {
-    private int seller_idx;
+    private int info_idx;
     private String seller_name;
     private String seller_id;
     private String seller_email;
