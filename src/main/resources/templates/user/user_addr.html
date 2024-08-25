@@ -75,14 +75,23 @@
 
 					<script>
 						function addr_delete(button) {
-							const list = button.closest('li');
+                            const list = button.closest('li');
+                            const addrId = list.getAttribute('data-addr-id'); // 데이터 속성에서 주소 ID 가져오기
 
-							if(list) {
-								alert("삭제되었습니다.");
-								list.remove();
-							}
-						}
+                            if (addrId) {
+                                $.ajax({
+                                    url: '/rest/deleteAddress',
+                                    type: 'POST',
+                                    data: { user_idx: $("user_idx").val() },
+                                    success: function(response) {
+                                        alert("삭제되었습니다.");
+                                        list.remove();
+                                    },
+                                });
+                            }
+                        }
 					</script>
+
 					<script>
 						function addr_modify() {
                            window.open("/user_addr2.html", "", 'width=600,height=550');
@@ -104,7 +113,6 @@
                    window.open("/user_addr2.html", "", 'width=600,height=550');
                }
 			</script>
-
 
 		</div>
 	</div>
