@@ -1,41 +1,45 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>달다구리스</title>
-<!-- Bootstrap -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-<style>
-	.card-main{
-		margin-top: 88px; 
-		padding-left: 186px; 
-		padding-right: 186px;
-	}
-	.dropdown-menu {
-		display: none;
-		position: absolute;
-		background-color: #f9f9f9;
-		border: 1px solid #ddd;
-	}
-	.dropdown-menu a:hover {
-		background-color: #f1f1f1;
-	}
-	.show {
-		display: block;
-	}
-	.card-profile{
-		margin-top: 88px; padding-left: 50px;
-	}
-	.card-wrapper {
-		margin-top: 20px;
-	}
-	#card1 {
-		width: 90%;
-		margin-top: -1020px; margin-left:250px; padding-left: 20px; padding-right: 20px;
-	}
-	
-</style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>달다구리스</title>
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<style>
+		.card-main {
+            margin-top: 88px;
+            padding-left: 186px;
+            padding-right: 186px;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+        }
+        .show {
+            display: block;
+        }
+        .card-profile {
+            margin-top: 88px;
+            padding-left: 50px;
+        }
+        .card-wrapper {
+            margin-top: 20px;
+        }
+        #card1 {
+            width: 90%;
+            margin-top: -1020px;
+            margin-left: 250px;
+            padding-left: 20px;
+            padding-right: 20px;
+        }
+	</style>
 </head>
 <body>
 
@@ -44,8 +48,8 @@
 	<div th:replace="page_header/header.html :: header-head"></div>
 	<div th:replace="page_header/header.html :: header-body"></div>
 </div>
-	
-	<!-- 유저프로필 라인 -->
+
+<!-- 유저프로필 라인 -->
 <div id="profile">
 	<div th:replace="page_profile/profile.html :: profile-head"></div>
 	<div th:replace="page_profile/profile.html :: profile-body"></div>
@@ -57,7 +61,9 @@
 		<div class="col-md-8" id="card1">
 			&ensp;《배송지 관리》
 			<ol class="list-group list-group-numbered" id="addr-list">
-				<li class="list-group-item d-flex justify-content-between align-items-start" th:each="addr : ${testAddr}">
+				<li class="list-group-item d-flex justify-content-between align-items-start" th:each="addr : ${testAddr}"
+					th:data-addr-id="${addr.addr_idx}">
+
 					<div class="form-group ms-2 me-auto">
 						<span class="badge text-bg-primary rounded-pill" th:text="${addr.message}"></span>
 						<b><div class="fw-bold" th:text="${addr.addr_name}"></div></b> <!--user_name-->
@@ -68,26 +74,32 @@
 
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 						&emsp;&emsp;&emsp;
-						<button type="submit" class="btn btn-outline-warning btn-sm-sm-sm-sm" onclick="addr_delete(this)">삭제</button> &nbsp;
-
+						<button type="button" class="btn btn-outline-warning btn-sm-sm-sm-sm" onclick="addr_delete(this)">삭제</button> &nbsp;
 						<button class="btn btn-outline-success" id="user_post1" onclick="addr_modify()" value="">수정</button>
 					</div>
 
 					<script>
 						function addr_delete(button) {
                             const list = button.closest('li');
-                            const addrId = list.getAttribute('data-addr-id'); // 데이터 속성에서 주소 ID 가져오기
+                            const addrId = list.getAttribute('data-addr-id');
+                            console.log("addrId:", addrId);
 
                             if (addrId) {
                                 $.ajax({
-                                    url: '/rest/deleteAddress',
-                                    type: 'POST',
-                                    data: { user_idx: $("user_idx").val() },
+                                	type: 'GET',
+                                    url: `/rest/deleteAddress`,
+                                    data: {addr_idx: addrId},
                                     success: function(response) {
-                                        alert("삭제되었습니다.");
+                                    	alert("삭제되었습니다.");
                                         list.remove();
                                     },
+                                    error: function(xhr, status, error) {
+                                        console.error("Error: " + error);
+                                        alert("삭제에 실패했습니다.");
+                                    }
                                 });
+                            } else {
+                                alert("잘못된 요청입니다.");
                             }
                         }
 					</script>
@@ -98,7 +110,6 @@
                        }
 					</script>
 				</li>
-
 			</ol>
 			<br />
 
@@ -119,11 +130,11 @@
 </div>
 <hr />
 
-	<!-- 하단 -->
+<!-- 하단 -->
 <div id="footer">
 	<div th:replace="page_footer/footer.html :: footer-head"></div>
 	<div th:replace="page_footer/footer.html :: footer-body"></div>
 </div>
-	
+
 </body>
 </html>

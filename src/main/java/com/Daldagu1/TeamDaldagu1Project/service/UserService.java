@@ -67,9 +67,15 @@ public class UserService {
 
         return userMapper.getExtraUserAddr(user_idx);
     }
+
     //배송지 업데이트
     public void getUpdateAddr(int user_idx) {
         userMapper.getUpdateAddr(user_idx);
+    }
+
+    //배송지 삭제
+    public void deleteUserAddr(int addr_idx) {
+        userMapper.deleteUserAddr(addr_idx);
     }
 }
 

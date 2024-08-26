@@ -46,4 +46,10 @@ public class RestApiController {
     public void denialSeller(@RequestParam("user_idx") int user_idx){
         sellerService.deleteSellerJoinInfo(user_idx);
     }
+
+    @GetMapping("/rest/deleteAddress")
+    public void deleteUserAddr(@RequestParam("addr_idx") int addr_idx) {
+        System.out.println(addr_idx);
+        userService.deleteUserAddr(addr_idx);
+    }
 }

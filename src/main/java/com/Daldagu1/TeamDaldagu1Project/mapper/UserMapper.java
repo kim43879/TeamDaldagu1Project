@@ -2,10 +2,7 @@ package com.Daldagu1.TeamDaldagu1Project.mapper;
 
 import com.Daldagu1.TeamDaldagu1Project.beans.AddrBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.UserBean;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -35,11 +32,15 @@ public interface UserMapper {
     int getSellerIdx(int user_idx);
 
     //배송지 호출
-    @Select("select * from addr_table where user_idx=#{user_idx}")
+    @Select("select * from addr_table where user_idx=#{user_idx} order by addr_main desc")
     List<AddrBean> getExtraUserAddr(int user_idx);
 
     //배송지 수정
     @Update("update addr_table set user_addr=#{user_addr}, user_post=#{user_post}, addr_phone=#{addr_phone}, " +
             "addr_name=#{addr_name}, addr_main=#{addr_main} where user_idx=#{user_idx}")
     void getUpdateAddr(int user_idx);
+
+    //배송지 삭제
+    @Delete("delete from addr_table where addr_idx= #{addr_idx}")
+    void deleteUserAddr(int addr_idx);
 }

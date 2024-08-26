@@ -19,7 +19,7 @@ public class GoodsController {
     GoodsService goodsService;
 
     @GetMapping("/goods_page")
-    public String goods_page(@RequestParam("goods_idx") int goods_idx, Model model) {
+    public String goods_page(@RequestParam(name = "goods_idx", required = false) int goods_idx, Model model) {
 
         /*List<GoodsBean> testGoods = goodsService.getPurchaseGoods(goods_idx);
         model.addAttribute("testGoods", testGoods);*/

@@ -103,11 +103,13 @@ public class UserController {
         return "user/user_page";
     }
 
+    //
     @GetMapping("/user/user_order")
     public String user_order(HttpServletRequest request){
 
         return "user/user_order";
     }
+
     @GetMapping("/user/user_present")
     public String user_present(){
         return "user/user_present";
@@ -133,6 +135,8 @@ public class UserController {
     public String user_addr(@RequestParam("user_idx") int user_idx, Model model){
 
         List<AddrBean> testAddr = userService.getExtraUserAddr(user_idx);
+        //System.out.println(testAddr.get(0).getUser_addr());
+
         model.addAttribute("testAddr", testAddr);
 
         return "user/user_addr";
