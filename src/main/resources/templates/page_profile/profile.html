@@ -31,28 +31,39 @@
         .card-wrapper {
             margin-top: 20px;
         }
-        #card1 {
-            width: 90%;
-            margin-top: -1020px; margin-left:350px; padding-left: 8%; padding-right: 8%;
-        }
-        #img_size{
-            width: 25%;
-        }
         #img{
             display: block;
         }
-        .hidden-button {
+
+        .image-container {
+            position: relative;
+            display: inline-block;
+        }
+        .image-container img {
+            display: block;
+            height: auto;
+        }
+
+        .image-container button {
+            display: none;
             position: absolute;
-            bottom: 10px;
-            right: 10px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            background-color: #007bff;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.7);
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
             cursor: pointer;
+        }
+        .image-container:hover button {
+            display: block;
+        }
+        .image-container button:hover {
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+        .image-container input[type="file"] {
+            display: none;
         }
 
     </style>
@@ -68,27 +79,29 @@
 </head>
 <body th:fragment="profile-body">
 <div class="card-profile" style="width: 18rem;">
-    <img th:src="@{/img/profile.jpg}" class="card-img-top" id="img">
-    <button class="btn btn-outline-primary hidden-button">이미지 변경</button>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var cardProfile = document.querySelector('.card-profile');
-            var hiddenButton = document.querySelector('.hidden-button');
+    <div class="image-container" style="border-color: Gray;">
+        <img th:src="@{/img/profile.jpg}" class="card-img-top" id="img">
+        <button class="btn btn-outline-info hidden-button" id="change-image-btn">이미지 변경</button>
+        <input type="file" id="image-input" style="display: none;" accept="image/*">
 
-            cardProfile.addEventListener('mouseover', function() {
-                hiddenButton.style.opacity = '1';
+        <script>
+            document.getElementById('change-image-btn').addEventListener('click', function() {
+                document.getElementById('image-input').click();
             });
 
-            cardProfile.addEventListener('mouseout', function() {
-                hiddenButton.style.opacity = '0';
+            document.getElementById('image-input').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if(file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.querySelector('.image-container img').src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
             });
-
-            hiddenButton.addEventListener('click', function() {
-
-
-    </script>
-
+        </script>
+    </div>
 
     <div class="card-body">
         <h5 class="card-title" th:text="${loginUserBean.user_idx}"></h5>
@@ -116,7 +129,7 @@
 
         <h6 style="border: thin;"><b>나의 정보</b></h6>
         <a href="/user/user_info" class="card-link">회원정보 관리</a> <br/>
-        <a href="/user/user_addr" class="card-link">배송지 관리</a> <br/>
+        <a href="/user/user_addr?user_idx=1" class="card-link">배송지 관리</a> <br/>
         <a href="/user/user_pay" class="card-link">결제수단 관리</a> <br/>
         <hr/>
 

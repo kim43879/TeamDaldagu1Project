@@ -85,13 +85,11 @@
 
 
 								<div class="form-group productInfo text-left">
-									<form action="/seller/add_goods_pro" method="post" th:object="${goodsBean}" enctype="multipart/form-data">
+									<form action="/goods/add_goods_pro" method="post" th:object="${addGoodsInfoBean}" enctype="multipart/form-data">
 
 										<div class="form-group hidden-xs" id="fileDrop">
-											<img th:src="@{/img/defaultImg.jpg}" class="img-thumbnail" alt="...">
-											<!-- 지울거 -->
 											<label for="input-img">파일 업로드.</label>
-											<input id="input-img" th:field="*{goods_img}" type="file" accept="image/*">
+											<input id="input-img" th:field="*{goods_img_file}" type="file" accept="image/*">
 										</div>
 
 										<div class="row g-3">
@@ -115,24 +113,21 @@
 														<option value="acc">5. 액세서리</option>
 													</select>
 													<button type="button" class="btn btn-outline-secondary btn_productDist" onclick="inputGoodsTag()">입력</button>
-													<input name="productDist" th:field="*{goods_tag}" class="form-control" readonly>
+													<input type="hidden" name="productDist" th:field="*{goods_tag}" class="form-control" readonly>
 												</div>
 											</div>
 											<br />
 											<div class="col-sm-6">
-												<label>재고</label>
-												<input name="stock" class="form-control">
+												<label>상품정보</label>
+												<textarea class="form-control" th:field="*{goods_info}" required></textarea>
 											</div>
-											<br />
-											<div class="col-sm-6">
-												<label>상품정보</label> <input name="productInfo" value="${productInfo.productInfo}" class="form-control" required>
-											</div>
-											</div>
-											<br />
-											<div class="btns text-center">
-												<button type="submit" class="btn btn-outline-secondary" id="btn_product_insert">상품 등록</button>
-												<button type="button" class="btn btn-outline-secondary" id="btn_product_back">상품 조회</button>
-											</div>
+										</div>
+										<input type="text" th:field="*{seller_idx}">
+										<br />
+										<div class="btns text-center">
+											<button type="submit" class="btn btn-outline-secondary" id="btn_product_insert">상품 등록</button>
+											<button type="button" class="btn btn-outline-secondary" id="btn_product_back">상품 조회</button>
+										</div>
 									</form>
 								</div>
 							</div>

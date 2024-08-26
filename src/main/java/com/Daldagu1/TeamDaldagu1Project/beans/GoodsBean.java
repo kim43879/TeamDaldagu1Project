@@ -14,5 +14,7 @@ public class GoodsBean {
     private int goods_stock;        //상품 재고
     private String goods_available; //상품 삭제여부
 
+    private int seller_idx;
+
     private boolean selling_true;   //상품 판매여부
 }

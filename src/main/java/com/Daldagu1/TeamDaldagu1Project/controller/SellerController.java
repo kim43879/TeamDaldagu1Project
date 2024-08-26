@@ -1,9 +1,6 @@
 package com.Daldagu1.TeamDaldagu1Project.controller;
 
-import com.Daldagu1.TeamDaldagu1Project.beans.GoodsBean;
-import com.Daldagu1.TeamDaldagu1Project.beans.SellerBean;
-import com.Daldagu1.TeamDaldagu1Project.beans.SellerInfoBean;
-import com.Daldagu1.TeamDaldagu1Project.beans.UserBean;
+import com.Daldagu1.TeamDaldagu1Project.beans.*;
 import com.Daldagu1.TeamDaldagu1Project.service.SellerService;
 import com.Daldagu1.TeamDaldagu1Project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +52,9 @@ public class SellerController {
     @GetMapping("/seller_product_insert")
     public String sellerProductInsertForm(@RequestParam("seller_idx") int seller_idx, Model model){
         model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(seller_idx));
-        model.addAttribute("goodsBean", new GoodsBean());
+        AddGoodsInfo tempBean = new AddGoodsInfo();
+        tempBean.setSeller_idx(seller_idx);
+        model.addAttribute("addGoodsInfoBean", tempBean);
         return "seller/seller_product_insert";
     }
 

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          border-width: 1px;
+          border-color: #ddd;
+          border-style: solid;
+          text-align: center;
+        }
+        th, td {
+          border-width: 1px;
+          border-color: #ddd;
+          border-style: solid;
+          padding: 8px;
+          text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h1>판매자 신청 리스트</h1>
+<table>
+    <thead>
+    <tr>
+        <th>인덱스 번호</th>
+        <th>상품 이름</th>
+        <th>상품 태그</th>
+        <th>상품 가격</th>
+        <th>상품 이미지</th>
+        <th>상품 설명</th>
+        <th>승인/거부</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="info : ${addGoodsInfoList}">
+        <td th:text="${info.info_idx}"></td>
+        <td th:text="${info.goods_name}"></td>
+        <td th:text="${info.goods_tag}"></td>
+        <td th:text="${info.goods_price}"></td>
+        <td>
+            <img th:src="@{/img/goods/{fileName}(fileName=${info.goods_img})}" style="width:200px; height:200px;">
+        </td>
+        <td th:text="${info.goods_info}"></td>
+        <td>
+            <input type="hidden" id="info_idx" th:value="${info.info_idx}">
+            <button onclick="submit()">승인</button>/
+            <button onclick="denial()">거부</button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<script>
+    function submit() {
+      $.ajax({
+        type: "post",
+        url: "/rest/approve_goods",
+        data:{info_idx: $("#info_idx").val()},
+        success: function(data){
+          alert("승인되었습니다.");
+          location.reload();
+        }
+      });
+    }
+
+    function denial() {
+      $.ajax({
+        type: "post",
+        url: "/rest/denial_goods",
+        data:{info_idx: $("#info_idx").val()},
+        success: function(data){
+          alert("거부되었습니다.");
+          location.reload();
+        }
+      });
+    }
+</script>
+</body>
+</html>
