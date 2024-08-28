@@ -71,7 +71,7 @@
 					<br />
 
 					<div class="btn-group" role="group"
-						 aria-label="Basic outlined example" th:replace="seller/import/menu_bar.html :: menu">
+						 aria-label="Basic outlined example" th:replace="seller/import/menu_bar.html :: menu(flag=5,seller_idx=${sellerBean.seller_idx})">
 					</div>
 					<hr />
 					<br />
@@ -106,8 +106,8 @@
 									</div>
 									<br />
 									<div class="col-sm-6">
-										<label>상품가격</label> <input name="price"
-											value="${productInfo.price}" class="form-control" required>
+										<label for="price">상품가격</label>
+										<input name="price" id="price" value="${productInfo.price}" class="form-control" required>
 									</div>
 									<br />
 									<br />
@@ -159,8 +159,6 @@
 								</form>
 							</div>
 						</div>
-
-						
 					</div>
 				</div>
 				<!-- class = row -->

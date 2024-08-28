@@ -1,6 +1,7 @@
 package com.Daldagu1.TeamDaldagu1Project.controller;
 
 import com.Daldagu1.TeamDaldagu1Project.beans.AddrBean;
+import com.Daldagu1.TeamDaldagu1Project.beans.SearchBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.UserBean;
 import com.Daldagu1.TeamDaldagu1Project.mapper.UserMapper;
 import com.Daldagu1.TeamDaldagu1Project.service.UserService;
@@ -152,5 +153,10 @@ public class UserController {
     @GetMapping("/user/user_pay")
     public String user_pay(){
         return "user/user_pay";
+    }
+
+    @ModelAttribute("searchBean")
+    public SearchBean getSearchBean() {
+        return new SearchBean();
     }
 }

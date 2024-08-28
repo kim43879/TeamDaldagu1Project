@@ -97,21 +97,17 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr onclick="location.href='/seller/seller_product_read'">
-                                <td>12345</td>
-                                <td>티셔츠</td>
-                                <td>₩20,000</td>
-                                <td>200</td>
-                                <td>상의</td>
+                            <tr onclick="location.href='/seller/seller_product_read'" th:each="goods : ${goodsList}">
+                                <td th:text="${goods.goods_idx}">12345</td>
+                                <td th:text="${goods.goods_name}">티셔츠</td>
+                                <td th:text="${goods.goods_price}">₩20,000</td>
+                                <td th:text="${goods.goods_stock}">200</td>
+                                <td th:text="${goods.goods_tag}">상의</td>
                                 <td>파란티셔츠(동대문)</td>
                                 <td>
-                                    <fmt:formatDate value="${dto.regDate}" type="date"
-                                                    pattern="yyyy-MM-dd"/>
                                     ex)2023-05-08
                                 </td>
                                 <td>
-                                    <fmt:formatDate value="${dto.updateDate}"
-                                                    type="date" pattern="yyyy-MM-dd"/>
                                     ex)2024-06-17
                                 </td>
                             </tr>

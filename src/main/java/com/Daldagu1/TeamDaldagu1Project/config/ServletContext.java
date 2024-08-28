@@ -34,7 +34,7 @@ public class ServletContext implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/**").addResourceLocations("file:src/main/resources/static/");
     }
 
     @Override

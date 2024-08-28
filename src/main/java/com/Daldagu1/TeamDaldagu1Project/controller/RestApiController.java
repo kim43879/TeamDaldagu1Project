@@ -1,9 +1,6 @@
 package com.Daldagu1.TeamDaldagu1Project.controller;
 
-import com.Daldagu1.TeamDaldagu1Project.beans.AddGoodsInfo;
-import com.Daldagu1.TeamDaldagu1Project.beans.GoodsBean;
-import com.Daldagu1.TeamDaldagu1Project.beans.SellerBean;
-import com.Daldagu1.TeamDaldagu1Project.beans.SellerInfoBean;
+import com.Daldagu1.TeamDaldagu1Project.beans.*;
 import com.Daldagu1.TeamDaldagu1Project.service.GoodsService;
 import com.Daldagu1.TeamDaldagu1Project.service.SellerService;
 import com.Daldagu1.TeamDaldagu1Project.service.UserService;

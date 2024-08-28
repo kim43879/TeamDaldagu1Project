@@ -31,6 +31,11 @@ public class SellerService {
         sellerMapper.addSellerJoinInfo(sellerInfoBean);
     }
 
+    //판매자 ID 반환
+    public String getSellerId(int seller_idx){
+        return sellerMapper.getSellerId(seller_idx);
+    }
+
     public void deleteSellerJoinInfo(int user_idx) {
         sellerMapper.deleteSellerJoinInfo(user_idx);
     }

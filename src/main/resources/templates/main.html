@@ -18,6 +18,21 @@
 		max-width: 1200px;
 		max-height: 350;
 	}
+
+    .card-img {
+        display: flex;                 /* Flexbox 활성화 */
+        align-items: center;           /* 수직 중앙 정렬 */
+        justify-content: center;       /* 수평 중앙 정렬 */
+        width: 100%;
+        height: 70%;
+        overflow: hidden;              /* 이미지가 div를 넘어가지 않도록 함 */
+    }
+
+    .card-img img {
+        max-width: 100%;               /* 이미지가 div를 넘어가지 않도록 설정 */
+        max-height: 100%;              /* 이미지가 div를 넘어가지 않도록 설정 */
+        object-fit: contain;           /* 이미지 비율을 유지하면서 적절히 맞춤 */
+    }
 	
 </style>
 </head>
@@ -64,47 +79,17 @@
 
 <!-- 목록1 -->
 <div class="container mt-4">
+    <label>장패드</label>
     <div class="row">
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/sample1.jpg}" class="card-img-top" alt="image" />
-                <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
+        <div class="col-md-3" th:each="goods,stat : ${goodsList1}" th:if="${stat.index < 4}">
+            <div class="card" style="width: 100%; height:100%">
+                <div class="card-img">
+                    <img th:src="@{'/img/goods/' + ${goods.goods_img}}" class="card-img-top" alt="image" />
                 </div>
-            </div>
-        </div>
-        
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/sample1.jpg}" class="card-img-top" alt="image" />
                 <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
-                </div>
-            </div>    
-        </div>
-        
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/sample1.jpg}" class="card-img-top" alt="image" />
-                <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/sample1.jpg}" class="card-img-top" alt="image" />
-                <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
+                    <h5 class="card-title" th:text="${goods.goods_name}">goods_name</h5>
+                    <p class="card-text" th:text="${goods.goods_price}+원">goods_price</p>
+                    <a th:href="@{/goods/goods_page(goods_idx=${goods.goods_idx})}" class="btn btn-outline-info">상품보기</a>
                 </div>
             </div>
         </div>
@@ -114,47 +99,17 @@
 
 <!-- 목록2 -->
 <div class="container mt-4">
+    <label>펫 용품</label>
     <div class="row">
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/sample2.jpg}" class="card-img-top" alt="image" />
-                <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
+        <div class="col-md-3" th:each="goods,stat : ${goodsList2}" th:if="${stat.index < 4}">
+            <div class="card" style="width: 100%; height:100%">
+                <div class="card-img">
+                    <img th:src="@{'/img/goods/' + ${goods.goods_img}}" class="card-img-top" alt="image" />
                 </div>
-            </div>
-        </div>
-        
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/sample2.jpg}" class="card-img-top" alt="image" />
                 <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
-                </div>
-            </div>    
-        </div>
-        
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/sample2.jpg}" class="card-img-top" alt="image" />
-                <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/sample2.jpg}" class="card-img-top" alt="image" />
-                <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
+                    <h5 class="card-title" th:text="${goods.goods_name}">goods_name</h5>
+                    <p class="card-text" th:text="${goods.goods_price}+원">goods_price</p>
+                    <a th:href="@{/goods/goods_page(goods_idx=${goods.goods_idx})}" class="btn btn-outline-info">상품보기</a>
                 </div>
             </div>
         </div>
@@ -164,47 +119,17 @@
 
 <!-- 목록3 -->
 <div class="container mt-4">
+    <label>컵</label>
     <div class="row">
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image" />
-                <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
+        <div class="col-md-3" th:each="goods,stat : ${goodsList3}" th:if="${stat.index < 4}">
+            <div class="card" style="width: 100%; height:100%">
+                <div class="card-img">
+                    <img th:src="@{'/img/goods/' + ${goods.goods_img}}" class="card-img-top" alt="image" />
                 </div>
-            </div>
-        </div>
-        
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image" />
                 <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
-                </div>
-            </div>    
-        </div>
-        
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image" />
-                <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image" />
-                <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
+                    <h5 class="card-title" th:text="${goods.goods_name}">goods_name</h5>
+                    <p class="card-text" th:text="${goods.goods_price}+원">goods_price</p>
+                    <a th:href="@{/goods/goods_page(goods_idx=${goods.goods_idx})}" class="btn btn-outline-info">상품보기</a>
                 </div>
             </div>
         </div>

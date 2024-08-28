@@ -31,6 +31,9 @@ public interface SellerMapper {
     @Select("select * from seller_table where seller_idx = #{seller_idx}")
     SellerBean getSellerByIdx(int seller_idx);
 
+    //판매자 이름 가져오기
+    @Select("select u.user_id from seller_table s, user_table u where u.user_idx = s.user_idx and s.seller_idx = #{seller_idx}")
+    String getSellerId(int seller_idx);
 
     @Update("update user_table set user_role = 'S' where user_idx = #{user_idx}")
     void updateUserRoll(int user_idx);

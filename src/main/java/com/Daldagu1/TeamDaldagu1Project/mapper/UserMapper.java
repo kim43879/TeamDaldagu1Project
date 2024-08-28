@@ -11,7 +11,7 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
-    @Insert("insert into user_table (user_idx, user_id, user_pw, user_name, user_email, user_phone, user_role, user_available, user_daily, user_membership, user_birth)" +
+    @Insert("insert into user_table (user_idx, user_id, user_pw, user_name, user_email, user_phone, user_role, user_available, user_daily, membership_idx, user_birth)" +
             "values (user_seq.nextval, #{user_id}, #{user_pw}, #{user_name}, #{user_email}, #{user_phone}, 'D', 'T', 0, 0, #{user_birth})")
     void addUser(UserBean userBean);
 

@@ -75,7 +75,7 @@
         <div class="col-sm-6 mb-3 mb-sm-0">
             <div class="card">
                 <div class="card-body">
-                    <img th:src="@{/img/sample4.jpg}" class="card-img-top" style="height: 50%;"/>
+                    <img th:src="@{'/img/goods/' + ${goods.goods_img}}" class="card-img-top" style="height: 50%;"/>
                 </div>
             </div>
         </div>
@@ -83,12 +83,12 @@
         <div class="col-sm-6" id="cardd1">
             <div class="card">
                 <div class="card-body">
-                    <a href="/goods/goods_seller" style="text-decoration: none;">판매자1</a> <br/>
+                    <a th:href="@{/goods/goods_seller(seller_idx=${goods.seller_idx})}" th:text="${seller_id}" style="text-decoration: none;">판매자1</a> <br/>
                     <!-- user_name(seller) -->
-                    <h5>상품명: <b>goods_name</b></h5>
+                    <h5>상품명: <b th:text="${goods.goods_name}">goods_name</b></h5>
                     <hr/>
-                    <h6>상품코드: goods_idx</h6>
-                    <h6>금액: <strong>goods_price</strong></h6>
+                    <h6 th:text="'상품코드: ' + ${goods.goods_idx}">상품코드: goods_idx</h6>
+                    <h6>금액: <strong th:text="${goods.goods_price}">goods_price</strong></h6>
                     <h6>적립금: point</h6>
                     <hr/>
 
@@ -99,7 +99,7 @@
                                 <label for="select_option1">옵션1 </label>
                                 &nbsp;
                                 <select class="btn border-secondary dropdown-toggle" id="select_option1"
-                                        onchange="change()">
+                                        th:onclick="change([[${goods.goods_price}]])">
                                     <option selected="selected" value="0">[필수] 옵션을 선택해주세요.</option>
                                     <option value="2000">option1(+2,000) &nbsp;</option>
                                     <option value="3000">option2(+3,000) &nbsp;</option>
@@ -113,7 +113,7 @@
                                 &nbsp;
 
                                 <select class="btn border-secondary dropdown-toggle" id="select_option2"
-                                        onchange="change()">
+                                        th:onclick="change([[${goods.goods_price}]])">
                                     <option value="0" selected="selected">[필수] 옵션을 선택해주세요.</option>
                                     <option value="3000">option1(+3,000) &nbsp;</option>
                                     <option value="4000">option2(+4,000) &nbsp;</option>
@@ -129,7 +129,7 @@
                                 let num = 1;
                                 let totalPrice = 0;
                                 let itemNum = 0;
-                                function change() {
+                                function change(price) {
                                     console.log("changed");
                                     let selectValue1 = $('#select_option1').val();
                                     let selectValue2 = $('#select_option2').val();
@@ -138,10 +138,10 @@
 
                                     if(selectValue1 === "0" || selectValue2 === "0"){}
                                     else{
-                                    let tempPrice = Number(selectValue1) + Number(selectValue2) + 15000;
+                                    let tempPrice = Number(selectValue1) + Number(selectValue2) + price;
                                     var itemDiv = $('<div></div>').addClass('item').attr('id','item' + num);
-                                    var bTag = $('<b></b>').text('goods_name');
-                                    var imgTag = $('<img>').attr('src','/static/btn_price_delete.gif').attr('style','cursor:pointer; margin-left: 70%;').attr('class','delete_btn').attr('onclick','remove_div(' + num + ')');
+                                    var bTag = $('<b></b>').text('[[${goods.goods_name}]]');
+                                    var imgTag = $('<img>').attr('src','[[@{/img/btn_price_delete.gif}]]').attr('style','cursor:pointer; margin-left: 70%;').attr('class','delete_btn').attr('onclick','remove_div(' + num + ')');
                                     var result1Tag = $('<div></div>').attr('id','result' + num).text('-옵션: '+ selectOption1 +' / ' + selectOption2);
                                     var inputTag = $('<input>').attr('type','number').attr('class','btn border-secondary btn-sm').attr('value','1').attr('min','1').attr('max','5').attr('style','margin-top:3px; width: 50px;')
                                     .attr('onchange', 'multi()');
@@ -486,6 +486,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    </div>
     </div>
 </body>
 </html>

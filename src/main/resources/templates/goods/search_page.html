@@ -6,6 +6,7 @@
     <title>달다구리스</title>
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
         .card-main{
             margin-top: 88px;
@@ -41,6 +42,20 @@
 		    width: 80%;
 		    padding-top: 70px; padding-left: 25px;
 	    }
+        .card-img {
+        display: flex;                 /* Flexbox 활성화 */
+        align-items: center;           /* 수직 중앙 정렬 */
+        justify-content: center;       /* 수평 중앙 정렬 */
+        width: 100%;
+        height: 70%;
+        overflow: hidden;              /* 이미지가 div를 넘어가지 않도록 함 */
+        }
+
+        .card-img img {
+            max-width: 100%;               /* 이미지가 div를 넘어가지 않도록 설정 */
+            max-height: 100%;              /* 이미지가 div를 넘어가지 않도록 설정 */
+            object-fit: contain;           /* 이미지 비율을 유지하면서 적절히 맞춤 */
+        }
     </style>
 </head>
 <body>
@@ -58,40 +73,53 @@
     <div class="card-header">
         <h6><b>《상품검색》</b></h6>
     </div>
-        <form action="/">
+        <form action="/goods/search_page" method="post" th:object="${searchBean}">
         <div class="card-body">
             <div class="select-group" style="text-align:center;">
-                <span><b>검색단어:</b> "입력내용"</span>
+                <span>
+                    <label for="search_keyword"><b>검색어:</b></label>
+                    <input type="text" id="search_keyword" class="form-control border-secondary" th:field="*{searchKeyword}">
+                </span>
                 <hr />
 
                 <div class="form-group" style="text-align:center;">
-                    <label for="search_option1">상품분류</label> &nbsp;
-                    <select class="btn border-secondary dropdown-toggle" id="search_option1" onchange="search()">
-                        <option selected="selected">-</option>
-                        <option value="opt1">브랜드1</option>
-                        <option value="opt2">브랜드2</option>
-                        <option value="opt3">브랜드3</option>
+                    <label for="search_tag">상품분류</label> &nbsp;
+                    <select class="btn border-secondary dropdown-toggle" id="search_tag" th:field="*{searchCategory}">
+                        <option selected="selected" value="전체">전체카테고리</option>
+                        <option value="장패드">장패드</option>
+                        <option value="컵">컵</option>
+                        <option value="액세서리">액세서리</option>
+                        <option value="파우치">파우치</option>
+                        <option value="펫 용품">펫 용품</option>
+                        <option value="홈 리빙">홈 리빙</option>
                     </select>
                 </div>
 
                 <div class="mb-3" style="margin-left:39%;">
                     <div class="d-flex align-items-center" id="search_price">
-                        <label for="search_option1">가격대</label> &nbsp;
-                        <input type="text" class="form-control border-secondary" style="width: 100px;">
+                        <label for="searchPrice">가격대</label> &nbsp;
+                        <input type="text" class="form-control border-secondary" id="searchPrice" th:field="*{searchMinPrice}" style="width: 100px;">
                             &nbsp;<span>~</span>
-                        &nbsp;
-                        <input type="text" class="form-control border-secondary" style="width: 100px;">
+                        <input type="text" class="form-control border-secondary" th:field="*{searchMaxPrice}" style="width: 100px;">
                     </div>
                 </div>
 
                 <div class="form-group" style="text-align:center;">
                     <label for="search_sort">정렬기준</label> &nbsp;
-                    <select class="btn border-secondary dropdown-toggle" id="search_sort" onchange="search()">
-                        <option selected="selected">-</option>
-                        <option value="opt1">상품명순</option>
-                        <option value="opt2">낮은가격순</option>
-                        <option value="opt3">높은가격순</option>
-                        <option value="opt3">조회수순</option>
+                    <select class="btn border-secondary dropdown-toggle" id="search_sort" th:field="*{sortType}">
+                        <option value="goods_name">상품명순</option>
+                        <option value="goods_price1">낮은가격순</option>
+                        <option value="goods_price2">높은가격순</option>
+                        <option value="4">조회수순</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="show_count">표시 개수</label>
+                    <select class="btn border-secondary dropdown-toggle" id="show_count" th:field="*{showCount}">
+                        <option value="8">8개</option>
+                        <option value="16">16개</option>
+                        <option value="24">24개</option>
                     </select>
                 </div>
 
@@ -113,107 +141,47 @@
         <b class="space">n개의 판매작품</b> &emsp;
     </div>
     <hr />
-
     <div class="row">
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/search1.jpg}">
+        <div class="col-md-3" th:each="goods,index : ${searchGoodsList}">
+            <div class="card" style="width: 100%; height: 100%;">
+                <div class="card-img">
+                    <img th:src="@{'/img/goods/' + ${goods.goods_img}}" class="card-img-top" alt="image" />
+                </div>
                 <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="goods_page.html" class="btn btn-outline-info">상품보기</a>
+                    <h5 class="card-title" th:text="${goods.goods_name}">goods_name</h5>
+                    <p class="card-text" th:text="${goods.goods_price}+원">goods_price</p>
+                    <a th:href="@{/goods/goods_page(goods_idx=${goods.goods_idx})}" class="btn btn-outline-info">상품보기</a>
                 </div>
             </div>
+            <div th:if="${(index.index + 1) % 4 == 0}" class="w-100"></div>
         </div>
-
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/search1.jpg}">
-                <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="goods_page.html" class="btn btn-outline-info">상품보기</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/search1.jpg}">
-                <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="goods_page.html" class="btn btn-outline-info">상품보기</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/search1.jpg}">
-                <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="goods_page.html" class="btn btn-outline-info">상품보기</a>
-                </div>
-            </div>
-        </div>
-
     </div>
 </div>
-<br/>
-
-<!--출력 상품1-->
-<div class="container mt-4">
-    <div class="row">
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/search2.jpg}">
-                <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="goods_page.html" class="btn btn-outline-info">상품보기</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/search2.jpg}">
-                <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="goods_page.html" class="btn btn-outline-info">상품보기</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/search2.jpg}">
-                <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="goods_page.html" class="btn btn-outline-info">상품보기</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/search2.jpg}">
-                <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="goods_page.html" class="btn btn-outline-info">상품보기</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
+<br>
+<hr/>
+<div>
+    <ul>
+        <li>
+            <a onclick="pageMove()">이전</a>
+        </li>
+    </ul>
 </div>
-<br />
-<hr />
+
+<script>
+    function pageMove(){
+        $.ajax({
+            url: "/goods/search_page",
+            type: "post",
+            data: {
+                currentPage: [[${page}]],
+                searchBean: [[${searchBean}]]
+            },
+            success: function(data) {
+
+            }
+        })
+    }
+</script>
 
 <!-- 하단 -->
 <div id="footer">
