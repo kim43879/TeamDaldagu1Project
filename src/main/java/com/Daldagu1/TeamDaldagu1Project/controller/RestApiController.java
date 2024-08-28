@@ -1,7 +1,10 @@
 package com.Daldagu1.TeamDaldagu1Project.controller;
 
+import com.Daldagu1.TeamDaldagu1Project.beans.AddGoodsInfo;
+import com.Daldagu1.TeamDaldagu1Project.beans.GoodsBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.SellerBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.SellerInfoBean;
+import com.Daldagu1.TeamDaldagu1Project.service.GoodsService;
 import com.Daldagu1.TeamDaldagu1Project.service.SellerService;
 import com.Daldagu1.TeamDaldagu1Project.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,9 @@ public class RestApiController {
 
     @Autowired
     private SellerService sellerService;
+
+    @Autowired
+    private GoodsService goodsService;
 
     @PostMapping("/rest/idCheck")
     public String IdCheck(@RequestParam("user_id")String user_id){
@@ -47,9 +53,23 @@ public class RestApiController {
         sellerService.deleteSellerJoinInfo(user_idx);
     }
 
-    @GetMapping("/rest/deleteAddress")
-    public void deleteUserAddr(@RequestParam("addr_idx") int addr_idx) {
-        System.out.println(addr_idx);
-        userService.deleteUserAddr(addr_idx);
+    @PostMapping("/rest/approve_goods")
+    public void approve_goods(@RequestParam("info_idx") int info_idx){
+        AddGoodsInfo tempGoodsInfoBean = goodsService.getAddGoodsInfo(info_idx);
+        GoodsBean tempGoodsBean = new GoodsBean();
+
+        tempGoodsBean.setGoods_name(tempGoodsInfoBean.getGoods_name());
+        tempGoodsBean.setGoods_tag(tempGoodsInfoBean.getGoods_tag());
+        tempGoodsBean.setGoods_price(tempGoodsInfoBean.getGoods_price());
+        tempGoodsBean.setGoods_img(tempGoodsInfoBean.getGoods_img());
+        tempGoodsBean.setSeller_idx(tempGoodsInfoBean.getSeller_idx());
+
+        goodsService.addGoodsInfo(tempGoodsBean);
+        goodsService.deleteAddGoodsInfo(info_idx);
+    }
+
+    @PostMapping("/rest/denial_goods")
+    public void denial_goods(@RequestParam("info_idx") int info_idx){
+        goodsService.deleteAddGoodsInfo(info_idx);
     }
 }
