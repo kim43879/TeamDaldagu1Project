@@ -38,10 +38,6 @@ public class HomeController {
             model.addAttribute("goodsList" + i, goodsList);
         }
 
-
-        model.addAttribute("goods", goodsService.getPurchaseGoods(12));
-
-
         return "main";
     }
 
