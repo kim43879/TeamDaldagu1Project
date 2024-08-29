@@ -77,7 +77,7 @@ public class GoodsService {
 
         int start = (page - 1) * searchBean.getShowCount();
 
-        RowBounds rowBounds = new RowBounds(start,searchBean.getShowCount());
+        RowBounds rowBounds = new RowBounds(start,(start + searchBean.getShowCount()));
 
         if(searchBean.getSearchCategory().equals("전체")){
             searchBean.setSearchCategory("%");
@@ -85,6 +85,9 @@ public class GoodsService {
         if(searchBean.getSearchMaxPrice() == 0){
             searchBean.setSearchMaxPrice(Integer.MAX_VALUE);
         }
+
+        searchBean.showField();
+
         if(searchBean.getSortType().equals("goods_price1")){
             return goodsMapper.searchGoodsListOrder_price1(searchBean, rowBounds);
         }else if(searchBean.getSortType().equals("goods_price2")){
@@ -109,5 +112,15 @@ public class GoodsService {
             return new PageBean(goodsMapper.searchGoodsListOrder_price2Cnt(searchBean), currentPage, searchBean.getShowCount(), paginationCnt);
         }
         return new PageBean(goodsMapper.searchGoodsListCnt(searchBean),currentPage,searchBean.getShowCount(),paginationCnt);
+    }
+
+    public int getTotalGoodsCnt(SearchBean searchBean){
+        if(searchBean.getSearchCategory().equals("goods_price1")){
+            return goodsMapper.searchGoodsListOrder_priceCnt(searchBean);
+        }
+        else if(searchBean.getSearchCategory().equals("goods_price2")){
+            return goodsMapper.searchGoodsListOrder_price2Cnt(searchBean);
+        }
+        return goodsMapper.searchGoodsListCnt(searchBean);
     }
 }

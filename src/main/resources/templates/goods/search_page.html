@@ -7,6 +7,7 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <style>
         .card-main{
             margin-top: 88px;
@@ -138,18 +139,18 @@
 <!--출력 상품1-->
 <div class="container mt-12">
     <div class="row" style="margin-left: 10px;">
-        <b class="space">n개의 판매작품</b> &emsp;
+        <b class="space" th:text="${totalGoodsNum} + '개의 판매작품'">n개의 판매작품</b> &emsp;
     </div>
     <hr />
     <div class="row">
-        <div class="col-md-3" th:each="goods,index : ${searchGoodsList}">
+        <div class="col-md-3" th:each="goods,index : ${searchGoodsList}" style="margin-top:30px">
             <div class="card" style="width: 100%; height: 100%;">
                 <div class="card-img">
                     <img th:src="@{'/img/goods/' + ${goods.goods_img}}" class="card-img-top" alt="image" />
                 </div>
                 <div class="card-body">
                     <h5 class="card-title" th:text="${goods.goods_name}">goods_name</h5>
-                    <p class="card-text" th:text="${goods.goods_price}+원">goods_price</p>
+                    <p class="card-text" th:text="${goods.goods_price} + 원">goods_price</p>
                     <a th:href="@{/goods/goods_page(goods_idx=${goods.goods_idx})}" class="btn btn-outline-info">상품보기</a>
                 </div>
             </div>
@@ -158,28 +159,46 @@
     </div>
 </div>
 <br>
-<hr/>
-<div>
-    <ul>
-        <li>
-            <a onclick="pageMove()">이전</a>
+<div class="d-none d-md-block">
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <a class="page-link" th:onclick="pageMove([[${pageBean.prevPage}]])">이전</a>
+        </li>
+        <li class="page-item" th:each="num : ${#numbers.sequence(pageBean.min,pageBean.max)}">
+            <a class="page-link" th:onclick="pageMove([[${num}]])" th:text="${num}" th:if="${num == page}" style="background-color:gray"></a>
+            <a class="page-link" th:onclick="pageMove([[${num}]])" th:text="${num}" th:if="${num != page}"></a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" th:onclick="pageMove([[${pageBean.nextPage}]])">다음</a>
         </li>
     </ul>
 </div>
+<hr/>
 
-<script>
-    function pageMove(){
-        $.ajax({
-            url: "/goods/search_page",
-            type: "post",
-            data: {
-                currentPage: [[${page}]],
-                searchBean: [[${searchBean}]]
-            },
-            success: function(data) {
+<script th:inline="javascript">
+    function pageMove(nextPage){
+        console.log(nextPage);
+        console.log([[${searchBean.searchKeyword}]]);
 
-            }
-        })
+        // URL 인코딩을 위해 encodeURIComponent 사용
+        var searchKeyword = /*[[${searchBean.searchKeyword}]]*/'';
+        var searchCategory = /*[[${searchBean.searchCategory}]]*/'';
+        var searchMinPrice = /*[[${searchBean.searchMinPrice}]]*/'';
+        var searchMaxPrice = /*[[${searchBean.searchMaxPrice}]]*/'';
+        var sortType = /*[[${searchBean.sortType}]]*/'';
+        var showCount = /*[[${searchBean.showCount}]]*/'';
+
+        // 동적으로 URL을 생성
+        var url = `/goods/search_page/get?page=${nextPage}&` +
+                  `k=${encodeURIComponent(searchKeyword)}&` +
+                  `c=${encodeURIComponent(searchCategory)}&` +
+                  `min=${searchMinPrice}&` +
+                  `max=${searchMaxPrice}&` +
+                  `s=${encodeURIComponent(sortType)}&` +
+                  `sc=${showCount}`;
+
+        // 페이지 리다이렉트
+        location.href = url;
     }
 </script>
 

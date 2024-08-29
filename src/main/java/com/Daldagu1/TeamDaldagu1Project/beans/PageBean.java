@@ -16,6 +16,13 @@ public class PageBean {
 
     private int currentPage;
 
+
+    /*
+    goodsCnt = 13
+    currentPage = 1
+    goodsPageCnt = 8
+    paginationCnt = 10
+     */
     public PageBean(int goodsCnt, int currentPage, int goodsPageCnt, int paginationCnt) {
         this.currentPage = currentPage;
         this.pageCnt = goodsCnt/goodsPageCnt;
@@ -23,7 +30,7 @@ public class PageBean {
         if(goodsCnt % goodsPageCnt > 0){
             pageCnt++;
         }
-        min = ((goodsCnt-1)/goodsPageCnt) * goodsPageCnt + 1;
+        min = ((currentPage-1)/goodsPageCnt) * goodsPageCnt + 1;
 
         max = min + paginationCnt - 1;
         if (max > this.pageCnt){
@@ -31,7 +38,7 @@ public class PageBean {
         }
 
         prevPage = min - 1;
-        if(min <= 0){
+        if(prevPage < 1){
             prevPage = 1;
         }
 

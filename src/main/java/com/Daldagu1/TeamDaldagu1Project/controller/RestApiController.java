@@ -4,8 +4,18 @@ import com.Daldagu1.TeamDaldagu1Project.beans.*;
 import com.Daldagu1.TeamDaldagu1Project.service.GoodsService;
 import com.Daldagu1.TeamDaldagu1Project.service.SellerService;
 import com.Daldagu1.TeamDaldagu1Project.service.UserService;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class RestApiController {
@@ -68,5 +78,28 @@ public class RestApiController {
     @PostMapping("/rest/denial_goods")
     public void denial_goods(@RequestParam("info_idx") int info_idx){
         goodsService.deleteAddGoodsInfo(info_idx);
+    }
+
+    @PostMapping("/rest/page_move")
+    public void page_move(@RequestBody HashMap<String,Object> jsonObj, Model model, RedirectAttributes redirectAttributes,HttpServletResponse response){
+
+        Map<String,Object> tempSearchBean = (HashMap<String,Object>) jsonObj.get("searchBean");
+
+        SearchBean searchBean = new SearchBean();
+        searchBean.setSearchKeyword((String)tempSearchBean.get("searchKeyword"));
+        searchBean.setSearchCategory((String) tempSearchBean.get("searchCategory"));
+        searchBean.setSearchMinPrice((Integer) tempSearchBean.get("searchMinPrice"));
+        searchBean.setSearchMaxPrice((Integer) tempSearchBean.get("searchMaxPrice"));
+        searchBean.setSortType((String) tempSearchBean.get("sortType"));
+        searchBean.setShowCount((Integer) tempSearchBean.get("showCount"));
+
+        redirectAttributes.addAttribute("page",jsonObj.get("currentPage"));
+        redirectAttributes.addAttribute("searchBean", searchBean);
+
+        try {
+            response.sendRedirect("goods/search_page/get");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
