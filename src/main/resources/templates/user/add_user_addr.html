@@ -88,13 +88,12 @@
         </script>
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <button type="reset" class="btn btn-outline-warning btn-sm-sm">취소</button>
+        <button type="reset" class="btn btn-outline-warning btn-sm-sm" onclick="closePop_up">취소</button>
         &emsp;
         <button type="submit" class="btn btn-outline-success btn-sm-sm">주소입력</button>
     </div>
     <script>
-        function add_addr() {
-            alert("주소를 추가했습니다.");
+        function closePop_up() {
             window.close();
         }
     </script>

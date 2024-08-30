@@ -130,42 +130,6 @@ public class UserController {
         return "user/user_info";
     }
 
-    @GetMapping("/user/user_addr")
-    public String user_addr(@RequestParam("user_idx") int user_idx, Model model){
-
-        List<AddrBean> testAddr = userService.getExtraUserAddr(user_idx);
-        model.addAttribute("testAddr", testAddr);
-
-        return "user/user_addr";
-    }
-
-    @GetMapping("/user/add_user_addr")
-    public String add_user_addr(Model model){
-        AddrBean addrBean = new AddrBean();
-        addrBean.setUser_idx(loginUserBean.getUser_idx());
-
-        model.addAttribute("addrBean", addrBean);
-
-        return "user/add_user_addr";
-    }
-
-    @PostMapping("/user/add_user_addr/add")
-    public String add_user_addr_add(@ModelAttribute("addrBean") AddrBean addrBean){
-        userService.addAddr(addrBean);
-
-        return "redirect:user/status/add_addr_success";
-    }
-    @PostMapping("/controller")
-    public void addr_update(HttpServletRequest request) {
-
-        String user_name = request.getParameter("user_name");
-        String user_phone = request.getParameter("user_phone");
-        String user_post = request.getParameter("user_post");
-        String user_addr = request.getParameter("user_addr");
-        String user_addr_detail = request.getParameter("user_addr_detail");
-
-    }
-
     @GetMapping("/user/user_pay")
     public String user_pay(){
         return "user/user_pay";

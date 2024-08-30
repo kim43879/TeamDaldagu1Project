@@ -1,6 +1,7 @@
 package com.Daldagu1.TeamDaldagu1Project.controller;
 
 import com.Daldagu1.TeamDaldagu1Project.beans.*;
+import com.Daldagu1.TeamDaldagu1Project.service.AddrService;
 import com.Daldagu1.TeamDaldagu1Project.service.GoodsService;
 import com.Daldagu1.TeamDaldagu1Project.service.SellerService;
 import com.Daldagu1.TeamDaldagu1Project.service.UserService;
@@ -28,6 +29,9 @@ public class RestApiController {
 
     @Autowired
     private GoodsService goodsService;
+
+    @Autowired
+    private AddrService addrService;
 
     @PostMapping("/rest/idCheck")
     public String IdCheck(@RequestParam("user_id")String user_id){
@@ -80,26 +84,15 @@ public class RestApiController {
         goodsService.deleteAddGoodsInfo(info_idx);
     }
 
-    @PostMapping("/rest/page_move")
-    public void page_move(@RequestBody HashMap<String,Object> jsonObj, Model model, RedirectAttributes redirectAttributes,HttpServletResponse response){
+    @PostMapping(value = "/rest/delete_addr", produces = "text/plain; charset=UTF-8")
+    public String delete_addr(@RequestParam("addr_idx") int addr_idx){
 
-        Map<String,Object> tempSearchBean = (HashMap<String,Object>) jsonObj.get("searchBean");
+        AddrBean tempAddrBean = addrService.getAddrByAddrIdx(addr_idx);
 
-        SearchBean searchBean = new SearchBean();
-        searchBean.setSearchKeyword((String)tempSearchBean.get("searchKeyword"));
-        searchBean.setSearchCategory((String) tempSearchBean.get("searchCategory"));
-        searchBean.setSearchMinPrice((Integer) tempSearchBean.get("searchMinPrice"));
-        searchBean.setSearchMaxPrice((Integer) tempSearchBean.get("searchMaxPrice"));
-        searchBean.setSortType((String) tempSearchBean.get("sortType"));
-        searchBean.setShowCount((Integer) tempSearchBean.get("showCount"));
-
-        redirectAttributes.addAttribute("page",jsonObj.get("currentPage"));
-        redirectAttributes.addAttribute("searchBean", searchBean);
-
-        try {
-            response.sendRedirect("goods/search_page/get");
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(tempAddrBean.getAddr_main().equals("F")){
+            addrService.deleteAddr(addr_idx);
+            return "삭제했습니다.";
         }
+        return "기본 주소지는 삭제할 수 없습니다.";
     }
 }

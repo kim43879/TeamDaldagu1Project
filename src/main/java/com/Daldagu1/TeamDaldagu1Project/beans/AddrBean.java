@@ -21,6 +21,7 @@ public class AddrBean {
     private String message;
 
     public void showField(){
+        System.out.println("addr_idx : " + addr_idx);
         System.out.println("user_idx : " + user_idx);
         System.out.println("user_addr : " + user_addr);
         System.out.println("user_addr1 : " + user_addr1);
