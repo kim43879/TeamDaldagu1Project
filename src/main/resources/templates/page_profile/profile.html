@@ -129,7 +129,7 @@
 
         <h6 style="border: thin;"><b>나의 정보</b></h6>
         <a href="/user/user_info" class="card-link">회원정보 관리</a> <br/>
-        <a href="/user/user_addr?user_idx=1" class="card-link">배송지 관리</a> <br/>
+        <a th:href="@{/user/user_addr(user_idx=${loginUserBean.user_idx})}" class="card-link">배송지 관리</a> <br/>
         <a href="/user/user_pay" class="card-link">결제수단 관리</a> <br/>
         <hr/>
 

@@ -139,6 +139,22 @@ public class UserController {
         return "user/user_addr";
     }
 
+    @GetMapping("/user/add_user_addr")
+    public String add_user_addr(Model model){
+        AddrBean addrBean = new AddrBean();
+        addrBean.setUser_idx(loginUserBean.getUser_idx());
+
+        model.addAttribute("addrBean", addrBean);
+
+        return "user/add_user_addr";
+    }
+
+    @PostMapping("/user/add_user_addr/add")
+    public String add_user_addr_add(@ModelAttribute("addrBean") AddrBean addrBean){
+        userService.addAddr(addrBean);
+
+        return "redirect:user/status/add_addr_success";
+    }
     @PostMapping("/controller")
     public void addr_update(HttpServletRequest request) {
 

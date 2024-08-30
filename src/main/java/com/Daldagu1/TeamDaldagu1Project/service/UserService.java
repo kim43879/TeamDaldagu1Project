@@ -44,6 +44,13 @@ public class UserService {
         userMapper.addAddr(addrBean);
     }
 
+    public void addAddr(AddrBean addrBean){
+        addrBean.setUser_addr(addrBean.getUser_addr1() + ", " + addrBean.getUser_addr2());
+        addrBean.setAddr_main("F");
+        addrBean.showField();
+        userMapper.addAddr(addrBean);
+    }
+
     public String getUserId(String user_id){
         return userMapper.getUserId(user_id);
     }
