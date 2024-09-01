@@ -50,8 +50,9 @@ public class AddrController {
     }
 
     @PostMapping("/user/add_user_addr/add")
-    public String add_user_addr_add(@ModelAttribute("addrBean") AddrBean addrBean){
-        addrService.addAddr(addrBean);
+    public String add_user_addr_add(@ModelAttribute("addrBean") AddrBean addrBean, Model model){
+        String message = addrService.addAddr(addrBean);
+        model.addAttribute("message", message);
 
         return "user/status/add_addr_success";
     }
@@ -69,7 +70,7 @@ public class AddrController {
     }
 
     @PostMapping("/user/update_user_addr/update")
-    public String update_user_addr_update(@ModelAttribute("addrBean") AddrBean addrBean, @RequestParam("addr_idx") int addr_idx){
+    public String update_user_addr_update(@ModelAttribute("addrBean") AddrBean addrBean, @RequestParam("addr_idx") int addr_idx,Model model){
 
         addrBean.showField();
 
@@ -78,6 +79,9 @@ public class AddrController {
         else
             addrService.unMainAddr(addrBean.getUser_idx());
         addrService.updateAddr(addrBean);
+
+        model.addAttribute("message","배송지 정보 수정이 완료되었습니다.");
+
         return "user/status/add_addr_success";
     }
 

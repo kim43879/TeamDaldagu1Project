@@ -8,8 +8,8 @@ import java.util.List;
 @Mapper
 public interface AddrMapper {
     //배송지 추가
-    @Insert("insert into addr_table (addr_idx, user_idx, user_addr, user_post, addr_available, addr_name, addr_main, addr_phone)" +
-            "values (addr_seq.nextval, #{user_idx}, #{user_addr}, #{user_post}, 'T', #{addr_name}, #{addr_main}, #{addr_phone} )")
+    @Insert("insert into addr_table (addr_idx, user_idx, user_addr, user_post, addr_name, addr_main, addr_phone)" +
+            "values (addr_seq.nextval, #{user_idx}, #{user_addr}, #{user_post}, #{addr_name}, #{addr_main}, #{addr_phone} )")
     void addAddr(AddrBean addrBean);
 
     //배송지 호출
@@ -34,4 +34,8 @@ public interface AddrMapper {
 
     @Delete("delete from addr_table where addr_idx = #{addr_idx}")
     void deleteAddr(int addr_idx);
+
+    //유저가 가진 배송지 갯수 가져오기(배송지정보는 유저당 3개까지만 등록가능)
+    @Select("select count(*) from addr_table where user_idx = #{user_idx}")
+    int getAddrCount(int uesr_idx);
 }

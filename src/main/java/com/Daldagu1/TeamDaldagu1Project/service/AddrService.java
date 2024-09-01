@@ -13,11 +13,15 @@ public class AddrService {
     @Autowired
     private AddrMapper addrMapper;
 
-    public void addAddr(AddrBean addrBean){
-        addrBean.setUser_addr(addrBean.getUser_addr1() + ", " + addrBean.getUser_addr2());
-        addrBean.setAddr_main("F");
-        addrBean.showField();
-        addrMapper.addAddr(addrBean);
+    public String addAddr(AddrBean addrBean){
+        if(addrMapper.getAddrCount(addrBean.getUser_idx()) <= 3) {
+            addrBean.setUser_addr(addrBean.getUser_addr1() + ", " + addrBean.getUser_addr2());
+            addrBean.setAddr_main("F");
+            addrBean.showField();
+            addrMapper.addAddr(addrBean);
+            return "성공적으로 배송지 등록을 마쳤습니다.";
+        }
+        return "배송지정보는 3개 까지 등록할 수 있습니다.";
     }
 
     //배송지 호출

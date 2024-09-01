@@ -5,18 +5,10 @@ import com.Daldagu1.TeamDaldagu1Project.service.AddrService;
 import com.Daldagu1.TeamDaldagu1Project.service.GoodsService;
 import com.Daldagu1.TeamDaldagu1Project.service.SellerService;
 import com.Daldagu1.TeamDaldagu1Project.service.UserService;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import com.Daldagu1.TeamDaldagu1Project.service.WishService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 public class RestApiController {
@@ -33,6 +25,9 @@ public class RestApiController {
     @Autowired
     private AddrService addrService;
 
+    @Autowired
+    private WishService wishService;
+
     @PostMapping("/rest/idCheck")
     public String IdCheck(@RequestParam("user_id")String user_id){
         String db_id = userService.getUserId(user_id);
@@ -43,6 +38,7 @@ public class RestApiController {
         }
     }
 
+    //판매자 승인
     @PostMapping("/rest/approve_seller")
     public void approveSeller(@RequestParam("user_idx") int user_idx){
         if(userService.getUserbyIdx(user_idx).getUser_role().equals("S")){}
@@ -59,11 +55,13 @@ public class RestApiController {
         }
     }
 
+    //판매자 반려
     @PostMapping("/rest/denial_seller")
     public void denialSeller(@RequestParam("user_idx") int user_idx){
         sellerService.deleteSellerJoinInfo(user_idx);
     }
 
+    //승인
     @PostMapping("/rest/approve_goods")
     public void approve_goods(@RequestParam("info_idx") int info_idx){
         AddGoodsInfo tempGoodsInfoBean = goodsService.getAddGoodsInfo(info_idx);
@@ -79,11 +77,19 @@ public class RestApiController {
         goodsService.deleteAddGoodsInfo(info_idx);
     }
 
+    //굿즈 반려
     @PostMapping("/rest/denial_goods")
     public void denial_goods(@RequestParam("info_idx") int info_idx){
         goodsService.deleteAddGoodsInfo(info_idx);
     }
 
+    //찜 삭제
+    @PostMapping("/rest/delete_wish")
+    public void delete_wish(@RequestParam("wish_idx") int wish_idx) {
+        wishService.deleteUserWish(wish_idx);
+    }
+
+    //주소 삭제
     @PostMapping(value = "/rest/delete_addr", produces = "text/plain; charset=UTF-8")
     public String delete_addr(@RequestParam("addr_idx") int addr_idx){
 
@@ -95,4 +101,5 @@ public class RestApiController {
         }
         return "기본 주소지는 삭제할 수 없습니다.";
     }
+
 }

@@ -32,11 +32,7 @@
             padding-top: 70px; padding-left: 25px;
         }
         #cardd1{
-            padding-left: 50px;
-        }
-        #card1{
-            margin-top: -80px;
-            margin-bottom: 10px;
+            width: 65%;
         }
         .mb-12 {
             height: 200px;
@@ -57,7 +53,7 @@
         #show_div{
             position: absolute;
             width: 30%;
-            left: 650px; top: 250px;
+            left: 640px; top: 250px;
             border: 1px solid light-gray;
             border-radius: 3px;
             z-index: 10000;
@@ -103,7 +99,7 @@
 
 </div>
 
-<!-- 목록1 -->
+<!-- 상품선택 -->
 <div class="container mt-4" id="cardd">
     <div class="row">
         <div class="col-sm-6 mb-3 mb-sm-0">
@@ -116,12 +112,12 @@
 
         <div class="col-sm-6" id="cardd1">
             <div class="card">
-                <div class="card-body">
+                <div class="card-body" style="margin-left: 5%; margin-right: 5%">
                     <a th:href="@{/goods/goods_seller(seller_idx=${goods.seller_idx})}" th:text="${seller_id}" style="text-decoration: none;">판매자1</a> <br/>
                     <!-- user_name(seller) -->
                     <h5>상품명: <b th:text="${goods.goods_name}">goods_name</b></h5>
                     <hr/>
-                    <h6 th:text="'상품코드: ' + ${goods.goods_idx}">상품코드: goods_idx</h6>
+                    <h6 th:text="'상품코드: ' + ${goods.goods_idx}" style="display: none;">상품코드: goods_idx</h6>
                     <h6>금액: <strong th:text="${goods.goods_price}">goods_price</strong></h6>
                     <h6>적립금: point</h6>
                     <hr/>
@@ -206,16 +202,24 @@
                                 }
                             </script>
 
-
                             <p>*총 상품금액(수량): <strong id="total-price">0원</strong><span id="item-num">(0개)</span></p>
                             <hr/>
 
+                            <button class="btn btn-outline-warning" type="button" onclick="wish_message()">관심상품</button>
+                            &ensp;
                             <button class="btn btn-outline-primary position-relative" type="button" onclick="show_div()">
                                 장바구니
                             </button>
                             &ensp;
                             <a href="/goods/goods_buy" class="btn btn-outline-info" onclick="buy()">구매하기</a>
-                            &ensp;
+
+                            <script>
+                                function wish_message() {
+                                    var result = confirm("관심상품에 추가되었습니다. 확인하시겠습니까?");
+
+                                    location.href= '/user/add_user_wish?goods_idx=' + [[${goods.goods_idx}]] + '&user_idx=' + [[${user_idx}]] + '&result=' + result;
+                                }
+                            </script>
 
                             <script>
                                 function show_div() {
@@ -236,260 +240,173 @@
                 </div>
             </div>
         </div>
-        <br/>
-        <hr/>
+    </div>
+</div>
+<br/>
+<hr/>
 
-        <!-- 상품 상세 -->
-        <div class="container" id="text">
-            <div class="col-sm-8"></div>
-            <div class="col-sm-12">
+<!-- 상품 상세 -->
+<div class="container" id="text">
+    <div class="col-sm-8"></div>
+    <div class="col-sm-12">
+        <div class="card-body">
+            <p>
+                <img class="resize" th:src="@{/img/asd.jpg}" alt=""/>
+            </p>
+
+            <!-- goods_text -->
+
+            이제 눈을 떠 새로운 세상을 보아라 <br/>
+            일어나리라 <br/>
+            내게 저주를 퍼부어라 <br/>
+            신과 맞서 싸워 난 정복하리라 <br/>
+            새생명의 시대 <br/>
+
+            <br/>
+
+            "눈을 떠, 제발, 제발 깨어나" <br/>
+
+            <br/>
+
+            지옥을 탈출한 영혼이여 <br/>
+            번개가 내리친 생명체여 <br/>
+            너의 창조주가 명하노니 <br/>
+            눈을 떠라 일어나라 깨어나 <br/>
+
+        </div>
+    </div>
+</div>
+<hr/>
+
+<!-- 상품리뷰 -->
+<div class="container">
+    <h6><b>《상품 리뷰》</b></h6>
+    <div class="card mb-12">
+        <div class="row" id="review">
+
+            <div class="col-md-8">
+                <div class="card-body" style="text-align: center;">
+                    &emsp;<b>등록된 리뷰가 없습니다.</b>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <br/>
+
+    <div class="card mb-12">
+        <div class="row">
+
+            <div class="col-md-3" style="width: 5%;">
+                <img th:src="@{/img/sample5.jpg}" id="img" class="img-fluid rounded-start"/>
+            </div>
+
+            <div class="col-md-8">
                 <div class="card-body">
-                    <p>
-                        <img class="resize" th:src="@{/img/asd.jpg}" alt=""/>
-                    </p>
-
-                    <!-- goods_text -->
-                    위대한 생명창조의 역사가 시작된다 <br/>
-                    인간의 한계를 극복하려는 강한 의지 <br/>
-                    창조주의 섭리에 맞서 굴복 당했던 <br/>
-                    인간의 허물을 벗는 순간 <br/>
-                    이 순간부터 나를 창조주라 부를지어다 <br/>
-
-                    <br/>
-
-                    내면에 감춰진 두려움 외면하고 <br/>
-                    한발짝 다가서는 신의 은밀한 비밀 <br/>
-                    죽음의 천사를 잠재우는 그 열쇠 <br/>
-                    태초에 그랬던 것처럼 <br/>
-                    빛이 있으리니 천둥번개여 휘몰아쳐라 <br/>
-
-                    <br/>
-
-                    신이여 축복을 아니면 차라리 <br/>
-                    내게 저주를 퍼부어라 <br/>
-                    신과 맞서 싸운 나는 프랑켄슈타인 <br/>
-
-                    <br/>
-
-                    생명은 어차피 우연의 소산물 <br/>
-                    신의 섭리 같은 운명따윈 없다 <br/>
-                    살인 전쟁 목적 없는 파괴 <br/>
-                    자멸하는 인간들의 선택 <br/>
-                    발전 없이 반복되는 역사 <br/>
-                    피해갈 수 없는 멸종 위기 <br/>
-                    빠져드는 미신들의 유혹 <br/>
-                    파렴치한 종교인의 위선 <br/>
-                    출구없는 치정자의 억압 <br/>
-                    숨막히는 세상을 벗어나 <br/>
-
-                    <br/>
-
-                    붉은피 솟구쳐 온몸을 불태워라 <br/>
-                    얼어붙은 심장박동쳐 맥박이 뛴다 <br/>
-                    결박된 사지에 터지는 강한 전율 <br/>
-                    태초에 그랬던 것처럼 <br/>
-                    어둠 속의 정적을 깨고 <br/>
-                    한줄기 빛 서서히 스며들어 숨을 쉰다 <br/>
-
-                    <br/>
-
-                    이제 눈을 떠 새로운 세상을 보아라 <br/>
-                    일어나리라 <br/>
-                    내게 저주를 퍼부어라 <br/>
-                    신과 맞서 싸워 난 정복하리라 <br/>
-                    새생명의 시대 <br/>
-
-                    <br/>
-
-                    "눈을 떠, 제발, 제발 깨어나" <br/>
-
-                    <br/>
-
-                    지옥을 탈출한 영혼이여 <br/>
-                    번개가 내리친 생명체여 <br/>
-                    너의 창조주가 명하노니 <br/>
-                    눈을 떠라 일어나라 깨어나 <br/>
-
+                    <h6 class="card-title">user_name</h6>
+                    <span>★★★★★(goods_grade)</span> &nbsp;
+                    <span><small>review_date</small></span>
+                    <hr/>
+                    <p class="card-text text-body-secondary">: review_text</p>
                 </div>
-            </div>
-        </div>
-        <hr/>
-
-        <!-- 상품리뷰 -->
-        <div class="container">
-            <h6><b>《상품 리뷰》</b></h6>
-            <div class="card mb-12">
-                <div class="row" id="review">
-
-                    <div class="col-md-8">
-                        <div class="card-body" style="text-align: center;">
-                            &emsp;<b>등록된 리뷰가 없습니다.</b>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <br/>
-
-            <div class="card mb-12">
-                <div class="row">
-
-                    <div class="col-md-3">
-                        <img th:src="@{/img/sample5.jpg}" id="img1" class="img-fluid rounded-start"/>
-                    </div>
-
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h6 class="card-title">user_name</h6>
-                            <span>★★★★★(goods_grade)</span> &nbsp;
-                            <span><small>review_date</small></span>
-                            <hr/>
-                            <p class="card-text text-body-secondary">: review_text</p>
-                        </div>
-                        <br/>
-                    </div>
-
-                </div>
-            </div>
-            <br/>
-
-            <div class="card mb-12">
-                <div class="row">
-
-                    <div class="col-md-3" style="width: 5%;">
-                        <img th:src="@{/img/sample5.jpg}" id="img2" class="img-fluid rounded-start"/>
-                    </div>
-
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h6 class="card-title">user_name</h6>
-                            <span>★★★★★(goods_grade)</span> &nbsp;
-                            <span><small>review_date</small></span>
-                            <hr/>
-                            <p class="card-text text-body-secondary">: review_text</p>
-                        </div>
-                        <br/>
-                    </div>
-
-                </div>
-            </div>
-            <br/>
-
-            <div class="card mb-12">
-                <div class="row">
-
-                    <div class="col-md-3" style="width: 5%;">
-                        <img th:src="@{/img/sample5.jpg}" id="img" class="img-fluid rounded-start"/>
-                    </div>
-
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h6 class="card-title">user_name</h6>
-                            <span>★★★★★(goods_grade)</span> &nbsp;
-                            <span><small>review_date</small></span>
-                            <hr/>
-                            <p class="card-text text-body-secondary">: review_text</p>
-                        </div>
-                        <br/>
-                    </div>
-
-                </div>
-            </div>
-            <br/>
-
-            <!-- 페이지 -->
-            <div class="d-none d-md-block">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                        <a href="#" class="page-link">&laquo;</a>
-                    </li>
-                    <li class="page-item">
-                        <a href="#" class="page-link">1</a>
-                    </li>
-                    <li class="page-item">
-                        <a href="#" class="page-link">2</a>
-                    </li>
-                    <li class="page-item">
-                        <a href="#" class="page-link">3</a>
-                    </li>
-                    <li class="page-item">
-                        <a href="#" class="page-link">4</a>
-                    </li>
-                    <li class="page-item">
-                        <a href="#" class="page-link">5</a>
-                    </li>
-                    <li class="page-item">
-                        <a href="#" class="page-link">&raquo;</a>
-                    </li>
-                </ul>
+                <br/>
             </div>
 
         </div>
-        <br/>
-        <hr/>
-
-        <!-- 상품추천 -->
-        <div class="container mt-4" id="sample">
-            <h6><b>‼상품추천‼ 이런상품은 어때요?</b></h6>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card" style="width: 100%;">
-                        <img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image"/>
-                        <div class="card-body">
-                            <h5 class="card-title">goods_name</h5>
-                            <p class="card-text">goods_price</p>
-                            <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card" style="width: 100%;">
-                        <img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image"/>
-                        <div class="card-body">
-                            <h5 class="card-title">goods_name</h5>
-                            <p class="card-text">goods_price</p>
-                            <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card" style="width: 100%;">
-                        <img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image"/>
-                        <div class="card-body">
-                            <h5 class="card-title">goods_name</h5>
-                            <p class="card-text">goods_price</p>
-                            <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card" style="width: 100%;">
-                        <img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image"/>
-                        <div class="card-body">
-                            <h5 class="card-title">goods_name</h5>
-                            <p class="card-text">goods_price</p>
-                            <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <hr/>
-
-        <!-- 하단 -->
-        <div id="footer">
-            <div th:replace="page_footer/footer.html :: footer-head"></div>
-            <div th:replace="page_footer/footer.html :: footer-body"></div>
-        </div>
-
-        <!-- Bootstrap JS, Popper.js, jQuery -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     </div>
+</div>
+<br/>
+
+<!-- 페이지 -->
+<div class="d-none d-md-block">
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <a href="#" class="page-link">&laquo;</a>
+        </li>
+        <li class="page-item">
+            <a href="#" class="page-link">1</a>
+        </li>
+        <li class="page-item">
+            <a href="#" class="page-link">2</a>
+        </li>
+        <li class="page-item">
+            <a href="#" class="page-link">3</a>
+        </li>
+        <li class="page-item">
+            <a href="#" class="page-link">4</a>
+        </li>
+        <li class="page-item">
+            <a href="#" class="page-link">5</a>
+        </li>
+        <li class="page-item">
+            <a href="#" class="page-link">&raquo;</a>
+        </li>
+    </ul>
+</div>
+<br/>
+<hr/>
+
+<!-- 상품추천 -->
+<div class="container mt-4" id="sample">
+    <h6><b>‼상품추천‼ 이런상품은 어때요?</b></h6>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card" style="width: 100%;">
+                <img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image"/>
+                <div class="card-body">
+                    <h5 class="card-title">goods_name</h5>
+                    <p class="card-text">goods_price</p>
+                    <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card" style="width: 100%;">
+                <img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image"/>
+                <div class="card-body">
+                    <h5 class="card-title">goods_name</h5>
+                    <p class="card-text">goods_price</p>
+                    <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card" style="width: 100%;">
+                <img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image"/>
+                <div class="card-body">
+                    <h5 class="card-title">goods_name</h5>
+                    <p class="card-text">goods_price</p>
+                    <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card" style="width: 100%;">
+                <img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image"/>
+                <div class="card-body">
+                    <h5 class="card-title">goods_name</h5>
+                    <p class="card-text">goods_price</p>
+                    <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
+<hr/>
+
+<!-- 하단 -->
+<div id="footer">
+    <div th:replace="page_footer/footer.html :: footer-head"></div>
+    <div th:replace="page_footer/footer.html :: footer-body"></div>
+</div>
+
+<!-- Bootstrap JS, Popper.js, jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>

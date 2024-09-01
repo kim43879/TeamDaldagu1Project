@@ -32,10 +32,7 @@
         }
         #card1 {
             width: 100%;
-            margin-top: -1020px; margin-left:300px; padding-left: 8%; padding-right: 8%;
-        }
-        .img-fluid rounded-start {
-            width: 25%;
+            margin-top: -1000px; margin-left:300px; padding-left: 8%; padding-right: 8%;
         }
         .empty-row {
             text-align: center;
@@ -59,140 +56,103 @@
 	<div th:replace="page_profile/profile.html :: profile-body"></div>
 </div>
 
-<!-- 장바구니 목록 -->
+<!-- 찜목록 -->
 <div class="container mt-2 card-wrapper">
-	<div class="row">
+	<div class="row g-0">
 		<div class="col-md-8" id="card1">
 			&ensp;《찜한상품》
 			<ol class="list-group list-group-numbered" id="cart-list">
 				<div class="card">
 					<table class="table" id="table">
 						<thead>
-						<tr>
-							<th scope="col" style="text-align: center;">상품정보</th>
-							<th scope="col" style="text-align: center;">금액</th>
-							<th scope="col" style="text-align: center;">수량</th>
-							<th scope="col">&emsp;&emsp;선택</th>
-						</tr>
+							<tr>
+								<th scope="col" style="text-align: center; margin-left: 10px;">상품정보</th>
+								<th scope="col" style="text-align: center;">금액</th>
+								<th scope="col" style="text-align: center;">선택</th>
+							</tr>
 						</thead>
 
 						<tbody class="table-group-divider">
-						<tr>
-							<th scope="row">
-								<div class="check">
-									<input type="checkbox" style="margin-left: 10px;" checked/>
-									&emsp;
-									<a href="/goods/goods_page" style="margin-left: 20px;">goods_name</a>
-								</div>
-							</th>
-							<td style="padding-top: 45px;">goods_price</td>
-							<td style="padding-top: 45px;">goods_amount</td>
-							<td style="padding-top: 25px;">
-								<button class="btn btn-outline-secondary" onclick="goods_remove(this)">상품삭제</button>
-							</td>
-						</tr>
+							<tr th:each="wish,index : ${wishBeanList}" style="text-align: center;">
+								<th>
+									<input type="hidden" th:value="${wish.wish_idx}" th:attr="id='wish_idx' + ${index.index}" />
+									<div class="check" style="width: 150px; display: flex; align-items: center;">
+										<input type="checkbox" style="margin-left: 10px;" checked/>
+										&emsp;
+										<a href="/goods/goods_page">
+											<img th:src="@{'/img/goods/' + ${wish.goods_img}}" style="width: 90%;">
+										</a>
+										<h6 th:text="${wish.goods_name}" style="margin-left: 30px;"></h6>
+									</div>
+								</th>
 
-						<tr>
-							<th scope="row">
-								<input type="checkbox" style="margin-left: 10px;" />
-								&emsp;
-								<a href="/goods/goods_page" style="margin-left: 20px;">goods_name</a>
-							</th>
-							<td style="padding-top: 45px;">goods_price</td>
-							<td style="padding-top: 45px;">goods_amount</td>
-							<td style="padding-top: 25px;">
-								<button class="btn btn-outline-secondary" onclick="goods_remove(this)">상품삭제</button>
-							</td>
-						</tr>
+								<td style="margin-top: auto;" th:text="${wish.goods_price}"></td>
+								<td style="margin-top: auto;">
+									<button type="submit" class="btn btn-outline-secondary btn-sm" th:onclick="delete_wish([[${index.index}]])">상품삭제</button>
+								</td>
+							</tr>
 
-						<tr>
-							<th scope="row">
-								<input type="checkbox" style="margin-left: 10px;" />
-								&emsp;
-								<a href="/goods/goods_page" style="margin-left: 20px;">goods_name</a>
-							</th>
-							<td style="padding-top: 45px;">goods_price</td>
-							<td style="padding-top: 45px;">goods_amount</td>
-							<td style="padding-top: 25px;">
-								<button class="btn btn-outline-secondary" onclick="goods_remove(this)">상품삭제</button>
-							</td>
-						</tr>
-
-						<tr>
-							<th scope="row">
-								<input type="checkbox" style="margin-left: 10px;" />
-								&emsp;
-								<a href="/goods/goods_page" style="margin-left: 20px;">goods_name</a>
-							</th>
-							<td style="padding-top: 45px;">goods_price</td>
-							<td style="padding-top: 45px;">goods_amount</td>
-							<td style="padding-top: 25px;">
-								<button class="btn btn-outline-secondary" onclick="goods_remove(this)">상품삭제</button>
-							</td>
-						</tr>
-
-						<tr>
-							<th scope="row">
-								<input type="checkbox" style="margin-left: 10px;" />
-								&emsp;
-								<a href="/goods/goods_page" style="margin-left: 20px;">goods_name</a>
-							</th>
-							<td style="padding-top: 45px;">goods_price</td>
-							<td style="padding-top: 45px;">goods_amount</td>
-							<td style="padding-top: 25px;">
-								<button class="btn btn-outline-secondary" onclick="goods_remove(this)">상품삭제</button>
-							</td>
-						</tr>
-
-						<tr>
-							<td colspan="4" class="empty-row"><b>주문 내역이 없습니다.</b></td>
-						</tr>
+							<tr id="no-wish-message" style="display: none;">
+								<td colspan="3" class="empty-row"><b>찜한 내역이 없습니다.</b></td>
+							</tr>
 
 						</tbody>
 
-						<script>
-							function goods_remove(button) {
-								var td = button.parentElement;
-								var tr = td.parentElement;
+						<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+						<script th:inline="javascript">
+							function delete_wish(num) {
+								let idx = $("#wish_idx" + num).val();
 
-								alert("선택하신 상품이 삭제되었습니다.");
+								$.ajax({
+									url: '/rest/delete_wish',
+									type: 'POST',
+									data: { wish_idx: idx },
+									success: function(response) {
+										alert("선택하신 상품이 삭제되었습니다.");
+										location.reload();
 
-								tr.remove();
+										checkIfNoWishes();
+									}
+								});
+							}
+
+							function checkIfNoWishes(){
+								const wishListBody = $("#cart-list");
+								if (wishListBody.children().length === 0) {
+									$("#no-wish-message").show();
+								}
 							}
 						</script>
 
 					</table>
 				</div>
-
 			</ol>
 		</div>
 	</div>
-
-	<!-- 페이지 -->
-	<div class="d-none d-md-block">
-		<ul class="pagination justify-content-center">
-			<li class="page-item">
-				<a href="#" class="page-link">&laquo;</a>
-			</li>
-			<li class="page-item">
-				<a href="#" class="page-link">1</a>
-			</li>
-			<li class="page-item">
-				<a href="#" class="page-link">2</a>
-			</li>
-			<li class="page-item">
-				<a href="#" class="page-link">&raquo;</a>
-			</li>
-		</ul>
-	</div>
-	<div style="margin-top: 88px;"></div>
-	<hr />
-
-	<!-- 하단 -->
-	<div id="footer">
-		<div th:replace="page_footer/footer.html :: footer-head"></div>
-		<div th:replace="page_footer/footer.html :: footer-body"></div>
-	</div>
 </div>
+
+<!-- 페이지 -->
+<div class="d-none d-md-block">
+	<ul class="pagination justify-content-center">
+		<li class="page-item">
+			<a href="#" class="page-link">&laquo;</a>
+		</li>
+		<li class="page-item">
+			<a href="#" class="page-link">1</a>
+		</li>
+		<li class="page-item">
+			<a href="#" class="page-link">&raquo;</a>
+		</li>
+	</ul>
+</div>
+<div style="margin-top: 88px;"></div>
+<hr />
+
+<!-- 하단 -->
+<div id="footer">
+	<div th:replace="page_footer/footer.html :: footer-head"></div>
+	<div th:replace="page_footer/footer.html :: footer-body"></div>
+</div>
+
 </body>
 </html>

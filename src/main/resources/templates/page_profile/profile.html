@@ -124,7 +124,7 @@
         <a href="/user/user_review" class="card-link">리뷰작성</a> <br/><br/>
 
         <h6 style="border: thin;"><b>관심상품</b></h6>
-        <a href="/user/user_wish" class="card-link">찜한상품</a> <br/>
+        <a th:href="@{/user/user_wish(user_idx=${loginUserBean.user_idx})}" class="card-link">찜한상품</a> <br/>
         <a href="/user/user_cart" class="card-link">장바구니</a> <br/><br/>
 
         <h6 style="border: thin;"><b>나의 정보</b></h6>
