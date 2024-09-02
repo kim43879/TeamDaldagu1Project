@@ -58,7 +58,9 @@
             border-radius: 3px;
             z-index: 10000;
         }
-
+        #result::-webkit-scrollbar{
+            display: none;
+        }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
@@ -129,26 +131,13 @@
                                 <label for="select_option1">옵션1 </label>
                                 &nbsp;
                                 <select class="btn border-secondary dropdown-toggle" id="select_option1"
-                                        th:onclick="change([[${goods.goods_price}]])">
+                                        th:onchange="change([[${goods.goods_price}]])">
                                     <option selected="selected" value="0">[필수] 옵션을 선택해주세요.</option>
                                     <option value="2000">option1(+2,000)</option>
                                     <option value="3000">option2(+3,000)</option>
                                     <option value="1000">option3(+1,000)</option>
                                 </select>
 
-                            </div>
-
-                            <div class="form-group">
-                                <label for="select_option2">옵션2 </label>
-                                &nbsp;
-
-                                <select class="btn border-secondary dropdown-toggle" id="select_option2"
-                                        th:onclick="change([[${goods.goods_price}]])">
-                                    <option value="0" selected="selected">[필수] 옵션을 선택해주세요.</option>
-                                    <option value="3000">option1(+3,000) &nbsp;</option>
-                                    <option value="4000">option2(+4,000) &nbsp;</option>
-                                    <option value="5000">option3(+5,000) &nbsp;</option>
-                                </select>
                             </div>
                             <hr/>
                             <div id="result" style="overflow-x:hidden; height:150px;">
@@ -162,23 +151,13 @@
                                 function change(price) {
                                     console.log("changed");
                                     let selectValue1 = $('#select_option1').val();
-                                    let selectValue2 = $('#select_option2').val();
                                     let selectOption1 = $("#select_option1 option:checked").text()
-                                    let selectOption2 = $("#select_option2 option:checked").text()
 
-                                    if(selectValue1 === "0" || selectValue2 === "0"){}
-                                    else{
-                                    let tempPrice = Number(selectValue1) + Number(selectValue2) + price;
-                                    var itemDiv = $('<div></div>').addClass('item').attr('id','item' + num);
-                                    var bTag = $('<b></b>').text('[[${goods.goods_name}]]');
-                                    var imgTag = $('<img>').attr('src','[[@{/img/btn_price_delete.gif}]]').attr('style','cursor:pointer; margin-left: 70%;').attr('class','delete_btn').attr('onclick','remove_div(' + num + ')');
-                                    var result1Tag = $('<div></div>').attr('id','result' + num).text('-옵션: '+ selectOption1 +' / ' + selectOption2);
-                                    var inputTag = $('<input>').attr('type','number').attr('class','btn border-secondary btn-sm').attr('value','1').attr('min','1').attr('max','5').attr('style','margin-top:3px; width: 50px;')
-                                    .attr('onchange', 'multi()');
-                                    var strongTag = $('<strong></strong>').attr('id','price' + num).text(tempPrice + '원');
-                                    var hrTag = $('<hr>');
-                                    itemDiv.append(bTag, imgTag, result1Tag, inputTag, strongTag, hrTag);
-                                    $('#result').append(itemDiv);
+                                    if(num <= 3){
+                                    let tempPrice = Number(selectValue1) + price;
+
+                                    addCart(tempPrice, selectOption1);
+
                                     num++;
                                     itemNum++;
                                     totalPrice += tempPrice;
@@ -186,19 +165,38 @@
                                     $("#total-price").text(totalPrice + "원");
                                     $("#item-num").text("("+ itemNum +"개)");
                                      document.getElementById('select_option1').selectedIndex = 0;
-                                     document.getElementById('select_option2').selectedIndex = 0;
+                                    }
+                                    else{
+                                        alert("상품은 최대 3개까지 담을 수 있습니다.");
+                                        document.getElementById('select_option1').selectedIndex = 0;
                                     }
                                 }
 
-                                function remove_div(num) {
+                                function remove_div(number) {
                                     itemNum--;
-                                    const div = document.getElementById('item' + num);
-                                    let tempPrice = $("#price" + num).text();
+                                    num--;
+                                    const div = document.getElementById('item' + number);
+                                    let tempPrice = $("#price" + number).text();
                                     let numPrice = tempPrice.slice(0, -1);
                                     totalPrice -= Number(numPrice);
                                     $("#total-price").text(totalPrice + "원");
                                     $("#item-num").text("("+ itemNum +"개)");
                                     div.remove();
+                                }
+                                function addCart(tempPrice, selectOption1){
+                                    var itemDiv = $('<div></div>').addClass('item').attr('id','item' + num);
+                                    var bTag = $('<b></b>').text('[[${goods.goods_name}]]');
+                                    var imgTag = $('<img>').attr('src','[[@{/img/btn_price_delete.gif}]]').attr('style','cursor:pointer; margin-left: 70%;').attr('class','delete_btn').attr('onclick','remove_div(' + num + ')');
+                                    var result1Tag = $('<div></div>').attr('id','result' + num).text('-옵션: '+ selectOption1);
+                                    var inputTag = $('<input>').attr('type','number').attr('class','btn border-secondary btn-sm').attr('value','1').attr('min','1').attr('max','5').attr('style','margin-top:3px; width: 50px;')
+                                    .attr('onchange', 'multi()');
+                                    var strongTag = $('<strong></strong>').attr('id','price' + num).text(tempPrice + '원');
+                                    var hrTag = $('<hr>');
+                                    itemDiv.append(bTag, imgTag, result1Tag, inputTag, strongTag, hrTag);
+                                    $('#result').append(itemDiv);
+                                }
+                                function multi(event) {
+                                    console.log(event);
                                 }
                             </script>
 
@@ -251,27 +249,15 @@
     <div class="col-sm-12">
         <div class="card-body">
             <p>
-                <img class="resize" th:src="@{/img/asd.jpg}" alt=""/>
+                <img class="resize" th:src="@{'/img/goods/' + ${goods.goods_img2}}" alt=""/>
             </p>
 
             <!-- goods_text -->
 
-            이제 눈을 떠 새로운 세상을 보아라 <br/>
-            일어나리라 <br/>
-            내게 저주를 퍼부어라 <br/>
-            신과 맞서 싸워 난 정복하리라 <br/>
-            새생명의 시대 <br/>
-
-            <br/>
-
-            "눈을 떠, 제발, 제발 깨어나" <br/>
-
-            <br/>
-
-            지옥을 탈출한 영혼이여 <br/>
-            번개가 내리친 생명체여 <br/>
-            너의 창조주가 명하노니 <br/>
-            눈을 떠라 일어나라 깨어나 <br/>
+            <div>
+                <span th:text="${goods.goods_text}" th:if="${goods.goods_text != null}"></span>
+                <span th:if="${goods.goods_text == null}">설명글이 아직 없습니다.</span>
+            </div>
 
         </div>
     </div>
@@ -350,46 +336,13 @@
 <div class="container mt-4" id="sample">
     <h6><b>‼상품추천‼ 이런상품은 어때요?</b></h6>
     <div class="row">
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image"/>
+        <div class="col-md-3" th:each="goodsBean,state : ${goods_list}">
+            <div class="card" style="width: 100%;" th:if="${state.index < 4}">
+                <img th:src="@{'/img/goods/' + ${goodsBean.goods_img}}" class="card-img-top" alt="image"/>
                 <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image"/>
-                <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image"/>
-                <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card" style="width: 100%;">
-                <img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image"/>
-                <div class="card-body">
-                    <h5 class="card-title">goods_name</h5>
-                    <p class="card-text">goods_price</p>
-                    <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
+                    <h5 class="card-title" th:text="${goodsBean.goods_name}">goods_name</h5>
+                    <p class="card-text" th:text="${goodsBean.goods_price}">goods_price</p>
+                    <a th:href="@{/goods/goods_page(goods_idx=${goodsBean.goods_idx})}" class="btn btn-outline-info">상품보기</a>
                 </div>
             </div>
         </div>

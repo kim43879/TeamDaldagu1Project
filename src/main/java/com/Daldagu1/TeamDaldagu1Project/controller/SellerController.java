@@ -4,7 +4,9 @@ import com.Daldagu1.TeamDaldagu1Project.beans.*;
 import com.Daldagu1.TeamDaldagu1Project.service.GoodsService;
 import com.Daldagu1.TeamDaldagu1Project.service.SellerService;
 import com.Daldagu1.TeamDaldagu1Project.service.UserService;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,9 @@ import org.springframework.web.bind.annotation.*;
 @Controller()
 @RequestMapping("/seller")
 public class SellerController {
+    @Resource(name = "loginUserBean")
+    @Lazy
+    private UserBean loginUserBean;
 
     @Autowired
     private SellerService sellerService;
@@ -81,8 +86,9 @@ public class SellerController {
     }
 
     @GetMapping("/seller_product_read")
-    public String sellerProductRead(@RequestParam("seller_idx") int seller_idx, Model model){
-        model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(seller_idx));
+    public String sellerProductRead(@RequestParam("goods_idx") int goods_idx, Model model){
+        model.addAttribute("goodsBean", goodsService.getPurchaseGoods(goods_idx));
+        model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(loginUserBean.getSeller_idx()));
         return "seller/seller_product_read";
     }
     @GetMapping("/seller_product_delete")

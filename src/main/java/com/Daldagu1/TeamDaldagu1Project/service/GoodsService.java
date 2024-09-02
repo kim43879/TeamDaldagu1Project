@@ -46,10 +46,13 @@ public class GoodsService {
 
     //상품 등록 정보 추가
     public void addGoodsInfoApply(AddGoodsInfo addGoodsInfoBean) {
-        MultipartFile uploadFile = addGoodsInfoBean.getGoods_img_file();
-        if(uploadFile.getSize() > 0){
-            String file_name = saveApplyGoodsInfo(uploadFile);
-            addGoodsInfoBean.setGoods_img(file_name);
+        MultipartFile uploadFile1 = addGoodsInfoBean.getGoods_img_file();
+        MultipartFile uploadFile2 = addGoodsInfoBean.getGoods_img_file2();
+        if(uploadFile1.getSize() > 0 && uploadFile2.getSize() > 0){
+            String file_name1 = saveApplyGoodsInfo(uploadFile1);
+            String file_name2 = saveApplyGoodsInfo(uploadFile2);
+            addGoodsInfoBean.setGoods_img(file_name1);
+            addGoodsInfoBean.setGoods_img2(file_name2);
         }else{
             addGoodsInfoBean.setGoods_img("default_goods_img.jpg");
         }
@@ -83,7 +86,7 @@ public class GoodsService {
             searchBean.setSearchCategory("%");
         }
         if(searchBean.getSearchMaxPrice() == 0){
-            searchBean.setSearchMaxPrice(Integer.MAX_VALUE);
+            searchBean.setSearchMaxPrice(300000);
         }
 
         searchBean.showField();

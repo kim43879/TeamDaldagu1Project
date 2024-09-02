@@ -33,6 +33,7 @@ public class GoodsController {
         GoodsBean tempGoodsBean = goodsService.getPurchaseGoods(goods_idx);
         model.addAttribute("goods", tempGoodsBean);
         model.addAttribute("seller_id",sellerService.getSellerId(tempGoodsBean.getSeller_idx()));
+        model.addAttribute("goods_list", goodsService.getGoodsListByTag(tempGoodsBean.getGoods_tag()));
 
         return "goods/goods_page";
     }
@@ -125,9 +126,9 @@ public class GoodsController {
     }
 
     @PostMapping("/add_goods_pro")
-    public String addGoodsPro(@ModelAttribute("addGoodsInfoBean")AddGoodsInfo addGoodsInfo){
+    public String addGoodsPro(@ModelAttribute("addGoodsInfoBean")AddGoodsInfo addGoodsInfo, Model model){
         goodsService.addGoodsInfoApply(addGoodsInfo);
-        return "redirect:/";
+        return "seller/seller_product_insert?seller_idx" + addGoodsInfo.getSeller_idx();
     }
 
     @ModelAttribute("searchBean")
