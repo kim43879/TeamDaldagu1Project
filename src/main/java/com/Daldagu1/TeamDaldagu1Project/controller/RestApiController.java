@@ -1,11 +1,7 @@
 package com.Daldagu1.TeamDaldagu1Project.controller;
 
 import com.Daldagu1.TeamDaldagu1Project.beans.*;
-import com.Daldagu1.TeamDaldagu1Project.service.AddrService;
-import com.Daldagu1.TeamDaldagu1Project.service.GoodsService;
-import com.Daldagu1.TeamDaldagu1Project.service.SellerService;
-import com.Daldagu1.TeamDaldagu1Project.service.UserService;
-import com.Daldagu1.TeamDaldagu1Project.service.WishService;
+import com.Daldagu1.TeamDaldagu1Project.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +23,9 @@ public class RestApiController {
 
     @Autowired
     private WishService wishService;
+
+    @Autowired
+    private CartService cartService;
 
     @PostMapping("/rest/idCheck")
     public String IdCheck(@RequestParam("user_id")String user_id){
@@ -89,6 +88,12 @@ public class RestApiController {
         wishService.deleteUserWish(wish_idx);
     }
 
+    //장바구니 삭제
+    @PostMapping("/rest/remove_cart")
+    public void remove_cart(@RequestParam("cart_idx") int cart_idx) {
+        cartService.removeUserCart(cart_idx);
+    }
+
     //주소 삭제
     @PostMapping(value = "/rest/delete_addr", produces = "text/plain; charset=UTF-8")
     public String delete_addr(@RequestParam("addr_idx") int addr_idx){
@@ -102,4 +107,4 @@ public class RestApiController {
         return "기본 주소지는 삭제할 수 없습니다.";
     }
 
-}
+}//class

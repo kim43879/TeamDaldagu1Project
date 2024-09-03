@@ -162,14 +162,14 @@
 <div class="d-none d-md-block">
     <ul class="pagination justify-content-center">
         <li class="page-item">
-            <a class="page-link" th:onclick="pageMove([[${pageBean.prevPage}]])">이전</a>
+            <a class="page-link" th:onclick="pageMove([[${pageBean.prevPage}]])">«</a>
         </li>
         <li class="page-item" th:each="num : ${#numbers.sequence(pageBean.min,pageBean.max)}">
             <a class="page-link" th:onclick="pageMove([[${num}]])" th:text="${num}" th:if="${num == page}" style="background-color:gray"></a>
             <a class="page-link" th:onclick="pageMove([[${num}]])" th:text="${num}" th:if="${num != page}"></a>
         </li>
         <li class="page-item">
-            <a class="page-link" th:onclick="pageMove([[${pageBean.nextPage}]])">다음</a>
+            <a class="page-link" th:onclick="pageMove([[${pageBean.nextPage}]])">»</a>
         </li>
     </ul>
 </div>

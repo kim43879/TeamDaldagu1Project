@@ -64,6 +64,7 @@ public class UserController {
                 loginUserBean.setUser_name(tempUserBean.getUser_name());
                 loginUserBean.setUser_role(tempUserBean.getUser_role());
                 loginUserBean.setSeller_idx(tempUserBean.getSeller_idx());
+                loginUserBean.setUser_profile_img(tempUserBean.getUser_profile_img());
 
                 return "user/status/login_success";
             }else {
@@ -155,11 +156,6 @@ public class UserController {
         return "user/user_wish";
     }
 
-    //장바구니
-    @GetMapping("/user/user_cart")
-    public String user_cart(){
-        return "user/user_cart";
-    }
     @GetMapping("/user/user_info")
     public String user_info(){
         return "user/user_info";

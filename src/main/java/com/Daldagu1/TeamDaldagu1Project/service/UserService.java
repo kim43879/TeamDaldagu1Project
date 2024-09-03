@@ -55,6 +55,7 @@ public class UserService {
     public UserBean getUserbyIdx(int user_idx){
         return userMapper.getUserbyIdx(user_idx);
     }
+
     public UserBean getUserbyId(String user_id){
         UserBean tempLoginUserBean = userMapper.getUserbyId(user_id);
         if(tempLoginUserBean != null) {

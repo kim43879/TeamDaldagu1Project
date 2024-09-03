@@ -88,59 +88,33 @@
 									<div class="row g-3">
 										<div class="form-group hidden-xs" id="fileDrop">
 											<label for="goods_img">변경할 이미지를 선택해주세요.</label>
-											<input type="file" id="goods_img" th:field="*{goodsBean.goods_img2}">
+											<input type="file" id="goods_img" th:field="*{goods_img2}">
 										</div>
-									
-									<div class="col-sm-6">
-										<label for="goods_name">상품명</label>
-										<input id="goods_name" class="form-control" th:field="*{goodsBean.goods_name}" required>
-									</div>
-									<br />
-									<div class="col-sm-6">
-										<label for="price">상품가격</label>
-										<input name="price" id="price" class="form-control" required>
-									</div>
-									<br />
-									<br />
-									<div class="col-sm-6">
-										<label>상품분류</label>
-										<div class="form-inline">
-											<select class="form-control" id="productDist">
-												<option value="outer">1. 외투</option>
-												<option value="top">2. 상의</option>
-												<option value="bottom">3. 하의</option>
-												<option value="bag">4. 가방</option>
-												<option value="acc">5. 액세서리</option>
-											</select>
-											<button class="btn btn-outline-secondary btn_productDist">입력</button>
-											<input name="productDist" class="form-control" readonly>
+										<div class="col-sm-6">
+											<label for="goods_name">상품명</label>
+											<input id="goods_name" class="form-control" th:field="*{goods_name}" required>
 										</div>
-									</div>
-									<br />
-									<div class="col-sm-6">
-										<label>재고</label>
-										<input name="stock" class="form-control" required>
-									</div>
-									<br />
-									<div class="col-sm-6">
-										<label>상품정보</label>
-										<input name="productInfo" class="form-control" required>
-									</div>
-									<br />
-									<div class="col-sm-6">
-										<label>상품 등록일</label>
-										<input class="form-control" readonly>
-									</div>
-									<br />
-									<div class="col-sm-6">
-										<label>최종 수정일</label>
-										<input class="form-control" readonly>
-									</div>
+										<br />
+										<div class="col-sm-6">
+											<label for="price">상품가격</label>
+											<input id="price" class="form-control" th:field="*{goods_price}" required>
+										</div>
+										<br />
+										<div class="col-sm-6">
+											<label for="goods_stock">재고</label>
+											<input id="goods_stock" class="form-control" th:field="*{goods_stock}" required>
+										</div>
+										<br />
+										<div class="col-sm-6">
+											<label for="goods_text">상품정보</label>
+											<input id="goods_text" class="form-control" th:field="*{goods_text}" required>
+										</div>
+										<br />
 									</div>
 									<br />
 									<div class="btns text-center">
-										<button class="btn btn-outline-secondary" id="btn_product_update">상품정보 수정</button>
-										<button class="btn btn-outline-secondary" id="btn_product_delete" >상품 삭제</button>
+										<button type="submit" class="btn btn-outline-secondary" id="btn_product_update">상품정보 수정</button>
+										<button type="button" class="btn btn-outline-secondary" id="btn_product_delete" >상품 삭제</button>
 										<!--삭제고려-->
 										<button class="btn btn-outline-secondary" id="btn_product_back">상품 정보 페이지로 돌아가기</button>
 									</div>
@@ -154,7 +128,13 @@
 		</div>
 	</div>
 	</main>
-
+	<script>
+		function input_tag() {
+            let productDist = document.getElementById('goods_tag').value;
+            let productTag = document.getElementById('goods_category');
+            productTag.value(productDist);
+        }
+	</script>
 	<!-- 하단 -->
 	<div id="footer">
 		<div th:replace="page_footer/footer.html :: footer-head"></div>
