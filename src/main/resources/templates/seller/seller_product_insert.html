@@ -88,12 +88,12 @@
 									<form action="/goods/add_goods_pro" method="post" th:object="${addGoodsInfoBean}" enctype="multipart/form-data">
 
 										<div class="form-group hidden-xs" id="fileDrop">
-											<label for="input-img">대표 이미지.</label>
+											<label for="input-img">대표 이미지.</label> <br>
 											<input id="input-img" th:field="*{goods_img_file}" type="file" accept="image/*">
 										</div>
 
 										<div class="form-group hidden-xs" id="fileDrop2">
-											<label for="input-img">설명 이미지.</label>
+											<label for="input-img">설명 이미지.</label> <br>
 											<input id="input-img2" th:field="*{goods_img_file2}" type="file" accept="image/*">
 										</div>
 

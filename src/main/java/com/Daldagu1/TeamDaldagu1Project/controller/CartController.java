@@ -64,7 +64,6 @@ public class CartController {
         int totalPrice = cartService.getTotalPrice(user_idx);
 
         model.addAttribute("cartBeanList", cartBeanList);
-        System.out.println(cartBeanList.get(0).getCart_idx());
         model.addAttribute("totalPrice", totalPrice);
 
         return "user/user_cart";

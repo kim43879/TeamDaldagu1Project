@@ -54,6 +54,9 @@ public interface GoodsMapper {
     @Select("select count(*) from goods_table where goods_name like #{searchKeyword} and goods_tag like #{searchCategory} and goods_price > #{searchMinPrice} and goods_price < #{searchMaxPrice} order by goods_price desc")
     int searchGoodsListOrder_price2Cnt(SearchBean searchBean);
 
+    @Select("select count(*) from goods_table where seller_idx = #{seller_idx}")
+    int goodsCountBySellerIdx(int seller_idx);
+
     @Delete("delete from add_goods_info_table where info_idx = #{info_idx}")
     void deleteAddGoods(int info_idx);
 }

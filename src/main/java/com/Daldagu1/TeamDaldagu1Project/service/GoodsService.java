@@ -107,6 +107,10 @@ public class GoodsService {
         goodsMapper.deleteAddGoods(info_idx);
     }
 
+    public int goodsCountBySellerIdx(int seller_idx){
+        return goodsMapper.goodsCountBySellerIdx(seller_idx);
+    }
+
     public PageBean getSearchPageCount(int currentPage,SearchBean searchBean){
         if(searchBean.getSearchCategory().equals("goods_price1")){
             return new PageBean(goodsMapper.searchGoodsListOrder_priceCnt(searchBean), currentPage, searchBean.getShowCount(), paginationCnt);

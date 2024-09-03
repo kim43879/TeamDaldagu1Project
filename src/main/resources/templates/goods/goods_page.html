@@ -102,7 +102,7 @@
                 <img th:src="@{'/img/goods/' + ${goods.goods_img}}" style="margin: 0; margin-top: 15px; width: 160px; height: 160px;">
             </dt>
             &emsp;&emsp;&emsp;
-            <dd style="margin: 0; margin-left: 10px;"><b>n</b>개의 상품이 장바구니에 담겼습니다.</dd>
+            <dd style="margin: 0; margin-left: 10px;"><b id="cart_num">n</b>개의 상품이 장바구니에 담겼습니다.</dd>
         </dl>
     </div>
     <hr />
@@ -187,11 +187,10 @@
                                         num++;
                                         addCart(tempPrice, selectOption1,newNumber);
                                     }
-                                    itemNum++;
                                     totalPrice += tempPrice;
                                     console.log(totalPrice);
                                     $("#total-price").text(totalPrice + "원");
-                                    $("#item-num").text("("+ itemNum +"개)");
+                                    countProduction();
                                      document.getElementById('select_option1').selectedIndex = 0;
                                     }
                                     else{
@@ -201,16 +200,14 @@
                                 }
 
                                 function remove_div(number) {
-                                    itemNum -= $('#goods-production' + number).val();
                                     num--;
                                     const div = document.getElementById('item' + number);
                                     let tempPrice = $("#price" + number).text();
                                     let numPrice = tempPrice.slice(0, -1);
                                     totalPrice -= Number(numPrice);
                                     $("#total-price").text(totalPrice + "원");
-                                    $("#item-num").text("("+ itemNum +"개)");
                                     div.remove();
-
+                                    countProduction();
                                     deletedNumbers.push(number);
                                 }
                                 function addCart(tempPrice, selectOption1,newNumber){
@@ -218,7 +215,7 @@
                                     var bTag = $('<b></b>').text('[[${goods.goods_name}]]');
                                     var imgTag = $('<img>').attr('src','[[@{/img/btn_price_delete.gif}]]').attr('style','cursor:pointer; margin-left: 70%;').attr('class','delete_btn').attr('onclick','remove_div(' + newNumber + ')');
                                     var result1Tag = $('<div></div>').attr('id','result' + newNumber).text('-옵션: '+ selectOption1);
-                                    var inputTag = $('<input>').attr('type','number').attr('class','btn border-secondary btn-sm').attr('id','goods-production' + newNumber).attr('value','1').attr('min','1').attr('max','5').attr('style','margin-top:3px; width: 50px;')
+                                    var inputTag = $('<input>').attr('type','number').attr('class','btn border-secondary btn-sm productNumber').attr('id','goods-production' + newNumber).attr('value','1').attr('min','1').attr('max','5').attr('style','margin-top:3px; width: 50px;')
                                     .attr('onchange', 'multi(' + newNumber +')');
                                     var strongTag = $('<strong></strong>').attr('id','price' + newNumber).text(tempPrice + '원');
                                     var hrTag = $('<hr>');
@@ -227,16 +224,32 @@
                                     $('#result').append(itemDiv);
                                 }
                                 function multi(product_num) {
-
                                     let select_value = $('#goods-production' + product_num).val();
                                     let price = $('#origin-price' + product_num).val();
                                     let currentPrice = $('#price' + product_num).text();
                                     totalPrice -= currentPrice.slice(0, -1);
                                     let tempPrice = price * select_value;
                                     totalPrice += tempPrice;
-                                    $('#item-num')
                                     $('#price' + product_num).text(tempPrice + '원');
                                     $("#total-price").text(totalPrice + "원");
+                                    countProduction();
+                                }
+
+                                function countProduction(){
+                                    const numberList = document.querySelectorAll(".productNumber");  // .productNumber 클래스를 가진 모든 요소 선택
+                                    let currentNumber = 0;  // currentNumber 초기화
+
+                                    // numberList를 반복하는 forEach문
+                                    numberList.forEach(function(number) {
+                                        const item_num = parseInt($(number).val(), 10);  // 각 요소의 값을 숫자로 변환하여 가져옴
+                                        currentNumber += item_num;  // currentNumber에 값 더하기
+                                    });
+
+                                    // 결과 출력
+                                    $("#item-num").text("("+ currentNumber +"개)");
+                                    itemNum = currentNumber;
+                                    console.log(itemNum);
+                                    console.log(totalPrice);
                                 }
                             </script>
 
@@ -262,6 +275,8 @@
                             <script>
                                 function show_div() {
                                     var divElement = document.getElementById('show_div');
+                                    $("#cart_num").text(itemNum);
+
                                     divElement.style.visibility = 'visible';
                                 }
                             </script>
