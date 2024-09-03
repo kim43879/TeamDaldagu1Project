@@ -32,6 +32,9 @@ public interface GoodsMapper {
     AddGoodsInfo getAddGoodsByIdx(int info_idx);
 
 
+    @Select("select count(*) from goods_table where seller_idx = #{seller_idx}")
+    int goodsCountBySellerIdx(int seller_idx);
+
     @Delete("delete from add_goods_info_table where info_idx = #{info_idx}")
     void deleteAddGoods(int info_idx);
 }

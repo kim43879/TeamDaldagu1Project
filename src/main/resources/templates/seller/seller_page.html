@@ -120,10 +120,8 @@
 									<h4 class="my-0 fw-normal">판매 중</h4>
 								</div>
 								<div class="card-body">
-									<h1 class="card-title pricing-card-title">
-										3<small class="text-muted fw-light"></small>
-									</h1>
-									<button type="button" class="btn btn-outline-dark">보러가기</button>
+									<h1 class="card-title pricing-card-title" th:text="${goodsCount}">3</h1>
+									<a th:href="@{/goods/goods_seller(seller_idx=${sellerBean.seller_idx})}" class="btn btn-outline-dark">보러가기</a>
 								</div>
 							</div>
 						</div>

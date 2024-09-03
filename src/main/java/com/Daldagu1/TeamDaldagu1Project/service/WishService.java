@@ -17,8 +17,11 @@ public class WishService {
     public void addUserWish(int user_idx, int goods_idx) {
 
         WishBean userWishBean = new WishBean();
-        userWishBean.setGoods_idx(goods_idx);
-        userWishBean.setUser_idx(user_idx);
+        userWishBean.setGoods_idx(user_idx);
+        userWishBean.setUser_idx(goods_idx);
+
+        System.out.println(userWishBean.getUser_idx());
+        System.out.println(userWishBean.getGoods_idx());
 
         wishMapper.addUserWish(userWishBean);
     }

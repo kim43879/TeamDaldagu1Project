@@ -87,7 +87,7 @@
 								<form action="/goods/goods_update" method="post" th:object="${goodsBean}">
 									<div class="row g-3">
 										<div class="form-group hidden-xs" id="fileDrop">
-											<label for="goods_img">변경할 이미지를 선택해주세요.</label>
+											<label for="goods_img">상품 이미지 추가.</label> <br>
 											<input type="file" id="goods_img" th:field="*{goods_img2}">
 										</div>
 										<div class="col-sm-6">
@@ -110,6 +110,10 @@
 											<input id="goods_text" class="form-control" th:field="*{goods_text}" required>
 										</div>
 										<br />
+										<div class="col-sm-6">
+											<label for="add-option">옵션 추가</label>
+											<input type="text" id="add-option">
+										</div>
 									</div>
 									<br />
 									<div class="btns text-center">

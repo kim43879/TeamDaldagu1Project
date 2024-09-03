@@ -50,6 +50,7 @@ public class SellerController {
     @GetMapping("/seller_page")
     public String sellerPage(@RequestParam("seller_idx") int seller_idx, Model model){
         model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(seller_idx));
+        model.addAttribute("goodsCount", goodsService.goodsCountBySellerIdx(seller_idx));
 
         return "seller/seller_page";
     }

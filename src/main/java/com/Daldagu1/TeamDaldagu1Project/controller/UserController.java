@@ -60,11 +60,13 @@ public class UserController {
         if(tempUserBean != null){
             if(tempUserBean.getUser_pw().equals(userBean.getUser_pw())){
                 loginUserBean.setUser_idx(tempUserBean.getUser_idx());
+                loginUserBean.setUser_id(tempUserBean.getUser_id());
                 loginUserBean.setLoginCheck(true);
                 loginUserBean.setUser_name(tempUserBean.getUser_name());
                 loginUserBean.setUser_role(tempUserBean.getUser_role());
                 loginUserBean.setSeller_idx(tempUserBean.getSeller_idx());
                 loginUserBean.setUser_profile_img(tempUserBean.getUser_profile_img());
+                loginUserBean.setUser_profile_text(tempUserBean.getUser_profile_text());
 
                 return "user/status/login_success";
             }else {
@@ -99,7 +101,6 @@ public class UserController {
             for(ObjectError error : result.getAllErrors()){
                 System.out.println(error.getCode());
             }
-
             return "user/join";
         }
         userService.addUser(userBean);
@@ -147,12 +148,25 @@ public class UserController {
     }
 
     //관심상품
+    @GetMapping("/user/status/wish_pro")
+    public String user_wish(@RequestParam("goods_idx") int goods_idx, @RequestParam("user_idx") int user_idx,@RequestParam("result") boolean result, Model model) {
+        wishService.addUserWish(goods_idx,user_idx);
+        if(result) {
+            List<WishBean> wishBeanList = wishService.getUserWishList(user_idx);
+            model.addAttribute("wishBeanList", wishBeanList);
+            return "user/user_wish";
+        }else{
+            GoodsBean tempGoodsBean = goodsService.getPurchaseGoods(goods_idx);
+            model.addAttribute("goods", tempGoodsBean);
+            model.addAttribute("goods_list", goodsService.getGoodsListByTag(tempGoodsBean.getGoods_tag()));
+            model.addAttribute("seller_id", sellerService.getSellerbyUserIdx(tempGoodsBean.getSeller_idx()));
+            model.addAttribute("user_idx",loginUserBean.getUser_idx());
+            return "goods/goods_page";
+        }
+    }
     @GetMapping("/user/user_wish")
-    public String user_wish(@RequestParam("user_idx") int user_idx, Model model) {
-
-        List<WishBean> wishBeanList = wishService.getUserWishList(user_idx);
-        model.addAttribute("wishBeanList", wishBeanList);
-
+    public String user_wish(Model model){
+        model.addAttribute("wishBeanList", wishService.getUserWishList(loginUserBean.getUser_idx()));
         return "user/user_wish";
     }
 

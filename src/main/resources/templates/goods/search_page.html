@@ -7,7 +7,6 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <style>
         .card-main{
             margin-top: 88px;
@@ -75,12 +74,13 @@
         <h6><b>《상품검색》</b></h6>
     </div>
         <form action="/goods/search_page" method="post" th:object="${searchBean}">
-        <div class="card-body">
-            <div class="select-group" style="text-align:center;">
-                <span>
+        <div class="card-body" style="text-align:center;">
+            <div class="form-group">
+                <div class="d-flex align-items-center" style="margin-left:34%;">
                     <label for="search_keyword"><b>검색어:</b></label>
-                    <input type="text" id="search_keyword" class="form-control border-secondary" th:field="*{searchKeyword}">
-                </span>
+                    &ensp;
+                    <input type="text" id="search_keyword" class="form-control border-secondary" th:field="*{searchKeyword}" style="width: 300px;">
+                </div>
                 <hr />
 
                 <div class="form-group" style="text-align:center;">
@@ -100,7 +100,7 @@
                     <div class="d-flex align-items-center" id="search_price">
                         <label for="searchPrice">가격대</label> &nbsp;
                         <input type="text" class="form-control border-secondary" id="searchPrice" th:field="*{searchMinPrice}" style="width: 100px;">
-                            &nbsp;<span>~</span>
+                            &nbsp;<span>~&nbsp;</span>
                         <input type="text" class="form-control border-secondary" th:field="*{searchMaxPrice}" style="width: 100px;">
                     </div>
                 </div>
@@ -108,6 +108,7 @@
                 <div class="form-group" style="text-align:center;">
                     <label for="search_sort">정렬기준</label> &nbsp;
                     <select class="btn border-secondary dropdown-toggle" id="search_sort" th:field="*{sortType}">
+                        <option value="goods_name" selected>-</option>
                         <option value="goods_name">상품명순</option>
                         <option value="goods_price1">낮은가격순</option>
                         <option value="goods_price2">높은가격순</option>
@@ -118,6 +119,7 @@
                 <div class="form-group">
                     <label for="show_count">표시 개수</label>
                     <select class="btn border-secondary dropdown-toggle" id="show_count" th:field="*{showCount}">
+                        <option value="8" selected>-</option>
                         <option value="8">8개</option>
                         <option value="16">16개</option>
                         <option value="24">24개</option>
@@ -143,14 +145,14 @@
     </div>
     <hr />
     <div class="row">
-        <div class="col-md-3" th:each="goods,index : ${searchGoodsList}" style="margin-top:30px">
+        <div class="col-md-3" th:each="goods,index : ${searchGoodsList}">
             <div class="card" style="width: 100%; height: 100%;">
                 <div class="card-img">
                     <img th:src="@{'/img/goods/' + ${goods.goods_img}}" class="card-img-top" alt="image" />
                 </div>
                 <div class="card-body">
                     <h5 class="card-title" th:text="${goods.goods_name}">goods_name</h5>
-                    <p class="card-text" th:text="${goods.goods_price} + 원">goods_price</p>
+                    <p class="card-text" th:text="${goods.goods_price}+원">goods_price</p>
                     <a th:href="@{/goods/goods_page(goods_idx=${goods.goods_idx})}" class="btn btn-outline-info">상품보기</a>
                 </div>
             </div>
@@ -165,7 +167,7 @@
             <a class="page-link" th:onclick="pageMove([[${pageBean.prevPage}]])">«</a>
         </li>
         <li class="page-item" th:each="num : ${#numbers.sequence(pageBean.min,pageBean.max)}">
-            <a class="page-link" th:onclick="pageMove([[${num}]])" th:text="${num}" th:if="${num == page}" style="background-color:gray"></a>
+            <a class="page-link" th:onclick="pageMove([[${num}]])" th:text="${num}" th:if="${num == page}" style="background-color:lightgray"></a>
             <a class="page-link" th:onclick="pageMove([[${num}]])" th:text="${num}" th:if="${num != page}"></a>
         </li>
         <li class="page-item">

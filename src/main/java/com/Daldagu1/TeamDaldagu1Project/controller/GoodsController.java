@@ -34,6 +34,7 @@ public class GoodsController {
         model.addAttribute("goods", tempGoodsBean);
         model.addAttribute("seller_id",sellerService.getSellerId(tempGoodsBean.getSeller_idx()));
         model.addAttribute("goods_list", goodsService.getGoodsListByTag(tempGoodsBean.getGoods_tag()));
+        model.addAttribute("user_idx", loginUserBean.getUser_idx());
 
         return "goods/goods_page";
     }
