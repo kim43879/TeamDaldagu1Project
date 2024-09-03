@@ -14,13 +14,19 @@ public interface CartMapper {
     void addUserCart(CartBean addCartBean);
 
     //물품 호출
-    @Select("select * from cart_table where user_idx= #{user_idx}")
+    @Select("select c.cart_idx, c.goods_idx, g.goods_name, c.user_idx, c.goods_quantity, c.selected_option " +
+            "from cart_table c " +
+            "join goods_table g on c.goods_idx = g.goods_idx " +
+            "where c.user_idx = #{user_idx}")
     List<CartBean> getCartList(int user_idx);
 
     //물품 확인
-    @Select("select & from cart_table where user_idx= #{user_idx} and goods_idx= #{goods_idx}, " +
-            "and selected_option= #{selected_option}")
-    CartBean cartInfo(int user_idx, int goods_idx, String selected_option);
+    @Select("select c.* " +
+            "from cart_table c " +
+            "join goods_table g on c.goods_idx = g.goods_idx " +
+            "where c.user_idx= #{user_idx} and g.goods_name= #{goods_name} " +
+            "and c.selected_option= #{selected_option}")
+    CartBean cartInfo(int user_idx, String goods_name, String selected_option);
 
     //물품 삭제
     @Delete("delete from cart_table where cart_idx= #{cart_idx}")

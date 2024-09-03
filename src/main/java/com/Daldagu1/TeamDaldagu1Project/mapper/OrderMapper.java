@@ -16,10 +16,12 @@ public interface OrderMapper {
             "#{user_idx}, #{order_goods_idx})")
     void addOrderForm(OrderBean orderBean);
 
-    //주문 리스트
-    @Select("select * from order_table where order_idx=#{order_idx}")
-    List<OrderGoodsBean> getOrderList(int order_idx);
-
-
+    //주문 리스트?
+    @Select("select ot.order_idx, to_char(ot.order_date, 'YYYY-MM-DD') as order_date, gt.goods_name, gt.goods_price " +
+            "from order_table ot, order_goods_table ogt, goods_table gt " +
+            "where ot.order_idx = ogt.order_idx " +
+            "and ogt.goods_idx = gt.goods_idx " +
+            "and ot.user_idx= #{user_idx};")
+    List<OrderGoodsBean> getOrderList(int user_idx);
 
 }

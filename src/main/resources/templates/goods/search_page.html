@@ -7,6 +7,7 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <style>
         .card-main{
             margin-top: 88px;
@@ -73,6 +74,7 @@
     <div class="card-header">
         <h6><b>《상품검색》</b></h6>
     </div>
+
         <form action="/goods/search_page" method="post" th:object="${searchBean}">
         <div class="card-body" style="text-align:center;">
             <div class="form-group">
@@ -136,6 +138,7 @@
         </form>
     </div>
 </div>
+<br />
 <hr />
 
 <!--출력 상품1-->
@@ -144,8 +147,9 @@
         <b class="space" th:text="${totalGoodsNum} + '개의 판매작품'">n개의 판매작품</b> &emsp;
     </div>
     <hr />
+
     <div class="row">
-        <div class="col-md-3" th:each="goods,index : ${searchGoodsList}">
+        <div class="col-md-3" th:each="goods,index : ${searchGoodsList}" style="margin-top:10px">
             <div class="card" style="width: 100%; height: 100%;">
                 <div class="card-img">
                     <img th:src="@{'/img/goods/' + ${goods.goods_img}}" class="card-img-top" alt="image" />

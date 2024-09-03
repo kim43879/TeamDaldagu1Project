@@ -18,14 +18,14 @@ public class CartService {
     private int paginationCnt;
 
     //장바구니 추가
-    public void addUserCart(int user_idx, int goods_idx, int goods_quantity, String selected_option) {
+    public void addUserCart(int user_idx, String goods_name, int goods_quantity, String selected_option) {
 
-        CartBean cartStatus = cartMapper.cartInfo(user_idx, goods_idx, selected_option);
+        CartBean cartStatus = cartMapper.cartInfo(user_idx, goods_name, selected_option);
 
         if(cartStatus == null) {
             CartBean userCartBean = new CartBean();
             userCartBean.setUser_idx(user_idx);
-            userCartBean.setGoods_idx(goods_idx);
+            userCartBean.setGoods_name(goods_name);
             userCartBean.setGoods_quantity(goods_quantity);
             userCartBean.setSelected_option(""); //option: String, 현재 내용이 없음
 

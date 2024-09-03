@@ -37,7 +37,6 @@ public class HomeController {
             goodsList = goodsService.getGoodsListByTag(tag[i-1]);
             model.addAttribute("goodsList" + i, goodsList);
         }
-
         return "main";
     }
 
