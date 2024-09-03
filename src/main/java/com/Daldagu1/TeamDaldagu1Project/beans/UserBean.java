@@ -41,6 +41,9 @@ public class UserBean {
     @NotBlank(message = "생년월일은 필수 입력사항입니다.")
     private String user_birth;
 
+    private String user_profile_img;
+    private String user_profile_text;
+
     //DB 이외
     @NotBlank(message = "비밀번호 확인은 필수로 입력해야합니다.")
     @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{8,20}$",

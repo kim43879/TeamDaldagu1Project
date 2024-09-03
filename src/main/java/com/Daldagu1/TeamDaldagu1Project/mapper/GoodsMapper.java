@@ -11,13 +11,13 @@ import java.util.List;
 
 @Mapper
 public interface GoodsMapper {
-    @Insert("insert into goods_table(goods_idx, goods_name, goods_tag, goods_price, goods_img, goods_stock, goods_available,seller_idx)" +
+    @Insert("insert into goods_table(goods_idx, goods_name, goods_tag, goods_price, goods_img, goods_stock, goods_available,seller_idx, goods_img2, goods_text)" +
             "values (goods_seq.nextval, #{goods_name}, #{goods_tag}, #{goods_price}, " +
-            "#{goods_img}, 0, 'T',#{seller_idx})")
+            "#{goods_img}, 0, 'T',#{seller_idx}, #{goods_img2}, #{goods_info})")
     void addGoodsInfo(GoodsBean addGoodsBean);
 
-    @Insert("insert into add_goods_info_table(info_idx, goods_name, goods_tag, goods_price, goods_img, goods_info,seller_idx) " +
-            "values (goods_info_seq.nextval, #{goods_name}, #{goods_tag}, #{goods_price}, #{goods_img},#{goods_info},#{seller_idx})")
+    @Insert("insert into add_goods_info_table(info_idx, goods_name, goods_tag, goods_price, goods_img, goods_info,seller_idx, goods_img2) " +
+            "values (goods_info_seq.nextval, #{goods_name}, #{goods_tag}, #{goods_price}, #{goods_img},#{goods_info},#{seller_idx}, #{goods_img2})")
     void addAddGoodsInfo(AddGoodsInfo addGoodsInfoBean);
 
     //구매상품 호출

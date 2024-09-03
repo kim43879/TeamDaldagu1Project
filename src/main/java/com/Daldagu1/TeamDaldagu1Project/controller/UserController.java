@@ -1,13 +1,13 @@
 package com.Daldagu1.TeamDaldagu1Project.controller;
 
-import com.Daldagu1.TeamDaldagu1Project.beans.AddrBean;
-import com.Daldagu1.TeamDaldagu1Project.beans.UserBean;
+import com.Daldagu1.TeamDaldagu1Project.beans.*;
 import com.Daldagu1.TeamDaldagu1Project.mapper.UserMapper;
+import com.Daldagu1.TeamDaldagu1Project.service.GoodsService;
+import com.Daldagu1.TeamDaldagu1Project.service.SellerService;
 import com.Daldagu1.TeamDaldagu1Project.service.UserService;
+import com.Daldagu1.TeamDaldagu1Project.service.WishService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -35,6 +34,15 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    WishService wishService;
+
+    @Autowired
+    GoodsService goodsService;
+
+    @Autowired
+    SellerService sellerService;
 
     @GetMapping("/user/login")
     public String login(Model model, @RequestParam(name = "fail", defaultValue = "false") boolean fail){
@@ -56,6 +64,7 @@ public class UserController {
                 loginUserBean.setUser_name(tempUserBean.getUser_name());
                 loginUserBean.setUser_role(tempUserBean.getUser_role());
                 loginUserBean.setSeller_idx(tempUserBean.getSeller_idx());
+                loginUserBean.setUser_profile_img(tempUserBean.getUser_profile_img());
 
                 return "user/status/login_success";
             }else {
@@ -110,51 +119,55 @@ public class UserController {
         return "user/user_order";
     }
 
-    @GetMapping("/user/user_present")
-    public String user_present(){
-        return "user/user_present";
-    }
     @GetMapping("/user/user_review")
     public String user_review(){
         return "user/user_review";
     }
+
+    //관심상품등록
+    @GetMapping("/user/add_user_wish")
+    public String add_user_wish(@RequestParam("goods_idx") int goods_idx,
+                            @RequestParam("user_idx") int user_idx,
+                            @RequestParam("result") boolean result, Model model){
+
+        wishService.addUserWish(goods_idx, user_idx);
+
+        if(result) {
+            List<WishBean> wishBeanList = wishService.getUserWishList(user_idx);
+            model.addAttribute("wishBeanList", wishBeanList);
+
+            return "user/user_wish";
+        }
+        GoodsBean tempGoodsBean = goodsService.getPurchaseGoods(goods_idx);
+        model.addAttribute("goods", tempGoodsBean);
+        model.addAttribute("seller_id",sellerService.getSellerId(tempGoodsBean.getSeller_idx()));
+        model.addAttribute("user_idx", loginUserBean.getUser_idx());
+
+        return "goods/goods_page";
+    }
+
+    //관심상품
     @GetMapping("/user/user_wish")
-    public String user_wish(){
+    public String user_wish(@RequestParam("user_idx") int user_idx, Model model) {
+
+        List<WishBean> wishBeanList = wishService.getUserWishList(user_idx);
+        model.addAttribute("wishBeanList", wishBeanList);
+
         return "user/user_wish";
     }
-    @GetMapping("/user/user_cart")
-    public String user_cart(){
-        return "user/user_cart";
-    }
+
     @GetMapping("/user/user_info")
     public String user_info(){
         return "user/user_info";
     }
 
-    @GetMapping("/user/user_addr")
-    public String user_addr(@RequestParam("user_idx") int user_idx, Model model){
-
-        List<AddrBean> testAddr = userService.getExtraUserAddr(user_idx);
-        //System.out.println(testAddr.get(0).getUser_addr());
-
-        model.addAttribute("testAddr", testAddr);
-
-        return "user/user_addr";
-    }
-
-    @PostMapping("/controller")
-    public void addr_update(HttpServletRequest request) {
-
-        String user_name = request.getParameter("user_name");
-        String user_phone = request.getParameter("user_phone");
-        String user_post = request.getParameter("user_post");
-        String user_addr = request.getParameter("user_addr");
-        String user_addr_detail = request.getParameter("user_addr_detail");
-
-    }
-
     @GetMapping("/user/user_pay")
     public String user_pay(){
         return "user/user_pay";
+    }
+
+    @ModelAttribute("searchBean")
+    public SearchBean getSearchBean() {
+        return new SearchBean();
     }
 }

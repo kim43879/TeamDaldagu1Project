@@ -12,25 +12,36 @@
 <div class="form-group">
     <span class="badge text-bg-primary rounded-pill">배송지 수정</span>
     <hr />
-
+    <form action="/user/update_user_addr/update" method="post" th:object="${addrBean}">
+        <input type="hidden" id="addr_idx" th:field="*{addr_idx}" required/>
+        <input type="hidden" id="user_idx" th:field="*{user_idx}" required/>
+        <div>
+            <label for="addr_main">기본배송지</label>
+            <input type="radio" id="addr_main" name="addr_main" value="T" th:field="*{addr_main}"/>
+        </div>
         <div class="form-group">
-            <label for="user_name">*이름</label>
-            <input type="text" id="user_name" class="form-control" />
+            <label for="addr_name">*이름</label>
+            <input type="text" id="addr_name" class="form-control" th:field="*{addr_name}" required/>
         </div>
 
         <div>
-            <label for="user_phone">*연락처</label>
-            <input type="text" id="user_phone" class="form-control"/>
+            <label for="addr_phone">*연락처</label>
+            <input type="text" id="addr_phone" class="form-control" th:field="*{addr_phone}" required/>
+        </div>
+
+        <div>
+            <label for="user_post">*우편번호</label>
+            <input type="text" id="user_post" class="form-control" onclick="kakaopost()" th:field="*{user_post}" readonly required/>
         </div>
 
         <div>
             <label for="user_addr">*주소</label>
-            <input type="text" id="user_addr" class="form-control" onclick="kakaopost()"/>
+            <input type="text" id="user_addr" class="form-control" onclick="kakaopost()" th:field="*{user_addr1}" readonly required/>
         </div>
 
         <div>
             <label for="user_addr_detail">*주소상세</label>
-            <input type="text" id="user_addr_detail" class="form-control">
+            <input type="text" id="user_addr_detail" class="form-control" th:field="*{user_addr2}" required>
         </div>
         <br />
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
@@ -81,12 +92,17 @@
 
         </script>
 
-    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-        <button type="reset" class="btn btn-outline-warning btn-sm-sm">취소</button>
-        &emsp;
-        <button type="submit" class="btn btn-outline-success btn-sm-sm">수정완료</button>
-    </div>
-
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button type="button" class="btn btn-outline-warning btn-sm-sm" onclick="closePop_up()">취소</button>
+            &emsp;
+            <button type="submit" class="btn btn-outline-success btn-sm-sm">수정완료</button>
+        </div>
+        <script>
+            function closePop_up() {
+                window.close();
+            }
+        </script>
+    </form>
 </div>
 
 </body>

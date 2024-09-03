@@ -6,6 +6,7 @@
 <title>달다구리스</title>
 <!-- Bootstrap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <style>
 	.card-main{
 		margin-top: 88px; 
@@ -57,8 +58,9 @@
 		<div class="col-md-8" id="card1">
 			&ensp;《배송지 관리》
 			<ol class="list-group list-group-numbered" id="addr-list">
-				<li class="list-group-item d-flex justify-content-between align-items-start" th:each="addr : ${testAddr}">
+				<li class="list-group-item d-flex justify-content-between align-items-start" th:each="addr,index : ${testAddr}">
 					<div class="form-group ms-2 me-auto">
+						<input type="hidden" th:value="${addr.addr_idx}" th:attr="id='addr_idx' + ${index.index}" />
 						<span class="badge text-bg-primary rounded-pill" th:text="${addr.message}"></span>
 						<b><div class="fw-bold" th:text="${addr.addr_name}"></div></b> <!--user_name-->
 						<span th:text="${addr.addr_phone}"></span> <br>
@@ -68,49 +70,47 @@
 
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 						&emsp;&emsp;&emsp;
-						<button type="submit" class="btn btn-outline-warning btn-sm-sm-sm-sm" onclick="addr_delete(this)">삭제</button> &nbsp;
+						<button type="submit" class="btn btn-outline-warning btn-sm-sm-sm-sm" th:onclick="addr_delete([[${index.index}]])">삭제</button> &nbsp;
 
-						<button class="btn btn-outline-success" id="user_post1" onclick="addr_modify()" value="">수정</button>
+						<button class="btn btn-outline-success" id="user_post1" th:onclick="addr_update([[${index.index}]])" value="">수정</button>
 					</div>
 
-					<script>
-						function addr_delete(button) {
-                            const list = button.closest('li');
-                            const addrId = list.getAttribute('data-addr-id'); // 데이터 속성에서 주소 ID 가져오기
-
-                            if (addrId) {
-                                $.ajax({
-                                    url: '/rest/deleteAddress',
-                                    type: 'POST',
-                                    data: { user_idx: $("user_idx").val() },
-                                    success: function(response) {
-                                        alert("삭제되었습니다.");
-                                        list.remove();
-                                    },
-                                });
-                            }
-                        }
-					</script>
-
-					<script>
-						function addr_modify() {
-                           window.open("/user_addr2.html", "", 'width=600,height=550');
-                       }
-					</script>
 				</li>
-
 			</ol>
+			<script th:inline="javascript">
+				function addr_update(num) {
+                    let idx = $("#addr_idx" + num).val();
+                    console.log(idx);
+                   window.open("/user/update_user_addr?addr_idx=" + idx, "", 'width=600,height=550');
+               }
+
+				function addr_delete(num) {
+					let idx = $("#addr_idx" + num).val();
+					$.ajax({
+                        url: "/rest/delete_addr",
+                        type: "post",
+                        data: { "addr_idx": idx },
+                        success: function(result) {
+                            alert(result);
+                            location.reload();
+                        },
+                        error: function(error) {
+                            console.log(error);
+                        }
+                    });
+				}
+			</script>
 			<br />
 
 			<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 				<a href="user_page.html" class="btn btn-outline-info" role="button" data-bs-toggle="button" aria-pressed="true">돌아가기</a>
 				&emsp;
-				<button class="btn btn-outline-primary" id="add_addr" onclick="addr_modify()" value="">추가등록</button>
+				<button class="btn btn-outline-primary" id="add_addr" onclick="addr_add()" value="">추가등록</button>
 			</div>
 
 			<script>
-				function addr_modify() {
-                   window.open("/user_addr2.html", "", 'width=600,height=550');
+				function addr_add() {
+                   window.open("/user/add_user_addr", "", 'width=600,height=550');
                }
 			</script>
 

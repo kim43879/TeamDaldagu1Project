@@ -6,64 +6,44 @@
 <title>달다구리스</title>
 <!-- Bootstrap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-    <style>
-        .btn{
-            position: fixed;
-        }
-    </style>
 </head>
 <body>
 
-<div class="form-group" style="padding-left: 5%; padding-right: 5%;">
-    <span class="badge text-bg-primary rounded-pill" style="margin-top: 20px;">-배송지 수정-</span>
+<div class="form-group">
+    <span class="badge text-bg-primary rounded-pill">배송지 수정</span>
     <hr />
-
-    <form action="/controller" name="addr_update" method="post">
+    <form action="/user/add_user_addr/add" method="post" th:object="${addrBean}">
+        <input type="hidden" th:field="*{user_idx}">
         <div class="form-group">
-            <label for="user_name">*이름</label>
-            <input type="text" id="user_name" name="user_name" class="form-control" required/>
+            <label for="user_name">*배송지 이름</label>
+            <input type="text" id="user_name" class="form-control" th:field="*{addr_name}"/>
         </div>
 
         <div>
             <label for="user_phone">*연락처</label>
-            <input type="text" id="user_phone" name="user_phone" class="form-control" required/>
+            <input type="text" id="user_phone" class="form-control" th:field="*{addr_phone}"/>
         </div>
 
         <div>
             <label for="user_post">*우편번호</label>
-            <input type="text" id="user_post" name="user_post" class="form-control" onclick="kakaopost()"/>
+            <input type="text" id="user_post" class="form-control" th:field="*{user_post}" readonly>
         </div>
 
         <div>
             <label for="user_addr">*주소</label>
-            <input type="text" id="user_addr" name="user_addr" class="form-control"/>
+            <input type="text" id="user_addr" class="form-control" onclick="kakaopost()" th:field="*{user_addr1}"/>
         </div>
 
         <div>
             <label for="user_addr_detail">*주소상세</label>
-            <input type="text" id="user_addr_detail" name="user_addr_detail" class="form-control">
+            <input type="text" id="user_addr_detail" class="form-control" th:field="*{user_addr2}">
         </div>
         <br />
-
-        <div id="wrap" style="display:none;border:1px solid;width:auto;height:auto;margin:5px 0;position:relative">
-            <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap"
-                 style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
-
-        </div> <hr />
-
         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
         <script>
-
-            var element_wrap = document.getElementById('wrap');
-
-            function foldDaumPostcode() {
-                element_wrap.style.display = 'none';
-            }
-
             function kakaopost() {
                 // Set a same-site cookie for first-party contexts
                 document.cookie = 'cookie1=value1; SameSite=None';
-                var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
                 new daum.Postcode({
                     oncomplete: function(data) {
                         var addr = ''; //주소변수
@@ -101,33 +81,22 @@
 
                         //커서를 주소 필드로 이동
                         document.getElementById("user_addr_detail").focus();
-
-                        //element 숨김처리
-                        element_wrap.style.display = 'none';
-
-                        //스크롤 위치 복구
-                        document.body.scrollTop = currentScroll;
                     }
-
-                }).embed(element_wrap);
-
-                element_wrap.style.display = 'block';
-            }
-        </script>
-
-        <div class="d-flex justify-content-end gap-2">
-            &emsp;
-            <button type="submit" class="btn btn-outline-success btn-sm-sm" onclick="complete()">수정완료</button>
-        </div>
-
-        <script>
-            function complete() {
-                alert('수정이 완료되었습니다.');
-                window.close();
+                }).open();
             }
 
         </script>
 
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <button type="reset" class="btn btn-outline-warning btn-sm-sm" onclick="closePop_up">취소</button>
+        &emsp;
+        <button type="submit" class="btn btn-outline-success btn-sm-sm">주소입력</button>
+    </div>
+    <script>
+        function closePop_up() {
+            window.close();
+        }
+    </script>
     </form>
 </div>
 

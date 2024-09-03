@@ -81,8 +81,8 @@
 <div class="card-profile" style="width: 18rem;">
 
     <div class="image-container" style="border-color: Gray;">
-        <img th:src="@{/img/profile.jpg}" class="card-img-top" id="img">
-        <button class="btn btn-outline-info hidden-button" id="change-image-btn">이미지 변경</button>
+        <img th:src="@{'/img/user_profile/' + ${loginUserBean.user_profile_img}}" class="card-img-top" id="img" style="width:100%; height:100%;">
+        <button class="btn btn-outline-info hidden-button" id="change-image-btn" style="width:100%;">이미지 변경</button>
         <input type="file" id="image-input" style="display: none;" accept="image/*">
 
         <script>
@@ -104,7 +104,7 @@
     </div>
 
     <div class="card-body">
-        <h5 class="card-title" th:text="${loginUserBean.user_idx}"></h5>
+        <h5 class="card-title" th:text="${loginUserBean.user_id}"></h5>
         <p class="card-text">동쑦이 15주년 데뷔축하링~</p>
     </div>
     <ul class="list-group list-group-flush">
@@ -124,12 +124,12 @@
         <a href="/user/user_review" class="card-link">리뷰작성</a> <br/><br/>
 
         <h6 style="border: thin;"><b>관심상품</b></h6>
-        <a href="/user/user_wish" class="card-link">찜한상품</a> <br/>
+        <a th:href="@{/user/user_wish(user_idx=${loginUserBean.user_idx})}" class="card-link">찜한상품</a> <br/>
         <a href="/user/user_cart" class="card-link">장바구니</a> <br/><br/>
 
         <h6 style="border: thin;"><b>나의 정보</b></h6>
         <a href="/user/user_info" class="card-link">회원정보 관리</a> <br/>
-        <a href="/user/user_addr?user_idx=1" class="card-link">배송지 관리</a> <br/>
+        <a th:href="@{/user/user_addr(user_idx=${loginUserBean.user_idx})}" class="card-link">배송지 관리</a> <br/>
         <a href="/user/user_pay" class="card-link">결제수단 관리</a> <br/>
         <hr/>
 

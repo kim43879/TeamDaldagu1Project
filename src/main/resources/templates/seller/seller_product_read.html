@@ -71,7 +71,7 @@
 					<br />
 
 					<div class="btn-group" role="group"
-						 aria-label="Basic outlined example" th:replace="seller/import/menu_bar.html :: menu">
+						 aria-label="Basic outlined example" th:replace="seller/import/menu_bar.html :: menu(flag=5,seller_idx=${sellerBean.seller_idx})">
 					</div>
 					<hr />
 					<br />
@@ -83,84 +83,44 @@
 						<!-- 							<h1 class="jumbotron" style="text-align: center; margin: 50px 0;">${productInfo.productId}</h1> -->
 						<div class="row">
 						 <div class="col-md-7 col-lg-8 text-center" style="margin:0 auto;">
-							<div class="form-group hidden-xs" id="fileDrop">
-							<img src="sample3.jpg" class="img-thumbnail" alt="..."><!-- 지울거 -->
-								<label>추가로 업로드 할 파일을 드랍하세요.</label>
-								<div class="fileDrop"></div>
-								<ul class="clearfix uploadedList col-xs-12"></ul>
-							</div>
-							
 							<div class="form-group productInfo text-left" >
-								<form action="/admin/product/update" method="post">
+								<form action="/goods/goods_update" method="post" th:object="${goodsBean}">
 									<div class="row g-3">
-									<div class="col-sm-6">
-										<label>상품 ID</label> <input name="productId"
-											value="${productInfo.productId}"
-											class="form-control productId" readonly>
-									</div>
-									
-									<div class="col-sm-6">
-										<label>상품명</label> <input name="productName"
-											value="${productInfo.productName}" class="form-control"
-											required>
-									</div>
-									<br />
-									<div class="col-sm-6">
-										<label>상품가격</label> <input name="price"
-											value="${productInfo.price}" class="form-control" required>
-									</div>
-									<br />
-									<br />
-									<div class="col-sm-6">
-										<label>상품분류</label>
-										<div class="form-inline">
-											<select class="form-control" id="productDist">
-												<option value="outer">1. 외투</option>
-												<option value="top">2. 상의</option>
-												<option value="bottom">3. 하의</option>
-												<option value="bag">4. 가방</option>
-												<option value="acc">5. 액세서리</option>
-											</select>
-											<button class="btn btn-outline-secondary btn_productDist">입력</button>
-											<input name="productDist" value="${productInfo.productDist}"
-												class="form-control" readonly>
+										<div class="form-group hidden-xs" id="fileDrop">
+											<label for="goods_img">변경할 이미지를 선택해주세요.</label>
+											<input type="file" id="goods_img" th:field="*{goods_img2}">
 										</div>
-									</div>
-									<br />
-									<div class="col-sm-6">
-										<label>재고</label> <input name="stock"
-											value="${productInfo.stock}" class="form-control" required>
-									</div>
-									<br />
-									<div class="col-sm-6">
-										<label>상품정보</label> <input name="productInfo"
-											value="${productInfo.productInfo}" class="form-control"
-											required>
-									</div>
-									<br />
-									<div class="col-sm-6">
-										<label>상품 등록일</label> <input value="${productInfo.regDate}"
-											class="form-control" readonly>
-									</div>
-									<br />
-									<div class="col-sm-6">
-										<label>최종 수정일</label> <input value="${productInfo.updateDate}"
-											class="form-control" readonly>
-									</div>
+										<div class="col-sm-6">
+											<label for="goods_name">상품명</label>
+											<input id="goods_name" class="form-control" th:field="*{goods_name}" required>
+										</div>
+										<br />
+										<div class="col-sm-6">
+											<label for="price">상품가격</label>
+											<input id="price" class="form-control" th:field="*{goods_price}" required>
+										</div>
+										<br />
+										<div class="col-sm-6">
+											<label for="goods_stock">재고</label>
+											<input id="goods_stock" class="form-control" th:field="*{goods_stock}" required>
+										</div>
+										<br />
+										<div class="col-sm-6">
+											<label for="goods_text">상품정보</label>
+											<input id="goods_text" class="form-control" th:field="*{goods_text}" required>
+										</div>
+										<br />
 									</div>
 									<br />
 									<div class="btns text-center">
-										<button class="btn btn-outline-secondary" id="btn_product_update">상품정보
-											수정</button>
-										<button class="btn btn-outline-secondary" id="btn_product_delete" >상품 삭제</button>
-										<button class="btn btn-outline-secondary" id="btn_product_back">상품
-											정보 페이지로 돌아가기</button>
+										<button type="submit" class="btn btn-outline-secondary" id="btn_product_update">상품정보 수정</button>
+										<button type="button" class="btn btn-outline-secondary" id="btn_product_delete" >상품 삭제</button>
+										<!--삭제고려-->
+										<button class="btn btn-outline-secondary" id="btn_product_back">상품 정보 페이지로 돌아가기</button>
 									</div>
 								</form>
 							</div>
 						</div>
-
-						
 					</div>
 				</div>
 				<!-- class = row -->
@@ -168,7 +128,13 @@
 		</div>
 	</div>
 	</main>
-
+	<script>
+		function input_tag() {
+            let productDist = document.getElementById('goods_tag').value;
+            let productTag = document.getElementById('goods_category');
+            productTag.value(productDist);
+        }
+	</script>
 	<!-- 하단 -->
 	<div id="footer">
 		<div th:replace="page_footer/footer.html :: footer-head"></div>

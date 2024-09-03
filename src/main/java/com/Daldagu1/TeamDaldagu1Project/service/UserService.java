@@ -2,6 +2,7 @@ package com.Daldagu1.TeamDaldagu1Project.service;
 
 import com.Daldagu1.TeamDaldagu1Project.beans.AddrBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.UserBean;
+import com.Daldagu1.TeamDaldagu1Project.mapper.AddrMapper;
 import com.Daldagu1.TeamDaldagu1Project.mapper.UserMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +20,9 @@ public class UserService {
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private AddrMapper addrMapper;
 
     public void addUser(UserBean userBean){
 
@@ -41,7 +45,7 @@ public class UserService {
         addrBean.setAddr_main("T");
         addrBean.setAddr_phone(userBean.getUser_phone());
 
-        userMapper.addAddr(addrBean);
+        addrMapper.addAddr(addrBean);
     }
 
     public String getUserId(String user_id){
@@ -51,6 +55,7 @@ public class UserService {
     public UserBean getUserbyIdx(int user_idx){
         return userMapper.getUserbyIdx(user_idx);
     }
+
     public UserBean getUserbyId(String user_id){
         UserBean tempLoginUserBean = userMapper.getUserbyId(user_id);
         if(tempLoginUserBean != null) {
@@ -62,20 +67,6 @@ public class UserService {
 
         return tempLoginUserBean;
     }
-    //배송지 호출
-    public List<AddrBean> getExtraUserAddr(int user_idx) {
 
-        return userMapper.getExtraUserAddr(user_idx);
-    }
-
-    //배송지 업데이트
-    public void getUpdateAddr(int user_idx) {
-        userMapper.getUpdateAddr(user_idx);
-    }
-
-    //배송지 삭제
-    public void deleteUserAddr(int addr_idx) {
-        userMapper.deleteUserAddr(addr_idx);
-    }
 }
 

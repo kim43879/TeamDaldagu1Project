@@ -2,7 +2,10 @@ package com.Daldagu1.TeamDaldagu1Project.service;
 
 import com.Daldagu1.TeamDaldagu1Project.beans.AddGoodsInfo;
 import com.Daldagu1.TeamDaldagu1Project.beans.GoodsBean;
+import com.Daldagu1.TeamDaldagu1Project.beans.PageBean;
+import com.Daldagu1.TeamDaldagu1Project.beans.SearchBean;
 import com.Daldagu1.TeamDaldagu1Project.mapper.GoodsMapper;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -19,8 +22,11 @@ public class GoodsService {
     @Autowired
     private GoodsMapper goodsMapper;
 
-    @Value("${img.goods.applypath}")
+    @Value("${imgPath}")
     private String goodsApplyPath;
+
+    @Value("${page.paginationCnt}")
+    private int paginationCnt;
 
     //상품 추가
     public void addGoodsInfo(GoodsBean addGoodsBean) {
@@ -40,10 +46,13 @@ public class GoodsService {
 
     //상품 등록 정보 추가
     public void addGoodsInfoApply(AddGoodsInfo addGoodsInfoBean) {
-        MultipartFile uploadFile = addGoodsInfoBean.getGoods_img_file();
-        if(uploadFile.getSize() > 0){
-            String file_name = saveApplyGoodsInfo(uploadFile);
-            addGoodsInfoBean.setGoods_img(file_name);
+        MultipartFile uploadFile1 = addGoodsInfoBean.getGoods_img_file();
+        MultipartFile uploadFile2 = addGoodsInfoBean.getGoods_img_file2();
+        if(uploadFile1.getSize() > 0 && uploadFile2.getSize() > 0){
+            String file_name1 = saveApplyGoodsInfo(uploadFile1);
+            String file_name2 = saveApplyGoodsInfo(uploadFile2);
+            addGoodsInfoBean.setGoods_img(file_name1);
+            addGoodsInfoBean.setGoods_img2(file_name2);
         }else{
             addGoodsInfoBean.setGoods_img("default_goods_img.jpg");
         }
@@ -51,7 +60,7 @@ public class GoodsService {
     }
 
     //구매상품 호출
-    public List<GoodsBean> getPurchaseGoods(int goods_idx) {
+    public GoodsBean getPurchaseGoods(int goods_idx) {
         return goodsMapper.getPurchaseGoods(goods_idx);
     }
 
@@ -59,10 +68,62 @@ public class GoodsService {
         return goodsMapper.getAddGoodsList();
     }
 
+    public List<GoodsBean> getMyGoodsList(int seller_idx){
+        return goodsMapper.getMyGoodsList(seller_idx);
+    }
+
+    public List<GoodsBean> getGoodsListByTag(String goods_tag){
+        return goodsMapper.getGoodsListByTag(goods_tag);
+    }
+
+    public List<GoodsBean> searchGoodsList(SearchBean searchBean,int page){
+
+        int start = (page - 1) * searchBean.getShowCount();
+
+        RowBounds rowBounds = new RowBounds(start,(start + searchBean.getShowCount()));
+
+        if(searchBean.getSearchCategory().equals("전체")){
+            searchBean.setSearchCategory("%");
+        }
+        if(searchBean.getSearchMaxPrice() == 0){
+            searchBean.setSearchMaxPrice(300000);
+        }
+
+        searchBean.showField();
+
+        if(searchBean.getSortType().equals("goods_price1")){
+            return goodsMapper.searchGoodsListOrder_price1(searchBean, rowBounds);
+        }else if(searchBean.getSortType().equals("goods_price2")){
+            return goodsMapper.searchGoodsListOrder_price2(searchBean, rowBounds);
+        }
+
+        return goodsMapper.searchGoodsList(searchBean,rowBounds);
+    }
+
     public AddGoodsInfo getAddGoodsInfo(int info_idx){
         return goodsMapper.getAddGoodsByIdx(info_idx);
     }
     public void deleteAddGoodsInfo(int info_idx){
         goodsMapper.deleteAddGoods(info_idx);
+    }
+
+    public PageBean getSearchPageCount(int currentPage,SearchBean searchBean){
+        if(searchBean.getSearchCategory().equals("goods_price1")){
+            return new PageBean(goodsMapper.searchGoodsListOrder_priceCnt(searchBean), currentPage, searchBean.getShowCount(), paginationCnt);
+        }
+        else if(searchBean.getSearchCategory().equals("goods_price2")){
+            return new PageBean(goodsMapper.searchGoodsListOrder_price2Cnt(searchBean), currentPage, searchBean.getShowCount(), paginationCnt);
+        }
+        return new PageBean(goodsMapper.searchGoodsListCnt(searchBean),currentPage,searchBean.getShowCount(),paginationCnt);
+    }
+
+    public int getTotalGoodsCnt(SearchBean searchBean){
+        if(searchBean.getSearchCategory().equals("goods_price1")){
+            return goodsMapper.searchGoodsListOrder_priceCnt(searchBean);
+        }
+        else if(searchBean.getSearchCategory().equals("goods_price2")){
+            return goodsMapper.searchGoodsListOrder_price2Cnt(searchBean);
+        }
+        return goodsMapper.searchGoodsListCnt(searchBean);
     }
 }

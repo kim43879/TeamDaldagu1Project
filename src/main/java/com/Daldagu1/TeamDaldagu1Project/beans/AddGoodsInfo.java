@@ -13,7 +13,9 @@ public class AddGoodsInfo {
     private String goods_tag;
     private int goods_price;
     private String goods_img;
+    private String goods_img2;
     private MultipartFile goods_img_file;
+    private MultipartFile goods_img_file2;
 
     private String goods_info;
 

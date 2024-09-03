@@ -1,13 +1,9 @@
 package com.Daldagu1.TeamDaldagu1Project.controller;
 
-import com.Daldagu1.TeamDaldagu1Project.beans.AddGoodsInfo;
-import com.Daldagu1.TeamDaldagu1Project.beans.GoodsBean;
-import com.Daldagu1.TeamDaldagu1Project.beans.SellerBean;
-import com.Daldagu1.TeamDaldagu1Project.beans.SellerInfoBean;
-import com.Daldagu1.TeamDaldagu1Project.service.GoodsService;
-import com.Daldagu1.TeamDaldagu1Project.service.SellerService;
-import com.Daldagu1.TeamDaldagu1Project.service.UserService;
+import com.Daldagu1.TeamDaldagu1Project.beans.*;
+import com.Daldagu1.TeamDaldagu1Project.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,6 +18,15 @@ public class RestApiController {
     @Autowired
     private GoodsService goodsService;
 
+    @Autowired
+    private AddrService addrService;
+
+    @Autowired
+    private WishService wishService;
+
+    @Autowired
+    private CartService cartService;
+
     @PostMapping("/rest/idCheck")
     public String IdCheck(@RequestParam("user_id")String user_id){
         String db_id = userService.getUserId(user_id);
@@ -32,6 +37,7 @@ public class RestApiController {
         }
     }
 
+    //판매자 승인
     @PostMapping("/rest/approve_seller")
     public void approveSeller(@RequestParam("user_idx") int user_idx){
         if(userService.getUserbyIdx(user_idx).getUser_role().equals("S")){}
@@ -48,11 +54,13 @@ public class RestApiController {
         }
     }
 
+    //판매자 반려
     @PostMapping("/rest/denial_seller")
     public void denialSeller(@RequestParam("user_idx") int user_idx){
         sellerService.deleteSellerJoinInfo(user_idx);
     }
 
+    //승인
     @PostMapping("/rest/approve_goods")
     public void approve_goods(@RequestParam("info_idx") int info_idx){
         AddGoodsInfo tempGoodsInfoBean = goodsService.getAddGoodsInfo(info_idx);
@@ -68,8 +76,35 @@ public class RestApiController {
         goodsService.deleteAddGoodsInfo(info_idx);
     }
 
+    //굿즈 반려
     @PostMapping("/rest/denial_goods")
     public void denial_goods(@RequestParam("info_idx") int info_idx){
         goodsService.deleteAddGoodsInfo(info_idx);
     }
-}
+
+    //찜 삭제
+    @PostMapping("/rest/delete_wish")
+    public void delete_wish(@RequestParam("wish_idx") int wish_idx) {
+        wishService.deleteUserWish(wish_idx);
+    }
+
+    //장바구니 삭제
+    @PostMapping("/rest/remove_cart")
+    public void remove_cart(@RequestParam("cart_idx") int cart_idx) {
+        cartService.removeUserCart(cart_idx);
+    }
+
+    //주소 삭제
+    @PostMapping(value = "/rest/delete_addr", produces = "text/plain; charset=UTF-8")
+    public String delete_addr(@RequestParam("addr_idx") int addr_idx){
+
+        AddrBean tempAddrBean = addrService.getAddrByAddrIdx(addr_idx);
+
+        if(tempAddrBean.getAddr_main().equals("F")){
+            addrService.deleteAddr(addr_idx);
+            return "삭제했습니다.";
+        }
+        return "기본 주소지는 삭제할 수 없습니다.";
+    }
+
+}//class

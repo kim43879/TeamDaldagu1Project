@@ -54,10 +54,31 @@
         #text{
             text-align: center;
         }
-        .offcanvas {
+        #show_div{
+            position: absolute;
+            width: 30%;
+            left: 640px; top: 250px;
+            border: 1px solid light-gray;
+            border-radius: 3px;
+            z-index: 10000;
+        }
+        #result::-webkit-scrollbar{
             display: none;
         }
+        .card-img {
+        display: flex;                 /* Flexbox 활성화 */
+        align-items: center;           /* 수직 중앙 정렬 */
+        justify-content: center;       /* 수평 중앙 정렬 */
+        width: 100%;
+        height: 70%;
+        overflow: hidden;              /* 이미지가 div를 넘어가지 않도록 함 */
+        }
 
+        .card-img img {
+            max-width: 100%;               /* 이미지가 div를 넘어가지 않도록 설정 */
+            max-height: 100%;              /* 이미지가 div를 넘어가지 않도록 설정 */
+            object-fit: contain;           /* 이미지 비율을 유지하면서 적절히 맞춤 */
+        }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
@@ -69,26 +90,55 @@
     <div th:replace="page_header/header.html :: header-body"></div>
 </div>
 
-<!-- 목록1 -->
+<!--장바구니 스크립트-->
+<div class="card" id="show_div" style="visibility: hidden;">
+    <div class="card-header" style="display: flex; align-items: center; justify-content: space-between;">
+        <h6 style="margin: 0;"><b>장바구니 확인</b></h6>
+        <a href="javascript:void(0);" onclick="hide_div()">
+            <img th:src="@{/img/btn_price_delete.gif}" style="display: block;">
+        </a>
+    </div>
+
+    <div class="card-body" id="card_info_message" style="display: flex; align-items: center; justify-content: space-between;">
+        <dl class="item-list" style="display: flex; align-items: center; margin: 0; padding: 0;">
+            <dt style="margin: 0;">
+                &ensp;
+                <img th:src="@{'/img/goods/' + ${goods.goods_img}}" style="margin: 0; margin-top: 15px; width: 160px; height: 160px;">
+            </dt>
+            &emsp;&emsp;&emsp;
+            <dd style="margin: 0; margin-left: 10px;"><b>n</b>개의 상품이 장바구니에 담겼습니다.</dd>
+        </dl>
+    </div>
+    <hr />
+
+    <div class="form-group" style="display: flex; justify-content: center; align-items: center;">
+        <button class="btn btn-outline-info" onclick="hide_div()">쇼핑계속하기</button>
+        &emsp;
+        <a href="/user/user_cart" class="btn btn-outline-primary">장바구니 가기</a>
+    </div>
+
+</div>
+
+<!-- 상품선택 -->
 <div class="container mt-4" id="cardd">
     <div class="row">
         <div class="col-sm-6 mb-3 mb-sm-0">
             <div class="card">
                 <div class="card-body">
-                    <img th:src="@{/img/sample4.jpg}" class="card-img-top" style="height: 50%;"/>
+                    <img th:src="@{'/img/goods/' + ${goods.goods_img}}" class="card-img-top" style="height: 50%;"/>
                 </div>
             </div>
         </div>
 
         <div class="col-sm-6" id="cardd1">
             <div class="card">
-                <div class="card-body">
-                    <a href="/goods/goods_seller" style="text-decoration: none;">판매자1</a> <br/>
+                <div class="card-body" style="margin-left: 5%; margin-right: 5%">
+                    <a th:href="@{/goods/goods_seller(seller_idx=${goods.seller_idx})}" th:text="${seller_id}" style="text-decoration: none;">판매자1</a> <br/>
                     <!-- user_name(seller) -->
-                    <h5>상품명: <b>goods_name</b></h5>
+                    <h5>상품명: <b th:text="${goods.goods_name}">goods_name</b></h5>
                     <hr/>
-                    <h6>상품코드: goods_idx</h6>
-                    <h6>금액: <strong>goods_price</strong></h6>
+                    <h6 th:text="'상품코드: ' + ${goods.goods_idx}" style="display: none;">상품코드: goods_idx</h6>
+                    <h6>금액: <strong th:text="${goods.goods_price}">goods_price</strong></h6>
                     <h6>적립금: point</h6>
                     <hr/>
 
@@ -99,26 +149,13 @@
                                 <label for="select_option1">옵션1 </label>
                                 &nbsp;
                                 <select class="btn border-secondary dropdown-toggle" id="select_option1"
-                                        onchange="change()">
+                                        th:onchange="change([[${goods.goods_price}]])">
                                     <option selected="selected" value="0">[필수] 옵션을 선택해주세요.</option>
-                                    <option value="2000">option1(+2,000) &nbsp;</option>
-                                    <option value="3000">option2(+3,000) &nbsp;</option>
-                                    <option value="1000">option3(+1,000) &nbsp;</option>
+                                    <option value="2000">option1(+2,000)</option>
+                                    <option value="3000">option2(+3,000)</option>
+                                    <option value="1000">option3(+1,000)</option>
                                 </select>
 
-                            </div>
-
-                            <div class="form-group">
-                                <label for="select_option2">옵션2 </label>
-                                &nbsp;
-
-                                <select class="btn border-secondary dropdown-toggle" id="select_option2"
-                                        onchange="change()">
-                                    <option value="0" selected="selected">[필수] 옵션을 선택해주세요.</option>
-                                    <option value="3000">option1(+3,000) &nbsp;</option>
-                                    <option value="4000">option2(+4,000) &nbsp;</option>
-                                    <option value="5000">option3(+5,000) &nbsp;</option>
-                                </select>
                             </div>
                             <hr/>
                             <div id="result" style="overflow-x:hidden; height:150px;">
@@ -129,363 +166,246 @@
                                 let num = 1;
                                 let totalPrice = 0;
                                 let itemNum = 0;
-                                function change() {
+
+                                let goods_price1 = 0;
+                                let goods_price2 = 0;
+                                let goods_price3 = 0;
+
+                                let deletedNumbers = [];
+                                let currentMaxNumber = 3;
+
+                                function change(price) {
+                                    let newNumber;
+
                                     console.log("changed");
                                     let selectValue1 = $('#select_option1').val();
-                                    let selectValue2 = $('#select_option2').val();
                                     let selectOption1 = $("#select_option1 option:checked").text()
-                                    let selectOption2 = $("#select_option2 option:checked").text()
 
-                                    if(selectValue1 === "0" || selectValue2 === "0"){}
-                                    else{
-                                    let tempPrice = Number(selectValue1) + Number(selectValue2) + 15000;
-                                    var itemDiv = $('<div></div>').addClass('item').attr('id','item' + num);
-                                    var bTag = $('<b></b>').text('goods_name');
-                                    var imgTag = $('<img>').attr('src','/static/btn_price_delete.gif').attr('style','cursor:pointer; margin-left: 70%;').attr('class','delete_btn').attr('onclick','remove_div(' + num + ')');
-                                    var result1Tag = $('<div></div>').attr('id','result' + num).text('-옵션: '+ selectOption1 +' / ' + selectOption2);
-                                    var inputTag = $('<input>').attr('type','number').attr('class','btn border-secondary btn-sm').attr('value','1').attr('min','1').attr('max','5').attr('style','margin-top:3px; width: 50px;')
-                                    .attr('onchange', 'multi()');
-                                    var strongTag = $('<strong></strong>').attr('id','price' + num).text(tempPrice + '원');
-                                    var hrTag = $('<hr>');
-                                    itemDiv.append(bTag, imgTag, result1Tag, inputTag, strongTag, hrTag);
-                                    $('#result').append(itemDiv);
-                                    num++;
+                                    if(num <= 3){
+                                    let tempPrice = Number(selectValue1) + price;
+                                    if(deletedNumbers.length > 0){
+                                        newNumber = deletedNumbers.shift();
+                                        addCart(tempPrice, selectOption1,newNumber);
+                                    }else{
+                                        newNumber = num;
+                                        num++;
+                                        addCart(tempPrice, selectOption1,newNumber);
+                                    }
                                     itemNum++;
                                     totalPrice += tempPrice;
                                     console.log(totalPrice);
                                     $("#total-price").text(totalPrice + "원");
                                     $("#item-num").text("("+ itemNum +"개)");
                                      document.getElementById('select_option1').selectedIndex = 0;
-                                     document.getElementById('select_option2').selectedIndex = 0;
+                                    }
+                                    else{
+                                        alert("상품은 최대 3개까지 담을 수 있습니다.");
+                                        document.getElementById('select_option1').selectedIndex = 0;
                                     }
                                 }
 
-                                function remove_div(num) {
-                                    itemNum--;
-                                    const div = document.getElementById('item' + num);
-                                    let tempPrice = $("#price" + num).text();
+                                function remove_div(number) {
+                                    itemNum -= $('#goods-production' + number).val();
+                                    num--;
+                                    const div = document.getElementById('item' + number);
+                                    let tempPrice = $("#price" + number).text();
                                     let numPrice = tempPrice.slice(0, -1);
                                     totalPrice -= Number(numPrice);
                                     $("#total-price").text(totalPrice + "원");
                                     $("#item-num").text("("+ itemNum +"개)");
                                     div.remove();
+
+                                    deletedNumbers.push(number);
+                                }
+                                function addCart(tempPrice, selectOption1,newNumber){
+                                    var itemDiv = $('<div></div>').addClass('item').attr('id','item' + newNumber);
+                                    var bTag = $('<b></b>').text('[[${goods.goods_name}]]');
+                                    var imgTag = $('<img>').attr('src','[[@{/img/btn_price_delete.gif}]]').attr('style','cursor:pointer; margin-left: 70%;').attr('class','delete_btn').attr('onclick','remove_div(' + newNumber + ')');
+                                    var result1Tag = $('<div></div>').attr('id','result' + newNumber).text('-옵션: '+ selectOption1);
+                                    var inputTag = $('<input>').attr('type','number').attr('class','btn border-secondary btn-sm').attr('id','goods-production' + newNumber).attr('value','1').attr('min','1').attr('max','5').attr('style','margin-top:3px; width: 50px;')
+                                    .attr('onchange', 'multi(' + newNumber +')');
+                                    var strongTag = $('<strong></strong>').attr('id','price' + newNumber).text(tempPrice + '원');
+                                    var hrTag = $('<hr>');
+                                    var inputTag2 = $('<input>').attr('type', 'hidden').attr('id', 'origin-price' + newNumber).attr('value', tempPrice);
+                                    itemDiv.append(bTag, imgTag, result1Tag, inputTag, strongTag, inputTag2, hrTag);
+                                    $('#result').append(itemDiv);
+                                }
+                                function multi(product_num) {
+
+                                    let select_value = $('#goods-production' + product_num).val();
+                                    let price = $('#origin-price' + product_num).val();
+                                    let currentPrice = $('#price' + product_num).text();
+                                    totalPrice -= currentPrice.slice(0, -1);
+                                    let tempPrice = price * select_value;
+                                    totalPrice += tempPrice;
+                                    $('#item-num')
+                                    $('#price' + product_num).text(tempPrice + '원');
+                                    $("#total-price").text(totalPrice + "원");
                                 }
                             </script>
-
 
                             <p>*총 상품금액(수량): <strong id="total-price">0원</strong><span id="item-num">(0개)</span></p>
                             <hr/>
 
-                            <button class="btn btn-outline-primary position-relative" type="button" id="cartButton">
+                            <button class="btn btn-outline-warning" type="button" onclick="wish_message()">관심상품</button>
+                            &ensp;
+                            <button class="btn btn-outline-primary position-relative" type="button" onclick="show_div()">
                                 장바구니
                             </button>
                             &ensp;
                             <a href="/goods/goods_buy" class="btn btn-outline-info" onclick="buy()">구매하기</a>
-                            &ensp;
 
-                            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight"
-                                 aria-labelledby="offcanvasRightLabel">
-                                <div class="offcanvas-header">
-                                    <h6 class="offcanvas-title" id="offcanvasRightLabel">장바구니에 상품이 담겼습니다.</h6>
-                                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-                                            aria-label="Close"></button>
-                                    <div class="offcanvas-body">
-                                        <div class="card">
-                                            <img th:src="@{/img/cart.jpg}" class="img-fluid"/>
-                                        </div>
-                                    </div>
+                            <script>
+                                function wish_message() {
+                                    var result = confirm("관심상품에 추가되었습니다. 확인하시겠습니까?");
 
-                                    <a href="/user/user_cart" class="btn btn-outline-primary">장바구니 가기</a>
-                                </div>
+                                    location.href= '/user/add_user_wish?goods_idx=' + [[${goods.goods_idx}]] + '&user_idx=' + [[${user_idx}]] + '&result=' + result;
+                                }
+                            </script>
 
-                                <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+                            <script>
+                                function show_div() {
+                                    var divElement = document.getElementById('show_div');
+                                    divElement.style.visibility = 'visible';
+                                }
+                            </script>
 
-                                <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        const cartButton = document.getElementById('cartButton');
-                                        const offcanvasElement = document.getElementById('offcanvasRight');
-                                        const bootstrapOffcanvas = new bootstrap.Offcanvas(offcanvasElement);
-
-                                        // 버튼 클릭 시 오프캔버스 토글
-                                        cartButton.addEventListener('click', function() {
-                                            offcanvasElement.style.display = 'block'; // Offcanvas 표시
-                                            bootstrapOffcanvas.show(); // Offcanvas 열기
-
-                                        });
-
-                                        // Offcanvas 닫기 버튼 클릭 시 Offcanvas 숨기기
-                                        offcanvasElement.querySelector('.btn-close').addEventListener('click', function() {
-                                            offcanvasElement.style.display = 'none'; // Offcanvas 숨기기
-                                        });
-                                    });
-
-                                </script>
-
-                                <script>
-                                    function buy() {
-                                        alert("상품 옵션 및 수량 선택해주세요.")
-                                    }
-                                </script>
-                            </div>
+                            <script>
+                                function hide_div() {
+                                    var divElement = document.getElementById('show_div');
+                                    divElement.style.visibility = 'hidden';
+                                }
+                            </script>
 
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <br/>
-        <hr/>
-
-        <!-- 상품 상세 -->
-        <div class="container" id="text">
-            <div class="col-sm-8"></div>
-            <div class="col-sm-12">
-                <div class="card-body">
-                    <p>
-                        <img class="resize" th:src="@{/img/asd.jpg}" alt=""/>
-                    </p>
-
-                    <!-- goods_text -->
-                    위대한 생명창조의 역사가 시작된다 <br/>
-                    인간의 한계를 극복하려는 강한 의지 <br/>
-                    창조주의 섭리에 맞서 굴복 당했던 <br/>
-                    인간의 허물을 벗는 순간 <br/>
-                    이 순간부터 나를 창조주라 부를지어다 <br/>
-
-                    <br/>
-
-                    내면에 감춰진 두려움 외면하고 <br/>
-                    한발짝 다가서는 신의 은밀한 비밀 <br/>
-                    죽음의 천사를 잠재우는 그 열쇠 <br/>
-                    태초에 그랬던 것처럼 <br/>
-                    빛이 있으리니 천둥번개여 휘몰아쳐라 <br/>
-
-                    <br/>
-
-                    신이여 축복을 아니면 차라리 <br/>
-                    내게 저주를 퍼부어라 <br/>
-                    신과 맞서 싸운 나는 프랑켄슈타인 <br/>
-
-                    <br/>
-
-                    생명은 어차피 우연의 소산물 <br/>
-                    신의 섭리 같은 운명따윈 없다 <br/>
-                    살인 전쟁 목적 없는 파괴 <br/>
-                    자멸하는 인간들의 선택 <br/>
-                    발전 없이 반복되는 역사 <br/>
-                    피해갈 수 없는 멸종 위기 <br/>
-                    빠져드는 미신들의 유혹 <br/>
-                    파렴치한 종교인의 위선 <br/>
-                    출구없는 치정자의 억압 <br/>
-                    숨막히는 세상을 벗어나 <br/>
-
-                    <br/>
-
-                    붉은피 솟구쳐 온몸을 불태워라 <br/>
-                    얼어붙은 심장박동쳐 맥박이 뛴다 <br/>
-                    결박된 사지에 터지는 강한 전율 <br/>
-                    태초에 그랬던 것처럼 <br/>
-                    어둠 속의 정적을 깨고 <br/>
-                    한줄기 빛 서서히 스며들어 숨을 쉰다 <br/>
-
-                    <br/>
-
-                    이제 눈을 떠 새로운 세상을 보아라 <br/>
-                    일어나리라 <br/>
-                    내게 저주를 퍼부어라 <br/>
-                    신과 맞서 싸워 난 정복하리라 <br/>
-                    새생명의 시대 <br/>
-
-                    <br/>
-
-                    "눈을 떠, 제발, 제발 깨어나" <br/>
-
-                    <br/>
-
-                    지옥을 탈출한 영혼이여 <br/>
-                    번개가 내리친 생명체여 <br/>
-                    너의 창조주가 명하노니 <br/>
-                    눈을 떠라 일어나라 깨어나 <br/>
-
-                </div>
-            </div>
-        </div>
-        <hr/>
-
-        <!-- 상품리뷰 -->
-        <div class="container">
-            <h6><b>《상품 리뷰》</b></h6>
-            <div class="card mb-12">
-                <div class="row" id="review">
-
-                    <div class="col-md-8">
-                        <div class="card-body" style="text-align: center;">
-                            &emsp;<b>등록된 리뷰가 없습니다.</b>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <br/>
-
-            <div class="card mb-12">
-                <div class="row">
-
-                    <div class="col-md-3">
-                        <img th:src="@{/img/sample5.jpg}" id="img1" class="img-fluid rounded-start"/>
-                    </div>
-
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h6 class="card-title">user_name</h6>
-                            <span>★★★★★(goods_grade)</span> &nbsp;
-                            <span><small>review_date</small></span>
-                            <hr/>
-                            <p class="card-text text-body-secondary">: review_text</p>
-                        </div>
-                        <br/>
-                    </div>
-
-                </div>
-            </div>
-            <br/>
-
-            <div class="card mb-12">
-                <div class="row">
-
-                    <div class="col-md-3" style="width: 5%;">
-                        <img th:src="@{/img/sample5.jpg}" id="img2" class="img-fluid rounded-start"/>
-                    </div>
-
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h6 class="card-title">user_name</h6>
-                            <span>★★★★★(goods_grade)</span> &nbsp;
-                            <span><small>review_date</small></span>
-                            <hr/>
-                            <p class="card-text text-body-secondary">: review_text</p>
-                        </div>
-                        <br/>
-                    </div>
-
-                </div>
-            </div>
-            <br/>
-
-            <div class="card mb-12">
-                <div class="row">
-
-                    <div class="col-md-3" style="width: 5%;">
-                        <img th:src="@{/img/sample5.jpg}" id="img" class="img-fluid rounded-start"/>
-                    </div>
-
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h6 class="card-title">user_name</h6>
-                            <span>★★★★★(goods_grade)</span> &nbsp;
-                            <span><small>review_date</small></span>
-                            <hr/>
-                            <p class="card-text text-body-secondary">: review_text</p>
-                        </div>
-                        <br/>
-                    </div>
-
-                </div>
-            </div>
-            <br/>
-
-            <!-- 페이지 -->
-            <div class="d-none d-md-block">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item">
-                        <a href="#" class="page-link">&laquo;</a>
-                    </li>
-                    <li class="page-item">
-                        <a href="#" class="page-link">1</a>
-                    </li>
-                    <li class="page-item">
-                        <a href="#" class="page-link">2</a>
-                    </li>
-                    <li class="page-item">
-                        <a href="#" class="page-link">3</a>
-                    </li>
-                    <li class="page-item">
-                        <a href="#" class="page-link">4</a>
-                    </li>
-                    <li class="page-item">
-                        <a href="#" class="page-link">5</a>
-                    </li>
-                    <li class="page-item">
-                        <a href="#" class="page-link">&raquo;</a>
-                    </li>
-                </ul>
-            </div>
-
-        </div>
-        <br/>
-        <hr/>
-
-        <!-- 상품추천 -->
-        <div class="container mt-4" id="sample">
-            <h6><b>‼상품추천‼ 이런상품은 어때요?</b></h6>
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="card" style="width: 100%;">
-                        <img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image"/>
-                        <div class="card-body">
-                            <h5 class="card-title">goods_name</h5>
-                            <p class="card-text">goods_price</p>
-                            <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card" style="width: 100%;">
-                        <img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image"/>
-                        <div class="card-body">
-                            <h5 class="card-title">goods_name</h5>
-                            <p class="card-text">goods_price</p>
-                            <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card" style="width: 100%;">
-                        <img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image"/>
-                        <div class="card-body">
-                            <h5 class="card-title">goods_name</h5>
-                            <p class="card-text">goods_price</p>
-                            <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="card" style="width: 100%;">
-                        <img th:src="@{/img/sample3.jpg}" class="card-img-top" alt="image"/>
-                        <div class="card-body">
-                            <h5 class="card-title">goods_name</h5>
-                            <p class="card-text">goods_price</p>
-                            <a href="/goods/goods_page" class="btn btn-outline-info">상품보기</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <hr/>
-
-        <!-- 하단 -->
-        <div id="footer">
-            <div th:replace="page_footer/footer.html :: footer-head"></div>
-            <div th:replace="page_footer/footer.html :: footer-body"></div>
-        </div>
-
-        <!-- Bootstrap JS, Popper.js, jQuery -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     </div>
+</div>
+<br/>
+<hr/>
+
+<!-- 상품 상세 -->
+<div class="container" id="text">
+    <div class="col-sm-8"></div>
+    <div class="col-sm-12">
+        <div class="card-body">
+            <p>
+                <img class="resize" th:src="@{'/img/goods/' + ${goods.goods_img2}}" alt=""/>
+            </p>
+
+            <!-- goods_text -->
+
+            <div>
+                <span th:text="${goods.goods_text}" th:if="${goods.goods_text != null}"></span>
+                <span th:if="${goods.goods_text == null}">설명글이 아직 없습니다.</span>
+            </div>
+
+        </div>
+    </div>
+</div>
+<hr/>
+
+<!-- 상품리뷰 -->
+<div class="container">
+    <h6><b>《상품 리뷰》</b></h6>
+    <div class="card mb-12">
+        <div class="row" id="review">
+
+            <div class="col-md-8">
+                <div class="card-body" style="text-align: center;">
+                    &emsp;<b>등록된 리뷰가 없습니다.</b>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <br/>
+
+    <div class="card mb-12">
+        <div class="row">
+
+            <div class="col-md-3" style="width: 5%;">
+                <img th:src="@{/img/sample5.jpg}" id="img" class="img-fluid rounded-start"/>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h6 class="card-title">user_name</h6>
+                    <span>★★★★★(goods_grade)</span> &nbsp;
+                    <span><small>review_date</small></span>
+                    <hr/>
+                    <p class="card-text text-body-secondary">: review_text</p>
+                </div>
+                <br/>
+            </div>
+
+        </div>
+    </div>
+</div>
+<br/>
+
+<!-- 페이지 -->
+<div class="d-none d-md-block">
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <a href="#" class="page-link">&laquo;</a>
+        </li>
+        <li class="page-item">
+            <a href="#" class="page-link">1</a>
+        </li>
+        <li class="page-item">
+            <a href="#" class="page-link">2</a>
+        </li>
+        <li class="page-item">
+            <a href="#" class="page-link">3</a>
+        </li>
+        <li class="page-item">
+            <a href="#" class="page-link">4</a>
+        </li>
+        <li class="page-item">
+            <a href="#" class="page-link">5</a>
+        </li>
+        <li class="page-item">
+            <a href="#" class="page-link">&raquo;</a>
+        </li>
+    </ul>
+</div>
+<br/>
+<hr/>
+
+<!-- 상품추천 -->
+<div class="container mt-4" id="sample">
+    <h6><b>‼상품추천‼ 이런상품은 어때요?</b></h6>
+    <div class="row">
+        <div class="col-md-3" th:each="goodsBean,state : ${goods_list}">
+            <div class="card" style="width: 100%;" th:if="${state.index < 4}">
+                <div class="card-img">
+                    <img th:src="@{'/img/goods/' + ${goodsBean.goods_img}}" class="card-img-top" alt="image" />
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${goodsBean.goods_name}">goods_name</h5>
+                    <p class="card-text" th:text="${goodsBean.goods_price}">goods_price</p>
+                    <a th:href="@{/goods/goods_page(goods_idx=${goodsBean.goods_idx})}" class="btn btn-outline-info">상품보기</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr/>
+
+<!-- 하단 -->
+<div id="footer">
+    <div th:replace="page_footer/footer.html :: footer-head"></div>
+    <div th:replace="page_footer/footer.html :: footer-body"></div>
+</div>
+
+<!-- Bootstrap JS, Popper.js, jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>
