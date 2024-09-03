@@ -40,12 +40,12 @@ public class CartController {
 
     //장바구니 추가
     @GetMapping("/user/add_user_cart")
-    public String add_cart(@RequestParam("goods_idx") int goods_idx,
+    public String add_cart(@RequestParam("goods_name") String goods_name,
                            @RequestParam("goods_quantity") int goods_quantity,
                            @RequestParam("selected_option") String selected_option,
                            @RequestParam("result_cart") boolean result_cart, Model model) {
 
-        cartService.addUserCart(loginUserBean.getUser_idx(), goods_idx, goods_quantity, selected_option);
+        cartService.addUserCart(loginUserBean.getUser_idx(), goods_name, goods_quantity, selected_option);
 
         if(result_cart) {
             List<CartBean> cartBeanList = cartService.getCartList(loginUserBean.getUser_idx());

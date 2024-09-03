@@ -1,6 +1,7 @@
 package com.Daldagu1.TeamDaldagu1Project.controller;
 
 import com.Daldagu1.TeamDaldagu1Project.beans.*;
+import com.Daldagu1.TeamDaldagu1Project.service.GoodsService;
 import com.Daldagu1.TeamDaldagu1Project.service.SellerService;
 import com.Daldagu1.TeamDaldagu1Project.service.UserService;
 import jakarta.annotation.Resource;
@@ -22,6 +23,9 @@ public class SellerController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private GoodsService goodsService;
 
     @GetMapping("/seller_join")
     public String sellerJoinForm(@RequestParam("user_idx") int user_idx, Model model){
@@ -73,6 +77,7 @@ public class SellerController {
     @GetMapping("/seller_list")
     public String sellerPresent(@RequestParam("seller_idx") int seller_idx, Model model){
         model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(seller_idx));
+        model.addAttribute("goodsList", goodsService.getMyGoodsList(seller_idx));
         return "seller/seller_list";
     }
     @GetMapping("/seller_regular")
@@ -90,5 +95,10 @@ public class SellerController {
     @GetMapping("/seller_product_delete")
     public String sellerProductDelete(){
         return "seller/seller_product_delete";
+    }
+
+    @ModelAttribute("searchBean")
+    public SearchBean getSearchBean() {
+        return new SearchBean();
     }
 }

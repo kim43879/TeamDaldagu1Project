@@ -61,47 +61,47 @@
 	<div th:replace="page_header/header.html :: header-body"></div>
 </div>
 
-	<!-- 상품구매 정보 -->
-	<div class="container mt-12" id="pay_info">
-		<div class="row g-0">
-			<div class="col-md-10"><br />
-				<div class="card">
+<!-- 상품구매 정보 -->
+<div class="container mt-12" id="pay_info">
+	<div class="row g-0">
+		<div class="col-md-10"><br />
+			<div class="card">
 				<div class="card-header"><strong>&ensp;주문 리스트</strong></div>
-					<div class="card-body">
-						<table class="table">
-							<tr>
-								<th>주문정보</th>
-								<th scope="col">제품명</th>
-								<th scope="col">수량</th>
-								<th scope="col">금액</th>
-							</tr>
+				<div class="card-body">
+					<table class="table">
+						<tr>
+							<th>주문정보</th>
+							<th scope="col">제품명</th>
+							<th scope="col">수량</th>
+							<th scope="col">금액</th>
+						</tr>
+
+						<tbody class="table-group-divider">
+						<tr>
+							<th scope="row">order_idx</th>
+							<td><a href="goods_page.html">goods_name</a></td>
+							<td>goods_amount</td>
+							<td>goods_price</td>
+						</tr>
+						</tbody>
 							
-							<tbody class="table-group-divider">
-								<tr>
-									<th scope="row">order_idx</th>
-									<td><a href="goods_page.html">goods_name</a></td>
-									<td>goods_amount</td>
-									<td>goods_price</td>
-								</tr>
-							</tbody>
-							
-						</table>
-						<hr />
-						<h6>&ensp;*옵션: goods_option</h6>
-					</div>
-					
+					</table>
+					<hr />
+					<h6>&ensp;*옵션: goods_option</h6>
 				</div>
-				<br />
-				
+
 			</div>
+			<br />
+
 		</div>
-	</div> <br />
+	</div>
+</div> <br />
 	
-	<!-- 구매자 정보 -->
-	<div class="container card-wrapper" id="user_info">
-		<div class="row">
-			<div class="col-md-10">
-				<div class="card">
+<!-- 구매자 정보 -->
+<div class="container card-wrapper" style="padding-left: 12%;">
+	<div class="row">
+		<div class="col-md-10">
+			<div class="card">
 				<div class="card-body">
 					<form action="#" method="post">
 						<div class="mb-4">
@@ -111,7 +111,7 @@
 						
 						<div class="mb-3">
 							<div class="d-flex align-items-center">
-								<label for="user_name" class="mb-0 me-2">&ensp;이름</label>
+								<label for="user_name" class="me-3">&ensp;이름</label>
 								&ensp;&ensp;&nbsp;&nbsp;
 								<input type="text" id="user_name" class="form-control test" disabled="disabled" value="user_name" />
 							</div>
@@ -141,16 +141,16 @@
 						
 					</form>
 				</div>
-				</div>
 			</div>
 		</div>
-	</div> <br />
+	</div>
+</div> <br />
 	
-	<!-- 배송지 정보 -->
-	<div class="container" id="addr_info">
-		<div class="row">
-			<div class="col-md-10">
-				<div class="card">
+<!-- 배송지 정보 -->
+<div class="container" id="addr_info">
+	<div class="row">
+		<div class="col-md-10">
+			<div class="card">
 				<div class="card-body">
 					<form action="#" method="post">
 						<div class="mb-4">
@@ -160,7 +160,7 @@
 						
 						<div class="mb-3">
 							<div class="d-flex align-items-center">
-								<label for="user_name" class="mb-0 me-2">&ensp;이름</label>
+								<label for="user_name">&ensp;이름</label>
 								&ensp;&ensp;&nbsp;&nbsp;
 								<input type="text" id="user_name" class="form-control test" value="user_name" />
 							</div>
@@ -202,23 +202,23 @@
 						
 					</form>
 				</div>	
-				</div>
 			</div>
 		</div>
-	</div> <br />
+	</div>
+</div> <br />
 	
-	<!-- 결제 -->
-	<div class="container card-wrapper" id="user_info">
-		<div class="row">
-			<div class="col-md-10">
-				<div class="card">
+<!-- 결제 -->
+<div class="container card-wrapper" style="padding-left: 12%;">
+	<div class="row">
+		<div class="col-md-10">
+			<div class="card">
 				<div class="card-body">
 					<form action="#" method="post">
 						<div class="mb-4">
 							<h6><b>&emsp;결제 정보</b></h6>
 							<hr />
 						</div>
-						
+
 						<div class="mb-3">
 							<div class="form-check">
 								&ensp;
@@ -231,30 +231,29 @@
 								<input class="form-check-input" type="radio" name="paymentMethod" value="bankTransfer" id="flexCheckDefault"/>
 								<label class="form-check-label" for="flexCheckDefault">&ensp;무통장입금</label>
 							</div>
-							
 						</div>
 						
 					</form>
 				</div>
-				</div>
 			</div>
 		</div>
-	</div> <br />
+	</div>
+</div> <br />
 	
-	<div class="text-center">
-		<a href="goods_page.html" type="button" class="btn btn-outline-danger">주문취소</a> &ensp;
-		<a href="../user/pay_complete.html" type="button" class="btn btn-outline-success" onclick="order_complete()">주문하기</a>
-		
-		<script>
-			function order_complete() {
-				alert("주문이 완료되었습니다.");
-			}
-		</script>
+<div class="text-center">
+	<a href="goods_page.html" type="button" class="btn btn-outline-danger">주문취소</a> &ensp;
+	<a href="../user/pay_complete.html" type="button" class="btn btn-outline-success" onclick="order_complete()">주문하기</a>
+
+	<script>
+		function order_complete() {
+			alert("주문이 완료되었습니다.");
+		}
+	</script>
 	
-	</div> &nbsp;
-	<hr />
+</div> &nbsp;
+<hr />
 	
-	<!-- 하단 -->
+<!-- 하단 -->
 <div id="footer">
 	<div th:replace="page_footer/footer.html :: footer-head"></div>
 	<div th:replace="page_footer/footer.html :: footer-body"></div>

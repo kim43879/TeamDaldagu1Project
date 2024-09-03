@@ -79,142 +79,150 @@
 	margin-bottom: 10px;
 	border-radius: 5px;
 }
+a {
+	color: #343434;
+	text-decoration: none;
+}
 </style>
 </head>
 <body>
 
-	<!-- 상단메뉴 -->
-	<div id="header">
-		<div th:replace="page_header/header.html :: header-head"></div>
-		<div th:replace="page_header/header.html :: header-body"></div>
-	</div>
+<!-- 상단메뉴 -->
+<div id="header">
+	<div th:replace="page_header/header.html :: header-head"></div>
+	<div th:replace="page_header/header.html :: header-body"></div>
+</div>
 
-	<!-- 유저프로필 라인 -->
-	<div id="profile">
-		<div th:replace="page_profile/profile.html :: profile-body"></div>
-	</div>
+<!-- 유저프로필 라인 -->
+<div id="profile">
+	<div th:replace="page_profile/profile.html :: profile-body"></div>
+</div>
 
+<!-- 판매자 메인 -->
+<main>
+	<div class="container mt-2 card-wrapper">
+		<div class="row">
+			<div class="col-md-9 text-center" id="card1">
+				<br /> <br />
+				<h4 class="display-5 fw-normal text-left" th:text="${sellerBean.selling_page_title}">판매자 MyPage</h4>
+				<br />
 
-	<!-- 판매자 메인 -->
-	<main>
-		<div class="container mt-2 card-wrapper">
-			<div class="row">
-				<div class="col-md-9 text-center" id="card1">
-					<br /> <br />
-					<h1 class="display-5 fw-normal text-left" th:text="${sellerBean.selling_page_title}">판매자 MyPage</h1>
-					<br />
-
-					<div class="btn-group" role="group"
-						aria-label="Basic outlined example" th:replace="seller/import/menu_bar.html :: menu(flag=1,seller_idx=${sellerBean.seller_idx})">
-					</div>
-					<hr />
-					<br />
-					<!-- 디자인 수정하기 -->
-
-
-
-					<div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-						<div class="col">
-							<div class="card mb-4 rounded-3 shadow-sm">
-								<div class="card-header py-3">
-									<h4 class="my-0 fw-normal">판매 중</h4>
-								</div>
-								<div class="card-body">
-									<h1 class="card-title pricing-card-title" th:text="${goodsCount}">3</h1>
-									<a th:href="@{/goods/goods_seller(seller_idx=${sellerBean.seller_idx})}" class="btn btn-outline-dark">보러가기</a>
-								</div>
-							</div>
-						</div>
-						<div class="col">
-							<div class="card mb-4 rounded-3 shadow-sm">
-								<div class="card-header py-3">
-									<h4 class="my-0 fw-normal">총 판매량</h4>
-								</div>
-								<div class="card-body">
-									<h1 class="card-title pricing-card-title">
-										15<small class="text-muted fw-light"></small>
-									</h1>
-									<button type="button" class="btn btn-outline-dark">보러가기</button>
-								</div>
-							</div>
-						</div>
-						<div class="col">
-							<div class="card mb-4 rounded-3 shadow-sm">
-								<div class="card-header py-3">
-									<h4 class="my-0 fw-normal">월 판매량</h4>
-								</div>
-								<div class="card-body">
-									<h1 class="card-title pricing-card-title">
-										3<small class="text-muted fw-light">/month</small>
-									</h1>
-									<button type="button" class="btn btn-outline-dark">보러가기</button>
-								</div>
-							</div>
-						</div>
-						<div class="col">
-							<div class="card mb-4 rounded-3 shadow-sm">
-								<div class="card-header py-3">
-									<h4 class="my-0 fw-normal">취소/환불</h4>
-								</div>
-								<div class="card-body">
-									<h1 class="card-title pricing-card-title">3</h1>
-									<button type="button" class="btn btn-outline-dark">보러가기</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<hr />
-					<br /> <br /> <br /> <br /> <br />
-
-					<h1 class="display-5 fw-normal text-left">판매 완료 내역</h1>
-					<hr />
-					<br />
-					
-					<div id="order-list" class="order-list"></div>
-					<div class="orders">
-						<p id="order-message">최근 판매내역이 없습니다.</p>
-						<button onclick="showOrders()" class="btn btn-secondary">최근
-							판매내역 더보기</button>
-					</div>					
+				<div class="btn-group" role="group"
+					 aria-label="Basic outlined example" th:replace="seller/import/menu_bar.html :: menu(flag=1,seller_idx=${sellerBean.seller_idx})">
 				</div>
+				<hr />
+				<br />
+				<!-- 디자인 수정하기 -->
 
-				<div class="container">
-					<script>
-        const orders = [
-            { orderNumber: '12345', date: '2023-08-10', item: '티셔츠', price: '₩20,000' },
-            { orderNumber: '12346', date: '2023-08-12', item: '바지', price: '₩30,000' },
-            { orderNumber: '12347', date: '2023-08-15', item: '신발', price: '₩50,000' }
-        ];	// orders: 최근 주문내역 객체형태로 저장 나중에 링크달고 나머지 삭제
+				<div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
+					<div class="col">
+						<div class="card mb-4 rounded-3 shadow-sm">
+							<div class="card-header py-3">
+								<h6 class="my-0 fw-normal">판매 중</h6>
+							</div>
 
-        function showOrders() {
-            const orderList = document.getElementById('order-list');
-            const orderMessage = document.getElementById('order-message');
-            orderMessage.style.display = 'none';  // 저장된 리스트 출력시 메시지 숨김
+							<div class="card-body">
+                                <h5 class="card-title pricing-card-title" th:text="${goodsCount}">3</h5>
+                                <a th:href="@{/goods/goods_seller(seller_idx=${sellerBean.seller_idx})}" class="btn btn-outline-dark">보러가기</a>
+							</div>
+						</div>
+					</div>
 
-            orders.forEach(order => {
-                const orderItem = document.createElement('div');
-                orderItem.classList.add('order-item');
-                orderItem.innerHTML = `
-                    <strong>상품 번호:</strong> ${order.orderNumber}<br>
-                    <strong>등록 날짜:</strong> ${order.date}<br>
-                    <strong>상품명:</strong> ${order.item}<br>
-                    <strong>가격:</strong> ${order.price}`;
-                orderList.appendChild(orderItem);
-            });//서버에 등록된 상품 가져오기
-        }
-    </script>
-					<hr />
-					<br /> <br /> <br /> <br /> <br />
+					<div class="col">
+						<div class="card mb-4 rounded-3 shadow-sm">
+							<div class="card-header py-3">
+								<h6 class="my-0 fw-normal">총 판매량</h6>
+							</div>
+
+							<div class="card-body">
+								<h5 class="card-title pricing-card-title">
+									15<small class="text-muted fw-light"></small>
+								</h5>
+								<button type="button" class="btn btn-outline-dark">보러가기</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="col">
+						<div class="card mb-4 rounded-3 shadow-sm">
+							<div class="card-header py-3">
+								<h6 class="my-0 fw-normal">월 판매량</h6>
+							</div>
+
+							<div class="card-body">
+								<h5 class="card-title pricing-card-title">
+									3<small class="text-muted fw-light">/month</small>
+								</h5>
+								<button type="button" class="btn btn-outline-dark">보러가기</button>
+							</div>
+						</div>
+					</div>
+
+					<div class="col">
+						<div class="card mb-4 rounded-3 shadow-sm">
+							<div class="card-header py-3">
+								<h6 class="my-0 fw-normal">취소/환불</h6>
+							</div>
+							<div class="card-body">
+								<h5 class="card-title pricing-card-title">3</h5>
+								<button type="button" class="btn btn-outline-dark">보러가기</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr />
+				<br /> <br />
+
+				<h5 class="display-5 fw-normal text-left">판매 완료 내역</h5>
+				<hr />
+				<br />
+					
+				<div id="order-list" class="order-list"></div>
+				<div class="orders">
+					<p id="order-message">최근 판매내역이 없습니다.</p>
+					<button onclick="showOrders()" class="btn btn-secondary">최근
+						판매내역 더보기</button>
 				</div>
 			</div>
-		</div>
-	</main>
 
-	<!-- 하단 -->
-	<div id="footer">
-		<div th:replace="page_footer/footer.html :: footer-head"></div>
-		<div th:replace="page_footer/footer.html :: footer-body"></div>
+			<div class="container">
+				<script>
+					const orders = [
+						{ orderNumber: '12345', date: '2023-08-10', item: '티셔츠', price: '₩20,000' },
+						{ orderNumber: '12346', date: '2023-08-12', item: '바지', price: '₩30,000' },
+						{ orderNumber: '12347', date: '2023-08-15', item: '신발', price: '₩50,000' }
+					];	// orders: 최근 주문내역 객체형태로 저장 나중에 링크달고 나머지 삭제
+
+					function showOrders() {
+						const orderList = document.getElementById('order-list');
+						const orderMessage = document.getElementById('order-message');
+						orderMessage.style.display = 'none';  // 저장된 리스트 출력시 메시지 숨김
+
+						orders.forEach(order => {
+							const orderItem = document.createElement('div');
+							orderItem.classList.add('order-item');
+							orderItem.innerHTML = `
+								<strong>상품 번호:</strong> ${order.orderNumber}<br>
+								<strong>등록 날짜:</strong> ${order.date}<br>
+								<strong>상품명:</strong> ${order.item}<br>
+								<strong>가격:</strong> ${order.price}`;
+							orderList.appendChild(orderItem);
+						});//서버에 등록된 상품 가져오기
+					}
+    			</script>
+
+			</div>
+		</div>
 	</div>
+</main>
+<br /> <br /> <br />
+<hr />
+
+<!-- 하단 -->
+<div id="footer">
+	<div th:replace="page_footer/footer.html :: footer-head"></div>
+	<div th:replace="page_footer/footer.html :: footer-body"></div>
+</div>
 
 </body>
 </html>

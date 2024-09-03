@@ -27,7 +27,7 @@ public class AdminContoller {
 
         return "admin/dev_admin_page";
     }
-    @GetMapping("/admin/dev_admin_gooods_page")
+    @GetMapping("/admin/dev_admin_goods_page")
     public String devAdminGoodsPage(Model model) {
 
         model.addAttribute("addGoodsInfoList", goodsService.getAddGoodsInfoList());

@@ -1,13 +1,22 @@
 package com.Daldagu1.TeamDaldagu1Project.controller;
 
+import com.Daldagu1.TeamDaldagu1Project.beans.GoodsBean;
+import com.Daldagu1.TeamDaldagu1Project.beans.SearchBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.UserBean;
+import com.Daldagu1.TeamDaldagu1Project.service.GoodsService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class HomeController {
@@ -16,11 +25,18 @@ public class HomeController {
     @Lazy
     private UserBean loginUserBean;
 
+    @Autowired
+    GoodsService goodsService;
+
     @GetMapping("/")
-    public String home(){
+    public String home(Model model){
+        String[] tag = {"장패드", "펫 용품", "컵"};
         System.out.println(loginUserBean.isLoginCheck());
-
-
+        List<GoodsBean> goodsList;
+        for (int i = 1; i < 4; i++){
+            goodsList = goodsService.getGoodsListByTag(tag[i-1]);
+            model.addAttribute("goodsList" + i, goodsList);
+        }
         return "main";
     }
 
@@ -29,4 +45,10 @@ public class HomeController {
 
         return "not_login";
     }
+
+    @ModelAttribute("searchBean")
+    public SearchBean getSearchBean() {
+        return new SearchBean();
+    }
+
 }

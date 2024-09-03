@@ -89,8 +89,6 @@ public class GoodsService {
             searchBean.setSearchMaxPrice(300000);
         }
 
-        searchBean.showField();
-
         if(searchBean.getSortType().equals("goods_price1")){
             return goodsMapper.searchGoodsListOrder_price1(searchBean, rowBounds);
         }else if(searchBean.getSortType().equals("goods_price2")){

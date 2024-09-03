@@ -32,9 +32,8 @@
 	}
 	#card1 {
 		width: 100%;
-		margin-top: -1000px; margin-left:300px; padding-left: 8%; padding-right: 8%;
+		margin-top: -990px; margin-left:300px; padding-left: 8%; padding-right: 8%;
 	}
-
 	.empty-row {
     	text-align: center;
 		padding: 20px;
@@ -81,7 +80,7 @@
 									<div class="check">
 										<input type="checkbox" style="margin-left: 10px;" checked/>
 										&emsp;
-										<a href="/goods/goods_page" style="margin-left: 20px;" th:text="${cart.cart_idx}"></a>
+										<a th:href="@{/goods/goods_page(goods_idx=${cart.goods_idx})}" style="margin-left: 20px;" th:text="${cart.goods_name}"></a>
 									</div>
 								</th>
 

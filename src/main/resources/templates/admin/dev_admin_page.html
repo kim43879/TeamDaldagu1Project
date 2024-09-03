@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>관리자</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <style>
     table {
@@ -48,7 +48,7 @@
     <td th:text="${info.seller_page_title}"></td>
     <td th:text="${info.goods_tag}"></td>
     <td>
-      <img th:src="@{'/img/info/' + ${info.sample_img}}">
+      <img th:src="@{'/img/goods/' + ${info.sample_img}}">
     </td>
     <td>
       <input type="hidden" id="user_idx" th:value="${info.user_idx}">

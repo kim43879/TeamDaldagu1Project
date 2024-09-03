@@ -101,13 +101,13 @@
 
 							<div class="form-group">	<!-- user_pw -->
 								<label for="user_pw">*비밀번호</label>
-								<input type="text" id="user_pw" th:field="*{user_pw}" class="form-control"/>
+								<input type="password" id="user_pw" th:field="*{user_pw}" class="form-control"/>
 								<span class="error-message" th:if="${#fields.hasErrors('user_pw')}" th:errors="*{user_pw}">Incorrect data</span>
 							</div>
 							
 							<div class="form-group">	<!-- user_pw2 -->
 								<label for="user_pw2">*비밀번호 확인</label>
-								<input type="text" id="user_pw2" th:field="*{user_pw2}" class="form-control"/>
+								<input type="password" id="user_pw2" th:field="*{user_pw2}" class="form-control"/>
 								<span class="error-message" th:if="${#fields.hasErrors('user_pw2')}" th:errors="*{user_pw2}">Incorrect data</span>
 							</div>
 							
