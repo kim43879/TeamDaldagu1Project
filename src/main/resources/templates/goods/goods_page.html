@@ -113,7 +113,7 @@
     <div class="form-group" style="display: flex; justify-content: center; align-items: center;">
         <button class="btn btn-outline-info" onclick="hide_div()">쇼핑계속하기</button>
         &emsp;
-        <a th:href="@{/user/user_cart(user_idx=${loginUserBean.user_idx})}" class="btn btn-outline-primary">장바구니 가기</a>
+        <a th:href="@{/user/user_cart(user_idx=${loginUserBean.user_idx})}" class="btn btn-outline-primary" >장바구니 가기</a>
     </div>
 
 </div>
@@ -355,7 +355,7 @@
             <!-- goods_text -->
 
             <div>
-                <span th:text="${goods.goods_text}" th:if="${goods.goods_text != null}"></span>
+                <span th:text="${goods.goods_text}" th:if="${goods.goods_text != null}">내용</span>
                 <span th:if="${goods.goods_text == null}">설명글이 아직 없습니다.</span>
             </div>
 
@@ -389,7 +389,7 @@
 
             <div class="col-md-8">
                 <div class="card-body">
-                    <h6 class="card-title">user_id</h6>
+                    <h6 class="card-title">user_name</h6>
                     <span>★★★★★(goods_grade)</span> &nbsp;
                     <span><small>review_date</small></span>
                     <hr/>
@@ -460,6 +460,7 @@
 </div>
 
 <!-- Bootstrap JS, Popper.js, jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 

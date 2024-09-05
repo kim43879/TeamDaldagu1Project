@@ -38,4 +38,7 @@ public interface AddrMapper {
     //유저가 가진 배송지 갯수 가져오기(배송지정보는 유저당 3개까지만 등록가능)
     @Select("select count(*) from addr_table where user_idx = #{user_idx}")
     int getAddrCount(int uesr_idx);
+
+
+
 }

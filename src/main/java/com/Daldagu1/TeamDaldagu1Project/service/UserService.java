@@ -3,10 +3,13 @@ package com.Daldagu1.TeamDaldagu1Project.service;
 import com.Daldagu1.TeamDaldagu1Project.beans.AddrBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.UserBean;
 import com.Daldagu1.TeamDaldagu1Project.mapper.AddrMapper;
+import com.Daldagu1.TeamDaldagu1Project.mapper.MembershipMapper;
 import com.Daldagu1.TeamDaldagu1Project.mapper.UserMapper;
+import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
@@ -18,11 +21,18 @@ import java.util.Map;
 @Service
 public class UserService {
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
+
+    @Resource(name = "loginUserBean")
+    private UserBean loginUserBean;
+
     @Autowired
     private UserMapper userMapper;
 
     @Autowired
     private AddrMapper addrMapper;
+
+    @Autowired
+    private MembershipMapper membershipMapper;
 
     public void addUser(UserBean userBean){
 
@@ -61,11 +71,30 @@ public class UserService {
         if(tempLoginUserBean != null) {
             if (tempLoginUserBean.getUser_role().equals("S")) {
                 tempLoginUserBean.setSeller_idx(userMapper.getSellerIdx(tempLoginUserBean.getUser_idx()));
+
+                int membership_idx = tempLoginUserBean.getUser_membership_idx();
+                String userMembership = membershipMapper.getMembership(membership_idx);
+                tempLoginUserBean.setMembership(userMembership);
+
                 System.out.println(tempLoginUserBean.getSeller_idx());
             }
         }
 
         return tempLoginUserBean;
+    }
+    public UserBean getModifyUser(String user_pw){
+
+        System.out.println(loginUserBean.getUser_id());
+        UserBean tempModifyUser = new UserBean();
+        tempModifyUser = userMapper.getModifyUser(loginUserBean.getUser_id(), user_pw);
+
+        return tempModifyUser;
+
+    }
+    public void modifyUser(UserBean modifyUserBean){
+
+        userMapper.modifyUser(modifyUserBean);
+
     }
 
 }

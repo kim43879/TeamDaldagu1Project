@@ -4,8 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>달다구리스</title>
+<!--<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>-->
 <!-- Bootstrap -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <style>
 	.card-main{
 		margin-top: 88px; 
@@ -32,7 +34,7 @@
 	}
 	#card1 {
 		width: 90%;
-		margin-top: -1000; margin-left:250px; margin-left:60px; padding-left: 50px;
+		margin-top: -1050px; margin-left:250px; margin-left:60px; padding-left: 50px;
 	}
 	.container {
 		position: relative;
@@ -66,72 +68,132 @@
 				<div class="col-sm-6">
 					<div class="card-shadow"id="card1">
 						<div class="card-body">
-							<form action="login.html" method="post">
+							<form action="/user/modify_pro" method="post" th:object="${modifyUserBean}">
 								<div class="form-group">
 									<label for="user_name">*이름</label>
-									<input type="text" id="user_name" name="user_name" class="form-control" disabled="disabled" value="김희진"/>			
+									<input type="text" id="user_name" th:field="*{user_name}" class="form-control" readonly/>
 								</div>
 								
 								<div class="form-group">
 									<label for="user_name">*아이디</label>
-									<input type="text" id="user_id" name="user_id" class="form-control" disabled="disabled" value="kk1234"/>
+									<input type="text" id="user_id" th:field="*{user_id}" class="form-control" readonly/>
 								</div>
 	
 								<div class="form-group">
 									<label for="user_pw">*비밀번호</label>
-									<input type="password" id="user_pw" name="user_pw" class="form-control" />
+									<input type="password" id="user_pw" th:field="*{user_pw}" class="form-control" />
+									<div th:if="${#fields.hasErrors('user_pw')}" th:errors="*{user_pw}" class="text-danger"></div>
 								</div>
 								
 								<div class="form-group">
 									<label for="user_pw2">*비밀번호 확인</label>
-									<input type="password" id="user_pw2" name="user_pw2" class="form-control" />
+									<input type="password" id="user_pw2" th:field="*{user_pw2}" class="form-control" />
+									<div th:if="${#fields.hasErrors('user_pw2')}" th:errors="*{user_pw2}" class="text-danger"></div>
 								</div>
 								
 								<div class="form-group">
-									<label for="user_addr">*이메일</label>
-									<input type="email" id="user_email" name="user_email" class="form-control" />
+									<label for="user_email">*이메일</label>
+									<input type="email" id="user_email" th:field="*{user_email}" class="form-control" />
 								</div>
 								
 								<div class="form-group">
 									<label for="user_birth">*생년월일</label>
-									<input type="text" id="user_birth" name="user_birth" class="form-control" disabled="disabled" value="1996-03-28"/>
+									<input type="text" id="user_birth" th:field="*{user_birth}" class="form-control" readonly/>
 								</div>
-								
+
+<!--
 								<div class="form-group">
 									<label for="user_post" class="mb-0 me-2">*우편번호</label>
 									<div class="d-flex align-items-center">
-										<input type="text" id="user_post" name=user_post class="form-control me-2" />
+										<input type="text" id="user_post" th:field="*{user_post}" class="form-control me-2" />
 										&nbsp;
 										<button type="button" class="btn btn-outline-info" onclick="searchAddr()">우편번호 검색</button>
 									</div>
 								</div>
-								
+
 								<script>
-								function searchAddr() {
-									new daum.PostCode({
-										oncomplete: function(data) {
-											
-											document.getElememtById("user_post").value = data.zonecode;
-										}
-										
-									}).open();
-								}
+									function searchAddr() {
+                                        new daum.Postcode({
+                                            oncomplete: function(data) {
+                                                document.getElementById("user_post").value = data.zonecode;
+                                            }
+                                        }).open();
+                                    }
 								</script>
-								
+
 								<div class="form-group">
-									<label for="user_addr">*상세주소</label>
-									<input type="text" id="user_addr" name="user_addr" class="form-control" />
+									<label for="user_addr">*주소</label>
+									<input type="text" id="user_addr" th:field="*{user_addr1}" class="form-control"  style="background-color: white;" readonly/> <br />
+									<span class="error-message" th:if="${#fields.hasErrors('user_addr1')}" th:errors="*{user_addr1}">Incorrect data</span>
+									<br>
+									<label for="user_addr2">*상세주소</label>
+									<input type="text" id="user_addr2" th:field="*{user_addr2}" class="form-control" />
 								</div>
-								
+
+								<script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+								<script>
+									function kakaopost() {
+                                        // Set a same-site cookie for first-party contexts
+                                        document.cookie = 'cookie1=value1; SameSite=None';
+                                        new daum.Postcode({
+                                            oncomplete: function(data) {
+                                                var addr = ''; //주소변수
+                                                var extraAddr = '';
+
+                                                //사용자가 선택한 주소타입에 따라
+                                                if(data.userSelectedType === 'R') { //도로명
+                                                    addr = data.roadAddress;
+                                                } else { //지번주소
+                                                    addr = data.jibunAddress;
+                                                }
+
+                                                //도로명
+                                                if(data.userSelectedType == 'R') {
+                                                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
+                                                        extraAddr += data.bname;
+                                                    }
+                                                    //건물명이 있고, 공동주택일 경우
+                                                    if(data.buildingName !== '' && data.apartment === 'Y') {
+                                                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                                                    }
+                                                    //참고사항이 있을 경우 추가
+                                                    if(extraAddr !== ''){
+                                                        extraAddr = ' (' + extraAddr + ')';
+                                                    }
+                                                    //조합된 항목
+                                                    document.getElementById("user_addr").value = extraAddr;
+
+                                                } else {
+                                                    document.getElementById("user_addr").value = '';
+                                                }
+                                                //우편번호와 주소 정보를 해당 필드에 주입
+                                                document.getElementById("user_post").value = data.zonecode;
+                                                document.getElementById("user_addr").value = addr;
+
+                                                //커서를 주소 필드로 이동
+                                                document.getElementById("user_addr_detail").focus();
+                                            }
+                                        }).open();
+                                    }
+
+								</script>-->
+
+
 								<div class="form-group">
 									<label for="user_phone">*연락처</label>
-									<input type="text" id="user_phone" name="user_phone" class="form-control" />
+									<input type="text" id="user_phone" th:field="*{user_phone}" class="form-control" />
 								</div>
-								
+
+
+								<!--<input type="hidden" id="user_addr1" th:field="*{user_addr1}" class="form-control"  />-->
+								<input type="hidden" id="checkId" th:field="*{id_check}" >
+
+
+
 								<div class="form-group">
 									<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-										<button type="submit" class="btn btn-outline-primary me-md-2">뒤로가기</button> &ensp;
-										<a href="user_page.html" class="btn btn-outline-success" role="button" data-bs-toggle="button">수정완료</a>
+										<button type="submit" class="btn btn-outline-primary me-md-2">수정완료</button> &ensp;
+										<a href="user_page.html" class="btn btn-outline-success" role="button" data-bs-toggle="button">뒤로가기</a>
 									</div>
 									<br />
 									<hr />

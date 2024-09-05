@@ -134,7 +134,7 @@ public class GoodsController {
     @PostMapping("/add_goods_pro")
     public String addGoodsPro(@ModelAttribute("addGoodsInfoBean")AddGoodsInfo addGoodsInfo, Model model){
         goodsService.addGoodsInfoApply(addGoodsInfo);
-        return "seller/seller_product_insert?seller_idx" + addGoodsInfo.getSeller_idx();
+        return "seller/seller_product_insert";
     }
 
     @ModelAttribute("searchBean")

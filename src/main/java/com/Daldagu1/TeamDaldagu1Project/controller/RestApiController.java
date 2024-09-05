@@ -27,6 +27,9 @@ public class RestApiController {
     @Autowired
     private CartService cartService;
 
+    @Autowired
+    private OptionService optionService;
+
     @PostMapping("/rest/idCheck")
     public String IdCheck(@RequestParam("user_id")String user_id){
         String db_id = userService.getUserId(user_id);
@@ -71,6 +74,8 @@ public class RestApiController {
         tempGoodsBean.setGoods_price(tempGoodsInfoBean.getGoods_price());
         tempGoodsBean.setGoods_img(tempGoodsInfoBean.getGoods_img());
         tempGoodsBean.setSeller_idx(tempGoodsInfoBean.getSeller_idx());
+        tempGoodsBean.setGoods_img2(tempGoodsInfoBean.getGoods_img2());
+        tempGoodsBean.setGoods_text(tempGoodsInfoBean.getGoods_info());
 
         goodsService.addGoodsInfo(tempGoodsBean);
         goodsService.deleteAddGoodsInfo(info_idx);
@@ -117,6 +122,29 @@ public class RestApiController {
             return "삭제했습니다.";
         }
         return "기본 주소지는 삭제할 수 없습니다.";
+    }
+
+    @PostMapping(value = "/rest/goods/add_option", produces = "text/plain; charset=UTF-8")
+    public String add_option(@RequestParam("option_name") String option_name,
+                             @RequestParam("option_price") int option_price,
+                             @RequestParam("goods_idx") int goods_idx){
+
+        OptionBean optionBean = new OptionBean();
+        optionBean.setOption_name(option_name);
+        optionBean.setOption_price(option_price);
+        optionBean.setGoods_idx(goods_idx);
+
+        if(optionService.getOptionCount(goods_idx) < 5) {
+            optionService.addOption(optionBean);
+            return "옵션을 추가했습니다.";
+        }else{
+            return "옵션은 5개까지 등록할 수 있습니다.";
+        }
+    }
+    @PostMapping(value = "/rest/goods/delete_option", produces = "text/plain; charset=UTF-8")
+    public String delete_option(@RequestParam("option_idx") int option_idx){
+         optionService.deleteOption(option_idx);
+         return "옵션을 삭제했습니다.";
     }
 
 }//class

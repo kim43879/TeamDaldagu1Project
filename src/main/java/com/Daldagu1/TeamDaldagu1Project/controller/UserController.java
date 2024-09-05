@@ -6,20 +6,21 @@ import com.Daldagu1.TeamDaldagu1Project.service.GoodsService;
 import com.Daldagu1.TeamDaldagu1Project.service.SellerService;
 import com.Daldagu1.TeamDaldagu1Project.service.UserService;
 import com.Daldagu1.TeamDaldagu1Project.service.WishService;
+import com.Daldagu1.TeamDaldagu1Project.validator.UserValidator;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
@@ -59,14 +60,15 @@ public class UserController {
 
         if(tempUserBean != null){
             if(tempUserBean.getUser_pw().equals(userBean.getUser_pw())){
-                loginUserBean.setUser_idx(tempUserBean.getUser_idx());
-                loginUserBean.setUser_id(tempUserBean.getUser_id());
-                loginUserBean.setLoginCheck(true);
-                loginUserBean.setUser_name(tempUserBean.getUser_name());
-                loginUserBean.setUser_role(tempUserBean.getUser_role());
-                loginUserBean.setSeller_idx(tempUserBean.getSeller_idx());
-                loginUserBean.setUser_profile_img(tempUserBean.getUser_profile_img());
-                loginUserBean.setUser_profile_text(tempUserBean.getUser_profile_text());
+//                loginUserBean.setUser_idx(tempUserBean.getUser_idx());
+//                loginUserBean.setUser_id(tempUserBean.getUser_id());
+//                loginUserBean.setLoginCheck(true);
+//                loginUserBean.setUser_name(tempUserBean.getUser_name());
+//                loginUserBean.setUser_role(tempUserBean.getUser_role());
+//                loginUserBean.setSeller_idx(tempUserBean.getSeller_idx());
+//                loginUserBean.setUser_profile_img(tempUserBean.getUser_profile_img());
+//                loginUserBean.setUser_profile_text(tempUserBean.getUser_profile_text());
+                loginUserBean.login(tempUserBean);
 
                 return "user/status/login_success";
             }else {
@@ -80,17 +82,14 @@ public class UserController {
 
     @GetMapping("/user/logout")
     public String logout(){
-        loginUserBean.setLoginCheck(false);
-        loginUserBean.setUser_id(null);
-        loginUserBean.setUser_name(null);
-        loginUserBean.setUser_role(null);
-
+        loginUserBean.clearUserBean();
         return "/";
     }
 
     @GetMapping("/user/join")
     public String join(Model model){
         model.addAttribute("userBean", new UserBean());
+
         return "user/join";
     }
 
@@ -101,10 +100,53 @@ public class UserController {
             for(ObjectError error : result.getAllErrors()){
                 System.out.println(error.getCode());
             }
+
+            System.out.println(userBean.getUser_birth());
+
             return "user/join";
         }
         userService.addUser(userBean);
         return "user/status/join_success";
+    }
+
+    @PostMapping("/user/modify")
+    public String modify(@RequestParam("user_pw") String user_pw, Model model){
+        System.out.println(user_pw);
+        UserBean modifyUserBean = userService.getModifyUser(user_pw);
+
+        if(modifyUserBean != null){
+            //modifyUserBean.setUser_addr1("주소1");
+            modifyUserBean.setId_check("체크");
+            model.addAttribute("modifyUserBean", modifyUserBean);
+            return "user/user_info2";
+        }else{
+
+            model.addAttribute("fail", "fail");
+            return "user/user_info";
+        }
+    }
+
+    @PostMapping("/user/modify_pro")
+    public String modify_pro(@Valid @ModelAttribute("modifyUserBean") UserBean modifyUserBean, BindingResult result, Model model){
+
+        System.out.println(modifyUserBean.getUser_pw());
+        System.out.println(modifyUserBean.getUser_pw2());
+        System.out.println(modifyUserBean.getUser_addr1());
+        System.out.println(modifyUserBean.getUser_addr2());
+
+        if(result.hasErrors()){
+
+            for (FieldError error : result.getFieldErrors()) {
+                System.out.println("Field: " + error.getField() + ", Error: " + error.getDefaultMessage());
+            }
+            //model.addAttribute("modifyUserBean", modifyUserBean);
+
+            return "user/user_info2";
+        }else {
+            System.out.println("수정완료");
+            userService.modifyUser(modifyUserBean);
+            return "user/status/modify_success";
+        }
     }
 
     @GetMapping("/user/user_page")
@@ -183,5 +225,11 @@ public class UserController {
     @ModelAttribute("searchBean")
     public SearchBean getSearchBean() {
         return new SearchBean();
+    }
+
+    @InitBinder("modifyUserBean")
+    public void initBinder(WebDataBinder binder) {
+        UserValidator uservalidator = new UserValidator();
+        binder.addValidators(uservalidator);
     }
 }

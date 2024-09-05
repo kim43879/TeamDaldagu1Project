@@ -86,8 +86,9 @@
 							<div class="form-group productInfo text-left" >
 								<form action="/goods/goods_update" method="post" th:object="${goodsBean}">
 									<div class="row g-3">
+										<input type="hidden" id="goods_idx" th:field="*{goods_idx}">
 										<div class="form-group hidden-xs" id="fileDrop">
-											<label for="goods_img">상품 이미지 추가.</label> <br>
+											<label for="goods_img">상점 이미지 변경.</label> <br>
 											<input type="file" id="goods_img" th:field="*{goods_img2}">
 										</div>
 										<div class="col-sm-6">
@@ -111,14 +112,25 @@
 										</div>
 										<br />
 										<div class="col-sm-6">
-											<label for="add-option">옵션 추가</label>
-											<input type="text" id="add-option">
+											<label for="add-option-name">옵션 추가</label>
+											<span>
+												<label for="add-option-name"> 옵션 이름</label><input type="text" class="form-group" id="add-option-name">
+												<label for="add-option-price">추가 금액</label><input type="text" class="form-group" id="add-option-price">
+												<button type="button" class="btn btn-outline-info btn-sm" onclick="addOption()">추가</button>
+											</span>
+											<div id="option-list" style="overflow-x:hidden; height:150px;">
+												<div class="option-col" th:each="option : *{goods_option}">
+													<span class="option-name" th:text="${option.option_name}"></span>
+													<span class="option-price" th:text="${option.option_price}"></span>
+													<button type="button" class="btn btn-outline-danger btn-sm" th:onclick="deleteOption([[${option.option_idx}]])">삭제</button>
+												</div>
+											</div>
 										</div>
 									</div>
 									<br />
 									<div class="btns text-center">
 										<button type="submit" class="btn btn-outline-secondary" id="btn_product_update">상품정보 수정</button>
-										<button type="button" class="btn btn-outline-secondary" id="btn_product_delete" >상품 삭제</button>
+										<button type="button" class="btn btn-outline-danger" id="btn_product_delete" >상품 삭제</button>
 										<!--삭제고려-->
 										<button class="btn btn-outline-secondary" id="btn_product_back">상품 정보 페이지로 돌아가기</button>
 									</div>
@@ -137,6 +149,47 @@
             let productDist = document.getElementById('goods_tag').value;
             let productTag = document.getElementById('goods_category');
             productTag.value(productDist);
+        }
+
+		function addOption() {
+			let optionName = $("#add-option-name").val();
+			let optionPrice = $("#add-option-price").val();
+			let goods_idx = $("#goods_idx").val();
+
+			if(optionName != '' && optionPrice != ''){
+				$.ajax({
+				    url: '/rest/goods/add_option',
+                    type: 'POST',
+                    data: {option_name: optionName, option_price: optionPrice, goods_idx: goods_idx},
+                    success: function(result){
+                    	alert(result);
+                    	location.reload();
+                    }
+				});
+                $("#add-option-name").val('');
+                $("#add-option-price").val('');
+			}
+		}
+		function addcol(Name, Price){
+		    let Div = $('<div></div>').addClass('option-col');
+		    let option_name = $('<span></span>').addClass('option-name').text(Name);
+		    let option_price = $('<span></span>').addClass('option-price').text(Price);
+		    let del_btn = $('<button></button>').addClass('btn btn-outline-danger del_btn').attr('type', 'button').attr('onclick', "deleteOption('" + Name + "')").text("옵션 삭제");
+
+		    Div.append(option_name).append(option_price).append(del_btn);
+		    $('#option-list').append(Div);
+		}
+
+		function deleteOption(idx){
+            $.ajax({
+            	url: '/rest/goods/delete_option',
+                type: 'POST',
+                data: {option_idx: idx},
+                success: function(result){
+                    alert(result);
+                    location.reload();
+                }
+            });
         }
 	</script>
 	<!-- 하단 -->
