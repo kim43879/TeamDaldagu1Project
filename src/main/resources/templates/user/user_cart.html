@@ -36,6 +36,7 @@
 	}
 	.empty-row {
     	text-align: center;
+    	margin-top: 5px;
 		padding: 20px;
 	}
 
@@ -67,8 +68,8 @@
 							<tr>
 								<th scope="col" style="text-align: center;">상품정보</th>
 								<th scope="col" style="text-align: center;">옵션</th>
-								<th scope="col" style="text-align: center;">금액</th>
 								<th scope="col" style="text-align: center;">수량</th>
+								<th scope="col" style="text-align: center;">금액</th>
 								<th scope="col">&emsp;&emsp;선택</th>
 							</tr>
 						</thead>
@@ -77,24 +78,24 @@
 							<tr th:each="cart,index : ${cartBeanList}" style="text-align: center;" th:if="${#lists.size(cartBeanList) > 0}">
 								<th scope="row">
 									<input type="hidden" th:value="${cart.cart_idx}" th:attr="id='cart_idx' + ${index.index}" />
-									<div class="check">
+									<div class="check" style="padding-top: 20px;">
 										<input type="checkbox" style="margin-left: 10px;" checked/>
 										&emsp;
 										<a th:href="@{/goods/goods_page(goods_idx=${cart.goods_idx})}" style="margin-left: 20px;" th:text="${cart.goods_name}"></a>
 									</div>
 								</th>
 
-								<td style="padding-top: 45px;" th:text="${cart.selected_option}"></td>
-								<td style="padding-top: 45px;" th:text="${cart.calc_price}"></td>
-								<td style="padding-top: 45px;" th:text="${cart.goods_quantity}"></td>
-								<td style="padding-top: 25px;">
+								<td style="padding-top: 35px;" th:text="${cart.selected_option}"></td>
+								<td style="padding-top: 35px;" th:text="${cart.goods_quantity}"></td>
+								<td style="padding-top: 35px;" th:text="${cart.cart_price}"></td>
+								<td style="padding-top: 20px;">
 									<a href="/goods/goods_buy" class="btn btn-outline-info btn-sm">상품주문</a> <br />
 
-									<button class="btn btn-outline-secondary btn-sm" th:onclick="remove_cart([[${cart.cart_idx}]])">상품삭제</button>
+									<button type="submit" class="btn btn-outline-secondary btn-sm" th:onclick="remove_cart([[${index.index}]])">상품삭제</button>
 								</td>
 							</tr>
 
-							<tr id="no-cart-message" style="display: none;" th:if="${#lists.size(cartBeanList) <= 0}">
+							<tr id="no-cart-message" style="display: none;">
 								<td colspan="5" class="empty-row"><b>장바구니가 비었습니다.</b></td>
 							</tr>
 
@@ -112,7 +113,7 @@
 									data: { cart_idx: idx },
 									success: function(response) {
 										alert("선택하신 상품이 삭제되었습니다.");
-										location.reload();
+										$("#cart_idx" + num).closest("tr").remove();
 
 										checkIfNoCart();
 									}
@@ -120,9 +121,11 @@
 							}
 
 							function checkIfNoCart(){
-								const cartListBody = $("#cart-list");
-								if (cartListBody.children().length === 0) {
+								const cartListBody = $("#table tbody tr:not(#no-cart-message)");
+								if (cartListBody.length === 0) {
 									$("#no-cart-message").show();
+								} else {
+									$("#no-cart-message").hide();
 								}
 							}
 						</script>
@@ -134,23 +137,6 @@
 	</div>
 </div>
 
-<!-- 페이지 -->
-<div class="d-none d-md-block">
-	<ul class="pagination justify-content-center">
-		<li class="page-item">
-			<a href="#" class="page-link">&laquo;</a>
-		</li>
-		<li class="page-item">
-			<a href="#" class="page-link">1</a>
-		</li>
-		<li class="page-item">
-			<a href="#" class="page-link">2</a>
-		</li>
-		<li class="page-item">
-			<a href="#" class="page-link">&raquo;</a>
-		</li>
-	</ul>
-</div>
 <div class="d" style="margin-top: 88px;"></div>
 <hr />
 

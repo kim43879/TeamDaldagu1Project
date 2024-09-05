@@ -34,11 +34,11 @@
             width: 100%;
             margin-top: -990px; margin-left:300px; padding-left: 8%; padding-right: 8%;
         }
-        .empty-row {
-            text-align: center;
-            margin-top: 20px;
-            padding: 20px;
-        }
+		.empty-row {
+			text-align: center;
+			margin-top: 5px;
+			padding: 20px;
+		}
 
 	</style>
 </head>
@@ -79,7 +79,7 @@
 									<div class="check" style="width: 150px; display: flex; align-items: center;">
 										<input type="checkbox" style="margin-left: 10px;" checked/>
 										&emsp;
-										<a href="/goods/goods_page">
+										<a th:href="@{/goods/goods_page(goods_idx=${wish.goods_idx})}">
 											<img th:src="@{'/img/goods/' + ${wish.goods_img}}" style="width: 90%;">
 										</a>
 										<h6 th:text="${wish.goods_name}" style="margin-left: 30px;"></h6>
@@ -108,7 +108,7 @@
 									data: { wish_idx: idx },
 									success: function(response) {
 										alert("선택하신 상품이 삭제되었습니다.");
-										location.reload();
+										$("#wish_idx" + num).closest("tr").remove();
 
 										checkIfNoWishes();
 									}
@@ -116,9 +116,11 @@
 							}
 
 							function checkIfNoWishes(){
-								const wishListBody = $("#cart-list");
-								if (wishListBody.children().length === 0) {
+								const wishListBody = $("#table tbody tr:not(#no-wish-message)");
+								if (wishListBody.length === 0) {
 									$("#no-wish-message").show();
+								} else {
+									$("#no-wish-message").hide();
 								}
 							}
 						</script>
@@ -130,20 +132,6 @@
 	</div>
 </div>
 
-<!-- 페이지 -->
-<div class="d-none d-md-block">
-	<ul class="pagination justify-content-center">
-		<li class="page-item">
-			<a href="#" class="page-link">&laquo;</a>
-		</li>
-		<li class="page-item">
-			<a href="#" class="page-link">1</a>
-		</li>
-		<li class="page-item">
-			<a href="#" class="page-link">&raquo;</a>
-		</li>
-	</ul>
-</div>
 <div style="margin-top: 88px;"></div>
 <hr />
 

@@ -88,6 +88,18 @@ public class RestApiController {
         wishService.deleteUserWish(wish_idx);
     }
 
+    //장바구니 추가
+    @PostMapping("/rest/add_cart")
+    public void addCart(@RequestParam("user_idx") int user_idx,
+                        @RequestParam("goods_idx") int goods_idx,
+                        @RequestParam("goods_quantity") int goods_quantity,
+                        @RequestParam("selected_option") String selected_option,
+                        @RequestParam("result_price") int result_price,
+                        @RequestParam("goods_name") String goods_name) {
+        System.out.println("컨트롤러 user_idx : " + user_idx);
+        cartService.addUserCart(user_idx, goods_idx, goods_quantity, selected_option, goods_name, result_price);
+    }
+
     //장바구니 삭제
     @PostMapping("/rest/remove_cart")
     public void remove_cart(@RequestParam("cart_idx") int cart_idx) {

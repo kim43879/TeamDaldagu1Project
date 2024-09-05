@@ -113,7 +113,7 @@
     <div class="form-group" style="display: flex; justify-content: center; align-items: center;">
         <button class="btn btn-outline-info" onclick="hide_div()">쇼핑계속하기</button>
         &emsp;
-        <a th:href="@{/user/user_cart(user_idx=${loginUserBean.user_idx})}" class="btn btn-outline-primary" >장바구니 가기</a>
+        <a th:href="@{/user/user_cart(user_idx=${loginUserBean.user_idx})}" class="btn btn-outline-primary">장바구니 가기</a>
     </div>
 
 </div>
@@ -150,9 +150,9 @@
                                 <select class="btn border-secondary dropdown-toggle" id="select_option1"
                                         th:onchange="change([[${goods.goods_price}]])">
                                     <option selected="selected" value="0">[필수] 옵션을 선택해주세요.</option>
-                                    <option value="2000">option1(+2,000)</option>
-                                    <option value="3000">option2(+3,000)</option>
-                                    <option value="1000">option3(+1,000)</option>
+                                    <option th:each="option : ${option_list}" th:value="${option.option_price}"
+                                            th:text="${option.option_name} + ' (+' + ${option.option_price} + ')'">
+                                    </option>
                                 </select>
 
                             </div>
@@ -215,14 +215,14 @@
                                 }
                                 function addCart(tempPrice, selectOption1,newNumber){
                                     var itemDiv = $('<div></div>').addClass('item').attr('id','item' + newNumber);
-                                    var bTag = $('<b></b>').text('[[${goods.goods_name}]]');
+                                    var bTag = $('<b></b>').addClass('goods-name').text('[[${goods.goods_name}]]');
                                     var imgTag = $('<img>').attr('src','[[@{/img/btn_price_delete.gif}]]').attr('style','cursor:pointer; margin-left: 70%;').attr('class','delete_btn').attr('onclick','remove_div(' + newNumber + ')');
-                                    var result1Tag = $('<div></div>').attr('id','result' + newNumber).text('-옵션: '+ selectOption1);
+                                    var result1Tag = $('<div></div>').addClass('selected-option').attr('id','result' + newNumber).text('-옵션: '+ selectOption1);
                                     var inputTag = $('<input>').attr('type','number').attr('class','btn border-secondary btn-sm productNumber').attr('id','goods-production' + newNumber).attr('value','1').attr('min','1').attr('max','5').attr('style','margin-top:3px; width: 50px;')
                                     .attr('onchange', 'multi(' + newNumber +')');
                                     var strongTag = $('<strong></strong>').attr('id','price' + newNumber).text(tempPrice + '원');
                                     var hrTag = $('<hr>');
-                                    var inputTag2 = $('<input>').attr('type', 'hidden').attr('id', 'origin-price' + newNumber).attr('value', tempPrice);
+                                    var inputTag2 = $('<input>').addClass('origin-price').attr('type', 'hidden').attr('id', 'origin-price' + newNumber).attr('value', tempPrice);
                                     itemDiv.append(bTag, imgTag, result1Tag, inputTag, strongTag, inputTag2, hrTag);
                                     $('#result').append(itemDiv);
                                 }
@@ -257,15 +257,13 @@
                             </script>
 
                             <p>*총 상품금액(수량): <strong id="total-price">0원</strong>
-                                <span>(</span>
                                 <span id="item-num">0</span>
-                                <span>개)</span>
                             </p>
                             <hr/>
 
                             <button class="btn btn-outline-warning" type="button" onclick="wish_message()">관심상품</button>
                             &ensp;
-                            <button class="btn btn-outline-primary position-relative" type="button" onclick="show_div()">
+                            <button class="btn btn-outline-primary position-relative" type="button" onclick="addToCart()">
                                 장바구니
                             </button>
                             &ensp;
@@ -280,11 +278,51 @@
                             </script>
 
                             <script>
-                                function show_div() {
+                                function addToCart() {
                                     var divElement = document.getElementById('show_div');
-                                    $("#cart_num").text(itemNum);
-
                                     divElement.style.visibility = 'visible';
+                                    $('#cart_num').text(itemNum);
+                                    let goods_list = $(".item");
+
+                                    // Thymeleaf를 통해 JavaScript로 변수 전달
+                                    let goodsName = /*[[${goods.goods_name}]]*/ 'defaultName';  // 상품명이 없을 때를 대비해 기본값 설정
+
+                                    console.log(goodsName);
+
+                                    //let userIdx = /*[[${loginUserBean.user_idx}]]*/ 'defaultUserIdx';
+                                    let userIdx = [[${loginUserBean.user_idx}]];
+                                    //let goodsIdx = /*[[${goods.goods_idx}]]*/ 'defaultGoodsIdx';
+                                    let goodsIdx = [[${goods.goods_idx}]];
+
+                                    goods_list.each(function() {
+                                        let itemQuantity = $(this).find('.productNumber').val();
+                                        let price = $(this).find('.origin-price').val();
+
+                                        console.log(itemQuantity);
+                                        console.log(price * itemQuantity);
+                                        console.log($(this).find('.goods-name').text());
+
+                                        // Ajax 요청 보내기
+                                        $.ajax({
+                                            url: "/rest/add_cart",
+                                            type: "post",
+                                            data: {
+                                                "user_idx": userIdx,
+                                                "goods_idx": goodsIdx,
+                                                "goods_quantity": itemQuantity,
+                                                "selected_option": $(this).find('.selected-option').text().slice(4),
+                                                "result_price": (price * itemQuantity),
+                                                "goods_name": goodsName
+                                            },
+                                            success: function() {
+                                                console.log("성공");
+                                            },
+                                            error: function(error) {
+                                                console.log(error);
+                                                alert("오류");
+                                            }
+                                        });
+                                    });
                                 }
                             </script>
 
@@ -351,7 +389,7 @@
 
             <div class="col-md-8">
                 <div class="card-body">
-                    <h6 class="card-title">user_name</h6>
+                    <h6 class="card-title">user_id</h6>
                     <span>★★★★★(goods_grade)</span> &nbsp;
                     <span><small>review_date</small></span>
                     <hr/>
@@ -412,6 +450,7 @@
         </div>
     </div>
 </div>
+<br />
 <hr/>
 
 <!-- 하단 -->
@@ -421,7 +460,6 @@
 </div>
 
 <!-- Bootstrap JS, Popper.js, jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
