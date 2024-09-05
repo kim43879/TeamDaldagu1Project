@@ -9,24 +9,21 @@ import java.util.List;
 public interface CartMapper {
 
     //물품 추가
-    @Insert("insert into cart_table(cart_idx, goods_idx, user_idx, goods_quantity, selected_option) " +
-            "values(cart_seq.nextval, #{goods_idx}, #{user_idx}, #{goods_quantity}, #{selected_option})")
+    @Insert("insert into cart_table(cart_idx, goods_idx, user_idx, goods_quantity, selected_option, cart_price) " +
+            "values(cart_seq.nextval, #{goods_idx}, #{user_idx}, #{goods_quantity}, #{selected_option}, #{cart_price})")
     void addUserCart(CartBean addCartBean);
 
     //물품 호출
-    @Select("select c.cart_idx, c.goods_idx, g.goods_name, c.user_idx, c.goods_quantity, c.selected_option " +
-            "from cart_table c " +
-            "join goods_table g on c.goods_idx = g.goods_idx " +
-            "where c.user_idx = #{user_idx}")
+    @Select("select * from cart_table where user_idx = #{user_idx}")
     List<CartBean> getCartList(int user_idx);
 
     //물품 확인
-    @Select("select c.* " +
+    @Select("select c.cart_idx, c.goods_idx, c.user_idx, c.goods_quantity, c.selected_option " +
             "from cart_table c " +
             "join goods_table g on c.goods_idx = g.goods_idx " +
-            "where c.user_idx= #{user_idx} and g.goods_name= #{goods_name} " +
-            "and c.selected_option= #{selected_option}")
-    CartBean cartInfo(int user_idx, String goods_name, String selected_option);
+            "where c.user_idx = #{user_idx} and g.goods_name = #{goods_name} " +
+            "and c.selected_option = #{selected_option}")
+    CartBean cartInfo(@Param("user_idx") int user_idx, @Param("goods_idx") int goods_idx, @Param("selected_option") String selected_option, @Param("goods_name") String goods_name);
 
     //물품 삭제
     @Delete("delete from cart_table where cart_idx= #{cart_idx}")
@@ -50,10 +47,5 @@ public interface CartMapper {
             "where c.goods_idx = g.goods_idx " +
             "and c.user_idx= #{user_idx} ")
     int getTotalPrice(int user_idx);
-
-    //페이징
-    @Select("select * from cart_table where user_idx " +
-            "order by cart_idx desc")
-    List<CartBean> getCartPage(int user_idx, int cartPage, int offset);
 
 }

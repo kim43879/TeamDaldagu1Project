@@ -62,5 +62,57 @@ public class UserBean {
 
     private int seller_idx;
 
+    private String membership;
+
+    //각 필드를 출력하는 메서드(seller_idx, loginCheck, id_check 제외)
+    public void printUserBean(){
+        System.out.println("아이디 : " + this.user_id);
+        System.out.println("비밀번호 : " + this.user_pw);
+        System.out.println("이름 : " + this.user_name);
+        System.out.println("이메일 : " + this.user_email);
+        System.out.println("연락처 : " + this.user_phone);
+        System.out.println("생년월일 : " + this.user_birth);
+        System.out.println("주소 : " + this.user_addr1);
+        System.out.println("상세주소 : " + this.user_addr2);
+        System.out.println("우편번호 : " + this.user_post);
+    }
+    //각 필드 초기화메서드(로그아웃)
+    public void clearUserBean(){
+        this.loginCheck = false;
+        this.user_id = "";
+        this.user_pw = "";
+        this.user_name = "";
+        this.user_email = "";
+        this.user_phone = "";
+        this.user_birth = "";
+        this.user_profile_img = "";
+        this.user_profile_text = "";
+        this.seller_idx = 0;
+        this.user_daily = 0;
+        this.user_membership_idx = 0;
+        this.user_role = null;
+        this.user_idx = 0;
+        this.membership = null;
+    }
+    //필드에 값 담기 매개변수는 UserBean
+    public void login(UserBean tempUserBean){
+        this.loginCheck = true;
+        this.user_id = tempUserBean.getUser_id();
+        this.user_pw = tempUserBean.getUser_pw();
+        this.user_name = tempUserBean.getUser_name();
+        this.user_email = tempUserBean.getUser_email();
+        this.user_phone = tempUserBean.getUser_phone();
+        this.user_birth = tempUserBean.getUser_birth();
+        this.user_profile_img = tempUserBean.getUser_profile_img();
+        this.user_profile_text = tempUserBean.getUser_profile_text();
+        this.user_role = tempUserBean.getUser_role();
+        this.user_idx = tempUserBean.getUser_idx();
+        this.seller_idx = tempUserBean.getSeller_idx();
+        this.user_membership_idx = tempUserBean.getUser_membership_idx();
+        this.user_daily = tempUserBean.getUser_daily();
+        this.membership = tempUserBean.getMembership();
+    }
+
+
 }
 

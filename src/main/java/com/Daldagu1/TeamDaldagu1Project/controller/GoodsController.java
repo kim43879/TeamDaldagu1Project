@@ -2,6 +2,7 @@ package com.Daldagu1.TeamDaldagu1Project.controller;
 
 import com.Daldagu1.TeamDaldagu1Project.beans.*;
 import com.Daldagu1.TeamDaldagu1Project.service.GoodsService;
+import com.Daldagu1.TeamDaldagu1Project.service.OptionService;
 import com.Daldagu1.TeamDaldagu1Project.service.SellerService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
@@ -24,6 +25,9 @@ public class GoodsController {
     @Autowired
     SellerService sellerService;
 
+    @Autowired
+    OptionService optionService;
+
     @Resource(name = "loginUserBean")
     @Lazy
     private UserBean loginUserBean;
@@ -35,6 +39,7 @@ public class GoodsController {
         model.addAttribute("seller_id",sellerService.getSellerId(tempGoodsBean.getSeller_idx()));
         model.addAttribute("goods_list", goodsService.getGoodsListByTag(tempGoodsBean.getGoods_tag()));
         model.addAttribute("user_idx", loginUserBean.getUser_idx());
+        model.addAttribute("option_list", optionService.getOptionList(goods_idx));
 
         return "goods/goods_page";
     }
@@ -129,7 +134,7 @@ public class GoodsController {
     @PostMapping("/add_goods_pro")
     public String addGoodsPro(@ModelAttribute("addGoodsInfoBean")AddGoodsInfo addGoodsInfo, Model model){
         goodsService.addGoodsInfoApply(addGoodsInfo);
-        return "seller/seller_product_insert?seller_idx" + addGoodsInfo.getSeller_idx();
+        return "seller/seller_product_insert";
     }
 
     @ModelAttribute("searchBean")

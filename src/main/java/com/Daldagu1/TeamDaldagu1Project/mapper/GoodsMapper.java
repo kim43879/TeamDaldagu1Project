@@ -15,7 +15,7 @@ import java.util.List;
 public interface GoodsMapper {
     @Insert("insert into goods_table(goods_idx, goods_name, goods_tag, goods_price, goods_img, goods_stock, goods_available,seller_idx, goods_img2, goods_text)" +
             "values (goods_seq.nextval, #{goods_name}, #{goods_tag}, #{goods_price}, " +
-            "#{goods_img}, 0, 'T',#{seller_idx}, #{goods_img2}, #{goods_info})")
+            "#{goods_img}, 0, 'T',#{seller_idx}, #{goods_img2}, #{goods_text})")
     void addGoodsInfo(GoodsBean addGoodsBean);
 
     @Insert("insert into add_goods_info_table(info_idx, goods_name, goods_tag, goods_price, goods_img, goods_info,seller_idx, goods_img2) " +
@@ -32,6 +32,9 @@ public interface GoodsMapper {
 
     @Select("select * from add_goods_info_table where info_idx = #{info_idx}")
     AddGoodsInfo getAddGoodsByIdx(int info_idx);
+
+    @Select("select goods_idx from goods_table where goods_img = #{goods_img}")
+    int getGoodsIdx(String goods_img);
 
     //자신이 등록한 상품 목록 호출
     @Select("select * from goods_table where seller_idx=#{seller_idx}")

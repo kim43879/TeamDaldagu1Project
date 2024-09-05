@@ -28,12 +28,12 @@ public class SellerController {
     private GoodsService goodsService;
 
     @GetMapping("/seller_join")
-    public String sellerJoinForm(@RequestParam("user_idx") int user_idx, Model model){
+    public String sellerJoinForm(Model model){
 
-        UserBean userBean = userService.getUserbyIdx(user_idx);
+        UserBean userBean = userService.getUserbyIdx(loginUserBean.getUser_idx());
         SellerInfoBean tempSellerBean = new SellerInfoBean();
 
-        tempSellerBean.setUser_idx(user_idx);
+        tempSellerBean.setUser_idx(loginUserBean.getUser_idx());
         tempSellerBean.setSeller_id(userBean.getUser_id());
         tempSellerBean.setSeller_name(userBean.getUser_name());
         tempSellerBean.setSeller_phone(userBean.getUser_phone());
@@ -52,37 +52,37 @@ public class SellerController {
     }
 
     @GetMapping("/seller_page")
-    public String sellerPage(@RequestParam("seller_idx") int seller_idx, Model model){
-        model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(seller_idx));
-        model.addAttribute("goodsCount", goodsService.goodsCountBySellerIdx(seller_idx));
+    public String sellerPage(Model model){
+        model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(loginUserBean.getSeller_idx()));
+        model.addAttribute("goodsCount", goodsService.goodsCountBySellerIdx(loginUserBean.getSeller_idx()));
 
         return "seller/seller_page";
     }
 
     @GetMapping("/seller_product_insert")
-    public String sellerProductInsertForm(@RequestParam("seller_idx") int seller_idx, Model model){
-        model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(seller_idx));
+    public String sellerProductInsertForm(Model model){
+        model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(loginUserBean.getSeller_idx()));
         AddGoodsInfo tempBean = new AddGoodsInfo();
-        tempBean.setSeller_idx(seller_idx);
+        tempBean.setSeller_idx(loginUserBean.getSeller_idx());
         model.addAttribute("addGoodsInfoBean", tempBean);
         return "seller/seller_product_insert";
     }
 
     @GetMapping("/seller_order")
-    public String sellerOrder(@RequestParam("seller_idx") int seller_idx, Model model){
-        model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(seller_idx));
+    public String sellerOrder(Model model){
+        model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(loginUserBean.getSeller_idx()));
         return "seller/seller_order";
     }
 
     @GetMapping("/seller_list")
-    public String sellerPresent(@RequestParam("seller_idx") int seller_idx, Model model){
-        model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(seller_idx));
-        model.addAttribute("goodsList", goodsService.getMyGoodsList(seller_idx));
+    public String sellerPresent(Model model){
+        model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(loginUserBean.getSeller_idx()));
+        model.addAttribute("goodsList", goodsService.getMyGoodsList(loginUserBean.getSeller_idx()));
         return "seller/seller_list";
     }
     @GetMapping("/seller_regular")
-    public String sellerReview(@RequestParam("seller_idx") int seller_idx, Model model){
-        model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(seller_idx));
+    public String sellerReview(Model model){
+        model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(loginUserBean.getSeller_idx()));
         return "seller/seller_regular";
     }
 

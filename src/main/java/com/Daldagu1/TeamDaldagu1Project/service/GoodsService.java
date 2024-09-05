@@ -1,10 +1,8 @@
 package com.Daldagu1.TeamDaldagu1Project.service;
 
-import com.Daldagu1.TeamDaldagu1Project.beans.AddGoodsInfo;
-import com.Daldagu1.TeamDaldagu1Project.beans.GoodsBean;
-import com.Daldagu1.TeamDaldagu1Project.beans.PageBean;
-import com.Daldagu1.TeamDaldagu1Project.beans.SearchBean;
+import com.Daldagu1.TeamDaldagu1Project.beans.*;
 import com.Daldagu1.TeamDaldagu1Project.mapper.GoodsMapper;
+import com.Daldagu1.TeamDaldagu1Project.mapper.OptionMapper;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +20,9 @@ public class GoodsService {
     @Autowired
     private GoodsMapper goodsMapper;
 
+    @Autowired
+    private OptionMapper optionMapper;
+
     @Value("${imgPath}")
     private String goodsApplyPath;
 
@@ -31,6 +32,11 @@ public class GoodsService {
     //상품 추가
     public void addGoodsInfo(GoodsBean addGoodsBean) {
         goodsMapper.addGoodsInfo(addGoodsBean);
+        OptionBean tempOptionBean = new OptionBean();
+        tempOptionBean.setGoods_idx(goodsMapper.getGoodsIdx(addGoodsBean.getGoods_img()));
+        tempOptionBean.setOption_name("기본");
+        tempOptionBean.setOption_price(0);
+        optionMapper.addOption(tempOptionBean);
     }
 
     private String saveApplyGoodsInfo(MultipartFile applyGoodsImg){
@@ -61,7 +67,9 @@ public class GoodsService {
 
     //구매상품 호출
     public GoodsBean getPurchaseGoods(int goods_idx) {
-        return goodsMapper.getPurchaseGoods(goods_idx);
+        GoodsBean tempGoodsBean = goodsMapper.getPurchaseGoods(goods_idx);
+        tempGoodsBean.setGoods_option(optionMapper.getOptionList(goods_idx));
+        return tempGoodsBean;
     }
 
     public List<AddGoodsInfo> getAddGoodsInfoList(){
