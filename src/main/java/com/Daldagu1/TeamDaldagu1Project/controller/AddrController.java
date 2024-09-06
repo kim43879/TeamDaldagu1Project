@@ -72,12 +72,15 @@ public class AddrController {
     @PostMapping("/user/update_user_addr/update")
     public String update_user_addr_update(@ModelAttribute("addrBean") AddrBean addrBean, @RequestParam("addr_idx") int addr_idx,Model model){
 
-        addrBean.showField();
 
-        if(addrBean.getAddr_main().isEmpty())
+
+        if(addrBean.getAddr_main() == null)
             addrBean.setAddr_main("F");
         else
             addrService.unMainAddr(addrBean.getUser_idx());
+
+        addrBean.showField();
+
         addrService.updateAddr(addrBean);
 
         model.addAttribute("message","배송지 정보 수정이 완료되었습니다.");

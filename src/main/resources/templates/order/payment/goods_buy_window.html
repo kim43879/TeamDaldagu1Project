@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>결제페이지</title>
+    <script src="https://js.tosspayments.com/v1/payment"></script>
+</head>
+<body>
+<script th:inline="javascript">
+    function initiatePayment() {
+        var amount = [[${amount}]];
+
+        // 클라이언트 키로 객체 초기화
+        var clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
+        var tossPayments = TossPayments(clientKey);
+        let successURL = 'http://localhost:8080/order/payment/payment_success?order_idx=' + [[${order_idx}]] + '&addr_idx=' + [[${addr_idx}]];
+        console.log(successURL);
+        // 결제창 띄우기
+        tossPayments.requestPayment('카드', {
+            amount: amount, // 서버에서 받은 금액 사용
+            orderId: [[${order_idx}]], // 주문 ID
+            orderName: [[${goods_name}]], // 주문명
+            customerName: [[${user_name}]], // 구매자 이름
+            successUrl: successURL,
+            failUrl: 'http://localhost:8080/order/payment/payment_fail',
+        }).catch(function (error) {
+            // 에러 처리
+            console.error(error);
+        });
+    }
+
+    // 페이지 로드 시 결제창 초기화
+    window.onload = initiatePayment;
+</script>
+</body>
+</html>

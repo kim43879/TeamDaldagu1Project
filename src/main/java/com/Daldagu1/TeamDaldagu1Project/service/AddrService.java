@@ -26,8 +26,19 @@ public class AddrService {
 
     //배송지 호출
     public List<AddrBean> getExtraUserAddr(int user_idx) {
+        List<AddrBean> list = addrMapper.getExtraUserAddr(user_idx);
+        for(AddrBean addrBean : list){
+            if(addrBean.getAddr_main().equals("T")){
+                addrBean.setMessage("기본배송지");
+            }else{
+                addrBean.setMessage("-");
+            }
+        }
+        return list;
+    }
 
-        return addrMapper.getExtraUserAddr(user_idx);
+    public int getMainAddrIdx(int user_idx){
+        return addrMapper.getMainAddrIdx(user_idx);
     }
 
     public AddrBean getAddrByAddrIdx(int addr_idx){

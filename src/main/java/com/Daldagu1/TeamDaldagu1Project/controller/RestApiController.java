@@ -30,6 +30,9 @@ public class RestApiController {
     @Autowired
     private OptionService optionService;
 
+    @Autowired
+    private OrderService orderService;
+
     @PostMapping("/rest/idCheck")
     public String IdCheck(@RequestParam("user_id")String user_id){
         String db_id = userService.getUserId(user_id);
@@ -147,4 +150,43 @@ public class RestApiController {
          return "옵션을 삭제했습니다.";
     }
 
+    @PostMapping("/rest/add_order")
+    public String add_order(@RequestParam("user_idx") int user_idx, @RequestParam("seller_idx") int seller_idx){
+        int addr_idx = addrService.getMainAddrIdx(user_idx);
+
+        String order_idx = orderService.getOrder_idx();
+        OrderBean tempOrderBean = new OrderBean();
+        tempOrderBean.setOrder_idx(order_idx);
+        tempOrderBean.setUser_idx(user_idx);
+        tempOrderBean.setAddr_idx(addr_idx);
+        tempOrderBean.setSeller_idx(seller_idx);
+        tempOrderBean.setOrder_stat(1);
+
+        orderService.addOrderForm(tempOrderBean);
+
+        return order_idx;
+    }
+
+    @PostMapping("/rest/add_order_goods")
+    public void add_order_goods(@RequestParam("goods_idx") int goods_idx,
+                                @RequestParam("goods_quantity") int goods_quantity,
+                                @RequestParam("selected_option") String selected_option,
+                                @RequestParam("result_price") int result_price,
+                                @RequestParam("order_idx") String order_idx){
+        OrderGoodsBean tempOrderGoogsBean = new OrderGoodsBean();
+        tempOrderGoogsBean.setOrder_idx(order_idx);
+        tempOrderGoogsBean.setGoods_idx(goods_idx);
+        tempOrderGoogsBean.setPrice(result_price);
+        tempOrderGoogsBean.setOrder_goods_num(goods_quantity);
+        tempOrderGoogsBean.setSelected_option(selected_option);
+
+        orderService.addOrderGoods(tempOrderGoogsBean);
+
+        System.out.println("구매요청");
+    }
+
+    @PostMapping("/rest/order/order_delete")
+    public void order_delete(@RequestParam("order_idx") String order_idx){
+        orderService.deleteOrder(order_idx);
+    }
 }//class

@@ -2,9 +2,7 @@ package com.Daldagu1.TeamDaldagu1Project.mapper;
 
 import com.Daldagu1.TeamDaldagu1Project.beans.OrderBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.OrderGoodsBean;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -12,16 +10,40 @@ import java.util.List;
 public interface OrderMapper {
     
     //주문 등록
-    @Insert("insert into order_table value(order_seq.nextval, sysdate, #{order_delivery_addr}, #{order_delivery_num}, " +
-            "#{user_idx}, #{order_goods_idx})")
+    @Insert("insert into order_table (order_idx, addr_idx, user_idx, seller_idx, order_stat) " +
+            "values(#{order_idx}, #{addr_idx}, #{user_idx}, #{seller_idx}, 1)")
     void addOrderForm(OrderBean orderBean);
 
-    //주문 리스트?
-    @Select("select ot.order_idx, to_char(ot.order_date, 'YYYY-MM-DD') as order_date, gt.goods_name, gt.goods_price " +
-            "from order_table ot, order_goods_table ogt, goods_table gt " +
-            "where ot.order_idx = ogt.order_idx " +
-            "and ogt.goods_idx = gt.goods_idx " +
-            "and ot.user_idx= #{user_idx};")
-    List<OrderGoodsBean> getOrderList(int user_idx);
+    @Insert("insert into order_goods_table (order_goods_idx, order_goods_num, price, selected_option,goods_idx,order_idx) " +
+            "values(order_goods_seq.nextval, #{order_goods_num}, #{price}, #{selected_option}, #{goods_idx}, #{order_idx})")
+    void addOrderGoods(OrderGoodsBean orderGoodsBean);
+
+    @Select("select o.order_goods_idx as order_goods, " +
+            "o.order_goods_num as order_goods_num, " +
+            "o.goods_idx as goods_idx, " +
+            "o.order_idx as order_idx, o.price as price, " +
+            "o.selected_option as selected_option, g.goods_img as img, " +
+            "g.goods_name as goods_name " +
+            "from order_goods_table o, goods_table g " +
+            "where o.goods_idx = g.goods_idx and o.order_idx = #{order_idx}")
+    List<OrderGoodsBean> getOrderGoodsList(String order_idx);
+
+    @Select("select order_idx, TO_CHAR(order_date, 'YYYY-MM-DD HH24:MI:SS') as order_date, " +
+            "addr_idx, user_idx, order_message, seller_idx " +
+            "from order_table " +
+            "where order_idx=#{order_idx}")
+    OrderBean getOrder(String order_idx);
+
+    @Update("update order_table set order_date = sysdate, order_stat = 2 where order_idx = #{order_idx}")
+    void orderPaymentSuccess(String order_idx);
+
+    @Update("update order_table set order_message = #{message} where order_idx = #{order_idx}")
+    void setOrderMessage(@Param("message") String message,@Param("order_idx") String order_idx);
+
+    @Delete("delete from order_goods_table where order_idx = #{order_idx}")
+    void deleteOrderGoods(String order_idx);
+
+    @Delete("delete from order_table where order_idx = #{order_idx}")
+    void deleteOrder(String order_idx);
 
 }

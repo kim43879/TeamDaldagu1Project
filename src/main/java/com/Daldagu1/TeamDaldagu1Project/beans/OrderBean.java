@@ -6,11 +6,13 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OrderBean {
-    private int order_idx;              //주문 기본키
+    private String order_idx;              //주문 기본키
     private String order_date;          //주문일자
-    private String order_delevery_addr; //배송지 주소
-    private String order_delevery_num;  //송장번호
     private int user_idx;               //주문유저 기본키
+    private int seller_idx;             //판매자 idx
+    private int addr_idx;               //배송지정보 기본키
+    private int order_stat;             //주문 상태 코드
+    private String order_message;             //주문메세지
 
     private int order_price;            //합계 주문금액
 }

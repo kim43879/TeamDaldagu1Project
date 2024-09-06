@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>달다구리스</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+    <style>
+        .card-main{
+            margin-top: 88px;
+            padding-left: 186px;
+            padding-right: 186px;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+        }
+        .show {
+            display: block;
+        }
+        #sample{
+            padding-top: 10px;
+        }
+        .resize{
+            width: 35%;
+            height: auto;
+        }
+        #text{
+            text-align: center;
+        }
+        #pay_info{
+            margin-top: 100px;
+            padding-left: 12%;
+        }
+        #user_info{
+            padding-left: 12%;
+        }
+        .test{
+            width: 275px;
+        }
+        #addr_info{
+            padding-left: 12%;
+        }
+        #p1, #p2, #p3 {
+
+        }
+
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+
+<!-- 상단메뉴 -->
+<div id="header">
+    <div th:replace="page_header/header.html :: header-head"></div>
+    <div th:replace="page_header/header.html :: header-body"></div>
+</div>
+
+<!-- 상품구매 정보 -->
+<div class="container mt-12" id="pay_info">
+    <div class="row g-0">
+        <div class="col-md-10"><br/>
+            <div class="card">
+                <div class="card-header"><strong>&ensp;주문 리스트</strong></div>
+                <div class="card-body">
+                    <table class="table">
+                        <tr>
+                            <th>상품이미지</th>
+                            <th scope="col">제품명(옵션)</th>
+                            <th scope="col">수량</th>
+                            <th scope="col">금액</th>
+                        </tr>
+
+                        <tbody class="table-group-divider">
+                        <tr th:each="item : ${orderItems}">
+                            <th scope="row">
+                                <img th:src="@{'/img/goods/' + ${item.img}}" style="width:100px; height:100px;">
+                            </th>
+                            <td>
+                                <a th:href="@{/goods/goods_page(goods_idx=${item.goods_idx})}"
+                                   th:text="${item.goods_name}">goods_name</a><br>
+                                <span th:text="${item.selected_option}"></span>
+                            </td>
+                            <td th:text="${item.order_goods_num}  + '개'">goods_amount</td>
+                            <td class="item-price" th:text="${item.price} + '원'">goods_price</td>
+                        </tr>
+                        </tbody>
+
+                    </table>
+                    <hr/>
+                    <h6 th:text="'금액합계 : ' + ${totalPrice}">&ensp;*옵션: goods_option</h6>
+                </div>
+            </div>
+            <br/>
+        </div>
+    </div>
+</div>
+<br/>
+
+<!-- 구매자 정보 -->
+<div class="container card-wrapper" style="padding-left: 12%;">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-4">
+                        <h6><b>&emsp;주문자 정보</b></h6>
+                        <hr/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="user_name" class="me-3">&ensp;이름</label>
+                        <br>
+                        <input type="text" id="user_name" class="form-control test" th:value="${userBean.user_name}"
+                               style="background-color:white;" readonly
+                               value="user_name"/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="user_email" class="mb-0 me-2">&ensp;이메일</label>
+                        <br>
+                        <input type="email" id="user_email" class="form-control test"
+                               th:value="${userBean.user_email}" style="background-color:white;"
+                               readonly/>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="user_phone" class="mb-0 me-2">&ensp;연락처</label>
+                        <br>
+                        <input type="text" id="user_phone" class="form-control test" th:value="${userBean.user_phone}"
+                               style="background-color:white;" readonly/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
+
+<!-- 배송지 정보 -->
+<div class="container" id="addr_info">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-4">
+                        <h6 class="fw-bold">&emsp;배송지 정보</h6>
+                        <select th:onchange="changeAddr()" id="selected-addr">
+                            <option th:each="addr : ${addrList}" th:value="${addr.addr_idx}" th:text="${addr.addr_name}"></option>
+                        </select>
+                        <hr/>
+                    </div>
+                    <!-- 이름 -->
+                    <div class="mb-3 row">
+                        <label for="addr_name" class="col-sm-2 col-form-label">&ensp;이름</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="addr_name" class="form-control" th:value="${addrList[0].addr_name}" readonly
+                                   style="background-color:white;"/>
+                        </div>
+                    </div>
+
+                    <!-- 연락처 -->
+                    <div class="mb-3 row">
+                        <label for="addr_phone" class="col-sm-2 col-form-label">&ensp;연락처</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="addr_phone" class="form-control" th:value="${addrList[0].addr_phone}" readonly
+                                   style="background-color:white;"/>
+                        </div>
+                    </div>
+
+                    <!-- 주소 -->
+                    <div class="mb-3 row">
+                        <label for="user_addr" class="col-sm-2 col-form-label">&ensp;주소</label>
+                        <div class="col-sm-3">
+                            <input type="text" id="user_post" class="form-control" th:value="${addrList[0].user_post}" readonly
+                                   style="background-color:white;"/>
+                        </div>
+                        <div class="col-sm-7">
+                            <input type="text" id="user_addr" class="form-control" th:value="${addrList[0].user_addr}" readonly
+                                   style="background-color:white;"/>
+                        </div>
+                    </div>
+
+                    <!-- 메모 -->
+                    <div class="mb-3 row">
+                        <label for="user_memo" class="col-sm-2 col-form-label">&ensp;메모</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="user_memo" class="form-control" placeholder="배송 요청사항을 입력해주세요."/>
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button" class="btn btn-outline-info w-100">저장</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
+
+<!-- 결제 -->
+<div class="container card-wrapper" style="padding-left: 12%;">
+    <div class="row">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-body">
+                    <div class="mb-4">
+                        <h6><b>&emsp;결제 정보</b></h6>
+                        <hr/>
+                    </div>
+
+                    <div class="mb-3">
+                        <!--							<div class="form-check">-->
+                        <!--								&ensp;-->
+                        <!--								<input class="form-check-input" type="radio" name="paymentMethod" value="creditCard" id="flexCheckChecked" checked/>-->
+                        <!--								<label class="form-check-label" for="flexCheckChecked">&ensp;신용카드</label>-->
+                        <!--							</div>-->
+                        <!--							-->
+                        <!--							<div class="form-check">-->
+                        <!--								&ensp;-->
+                        <!--								<input class="form-check-input" type="radio" name="paymentMethod" value="bankTransfer" id="flexCheckDefault"/>-->
+                        <!--								<label class="form-check-label" for="flexCheckDefault">&ensp;무통장입금</label>-->
+                        <!--							</div>-->
+
+                        <button type="button" onclick="payment()">
+                            <img th:src="@{/img/kakao_login_medium_narrow.png}">
+                        </button>
+                    </div>
+                    <script th:inline="javascript">
+                        function payment(){
+                            let message = $('#user_memo').val();
+                            let url = '/order/payment/goods_buy_window?order_idx=' + [[${order_idx}]] + '&message=' + message + '&addr_idx=' + $('#selected-addr').val();
+                            window.open(url,"","width=650,height=650");
+                        }
+
+                        function changeAddr(){
+                            console.log("함수실행");
+                            let addrIdx = $('#selected-addr').val();
+                            console.log(addrIdx);
+                            let addrList = /*[[${addrList}]]*/ [];
+
+                            let selectedAddr = addrList.find(addr => addr.addr_idx == addrIdx);
+
+                            if(selectedAddr){
+                                console.log("주소이름 : " + selectedAddr.addr_name);
+                                console.log("연락처 : " + selectedAddr.addr_phone);
+                                console.log("주소 : " + selectedAddr.user_post + " " + selectedAddr.user_addr);
+
+                                $("#addr_name").val(selectedAddr.addr_name);
+                                $("#addr_phone").val(selectedAddr.addr_phone);
+                                $("#user_post").val(selectedAddr.user_post);
+                                $("#user_addr").val(selectedAddr.user_addr);
+                                $("#user_memo").val("");
+                            }
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
+
+<div class="text-center">
+    <a onclick="order_delete()" type="button" class="btn btn-outline-danger">주문취소</a> &ensp;
+    <a href="payment/pay_complete.html" type="button" class="btn btn-outline-success"
+       onclick="order_complete()">주문하기</a>
+
+    <script>
+        function order_complete() {
+            alert("주문이 완료되었습니다.");
+        }
+        function order_delete(){
+            orderIdx = '[[${order_idx}]]';
+            confirm("주문을 취소하시겠습니까?")
+            if(confirm){
+                $.ajax({
+                    url: "/rest/order/order_delete",
+                    type: "post",
+                    data: {
+                        order_idx: orderIdx
+                    },
+                    success: function(){
+                        alert("주문이 취소되었습니다.");
+                        location.href = "/";
+                    }
+                })
+            }
+        }
+    </script>
+
+</div> &nbsp;
+<hr/>
+
+<!-- 하단 -->
+<div id="footer">
+    <div th:replace="page_footer/footer.html :: footer-head"></div>
+    <div th:replace="page_footer/footer.html :: footer-body"></div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</body>
+</html>

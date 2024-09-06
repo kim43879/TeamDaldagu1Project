@@ -179,22 +179,34 @@
                                     console.log("changed");
                                     let selectValue1 = $('#select_option1').val();
                                     let selectOption1 = $("#select_option1 option:checked").text()
+                                    let itemList = $('.item');
+                                    let checkCurrentOption = false;
 
-                                    if(num <= 3){
-                                    let tempPrice = Number(selectValue1) + price;
-                                    if(deletedNumbers.length > 0){
-                                        newNumber = deletedNumbers.shift();
-                                        addCart(tempPrice, selectOption1,newNumber);
-                                    }else{
-                                        newNumber = num;
-                                        num++;
-                                        addCart(tempPrice, selectOption1,newNumber);
+                                    itemList.each(function(){
+                                        if($(this).find(".selected-option").text().slice(5) === selectOption1){
+                                            checkCurrentOption = true;
+                                        }
+                                    });
+
+                                    if(checkCurrentOption){
+                                        alert("이미 해당옵션의 상품을 담았습니다.");
+                                        document.getElementById('select_option1').selectedIndex = 0;
                                     }
-                                    totalPrice += tempPrice;
-                                    console.log(totalPrice);
-                                    $("#total-price").text(totalPrice + "원");
-                                    countProduction();
-                                     document.getElementById('select_option1').selectedIndex = 0;
+                                    else if(itemList.length < 3){
+                                        let tempPrice = Number(selectValue1) + price;
+                                        if(deletedNumbers.length > 0){
+                                            newNumber = deletedNumbers.shift();
+                                            addCart(tempPrice, selectOption1,newNumber);
+                                        }else{
+                                            newNumber = num;
+                                            num++;
+                                            addCart(tempPrice, selectOption1,newNumber);
+                                        }
+                                        totalPrice += tempPrice;
+                                        console.log(totalPrice);
+                                        $("#total-price").text(totalPrice + "원");
+                                        countProduction();
+                                        document.getElementById('select_option1').selectedIndex = 0;
                                     }
                                     else{
                                         alert("상품은 최대 3개까지 담을 수 있습니다.");
@@ -267,7 +279,7 @@
                                 장바구니
                             </button>
                             &ensp;
-                            <a href="/goods/goods_buy" class="btn btn-outline-info" onclick="buy()">구매하기</a>
+                            <a class="btn btn-outline-info" onclick="buy()">구매하기</a>
 
                             <script>
                                 function wish_message() {
@@ -289,9 +301,7 @@
 
                                     console.log(goodsName);
 
-                                    //let userIdx = /*[[${loginUserBean.user_idx}]]*/ 'defaultUserIdx';
                                     let userIdx = [[${loginUserBean.user_idx}]];
-                                    //let goodsIdx = /*[[${goods.goods_idx}]]*/ 'defaultGoodsIdx';
                                     let goodsIdx = [[${goods.goods_idx}]];
 
                                     goods_list.each(function() {
@@ -323,6 +333,71 @@
                                             }
                                         });
                                     });
+                                }
+                                function buy(){
+                                    let items_number = $('.item').length;
+
+                                    let userIdx = [[${loginUserBean.user_idx}]];
+                                    let sellerIdx = [[${goods.seller_idx}]];
+                                    let goodsIdx = [[${goods.goods_idx}]];
+                                    let goodsName = /*[[${goods.goods_name}]]*/ 'defaultName';  // 상품명이 없을 때를 대비해 기본값 설정
+                                    let orderIdx = ' ';
+                                    let loginCheck = [[${loginUserBean.loginCheck}]];
+                                    console.log(loginCheck);
+                                    if(items_number == 0){
+                                        alert("구매하려는 상품이 없습니다.");
+                                    }
+                                    else if(loginCheck === false){
+                                        alert("로그인 후 이용가능한 서비스입니다.");
+                                        location.href = "/user/login";
+                                    }
+                                    else{
+                                        let items = $('.item');
+                                        let result = confirm("주문하시겠습니까?");
+
+                                        if(result){
+
+                                            $.ajax({
+                                                url: "/rest/add_order",
+                                                type: "post",
+                                                data: {
+                                                    "user_idx": userIdx,
+                                                    "seller_idx": sellerIdx
+                                                },
+                                                success: function(response) {
+                                                    console.log("주문추가 성공");
+                                                    orderIdx = response;
+
+                                                    items.each(function() {
+                                                        let itemQuantity = $(this).find('.productNumber').val();
+                                                        let price = $(this).find('.origin-price').val();
+
+                                                        $.ajax({
+                                                            url: "/rest/add_order_goods",
+                                                            type: "post",
+                                                            data: {
+                                                                "goods_idx": goodsIdx,
+                                                                "goods_quantity": itemQuantity,
+                                                                "selected_option": $(this).find('.selected-option').text().slice(4),
+                                                                "result_price": (price * itemQuantity),
+                                                                "order_idx" : orderIdx
+                                                            },
+                                                            success: function() {
+                                                                console.log("성공");
+                                                            },
+                                                            error: function(error) {
+                                                                console.log(error);
+                                                                alert("오류");
+                                                            }
+                                                        });
+                                                    })
+                                                    location.href="/order/goods_buy?order_idx=" + orderIdx + "&user_idx=" + userIdx;
+                                                }
+                                            })
+                                        }else{
+                                            alert("주문을 취소합니다..");
+                                        }
+                                    }
                                 }
                             </script>
 

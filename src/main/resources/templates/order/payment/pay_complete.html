@@ -92,11 +92,19 @@
 		<br />
 		<h6 class="card-title"><b>고객님의 주문이 완료 되었습니다.</b></h6>
 		<hr />
-		<p class="card-text">주문내역 및 배송에 관한 안내는 <a href="user_order.html">주문조회</a>를 통하여 확인 가능합니다.</p>
+		<p class="card-text">주문내역 및 배송에 관한 안내는 <a href="../../user/user_order.html">주문조회</a>를 통하여 확인 가능합니다.</p>
 			<div class="" id="order_text">
-				<span class="card-text" style="text-align: left;"><small class="text-body-secondary"><b>주문번호: 20240812-00002222</b></small></span>
+				<span class="card-text" style="text-align: left;">
+					<small class="text-body-secondary">
+						<b th:text="'주문번호 : ' + ${orderBean.order_idx}">주문번호: 20240812-00002222</b>
+					</small>
+				</span>
 				<br />
-				<span class="card-text" style="text-align: left;"><small class="text-body-secondary"><b>주문일자: 2024-08-12 10:05:00</b></small></span>
+				<span class="card-text" style="text-align: left;">
+					<small class="text-body-secondary">
+						<b th:text="'주문일자: ' + ${orderBean.order_date}">주문일자: 2024-08-12 10:05:00</b>
+					</small>
+				</span>
 			</div>
 		<br />
 	</div>
@@ -116,49 +124,23 @@
 								<th scope="col">수량</th>
 								<th scope="col">금액</th>
 							</tr>
-							
-							<tbody class="table-group-divider">
-								<tr>
-									<th scope="row">odrder_idx</th>
-									<td><a href="/goods/goods_page">goods_name</a></td>
-									<td>goods_amount</td>
-									<td>goods_price</td>
-								</tr>
-							</tbody>
+
+							<tr th:each="item : ${goodsList}">
+								<th scope="row">
+									<img th:src="@{'/img/goods/' + ${item.img}}" style="width:100px; height:100px;">
+								</th>
+								<td>
+									<a th:href="@{/goods/goods_page(goods_idx=${item.goods_idx})}"
+									   th:text="${item.goods_name}">goods_name</a><br>
+									<span th:text="${item.selected_option}"></span>
+								</td>
+								<td th:text="${item.order_goods_num}  + '개'">goods_amount</td>
+								<td class="item-price" th:text="${item.price} + '원'">goods_price</td>
+							</tr>
 							
 						</table>
 						<hr />
-						<h6>&ensp;*옵션: goods_option</h6>
-					</div>
-					
-				</div>
-				<br />
-				
-			</div>
-		</div>
-	</div> <br />
-	
-	<!-- 주문 상세 -->
-	<div class="container mt-12" id="order_info">
-		<div class="row g-0">
-			<div class="col-md-10"><br />
-				<div class="card">
-				<div class="card-header"><strong>&ensp;결제 정보</strong></div>
-					<div class="card-body">
-						<table class="table">
-							<tr>
-								<th>총 주문 금액</th>
-								<th scope="col">총 결제 금액</th>
-							</tr>
-							
-							<tbody class="table-group-divider">
-								<tr>
-									<th scope="row">order_price</th>
-									<td>oder_price_option</td>
-								</tr>
-							</tbody>
-							
-						</table>
+						<h6 th:text="'금액합계 : ' + ${amount}">&ensp;*옵션: goods_option</h6>
 					</div>
 					
 				</div>
@@ -173,54 +155,50 @@
 		<div class="row">
 			<div class="col-md-10">
 				<div class="card">
-				<div class="card-body">
-					<form action="#" method="post">
+					<div class="card-body">
 						<div class="mb-4">
-							<h6><b>&emsp;배송지 정보</b></h6>
-							<hr />
+							<h6 class="fw-bold">&emsp;배송지 정보</h6>
+							<hr/>
 						</div>
-						
-						<div class="mb-3">
-							<div class="d-flex align-items-center">
-								<label for="user_name" class="mb-0 me-2">&ensp;이름</label>
-								&ensp;&ensp;&nbsp;&nbsp;
-								<label id="user_name" class="form-control">user_name</label>
+						<!-- 이름 -->
+						<div class="mb-3 row">
+							<label for="addr_name" class="col-sm-2 col-form-label">&ensp;이름</label>
+							<div class="col-sm-10">
+								<input type="text" id="addr_name" class="form-control" th:value="${addrBean.addr_name}" readonly
+									   style="background-color:white;"/>
 							</div>
 						</div>
-						
-						<div class="mb-3">
-							<div class="d-flex align-items-center">
-								<label for="user_phone" class="mb-0 me-2">&ensp;연락처</label>
-								&ensp;
-								<label id="user_phone" class="form-control" style="width: 81px;">tel1</label>
-									&nbsp;<span>-</span>
-								&nbsp;
-								<label id="user_phone1" class="form-control" style="width: 81px;">tel2</label>
-									&nbsp;<span>-</span>
-								<label id="user_phone2" class="form-control" style="width: 81px;">tel3</label>
+
+						<!-- 연락처 -->
+						<div class="mb-3 row">
+							<label for="addr_phone" class="col-sm-2 col-form-label">&ensp;연락처</label>
+							<div class="col-sm-10">
+								<input type="text" id="addr_phone" class="form-control" th:value="${addrBean.addr_phone}" readonly
+									   style="background-color:white;"/>
 							</div>
 						</div>
-						
-						<div class="mb-3">
-							<div class="d-flex align-items-center">
-								<label for="user_addr" class="mb-0 me-2">&ensp;주소</label>
-								&ensp;&ensp;&nbsp;&nbsp;
-								<label id="user_post" class="form-control" style="width: 100px;">user_post</label>
-								<br />
-								<label id="user_addr" class="form-control" >user_addr</label>
+
+						<!-- 주소 -->
+						<div class="mb-3 row">
+							<label for="user_addr" class="col-sm-2 col-form-label">&ensp;주소</label>
+							<div class="col-sm-3">
+								<input type="text" id="user_post" class="form-control" th:value="${addrBean.user_post}" readonly
+									   style="background-color:white;"/>
+							</div>
+							<div class="col-sm-7">
+								<input type="text" id="user_addr" class="form-control" th:value="${addrBean.user_addr}" readonly
+									   style="background-color:white;"/>
 							</div>
 						</div>
-						
-						<div class="mb-3">
-							<div class="d-flex align-items-center">
-								<label for="user_memo">&ensp;메모</label>
-								&ensp;&ensp;&nbsp;&nbsp;
-								<label for="order_memo" id="user_memo" class="form-control">order_memo</label>
+
+						<!-- 메모 -->
+						<div class="mb-3 row">
+							<label for="user_memo" class="col-sm-2 col-form-label">&ensp;메모</label>
+							<div class="col-sm-8">
+								<input type="text" id="user_memo" class="form-control" th:value="${orderBean.order_message}" readonly style="background-color:white;"/>
 							</div>
 						</div>
-						
-					</form>
-				</div>	
+					</div>
 				</div>
 			</div>
 		</div>

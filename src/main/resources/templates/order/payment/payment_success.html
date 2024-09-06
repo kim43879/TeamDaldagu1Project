@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  alert("결제가 완료되었습니다!");
+  window.opener.location.href = "/order/payment/pay_complete?order_idx=" + '[[${order_idx}]]' + "&addr_idx=" + [[${addr_idx}]];
+  window.opener.focus();
+  window.close();
+</script>
+</body>
+</html>
