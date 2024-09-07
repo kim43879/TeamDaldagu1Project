@@ -1,0 +1,73 @@
+/* 기본 CSS 초기화 */
+* {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+}
+
+body, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, address, b, cite, code, dfn, em, img, q, small, strong, sub, sup, ul, ol, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      font-size: 100%;
+      vertical-align: baseline;
+      background: transparent;
+}
+
+/* HTML5 display-role reset */
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+      display: block;
+}
+
+/* Remove list style */
+ul, ol {
+      list-style: none;
+}
+
+/* Set default line-height */
+body {
+      line-height: 1;
+}
+
+/* Remove table borders */
+table {
+        border-collapse: collapse;
+        border-spacing: 0;
+}
+
+/* Reset button */
+button.btn {
+        border: none !important;
+        background-color: transparent !important;
+        color: inherit !important;
+        padding: 0 !important;
+        font-size: inherit !important;
+}
+
+/* 부트스트랩 버튼 유지 */
+.btn, .btn-primary, .btn-outline-primary, .btn-secondary, .btn-outline-secondary, .btn-info, .btn-outline-info, .btn-warning, .btn-outline-warning, .btn-danger, .btn-outline-danger {
+        border: none !important;
+        background-color: transparent !important;
+        color: inherit !important;
+        padding: 0 !important;
+        font-size: inherit !important;
+}
+
+/* 부트스트랩 테이블 스타일 초기화 */
+.table, .table-bordered, .table-striped, .table-hover, .table-sm {
+        border: none !important;
+        border-collapse: collapse !important;
+        border-spacing: 0 !important;
+        width: 100% !important;
+        font-size: inherit !important;
+        background-color: transparent !important;
+}
+
+.table th, .table td {
+        padding: 0 !important;
+        border: none !important;
+        background-color: transparent !important;
+        text-align: inherit !important;
+        vertical-align: middle !important;
+        font-size: inherit !important;
+}
