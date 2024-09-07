@@ -33,6 +33,7 @@ public class GoodsService {
     public void addGoodsInfo(GoodsBean addGoodsBean) {
         goodsMapper.addGoodsInfo(addGoodsBean);
         OptionBean tempOptionBean = new OptionBean();
+        System.out.println(goodsMapper.getGoodsIdx(addGoodsBean.getGoods_img()));
         tempOptionBean.setGoods_idx(goodsMapper.getGoodsIdx(addGoodsBean.getGoods_img()));
         tempOptionBean.setOption_name("기본");
         tempOptionBean.setOption_price(0);

@@ -9,14 +9,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/board")
 @Controller
 public class BoardController {
-    @GetMapping("/board_list")
-    public String boardList() {
-        return "board/board_list";
+    @GetMapping("/notice_normal")
+    public String noticeList() {
+        return "board/notice_normal";
+    }
+
+    @GetMapping("/notice_read")
+    public String noticeRead() {
+        return "board/notice_read";
     }
 
     @ModelAttribute("searchBean")
     public SearchBean getSearchBean() {
         return new SearchBean();
     }
-}
+
+}//class
 

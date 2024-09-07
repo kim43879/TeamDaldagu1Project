@@ -1,83 +1,120 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>관리자</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
         table {
-          width: 100%;
-          border-collapse: collapse;
-          border-width: 1px;
-          border-color: #ddd;
-          border-style: solid;
-          text-align: center;
+            width: 100%;
+            max-width: 100%;
+            border-collapse: collapse;
+            border-width: 1px;
+            border-color: #ddd;
+            border-style: solid;
+            text-align: center;
+        }
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
         }
         th, td {
-          border-width: 1px;
-          border-color: #ddd;
-          border-style: solid;
-          padding: 8px;
-          text-align: center;
+            border-width: 1px;
+            border-color: #ddd;
+            border-style: solid;
+            padding: 8px;
+            text-align: center;
+        }
+        .container {
+            margin-top: 0;
+            margin-left: 200px;
+            padding: 10px;
         }
     </style>
 </head>
 <body>
-<h1>판매자 신청 리스트</h1>
-<table>
-    <thead>
-    <tr>
-        <th>인덱스 번호</th>
-        <th>상품 이름</th>
-        <th>상품 태그</th>
-        <th>상품 가격</th>
-        <th>상품 이미지</th>
-        <th>상품 설명</th>
-        <th>승인/거부</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="info : ${addGoodsInfoList}">
-        <td th:text="${info.info_idx}"></td>
-        <td th:text="${info.goods_name}"></td>
-        <td th:text="${info.goods_tag}"></td>
-        <td th:text="${info.goods_price}"></td>
-        <td>
-            <img th:src="@{/img/goods/{fileName}(fileName=${info.goods_img})}" style="width:200px; height:200px;">
-        </td>
-        <td th:text="${info.goods_info}"></td>
-        <td>
-            <input type="hidden" id="info_idx" th:value="${info.info_idx}">
-            <button onclick="submit()">승인</button>/
-            <button onclick="denial()">거부</button>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<script>
-    function submit() {
-      $.ajax({
-        type: "post",
-        url: "/rest/approve_goods",
-        data:{info_idx: $("#info_idx").val()},
-        success: function(data){
-          alert("승인되었습니다.");
-          location.reload();
-        }
-      });
-    }
 
-    function denial() {
-      $.ajax({
-        type: "post",
-        url: "/rest/denial_goods",
-        data:{info_idx: $("#info_idx").val()},
-        success: function(data){
-          alert("거부되었습니다.");
-          location.reload();
-        }
-      });
-    }
-</script>
+<!--메뉴-->
+<div id="administration">
+    <div th:replace="admin/admin_import/admin_menu.html :: administration-style"></div>
+    <div th:replace="admin/admin_import/admin_menu.html :: administration-head"></div>
+    <div th:replace="admin/admin_import/admin_menu.html :: administration-body"></div>
+</div>
+
+<!--메인-->
+<div class="main">
+    <div>
+        <div class="container">
+            <h3>판매자 상품 등록 리스트</h3>
+            <div class="card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>no.</th>
+                            <th>상품 이름</th>
+                            <th>상품 태그</th>
+                            <th>상품 가격</th>
+                            <th>상품 이미지</th>
+                            <th>상품 설명</th>
+                            <th>승인/거부</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr th:each="info : ${addGoodsInfoList}">
+                            <td th:text="${info.info_idx}"></td>
+                            <td th:text="${info.goods_name}"></td>
+                            <td th:text="${info.goods_tag}"></td>
+                            <td th:text="${info.goods_price}"></td>
+                            <td>
+                                <img th:src="@{'/img/goods/' + ${info.goods_img}}" style="width:200px; height:200px;">
+                            </td>
+                            <td th:text="${info.goods_info}"></td>
+                            <td>
+                                <input type="hidden" id="info_idx" th:value="${info.info_idx}">
+                                <button onclick="submit()">승인</button>/
+                                <button onclick="denial()">거부</button>
+                            </td>
+                        </tr>
+                    </tbody>
+
+                </table>
+
+                <script>
+                    function submit() {
+                        $.ajax({
+                            type: "post",
+                            url: "/rest/approve_goods",
+                            data:{info_idx: $("#info_idx").val()},
+                            success: function(data){
+                                alert("승인되었습니다.");
+                                location.reload();
+                            }
+                        });
+                    }
+
+                    function denial() {
+                        $.ajax({
+                            type: "post",
+                            url: "/rest/denial_goods",
+                            data:{info_idx: $("#info_idx").val()},
+                            success: function(data){
+                                alert("거부되었습니다.");
+                                location.reload();
+                            }
+                        });
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 </body>
 </html>

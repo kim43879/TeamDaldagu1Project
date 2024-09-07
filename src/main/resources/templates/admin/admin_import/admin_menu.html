@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>관리자</title>
+
+    <style th:fragment="administration-style">
+        header {
+            position: relative;
+            background-color: #343a40;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            z-index: 10000;
+        }
+        nav {
+            width: 180px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            margin-top: 88px;
+            background-color: #495057;
+            padding-top: 20px;
+        }
+        nav a {
+            display: block;
+            color: white;
+            padding: 15px;
+            text-decoration: none;
+        }
+        nav a:hover {
+            background-color: #76bcc4;
+            color: white;
+        }
+    </style>
+
+</head>
+<!--헤더-->
+<header th:fragment="administration-head">
+    <h3>관리자 페이지</h3>
+</header>
+
+<!--관리자 사이드 메뉴바-->
+<body th:fragment="administration-body">
+<nav style="text-align: center;">
+    <a href="/admin_page">대시보드</a>
+    <a href="/admin/dev_admin_page">판매자 관리</a>
+    <a href="/admin/dev_admin_goods_page">상품 관리</a>
+    <a href="/admin/notice_admin_list">공지사항</a>
+</nav>
+
+</body>
+</html>

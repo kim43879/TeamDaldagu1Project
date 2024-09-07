@@ -151,7 +151,10 @@ public class UserController {
 
     @GetMapping("/user/user_page")
     public String user_page(Model model){
+
         model.addAttribute("user_name", loginUserBean.getUser_name());
+        model.addAttribute("wishBeanList", wishService.getUserWishList(loginUserBean.getUser_idx()));
+
         return "user/user_page";
     }
 

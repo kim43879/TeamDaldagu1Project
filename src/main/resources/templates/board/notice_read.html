@@ -28,6 +28,9 @@
 		margin-top: 90px;
 		padding-left: 12%;
 	}
+	#board_text{
+		background-color: white;
+	}
 	       
 </style>
 </head>
@@ -39,24 +42,19 @@
 	<div th:replace="page_header/header.html :: header-body"></div>
 </div>
 	
-	<!-- 게시글 확인 -->
-	<div class="container mt-12" id="board_info">
-		<div class="row g-0">
-			<div class="col-md-10">
-			
-			<h6 class="card-title"><b>&ensp;《상담문의》</b></h6>
-				<div class="card">
-					<div class="card-body">
-						<form action="board_list.html" method="post">
-						
+<!-- 게시글 확인 -->
+<div class="container mt-12" id="board_info">
+	<div class="row g-0">
+		<div class="col-md-10">
+
+			<h6 class="card-title"><b>&ensp;《공지사항》</b></h6>
+			<div class="card">
+				<div class="card-body">
+					<form action="notice_normal.html" method="post">
+
 						<div class="form-group">
 							<label for="user_id">이름</label>
-							<input type="text" id="user_id" class="form-control" value="user_name" readonly />
-						</div>
-						
-						<div class="form-group">
-							<label for="user_email">*이메일</label>
-							<input type="text" id="user_email" class="form-control"/>
+							<input type="text" id="user_id" class="form-control" value="관리자" readonly />
 						</div>
 						
 						<div class="form-group">
@@ -66,7 +64,13 @@
 						
 						<div class="form-group">
 							<label for="board_text">*내용</label>
-							<textarea id="board_text" class="form-control" rows="10" style="resize:none"></textarea>
+							<textarea id="board_text" class="form-control" rows="10" style="resize:none" readonly>
+								생명 그건 단지 우연일 뿐, 큰 우주의 아주 작은 사건일 뿐
+								미세한 세포를 복제하는 화학적 유전자 돌연변이
+								그것이 생명의 정체
+
+								생명, 그건 신의 자연섭리. 함부로 다가설 수 없는 세계
+							</textarea>
 						</div>
 						
 						<div class="form-group">
@@ -77,36 +81,22 @@
 								</div>
 							</div>
 						</div>
-						
+
 						<div class="form-group">
 							<div class="text-right">
-								<a href="board_list.html" class="btn btn-outline-warning">뒤로가기</a>
-								<a href="board_list.html" class="btn btn-outline-danger" onclick="delete_board()">삭제하기</a>
-								<button type="submit" class="btn btn-outline-success" onclick="modify()">수정하기</button>
-							
-								<script>
-									function delete_board() {
-										alert("삭제되었습니다.");
-									}
-								
-									function modify() {
-										alert("수정이 완료되었습니다.");
-									}
-								</script>
-							
+								<a href="admin_list.html" class="btn btn-outline-info">뒤로가기</a>
 							</div>
 						</div>
 						
-						</form>
-					</div>
+					</form>
 				</div>
 			</div>
-			
 		</div>
 	</div>
-	<br /><hr />
+</div>
+<br /><hr />
 	
-	<!-- 하단 -->
+<!-- 하단 -->
 <div id="footer">
 	<div th:replace="page_footer/footer.html :: footer-head"></div>
 	<div th:replace="page_footer/footer.html :: footer-body"></div>

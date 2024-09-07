@@ -443,7 +443,7 @@
                 </div>
                 <div class="card-body">
                     <h5 class="card-title" th:text="${goodsBean.goods_name}">goods_name</h5>
-                    <p class="card-text" th:text="${goodsBean.goods_price}">goods_price</p>
+                    <p class="card-text" th:text="${goodsBean.goods_price}+원">goods_price</p>
                     <a th:href="@{/goods/goods_page(goods_idx=${goodsBean.goods_idx})}" class="btn btn-outline-info">상품보기</a>
                 </div>
             </div>

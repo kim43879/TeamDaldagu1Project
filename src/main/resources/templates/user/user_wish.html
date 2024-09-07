@@ -32,7 +32,7 @@
         }
         #card1 {
             width: 100%;
-            margin-top: -990px; margin-left:300px; padding-left: 8%; padding-right: 8%;
+            margin-top: -890px; margin-left:300px; padding-left: 8%; padding-right: 8%;
         }
         .empty-row {
             text-align: center;
@@ -73,21 +73,21 @@
 						</thead>
 
 						<tbody class="table-group-divider">
-							<tr th:each="wish,index : ${wishBeanList}" style="text-align: center;">
-								<th>
+							<tr th:each="wish,index : ${wishBeanList}" style="text-align: center; white-space: nowrap;">
+								<th style="width: 350pxs;">
 									<input type="hidden" th:value="${wish.wish_idx}" th:attr="id='wish_idx' + ${index.index}" />
-									<div class="check" style="width: 150px; display: flex; align-items: center;">
+									<div class="check" style="width: 200px; display: flex; align-items: center; margin-top: auto;">
 										<input type="checkbox" style="margin-left: 10px;" checked/>
 										&emsp;
 										<a th:href="@{/goods/goods_page(goods_idx=${wish.goods_idx})}">
 											<img th:src="@{'/img/goods/' + ${wish.goods_img}}" style="width: 90%;">
 										</a>
-										<h6 th:text="${wish.goods_name}" style="margin-left: 30px;"></h6>
+										<h6 th:text="${wish.goods_name}" style="margin-left: 20px;"></h6>
 									</div>
 								</th>
 
-								<td style="margin-top: auto;" th:text="${wish.goods_price}"></td>
-								<td style="margin-top: auto;">
+								<td style="padding-top: 35px;;" th:text="${wish.goods_price}"></td>
+								<td style="padding-top: 35px;;">
 									<button type="submit" class="btn btn-outline-secondary btn-sm" th:onclick="delete_wish([[${index.index}]])">상품삭제</button>
 								</td>
 							</tr>
@@ -131,8 +131,6 @@
 		</div>
 	</div>
 </div>
-
-<div style="margin-top: 88px;"></div>
 <hr />
 
 <!-- 하단 -->

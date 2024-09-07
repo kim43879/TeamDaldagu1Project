@@ -66,7 +66,7 @@
 
 				<!-- 디자인 수정하기 -->
 				<div class="container admin_container">
-					<h4 class="display-5 fw-normal text-left">상품 판매 내역</h4><hr />
+					<h4 class="display-5 fw-normal text-left">주문처리 현황</h4><hr />
 
 					<div class="row">
 						<div class="card" id="card2">
@@ -83,7 +83,7 @@
 								</thead>
 
 								<tbody style="text-align: center;">
-									<tr th:onclick="location.href='/seller/seller_order_state?goods_idx=' + [[${goods.goods_idx}]]" th:each="goods : ${goodsList}">
+									<tr>
 										<td>
 											<a href="">
 												<img src="../static/img/goods/1724910478950_피어싱(링_7000_알리).JPG" style="width: 90%;">
