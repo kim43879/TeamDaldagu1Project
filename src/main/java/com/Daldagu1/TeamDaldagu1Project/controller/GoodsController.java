@@ -3,10 +3,12 @@ package com.Daldagu1.TeamDaldagu1Project.controller;
 import com.Daldagu1.TeamDaldagu1Project.beans.*;
 import com.Daldagu1.TeamDaldagu1Project.service.GoodsService;
 import com.Daldagu1.TeamDaldagu1Project.service.OptionService;
+import com.Daldagu1.TeamDaldagu1Project.service.ReviewService;
 import com.Daldagu1.TeamDaldagu1Project.service.SellerService;
 import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,16 +30,30 @@ public class GoodsController {
     @Autowired
     OptionService optionService;
 
+    @Autowired
+    ReviewService reviewService;
+
     @Resource(name = "loginUserBean")
-    @Lazy
     private UserBean loginUserBean;
 
     @GetMapping("/goods_page")
-    public String goods_page(@RequestParam("goods_idx") int goods_idx, Model model) {
+    public String goods_page(@RequestParam("goods_idx") int goods_idx,
+                             @RequestParam(value = "page", defaultValue = "1") int page, Model model) {
         GoodsBean tempGoodsBean = goodsService.getPurchaseGoods(goods_idx);
+
+        //상품페이지에 리뷰목록 등록
+        List<ReviewBean> reviewList = reviewService.getReviewList(goods_idx, page);
+        PageBean pageBean = reviewService.getReviewCount(goods_idx, page);
+
         model.addAttribute("goods", tempGoodsBean);
         model.addAttribute("seller_id",sellerService.getSellerId(tempGoodsBean.getSeller_idx()));
         model.addAttribute("goods_list", goodsService.getGoodsListByTag(tempGoodsBean.getGoods_tag()));
+
+
+
+        model.addAttribute("reviewList", reviewList);
+        model.addAttribute("pageBean", pageBean);
+
         model.addAttribute("user_idx", loginUserBean.getUser_idx());
         model.addAttribute("option_list", optionService.getOptionList(goods_idx));
 
@@ -134,7 +150,7 @@ public class GoodsController {
     @PostMapping("/add_goods_pro")
     public String addGoodsPro(@ModelAttribute("addGoodsInfoBean")AddGoodsInfo addGoodsInfo, Model model){
         goodsService.addGoodsInfoApply(addGoodsInfo);
-        return "seller/seller_product_insert";
+        return "redirect:/seller/seller_product_insert";
     }
 
     @ModelAttribute("searchBean")

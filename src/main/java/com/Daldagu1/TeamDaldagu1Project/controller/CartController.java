@@ -45,6 +45,11 @@ public class CartController {
         List<CartBean> cartBeanList = cartService.getCartList(user_idx);
         int totalPrice = cartService.getTotalPrice(user_idx);
 
+        for(CartBean bean : cartBeanList){
+            int goods_idx = bean.getGoods_idx();
+            bean.setSeller_idx(goodsService.getPurchaseGoods(goods_idx).getSeller_idx());
+        }
+        model.addAttribute("loginUserBean", loginUserBean);
         model.addAttribute("cartBeanList", cartBeanList);
         model.addAttribute("totalPrice", totalPrice);
 

@@ -1,17 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>달다구리스</title>
 </head>
 <body>
-<div class="btn-group" role="group" aria-label="Basic outlined example" th:fragment="menu(flag,seller_idx)">
-    <a th:href="@{/seller/seller_page(seller_idx=${seller_idx})}" class="btn" th:classappend="${flag == 1} ? 'btn-secondary' : 'btn-outline-secondary'">MyPage</a>
-    <a th:href="@{/seller/seller_order(seller_idx=${seller_idx})}" class="btn" th:classappend="${flag == 2} ? 'btn-secondary' : 'btn-outline-secondary'">주문 현황</a>
-    <a th:href="@{/seller/seller_regular(seller_idx=${seller_idx})}" class="btn" th:classappend="${flag == 3} ? 'btn-secondary' : 'btn-outline-secondary'">단골 관리</a>
-    <a th:href="@{/seller/seller_product_insert(seller_idx=${seller_idx})}" class="btn" th:classappend="${flag == 4} ? 'btn-secondary' : 'btn-outline-secondary'">상품 등록</a>
-    <a th:href="@{/seller/seller_list(seller_idx=${seller_idx})}" class="btn" th:classappend="${flag == 5} ? 'btn-secondary' : 'btn-outline-secondary'">상품 조회</a>
-    <a href="/seller/seller_blacklist" class="btn" th:classappend="${flag == 6} ? 'btn-secondary' : 'btn-outline-secondary'">블랙리스트</a>
-</div>
+    <div class="btn-group" role="group" aria-label="Basic outlined example" th:fragment="menu(flag,seller_idx)">
+        <a th:href="@{/seller/seller_page(seller_idx=${seller_idx})}" class="btn" th:classappend="${flag == 1} ? 'btn-secondary' : 'btn-outline-secondary'">MyPage</a>
+        <a th:href="@{/seller/seller_product_insert(seller_idx=${seller_idx})}" class="btn" th:classappend="${flag == 4} ? 'btn-secondary' : 'btn-outline-secondary'">상품 등록</a>
+        <a th:href="@{/seller/seller_list(seller_idx=${seller_idx})}" class="btn" th:classappend="${flag == 5} ? 'btn-secondary' : 'btn-outline-secondary'">상품 조회</a>
+        <a th:href="@{/seller/seller_order(seller_idx=${seller_idx})}" class="btn" th:classappend="${flag == 2} ? 'btn-secondary' : 'btn-outline-secondary'">판매 현황</a>
+    </div>
 </body>
 </html>

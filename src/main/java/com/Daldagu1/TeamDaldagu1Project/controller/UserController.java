@@ -2,10 +2,7 @@ package com.Daldagu1.TeamDaldagu1Project.controller;
 
 import com.Daldagu1.TeamDaldagu1Project.beans.*;
 import com.Daldagu1.TeamDaldagu1Project.mapper.UserMapper;
-import com.Daldagu1.TeamDaldagu1Project.service.GoodsService;
-import com.Daldagu1.TeamDaldagu1Project.service.SellerService;
-import com.Daldagu1.TeamDaldagu1Project.service.UserService;
-import com.Daldagu1.TeamDaldagu1Project.service.WishService;
+import com.Daldagu1.TeamDaldagu1Project.service.*;
 import com.Daldagu1.TeamDaldagu1Project.validator.UserValidator;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -45,6 +42,12 @@ public class UserController {
     @Autowired
     SellerService sellerService;
 
+    @Autowired
+    OrderService orderService;
+
+    @Autowired
+    CartService cartService;
+
     @GetMapping("/user/login")
     public String login(Model model, @RequestParam(name = "fail", defaultValue = "false") boolean fail){
         model.addAttribute("userBean", new UserBean());
@@ -60,16 +63,7 @@ public class UserController {
 
         if(tempUserBean != null){
             if(tempUserBean.getUser_pw().equals(userBean.getUser_pw())){
-//                loginUserBean.setUser_idx(tempUserBean.getUser_idx());
-//                loginUserBean.setUser_id(tempUserBean.getUser_id());
-//                loginUserBean.setLoginCheck(true);
-//                loginUserBean.setUser_name(tempUserBean.getUser_name());
-//                loginUserBean.setUser_role(tempUserBean.getUser_role());
-//                loginUserBean.setSeller_idx(tempUserBean.getSeller_idx());
-//                loginUserBean.setUser_profile_img(tempUserBean.getUser_profile_img());
-//                loginUserBean.setUser_profile_text(tempUserBean.getUser_profile_text());
                 loginUserBean.login(tempUserBean);
-
                 return "user/status/login_success";
             }else {
 
@@ -83,7 +77,8 @@ public class UserController {
     @GetMapping("/user/logout")
     public String logout(){
         loginUserBean.clearUserBean();
-        return "/";
+        System.out.println(loginUserBean.getUser_id());
+        return "redirect:/";
     }
 
     @GetMapping("/user/join")
@@ -151,14 +146,20 @@ public class UserController {
 
     @GetMapping("/user/user_page")
     public String user_page(Model model){
-        model.addAttribute("user_name", loginUserBean.getUser_name());
+        List<OrderBean> orderList = orderService.getOrderListByUser(loginUserBean.getUser_idx());
+
+        model.addAttribute("userBean", loginUserBean);
+        model.addAttribute("wishBeanList", wishService.getUserWishList(loginUserBean.getUser_idx()));
+        model.addAttribute("orderList", orderList);
+        model.addAttribute("orderCount", orderList.size());
+        model.addAttribute("cartCount", cartService.getCartCnt(loginUserBean.getUser_idx()));
         return "user/user_page";
     }
 
     //
     @GetMapping("/user/user_order")
-    public String user_order(HttpServletRequest request){
-
+    public String user_order(Model model){
+        model.addAttribute("orderList", orderService.getOrderListByUser(loginUserBean.getUser_idx()));
         return "user/user_order";
     }
 

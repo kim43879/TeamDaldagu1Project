@@ -18,6 +18,12 @@ public interface OrderMapper {
             "values(order_goods_seq.nextval, #{order_goods_num}, #{price}, #{selected_option}, #{goods_idx}, #{order_idx})")
     void addOrderGoods(OrderGoodsBean orderGoodsBean);
 
+    @Select("select * from order_table where seller_idx = #{seller_idx} and order_stat > 1")
+    List<OrderBean> getOrderListBySeller(int seller_idx);
+
+    @Select("select * from order_table where user_idx = #{user_idx} and order_stat > 1")
+    List<OrderBean> getOrderListByUser(int user_idx);
+
     @Select("select o.order_goods_idx as order_goods, " +
             "o.order_goods_num as order_goods_num, " +
             "o.goods_idx as goods_idx, " +

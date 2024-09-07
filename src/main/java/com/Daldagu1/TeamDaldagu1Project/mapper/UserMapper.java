@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
     @Insert("insert into user_table (user_idx, user_id, user_pw, user_name, user_email, user_phone, user_role, user_available, user_daily, membership_idx, user_birth,user_profile_img, user_profile_text)" +
-            "values (user_seq.nextval, #{user_id}, #{user_pw}, #{user_name}, #{user_email}, #{user_phone}, 'D', 'T', 0, 0, #{user_birth}, 'default_profile.png', '메세지가 아직 없습니다.')")
+            "values (user_seq.nextval, #{user_id}, #{user_pw}, #{user_name}, #{user_email}, #{user_phone}, 'D', 'T', 0, 1, #{user_birth}, 'default_profile.png', '메세지가 아직 없습니다.')")
     void addUser(UserBean userBean);
 
     @Select("select user_idx from user_table where user_id=#{user_id}")

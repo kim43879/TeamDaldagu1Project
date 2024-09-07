@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>관리자</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+        }
+        .main {
+            margin-left: 200px;
+            padding: 30px;
+        }
+
+        .dashboard {
+            background-color: white;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .dashboard h4 {
+            margin-top: 0;
+            font-size: 24px;
+            color: #343a40;
+        }
+
+        .card {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 3px;
+        }
+        .card h5 {
+            margin-top: 0;
+            font-size: 15px;
+            color: #495057;
+        }
+        .card p {
+            font-size: 16px;
+            color: #6c757d;
+        }
+
+    </style>
+</head>
+<body>
+
+<!--메뉴-->
+<div id="administration">
+    <div th:replace="admin/admin_import/admin_menu.html :: administration-style"></div>
+    <div th:replace="admin/admin_import/admin_menu.html :: administration-head"></div>
+    <div th:replace="admin/admin_import/admin_menu.html :: administration-body"></div>
+</div>
+
+<!--메인, 대시보드-->
+<div class="main">
+    <div class="dashboard">
+        <h4>대시보드</h4>
+        <div class="card">
+            <h5>사용자 수</h5>
+            <p>현재 총 사용자: 1023명</p>
+        </div>
+
+        <div class="card">
+            <h5>상품 수</h5>
+            <p>현재 총 상품: 432개</p>
+        </div>
+
+        <div class="card">
+            <h5>오늘의 주문</h5>
+            <p>오늘 총 주문: 58건</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

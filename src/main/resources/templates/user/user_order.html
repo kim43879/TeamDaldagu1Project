@@ -33,7 +33,7 @@
 	}
 	#card1 {
 		width: 90%;
-		margin-top: -990px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+		margin-top: -890px; margin-left:250px; padding-left: 20px; padding-right: 20px;
 	}
 	#card2 {
 		width: 90%;
@@ -130,10 +130,8 @@
             </div>
          </div>
       </div>
-
    </div>
-
-   <br />
+   <br /> <br> <br>
    <!-- 상세정보 -->
    <div class="container mt-2 card-wrapper">
       <div class="row">
@@ -150,20 +148,17 @@
                   </thead>
 
                   <tbody class="table-group-divider">
-                     <tr th:each="order : ${testOrderList}">
-                        <th scope="row">3</th>
-                        <td>2023.11.18</td>
-                        <td><a href="../goods/goods_page.html" class="card-link" th:text="${order.goods_name}"></a></td>
-                        <td th:text="${order.goods_price}"></td>
+                     <tr th:each="order,index : ${orderList}">
+                        <th scope="row" th:text="${order.order_idx}">3</th>
+                        <td th:text="${order.order_date}">2023.11.18</td>
+                        <td>
+                           <a th:href="@{/goods/goods_page(goods_idx=${order.goods_idx})}" th:text="${order.goods_name}" class="card-link">루안</a>
+                        </td>
+                        <td th:text="${order.order_price} + '원'">1,212,980</td>
                      </tr>
-
-                     <tr>
-                        <th scope="row">1</th>
-                        <td>2022.01.01</td>
-                        <td><a href="../goods/goods_page.html" class="card-link">뮤지컬 프랑켄슈타인</a></td>
-                        <td>172,000</td>
+                     <tr th:if="${#lists.isEmpty(orderList)}">
+                        <td colspan="3" style="text-align: center;">관심상품이 없습니다.</td>
                      </tr>
-
                   </tbody>
                </table>
                <br />

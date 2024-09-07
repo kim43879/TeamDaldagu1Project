@@ -5,6 +5,7 @@ import com.Daldagu1.TeamDaldagu1Project.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class RestApiController {
@@ -26,6 +27,9 @@ public class RestApiController {
 
     @Autowired
     private CartService cartService;
+
+    @Autowired
+    private  ReviewService reviewService;
 
     @Autowired
     private OptionService optionService;
@@ -188,5 +192,26 @@ public class RestApiController {
     @PostMapping("/rest/order/order_delete")
     public void order_delete(@RequestParam("order_idx") String order_idx){
         orderService.deleteOrder(order_idx);
+    }
+
+    //리뷰등록
+    @PostMapping("/rest/addReview")
+    public void add_review(@RequestParam("review_title") String review_title,
+                           @RequestParam("review_content")String review_content,
+                           @RequestParam("user_id")int user_id,
+                           @RequestParam("review_score") int review_score,
+                           @RequestParam("goods_idx") int goods_idx,
+                           @RequestParam(value = "review_file", required = false) MultipartFile review_file){
+
+        ReviewBean reviewBean = new ReviewBean();
+        reviewBean.setReview_title(review_title);
+        reviewBean.setReview_content(review_content);
+        reviewBean.setReview_score(review_score);
+        reviewBean.setGoods_idx(goods_idx);
+        reviewBean.setUser_idx(user_id);
+        reviewBean.setReview_file(review_file);
+
+        reviewService.addReview(reviewBean);
+
     }
 }//class

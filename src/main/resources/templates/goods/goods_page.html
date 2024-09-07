@@ -29,7 +29,8 @@
         }
         #cardd{
             width: 80%;
-            padding-top: 70px; padding-left: 25px;
+            padding-top: 70px;
+            padding-left: 25px;
         }
         #cardd1{
             padding-left: 50px;
@@ -42,7 +43,8 @@
             height: 200px;
         }
         #img{
-            margin-left: 40px; height: 72%;
+            margin-left: 40px;
+            height: 72%;
         }
         #sample{
             padding-top: 10px;
@@ -57,7 +59,8 @@
         #show_div{
             position: absolute;
             width: 30%;
-            left: 640px; top: 250px;
+            left: 640px;
+            top: 250px;
             border: 1px solid light-gray;
             border-radius: 3px;
             z-index: 10000;
@@ -78,6 +81,37 @@
             max-height: 100%;              /* 이미지가 div를 넘어가지 않도록 설정 */
             object-fit: contain;           /* 이미지 비율을 유지하면서 적절히 맞춤 */
         }
+
+        /*별점*/
+                #reviewScore{
+                    display: flex;
+                    flex-direction: row-reverse;
+                    justify-content: center;
+                }
+                #reviewScore > input{
+                    display:none;
+                }
+                #reviewScore > label {
+                    position: relative;
+                    width: 1.1em;
+                    color: #FFD700;
+                    cursor: pointer;
+                }
+                #reviewScore > label::before{
+                    content: "\2605";
+                    position: absolute;
+                    opacity: 0;
+                }
+                #reviewScore > label:hover:before,
+                #reviewScore > label:hover ~ label:before {
+                    opacity: 1 !important;
+                }
+                #reviewScore > input:checked ~ label:before{
+                    opacity:1;
+                }
+                #reviewScore:hover > input:checked ~ label:before{
+                    opacity: 0.4;
+                }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
@@ -275,11 +309,9 @@
 
                             <button class="btn btn-outline-warning" type="button" onclick="wish_message()">관심상품</button>
                             &ensp;
-                            <button class="btn btn-outline-primary position-relative" type="button" onclick="addToCart()">
-                                장바구니
-                            </button>
+                            <button class="btn btn-outline-primary position-relative" type="button" onclick="addToCart()">장바구니</button>
                             &ensp;
-                            <a class="btn btn-outline-info" onclick="buy()">구매하기</a>
+                            <button type="button" class="btn btn-outline-info" onclick="buy()">구매하기</button>
 
                             <script>
                                 function wish_message() {
@@ -426,14 +458,10 @@
             <p>
                 <img class="resize" th:src="@{'/img/goods/' + ${goods.goods_img2}}" alt=""/>
             </p>
-
-            <!-- goods_text -->
-
             <div>
                 <span th:text="${goods.goods_text}" th:if="${goods.goods_text != null}">내용</span>
                 <span th:if="${goods.goods_text == null}">설명글이 아직 없습니다.</span>
             </div>
-
         </div>
     </div>
 </div>
@@ -442,68 +470,82 @@
 <!-- 상품리뷰 -->
 <div class="container">
     <h6><b>《상품 리뷰》</b></h6>
-    <div class="card mb-12">
+    <div class="card mb-12" style="height: 100%;">
         <div class="row" id="review">
-
             <div class="col-md-8">
                 <div class="card-body" style="text-align: center;">
                     &emsp;<b>등록된 리뷰가 없습니다.</b>
                 </div>
             </div>
-
         </div>
     </div>
     <br/>
 
-    <div class="card mb-12">
+    <div class="card mb-12" style="height: 100%;">
         <div class="row">
-
             <div class="col-md-3" style="width: 5%;">
-                <img th:src="@{/img/sample5.jpg}" id="img" class="img-fluid rounded-start"/>
+                <img th:src="@{/img/sample6.jpg}" id="review_img" class="img-fluid rounded-start"/>
             </div>
-
-            <div class="col-md-8">
+            <div class="col-md-8" style="height:100%;">
                 <div class="card-body">
-                    <h6 class="card-title">user_name</h6>
-                    <span>★★★★★(goods_grade)</span> &nbsp;
-                    <span><small>review_date</small></span>
-                    <hr/>
-                    <p class="card-text text-body-secondary">: review_text</p>
+                    <h6 th:text="${loginUserBean.user_id}" class="card-title">user_name</h6>
+                    <div id="reviewScore">
+                        <input type="radio" name="review_score" value="5" id="rate5">
+                        <label for="rate5">☆</label>
+                        <input type="radio" name="review_score" value="4" id="rate4">
+                        <label for="rate4">☆</label>
+                        <input type="radio" name="review_score" value="3" id="rate3">
+                        <label for="rate3">☆</label>
+                        <input type="radio" name="review_score" value="2" id="rate2">
+                        <label for="rate2">☆</label>
+                        <input type="radio" name="review_score" value="1" id="rate1">
+                        <label for="rate1">☆</label>
+                    </div>
+                    <input type="text" id="review_title" placeholder="리뷰 제목" class="form-control mb-2"/>
+                    <textarea id="review_content" placeholder="리뷰 내용을 입력하세요" class="form-control"></textarea>
+                    <input type="file" id="review_file" style="display: none;" accept="image/*">
+                    <button type="button" class="btn btn-outline-info mt-2" id="imgBtn">사진</button>
+                    <button type="button" class="btn btn-outline-info mt-2" onclick="addReview()">등록</button>
                 </div>
-                <br/>
             </div>
-
         </div>
     </div>
+
+    <!-- 기존 리뷰 반복 -->
+    <div th:each="review : ${reviewList}" class="card mb-12" style="height: 100%;">
+        <div class="row">
+            <div class="col-md-3" style="width: 5%;">
+                <img th:src="@{'/img/upload/' + ${review.review_img}}" id="img" class="img-fluid rounded-start"/>
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h6 class="card-title" th:text="${review.user_id}">user_name</h6>
+                    <span th:text="${review.review_score}">★★★★★</span>
+                    <!--<span><small th:text="${review.review_date}">review_date</small></span>-->
+                    <hr/>
+                    <p class="card-text text-body-secondary" th:text="${review.review_title}">: review_title</p>
+                    <p class="card-text text-body-secondary" th:text="${review.review_content}">: review_text</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <br/>
-
-<!-- 페이지 -->
 <div class="d-none d-md-block">
     <ul class="pagination justify-content-center">
-        <li class="page-item">
-            <a href="#" class="page-link">&laquo;</a>
+        <li class="page-item" th:classappend="${pageBean.currentPage == 1} ? 'disabled'">
+            <a th:href="@{|/goods/goods_page?goods_idx=${goods.goods_idx}&page=${pageBean.prevPage}|}" class="page-link">&laquo;</a>
         </li>
-        <li class="page-item">
-            <a href="#" class="page-link">1</a>
+        <li class="page-item" th:each="i : ${#numbers.sequence(pageBean.min, pageBean.max)}" th:classappend="${pageBean.currentPage == i} ? 'active'">
+            <a th:href="@{|/goods/goods_page?goods_idx=${goods.goods_idx}&page=${i}|}" class="page-link" th:text="${i}"></a>
         </li>
-        <li class="page-item">
-            <a href="#" class="page-link">2</a>
-        </li>
-        <li class="page-item">
-            <a href="#" class="page-link">3</a>
-        </li>
-        <li class="page-item">
-            <a href="#" class="page-link">4</a>
-        </li>
-        <li class="page-item">
-            <a href="#" class="page-link">5</a>
-        </li>
-        <li class="page-item">
-            <a href="#" class="page-link">&raquo;</a>
+        <li class="page-item" th:classappend="${pageBean.currentPage == pageBean.pageCnt} ? 'disabled'">
+            <a th:href="@{|/goods/goods_page?goods_idx=${goods.goods_idx}&page=${pageBean.nextPage}|}" class="page-link">&raquo;</a>
         </li>
     </ul>
 </div>
+
 <br/>
 <hr/>
 
@@ -518,7 +560,7 @@
                 </div>
                 <div class="card-body">
                     <h5 class="card-title" th:text="${goodsBean.goods_name}">goods_name</h5>
-                    <p class="card-text" th:text="${goodsBean.goods_price}">goods_price</p>
+                    <p class="card-text" th:text="${goodsBean.goods_price} + '원'">goods_price</p>
                     <a th:href="@{/goods/goods_page(goods_idx=${goodsBean.goods_idx})}" class="btn btn-outline-info">상품보기</a>
                 </div>
             </div>
@@ -538,6 +580,66 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<script>
+    $("#imgBtn").click(function(){
+        $("#review_file").click();
+    });
+
+    $("#review_file").change(function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                $("#review_img").attr("src", e.target.result);
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    function addReview() {
+        let review_title = $("#review_title").val();
+        let review_content = $("#review_content").val();
+        let review_score = $('input[name="review_score"]:checked').val();
+        let review_file = $("#review_file")[0].files[0];
+        let user_id = [[${loginUserBean.user_idx}]];
+        let goods_idx = [[${goods.goods_idx}]];
+
+        if (!user_id) {
+            alert("로그인 후 리뷰를 작성해주세요.");
+            return;
+        } else if (!review_title || !review_content) {
+            alert("리뷰 제목과 내용을 입력해주세요.");
+            return;
+        }
+
+        let formData = new FormData();
+        formData.append("review_title", review_title);
+        formData.append("review_content", review_content);
+        formData.append("review_score", review_score);
+        formData.append("user_id", user_id);
+        formData.append("goods_idx", goods_idx);
+
+        if (review_file) {
+            formData.append("review_file", review_file);
+        }
+
+        $.ajax({
+            type: "post",
+            url: "/rest/addReview",
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function () {
+                window.location.reload();
+            },
+            error: function (xhr, status, error) {
+                console.error("리뷰 등록 실패:", status, error);
+                alert("리뷰 등록 중 오류가 발생했습니다.");
+            }
+        });
+    }
+</script>
 
 </body>
 </html>

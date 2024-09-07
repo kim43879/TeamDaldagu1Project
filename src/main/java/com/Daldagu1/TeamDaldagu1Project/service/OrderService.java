@@ -26,6 +26,48 @@ public class OrderService {
     }
 
     //주문 리스트
+    public List<OrderBean> getOrderListBySeller(int seller_idx) {
+        List<OrderBean> list = orderMapper.getOrderListBySeller(seller_idx);
+        for (OrderBean orderBean : list){
+            int quantity = 0;
+            int price = 0;
+
+            List<OrderGoodsBean> goodsList = orderMapper.getOrderGoodsList(orderBean.getOrder_idx());
+            orderBean.setSample_img(goodsList.get(0).getImg());
+            for(OrderGoodsBean goodsBean : goodsList){
+                quantity += goodsBean.getOrder_goods_num();
+                price += goodsBean.getPrice();
+            }
+            orderBean.setQuantity(quantity);
+            orderBean.setOrder_price(price);
+            orderBean.setOrder_statText(setOrderStatMessage(orderBean.getOrder_stat()));
+        }
+        return list;
+    }
+
+    public List<OrderBean> getOrderListByUser(int user_idx){
+        List<OrderBean> list = orderMapper.getOrderListByUser(user_idx);
+        for(OrderBean orderBean : list){
+            int quantity = 0;
+            int price = 0;
+
+            List<OrderGoodsBean> goodsList = orderMapper.getOrderGoodsList(orderBean.getOrder_idx());
+            orderBean.setGoods_name(goodsList.get(0).getGoods_name());
+            orderBean.setGoods_idx(goodsList.get(0).getGoods_idx());
+            for(OrderGoodsBean goodsBean : goodsList){
+                quantity += goodsBean.getOrder_goods_num();
+                price += goodsBean.getPrice();
+            }
+            orderBean.setQuantity(quantity);
+            orderBean.setOrder_price(price);
+            orderBean.setOrder_statText(setOrderStatMessage(orderBean.getOrder_stat()));
+
+            System.out.println("OrderIdx : " + orderBean.getOrder_idx());
+        }
+        return list;
+    }
+
+    //주문 물품 리스트
     public List<OrderGoodsBean> getOrderGoodsList(String order_idx) {
         System.out.println(orderMapper.getOrderGoodsList(order_idx).size());
         return orderMapper.getOrderGoodsList(order_idx);
@@ -66,4 +108,33 @@ public class OrderService {
         orderMapper.deleteOrder(order_idx);
     }
 
+    public String setOrderStatMessage(int order_stat){
+        String orderStatText = "";
+        switch(order_stat){
+            case 2:
+                orderStatText = "배송 준비중";
+                break;
+            case 3:
+                orderStatText = "배송 중";
+                break;
+            case 4:
+                orderStatText = "배송 완료";
+                break;
+            case 5:
+                orderStatText = "취소";
+                break;
+            case 6:
+                orderStatText = "교환";
+                break;
+            case 7:
+                orderStatText = "반품";
+                break;
+            case 8:
+                orderStatText = "환불";
+                break;
+            default:
+                orderStatText = "오류";
+        }
+        return orderStatText;
+    }
 }

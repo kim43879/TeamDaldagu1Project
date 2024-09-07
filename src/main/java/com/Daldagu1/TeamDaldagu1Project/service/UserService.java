@@ -72,7 +72,7 @@ public class UserService {
             if (tempLoginUserBean.getUser_role().equals("S")) {
                 tempLoginUserBean.setSeller_idx(userMapper.getSellerIdx(tempLoginUserBean.getUser_idx()));
 
-                int membership_idx = tempLoginUserBean.getUser_membership_idx();
+                int membership_idx = tempLoginUserBean.getMembership_idx();
                 String userMembership = membershipMapper.getMembership(membership_idx);
                 tempLoginUserBean.setMembership(userMembership);
 

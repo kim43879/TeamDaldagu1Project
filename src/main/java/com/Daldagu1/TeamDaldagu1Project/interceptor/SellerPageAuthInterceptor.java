@@ -15,11 +15,17 @@ public class SellerPageAuthInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-
-        if(loginUserBean.getUser_role().equals("D")){
+        boolean flag = false;
+        if(loginUserBean.getUser_role() != null) {
+            if (loginUserBean.getUser_role().equals("D")) {
+                flag = true;
+            }
+        }else{
+            flag = true;
+        }
+        if(flag) {
             response.sendRedirect("/not_seller");
         }
-
         return true;
     }
 }

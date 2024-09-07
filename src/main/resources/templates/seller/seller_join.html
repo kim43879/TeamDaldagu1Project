@@ -32,7 +32,7 @@
 	}
 	#card1 {
 		width: 90%;
-		margin-top: -950px; margin-left:60px; padding-left: 50px;
+		margin-top: -890px; margin-left:60px; padding-left: 50px;
 	}
 	 
 </style>
@@ -40,135 +40,130 @@
 <body>
 
 <!-- 상단메뉴 -->
-<div id="header">
-	<div th:replace="page_header/header.html :: header-head"></div>
-	<div th:replace="page_header/header.html :: header-body"></div>
-</div>
+	<div id="header">
+		<div th:replace="page_header/header.html :: header-head"></div>
+		<div th:replace="page_header/header.html :: header-body"></div>
+	</div>
 
-	<!-- 유저프로필 라인 -->
-<div id="profile">
-	<div th:replace="page_profile/profile.html :: profile-head"></div>
-	<div th:replace="page_profile/profile.html :: profile-body"></div>
-</div>
+		<!-- 유저프로필 라인 -->
+	<div id="profile">
+		<div th:replace="page_profile/profile.html :: profile-head"></div>
+		<div th:replace="page_profile/profile.html :: profile-body"></div>
+	</div>
 
 
 <!-- 판매자 등록 -->
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-3"></div>
-				<div class="col-sm-6">
-					<div class="card-shadow"id="card1">
-						<div class="card-body">
-							<form action="/seller/seller_join_pro" method="post" th:object="${sellerInfoBean}">
-								<input type="hidden" id="user_idx" th:field="*{user_idx}">
-								<div class="form-group">
-									<label for="user_name">이름</label>
-									<input type="text" id="user_name" class="form-control" readonly th:field="*{seller_name}"/>
-								</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-3"></div>
+			<div class="col-sm-6">
+				<div class="card-shadow"id="card1">
+					<div class="card-body">
+						<form action="/seller/seller_join_pro" method="post" th:object="${sellerInfoBean}">
+							<input type="hidden" id="user_idx" th:field="*{user_idx}">
+							<div class="form-group">
+								<label for="user_name">이름</label>
+								<input type="text" id="user_name" class="form-control" readonly th:field="*{seller_name}"/>
+							</div>
 
-								<div class="form-group">
-									<label for="user_name">아이디</label>
-									<input type="text" id="user_id" name="user_id" class="form-control" readonly th:field="*{seller_id}"/>
-								</div>
+							<div class="form-group">
+								<label for="user_name">아이디</label>
+								<input type="text" id="user_id" name="user_id" class="form-control" readonly th:field="*{seller_id}"/>
+							</div>
 
-								<div class="form-group">
-									<label for="user_addr">이메일</label>
-									<input type="email" id="user_addr" name="user_email" class="form-control" readonly th:field="*{seller_email}" />
-								</div>
+							<div class="form-group">
+								<label for="user_addr">이메일</label>
+								<input type="email" id="user_addr" name="user_email" class="form-control" readonly th:field="*{seller_email}" />
+							</div>
 
-								<div class="form-group">
-									<label for="user_phone">연락처</label>
-									<input type="text" id="user_phone" name="user_phone" class="form-control" readonly th:field="*{seller_phone}"/>
-								</div>
+							<div class="form-group">
+								<label for="user_phone">연락처</label>
+								<input type="text" id="user_phone" name="user_phone" class="form-control" readonly th:field="*{seller_phone}"/>
+							</div>
 
-								<div class="form-group">
-									<label for="seller_title" class="mb-0 me-2">*브랜드명</label>
-									<div class="d-flex align-items-center">
+							<div class="form-group">
+								<label for="seller_title" class="mb-0 me-2">*브랜드명</label>
+								<div class="d-flex align-items-center">
 										<input type="text" id="seller_title" th:field="*{seller_page_title}" class="form-control me-2" required/>
-									</div>
 								</div>
+							</div>
 
-								<div class="form-group">
-									<label for="calc_account" class="mb-0 me-2">*정산 계좌번호</label>
-									<div class="d-flex align-items-center">
-										<input type="text" id="calc_account" th:field="*{calc_account}" class="form-control me-2" required/>
-									</div>
+							<div class="form-group">
+								<label for="calc_account" class="mb-0 me-2">*정산 계좌번호</label>
+								<div class="d-flex align-items-center">
+									<input type="text" id="calc_account" th:field="*{calc_account}" class="form-control me-2" required/>
 								</div>
+							</div>
 								
-								<div class="form-group">
-									<label for="goods_tag">*작품 카테고리</label>
-									<input type="text" id="goods_tag" name="goods_tag" class="form-control" required/>
-								</div>
+							<div class="form-group">
+								<label for="goods_tag">*작품 카테고리</label>
+								<input type="text" id="goods_tag" name="goods_tag" class="form-control" required/>
+							</div>
 								
-								<div class="form-group">
-									<label for="goods_img">*작품 이미지</label>
-									<input type="file" id="goods_img" th:field="*{sample_img}" class="form-control" accept="image/*"/>
-								</div>
-								<hr />
+							<div class="form-group">
+								<label for="goods_img">*작품 이미지</label>
+								<input type="file" id="goods_img" th:field="*{sample_img}" class="form-control" accept="image/*"/>
+							</div>
+							<hr />
 								
-								<div class="form-group">
-									<label><b>*브랜드 신규등록 약관</b></label> <br />
-									<label>-개인정보 수집,이용 관련</label> <br />
-									<label style="color:red;">※목적: 서비스 이용 및 본인확인</label> <br />
-									<label style="color:red;">※항목: 입력한 모든 사항</label> <br />
-									<label style="color:red;">※보유기간: 탈퇴 후 즉시</label> <br />
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" required/>
-										<label class="form-check-label" for="flexCheckDefault1">동의합니다.</label>
-									</div> <hr />
-								</div>
+							<div class="form-group">
+								<label><b>*브랜드 신규등록 약관</b></label> <br />
+								<label>-개인정보 수집,이용 관련</label> <br />
+								<label style="color:red;">※목적: 서비스 이용 및 본인확인</label> <br />
+								<label style="color:red;">※항목: 입력한 모든 사항</label> <br />
+								<label style="color:red;">※보유기간: 탈퇴 후 즉시</label> <br />
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault1" required/>
+									<label class="form-check-label" for="flexCheckDefault1">동의합니다.</label>
+								</div> <hr />
+							</div>
 								
-								<div class="form-group">
-									<label><b>*운영정책 약관</b></label> <br />
-									<label>- 입점 후 판매 가능 기준 및 페널티 정책</label> <br />
-									<label style="color:red;">※동일인의 중복 입점을 허용하지 않습니다.</label> <br />
-									<label style="color:red;">※동일 정보의 입점이 확인되는 경우 입점이 반려되거나, 내부 검토 후 일부 계정의 권한이 만료될 수 있습니다.</label> <br />
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2" required/>
-										<label class="form-check-label" for="flexCheckDefault2">동의합니다.</label>
-									</div> <hr />
-								</div>
+							<div class="form-group">
+								<label><b>*운영정책 약관</b></label> <br />
+								<label>- 입점 후 판매 가능 기준 및 페널티 정책</label> <br />
+								<label style="color:red;">※동일인의 중복 입점을 허용하지 않습니다.</label> <br />
+								<label style="color:red;">※동일 정보의 입점이 확인되는 경우 입점이 반려되거나, 내부 검토 후 일부 계정의 권한이 만료될 수 있습니다.</label> <br />
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault2" required/>
+									<label class="form-check-label" for="flexCheckDefault2">동의합니다.</label>
+								</div> <hr />
+							</div>
 								
-								<div class="form-group">
-									<label><strong>*등록 최종 안내</strong></label> <br />
-									<label style="color:red;"><b>※위의 모든 내용을 확인하셨습니까?</b></label>
-										<div class="form-check">
-										<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3" required/>
-										<label class="form-check-label" for="flexCheckDefault3" ><strong>모두 확인했습니다.</strong></label>
-									</div> <hr />					
-								</div>
+							<div class="form-group">
+								<label><strong>*등록 최종 안내</strong></label> <br />
+								<label style="color:red;"><b>※위의 모든 내용을 확인하셨습니까?</b></label>
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" value="" id="flexCheckDefault3" required/>
+									<label class="form-check-label" for="flexCheckDefault3" ><strong>모두 확인했습니다.</strong></label>
+								</div> <hr />
+							</div>
 											
-								<div class="form-group">
-									<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-										<button type="button" class="btn btn-outline-warning me-md-2" onclick="back()">뒤로가기</button> &ensp;
-										<button type="submit" class="btn btn-outline-success" data-bs-toggle="button" onclick="submit()">제출</button>
-										<script>
-											function submit() {
-												alert("심사결과는 영업일 기준 10일 이내 기재하신 연락처로 안내 드립니다.");
-											}
-											function back() {
-                                                location.href="/user/user_page";
-                                            }
-										</script>
-										
-									</div>
+							<div class="form-group">
+								<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+									<button type="button" class="btn btn-outline-warning me-md-2" onclick="back()">뒤로가기</button> &ensp;
+									<button type="submit" class="btn btn-outline-success" data-bs-toggle="button" onclick="submit()">제출</button>
+									<script>
+										function submit() {
+											alert("심사결과는 영업일 기준 10일 이내 기재하신 연락처로 안내 드립니다.");
+										}
+										function back() {
+                                            location.href="/user/user_page";
+                                        }
+									</script>
 								</div>
-								
-							</form>
-						</div>
-						
+							</div>
+						</form>
 					</div>
 				</div>
+			</div>
 				<div class="col-sm-3"></div>
 			</div>
 		</div>
-	<hr />	
-	
+	<hr />
 	<!-- 하단 -->
-<div id="footer">
-	<div th:replace="page_footer/footer.html :: footer-head"></div>
-	<div th:replace="page_footer/footer.html :: footer-body"></div>
-</div>
-	
+	<div id="footer">
+		<div th:replace="page_footer/footer.html :: footer-head"></div>
+		<div th:replace="page_footer/footer.html :: footer-body"></div>
+	</div>
 </body>
 </html>

@@ -1,149 +1,201 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>달다구리스</title>
-<!-- Bootstrap -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-<style>
-	.card-main{
-		margin-top: 88px; 
-		padding-left: 186px; 
-		padding-right: 186px;
-	}
-	.dropdown-menu {
-		display: none;
-		position: absolute;
-		background-color: #f9f9f9;
-		border: 1px solid #ddd;
-	}
-	.dropdown-menu a:hover {
-		background-color: #f1f1f1;
-	}
-	.show {
-		display: block;
-	}
-	.card-profile{
-		margin-top: 88px; padding-left: 50px;
-	}
-	.card-wrapper {
-		margin-top: 20px;
-	}
-	#card1 {
-		width: 100%;
-		margin-top: -990px; margin-left:300px; padding-left: 8%; padding-right: 8%;
-	}
-	.empty-row {
-    	text-align: center;
-    	margin-top: 5px;
-		padding: 20px;
-	}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>달다구리스</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <style>
+        .card-main{
+            margin-top: 88px;
+            padding-left: 186px;
+            padding-right: 186px;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+        .dropdown-menu a:hover {
+            background-color: #f1f1f1;
+        }
+        .show {
+            display: block;
+        }
+        .card-profile{
+            margin-top: 88px; padding-left: 50px;
+        }
+        .card-wrapper {
+            margin-top: 20px;
+        }
+        #card1 {
+            width: 100%;
+            margin-top: -890px; margin-left:300px; padding-left: 8%; padding-right: 8%;
+        }
+        .empty-row {
+            text-align: center;
+            margin-top: 5px;
+            padding: 20px;
+        }
 
-</style>
+    </style>
 </head>
 <body>
 
 <!-- 상단메뉴 -->
 <div id="header">
-	<div th:replace="page_header/header.html :: header-head"></div>
-	<div th:replace="page_header/header.html :: header-body"></div>
+    <div th:replace="page_header/header.html :: header-head"></div>
+    <div th:replace="page_header/header.html :: header-body"></div>
 </div>
-	
+
 <!-- 유저프로필 라인 -->
 <div id="profile">
-	<div th:replace="page_profile/profile.html :: profile-head"></div>
-	<div th:replace="page_profile/profile.html :: profile-body"></div>
+    <div th:replace="page_profile/profile.html :: profile-head"></div>
+    <div th:replace="page_profile/profile.html :: profile-body"></div>
 </div>
 
 <!-- 장바구니 목록 -->
 <div class="container mt-2 card-wrapper">
-	<div class="row">
-		<div class="col-md-8" id="card1">
-			&ensp;《장바구니》
-			<ol class="list-group list-group-numbered" id="cart-list">
-				<div class="card">
-					<table class="table" id="table">
-						<thead>
-							<tr>
-								<th scope="col" style="text-align: center;">상품정보</th>
-								<th scope="col" style="text-align: center;">옵션</th>
-								<th scope="col" style="text-align: center;">수량</th>
-								<th scope="col" style="text-align: center;">금액</th>
-								<th scope="col">&emsp;&emsp;선택</th>
-							</tr>
-						</thead>
+    <div class="row">
+        <div class="col-md-8" id="card1">
+            &ensp;《장바구니》
+            <ol class="list-group list-group-numbered" id="cart-list">
+                <div class="card">
+                    <table class="table" id="table">
+                        <thead>
+                        <tr>
+                            <th scope="col" style="text-align: center;">상품정보</th>
+                            <th scope="col" style="text-align: center;">옵션</th>
+                            <th scope="col" style="text-align: center;">수량</th>
+                            <th scope="col" style="text-align: center;">금액</th>
+                            <th scope="col">&emsp;&emsp;선택</th>
+                        </tr>
+                        </thead>
 
-						<tbody class="table-group-divider">
-							<tr th:each="cart,index : ${cartBeanList}" style="text-align: center;" th:if="${#lists.size(cartBeanList) > 0}">
-								<th scope="row">
-									<input type="hidden" th:value="${cart.cart_idx}" th:attr="id='cart_idx' + ${index.index}" />
-									<div class="check" style="padding-top: 20px;">
-										<input type="checkbox" style="margin-left: 10px;" checked/>
-										&emsp;
-										<a th:href="@{/goods/goods_page(goods_idx=${cart.goods_idx})}" style="margin-left: 20px;" th:text="${cart.goods_name}"></a>
-									</div>
-								</th>
+                        <tbody class="table-group-divider">
+                        <tr th:each="cart,index : ${cartBeanList}" style="text-align: center;"
+                            th:if="${#lists.size(cartBeanList) > 0}">
+                            <th scope="row">
+                                <input type="hidden" th:value="${cart.cart_idx}"
+                                       th:attr="id='cart_idx' + ${index.index}"/>
+                                <div class="check" style="padding-top: 20px;">
+                                    <input type="checkbox" style="margin-left: 10px;" checked/>
+                                    &emsp;
+                                    <a th:href="@{/goods/goods_page(goods_idx=${cart.goods_idx})}"
+                                       style="margin-left: 20px;" th:text="${cart.goods_name}"></a>
+                                </div>
+                            </th>
 
-								<td style="padding-top: 35px;" th:text="${cart.selected_option}"></td>
-								<td style="padding-top: 35px;" th:text="${cart.goods_quantity}"></td>
-								<td style="padding-top: 35px;" th:text="${cart.cart_price}"></td>
-								<td style="padding-top: 20px;">
-									<a href="/goods/goods_buy" class="btn btn-outline-info btn-sm">상품주문</a> <br />
+                            <td style="padding-top: 35px;" th:text="${cart.selected_option}"></td>
+                            <td style="padding-top: 35px;" th:text="${cart.goods_quantity}"></td>
+                            <td style="padding-top: 35px;" th:text="${cart.cart_price}"></td>
+                            <td style="padding-top: 20px;">
+                                <button th:onclick="buy_cart([[${cart.seller_idx}]])" class="btn btn-outline-info btn-sm">상품주문</button>
+                                <br/>
 
-									<button type="submit" class="btn btn-outline-secondary btn-sm" th:onclick="remove_cart([[${index.index}]])">상품삭제</button>
-								</td>
-							</tr>
+                                <button type="submit" class="btn btn-outline-secondary btn-sm"
+                                        th:onclick="remove_cart([[${index.index}]])">상품삭제
+                                </button>
+                            </td>
+                        </tr>
 
-							<tr id="no-cart-message" style="display: none;">
-								<td colspan="5" class="empty-row"><b>장바구니가 비었습니다.</b></td>
-							</tr>
+                        <tr id="no-cart-message" style="display: none;">
+                            <td colspan="5" class="empty-row"><b>장바구니가 비었습니다.</b></td>
+                        </tr>
 
-						</tbody>
+                        </tbody>
 
-						<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-						<script th:inline="javascript">
-							function remove_cart(num) {
-								console.log(num);
-								let idx = $("#cart_idx" + num).val();
+                        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                        <script th:inline="javascript">
+                            function remove_cart(num) {
+                                console.log(num);
+                                let idx = $("#cart_idx" + num).val();
 
-								$.ajax({
-									url: '/rest/remove_cart',
-									type: 'POST',
-									data: { cart_idx: idx },
-									success: function(response) {
-										alert("선택하신 상품이 삭제되었습니다.");
-										$("#cart_idx" + num).closest("tr").remove();
+                                $.ajax({
+                                    url: '/rest/remove_cart',
+                                    type: 'POST',
+                                    data: { cart_idx: idx },
+                                    success: function(response) {
+                                        alert("선택하신 상품이 삭제되었습니다.");
+                                        $("#cart_idx" + num).closest("tr").remove();
 
-										checkIfNoCart();
-									}
-								});
-							}
+                                        checkIfNoCart();
+                                    }
+                                });
+                            }
 
-							function checkIfNoCart(){
-								const cartListBody = $("#table tbody tr:not(#no-cart-message)");
-								if (cartListBody.length === 0) {
-									$("#no-cart-message").show();
-								} else {
-									$("#no-cart-message").hide();
-								}
-							}
-						</script>
+                            function checkIfNoCart(){
+                                const cartListBody = $("#table tbody tr:not(#no-cart-message)");
+                                if (cartListBody.length === 0) {
+                                    $("#no-cart-message").show();
+                                } else {
+                                    $("#no-cart-message").hide();
+                                }
+                            }
 
-					</table>
-				</div>
-			</ol>
-		</div>
-	</div>
+                            function buy_cart(sellerIdx) {
+                                let items = [[${cartBeanList}]];
+                                let result = confirm("주문하시겠습니까?");
+                                let userIdx = [[loginUserBean.user_idx]];
+                                console.log(userIdx);
+                                if(result){
+                                      $.ajax({
+                                           url: "/rest/add_order",
+                                           type: "post",
+                                           data: {
+                                                "user_idx": userIdx,
+                                                "seller_idx": sellerIdx
+                                           },
+                                           success: function(response) {
+                                               console.log("주문추가 성공");
+                                               orderIdx = response;
+                                               items.forEach(function() {
+                                                    let itemQuantity = item.goods_quantity;
+                                                    let price = item.cart_price;
+
+                                                    $.ajax({
+                                                        url: "/rest/add_order_goods",
+                                                        type: "post",
+                                                        data: {
+                                                            "goods_idx": item.goods_idx,
+                                                            "goods_quantity": itemQuantity,
+                                                            "selected_option": item.selected_option,
+                                                            "result_price": (price * itemQuantity),
+                                                            "order_idx" : orderIdx
+                                                        },
+                                                        success: function() {
+                                                            console.log("성공");
+                                                        },
+                                                        error: function(error) {
+                                                            console.log(error);
+                                                            alert("오류");
+                                                        }
+                                                    });
+                                               })
+                                                   location.href="/order/goods_buy?order_idx=" + orderIdx + "&user_idx=" + [[loginUserBean.user_idx]];
+                                           }
+                                      })
+                                }else{
+                                    alert("주문을 취소합니다..");
+                                }
+                            }
+                        </script>
+                    </table>
+                </div>
+            </ol>
+        </div>
+    </div>
 </div>
 
 <div class="d" style="margin-top: 88px;"></div>
-<hr />
+<hr/>
 
 <!-- 하단 -->
 <div id="footer">
-	<div th:replace="page_footer/footer.html :: footer-head"></div>
-	<div th:replace="page_footer/footer.html :: footer-body"></div>
+    <div th:replace="page_footer/footer.html :: footer-head"></div>
+    <div th:replace="page_footer/footer.html :: footer-body"></div>
 </div>
 </body>
 </html>

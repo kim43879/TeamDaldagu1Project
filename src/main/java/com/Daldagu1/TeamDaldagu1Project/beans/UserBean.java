@@ -37,7 +37,7 @@ public class UserBean {
     private String user_role;       //일반유저 = D, 판매자유저 = S
     private String user_available;
     private int user_daily;
-    private int user_membership_idx;
+    private int membership_idx;
     @NotBlank(message = "생년월일은 필수 입력사항입니다.")
     private String user_birth;
 
@@ -89,7 +89,7 @@ public class UserBean {
         this.user_profile_text = "";
         this.seller_idx = 0;
         this.user_daily = 0;
-        this.user_membership_idx = 0;
+        this.membership_idx = 0;
         this.user_role = null;
         this.user_idx = 0;
         this.membership = null;
@@ -108,9 +108,19 @@ public class UserBean {
         this.user_role = tempUserBean.getUser_role();
         this.user_idx = tempUserBean.getUser_idx();
         this.seller_idx = tempUserBean.getSeller_idx();
-        this.user_membership_idx = tempUserBean.getUser_membership_idx();
+        this.membership_idx = tempUserBean.getMembership_idx();
         this.user_daily = tempUserBean.getUser_daily();
-        this.membership = tempUserBean.getMembership();
+        switch (tempUserBean.getMembership_idx()){
+            case 1: this.membership = "Bronze";
+                    break;
+            case 2: this.membership = "Silver";
+                    break;
+            case 3: this.membership = "Gold";
+                    break;
+            case 4: this.membership = "Platinum";
+                    break;
+            default: this.membership = "UnMembers";
+        }
     }
 
 

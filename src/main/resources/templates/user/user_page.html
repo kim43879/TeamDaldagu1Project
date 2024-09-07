@@ -32,19 +32,15 @@
 	}
 	#card1{
 		width: 90%;
-		margin-top: -990px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+		margin-top: -890px; margin-left:250px; padding-left: 20px; padding-right: 20px;
 	}
 	#card2 {
 		width: 90%;
-		margin-top: -750px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+		margin-top: -665px; margin-left:250px; padding-left: 20px; padding-right: 20px;
 	}
 	#card3 {
 		width: 90%;
-		margin-top: -480px; margin-left:250px; padding-left: 20px; padding-right: 20px;
-	}
-	#card4{
-		width: 90%;
-		margin-top: -210px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+		margin-top: -400px; margin-left:250px; padding-left: 20px; padding-right: 20px;
 	}
 	a {
 		color: #343434;
@@ -82,7 +78,7 @@
                            <div class="card-body">
                               <h6>&nbsp;주문배송&nbsp;</h6>
                               <hr />
-                              <a href="/user/user_order" class="card-link">7</a>
+                              <a href="/user/user_order" th:text="${orderCount}" class="card-link">7</a>
                            </div>
                         </div>
                      </div>
@@ -93,7 +89,7 @@
                            <div class="card-body">
                               <h6>&nbsp;장바구니&nbsp;</h6>
                               <hr />
-                              <a href="/user/user_cart" class="card-link">0</a>
+                              <a th:href="@{/user/user_cart(user_idx=${loginUserBean.user_idx})}" th:text="${cartCount}" class="card-link">0</a>
                            </div>
                         </div>
                      </div>
@@ -130,7 +126,6 @@
                            </div>
                         </div>
                      </div>
-                     
                   </div>
                </div>
             </div>
@@ -140,7 +135,7 @@
    </div>
 
 
-	<!-- 정보1 -->
+	<!-- 주문정보 -->
 	<div class="container mt-2 card-wrapper">
 		<div class="row">
 			<div class="col-md-10">
@@ -156,29 +151,22 @@
 					</thead>
 					
 					<tbody class="table-group-divider">
-						<tr>
-							<th scope="row">3</th>
-							<td>2023.11.18</td>
-							<td><a href="/goods/goods_page"  class="card-link">루안</a></td>
-							<td>1,212,980</td>
+						<tr th:each="order,index : ${orderList}" th:if="${index.index < 3}">
+							<th scope="row" th:text="${order.order_idx}">3</th>
+							<td th:text="${order.order_date}">2023.11.18</td>
+							<td>
+								<a th:href="@{/goods/goods_page(goods_idx=${order.goods_idx})}" th:text="${order.goods_name}" class="card-link">루안</a>
+							</td>
+							<td th:text="${order.order_price} + '원'">1,212,980</td>
 						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>2023.04.20</td>
-							<td><a href="/goods/goods_page"  class="card-link">희사</a></td>
-							<td>358,000</td>
-						</tr>
-						<tr>
-							<th scope="row">1</th>
-							<td>2023.03.10</td>
-							<td><a href="/goods/goods_page"  class="card-link">카이엔</a></td>
-							<td>163,000</td>
+						<tr th:if="${#lists.isEmpty(orderList)}">
+							<td colspan="3" style="text-align: center;">관심상품이 없습니다.</td>
 						</tr>
 					</tbody>
 				</table>
 				
 					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-						<a href="user_order.html" class="btn btn-outline-info" role="button" data-bs-toggle="button" aria-pressed="true">더보기</a>
+						<a href="/user/user_order" class="btn btn-outline-info" role="button" data-bs-toggle="button" aria-pressed="true">더보기</a>
 					</div>
 					
 				</div>
@@ -186,7 +174,7 @@
 		</div>
 	</div>
 	
-	<!-- 정보2 -->
+	<!-- 관심상품 -->
 	<div class="container mt-2 card-wrapper">
 		<div class="row">
 			<div class="col-md-10" >
@@ -194,84 +182,29 @@
 				<table class="table">
 					<thead>
 						<tr>
-							<th>최근 등록글</th>
-							<th scope="col">작성일</th>
-							<th scope="col">작성자</th>
-	 						<th scope="col">제목</th>
-						</tr>
-					</thead>
-					
-					<tbody class="table-group-divider">
-						<tr>
-							<th scope="row">3</th>
-							<td>2024.08.08</td>
-							<td>전동석</td>
-							<td><a href="/board/board_list" class="card-link">이제는 후회해도</a></td>
-						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>2024.08.08</td>
-							<td>전동석</td>
-							<td><a href="/board/board_list" class="card-link">되돌릴 수가 없어</a></td>
-						</tr>
-						<tr>
-							<th scope="row">1</th>
-							<td>2024.08.08</td>
-							<td>전동석</td>
-							<td><a href="/board/board_list" class="card-link">용서받지 못할</a></td>
-						</tr>
-					</tbody>
-				</table>
-				
-					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-						<a href="user_board.html" class="btn btn-outline-info" role="button" data-bs-toggle="button" aria-pressed="true">더보기</a>
-					</div>
-					
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<!-- 정보3 -->
-	<div class="container mt-2 card-wrapper">
-		<div class="row">
-			<div class="col-md-10" >
-				<div class="card" id="card4">
-				<table class="table">
-					<thead>
-						<tr>
 							<th>관심 상품 정보</th>
-							<th scope="col">등록일</th>
-							<th scope="col">상품명</th>
-	 						<th scope="col">금액</th>
+							<th style="width:200px;">상품명</th>
+	 						<th style="width:300px;" scope="col">금액</th>
 						</tr>
 					</thead>
 					
 					<tbody class="table-group-divider">
-						<tr>
-							<th scope="row">3</th>
-							<td>2024.08.08</td>
-							<td><a href="/goods/goods_page" class="card-link">뮤지컬 프랑켄슈타인</a></td>
-							<td>172,000</td>
+						<tr th:each="wish,index : ${wishBeanList}" th:if="${index.index < 3}">
+							<input type="hidden" th:value="${wish.wish_idx}" th:attr="id='wish_idx' + ${index.index}" />
+							<td th:text="${wish.wish_idx}"></td>
+							<td>
+								<a th:href="@{/goods/goods_page(goods_idx=${wish.goods_idx})}" th:text="${wish.goods_name}" class="card-link"></a>
+							</td>
+							<td th:text="${wish.goods_price}"></td>
 						</tr>
-						<tr>
-							<th scope="row">2</th>
-							<td>2024.08.08</td>
-							<td><a href="/goods/goods_page" class="card-link">뮤지컬 프랑켄슈타인</a></td>
-							<td>172,000</td>
+						<tr th:if="${#lists.isEmpty(wishBeanList)}">
+							<td colspan="3" style="text-align: center;">관심상품이 없습니다.</td>
 						</tr>
-						<tr>
-							<th scope="row">1</th>
-							<td>2024.08.08</td>
-							<td><a href="/goods/goods_page" class="card-link">뮤지컬 프랑켄슈타인</a></td>
-							<td>172,000</td>
-						</tr>
-						
 					</tbody>
 				</table>
 				
 				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-					<a href="user_wish.html" class="btn btn-outline-info" role="button" data-bs-toggle="button" aria-pressed="true">더보기</a>
+					<a th:href="@{/user/user_wish}" class="btn btn-outline-info" role="button" data-bs-toggle="button" aria-pressed="true">더보기</a>
 				</div>
 			
 				</div>

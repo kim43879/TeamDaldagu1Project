@@ -2,11 +2,13 @@ package com.Daldagu1.TeamDaldagu1Project.controller;
 
 import com.Daldagu1.TeamDaldagu1Project.beans.*;
 import com.Daldagu1.TeamDaldagu1Project.service.GoodsService;
+import com.Daldagu1.TeamDaldagu1Project.service.OrderService;
 import com.Daldagu1.TeamDaldagu1Project.service.SellerService;
 import com.Daldagu1.TeamDaldagu1Project.service.UserService;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +28,9 @@ public class SellerController {
 
     @Autowired
     private GoodsService goodsService;
+
+    @Autowired
+    private OrderService orderService;
 
     @GetMapping("/seller_join")
     public String sellerJoinForm(Model model){
@@ -71,6 +76,7 @@ public class SellerController {
     @GetMapping("/seller_order")
     public String sellerOrder(Model model){
         model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(loginUserBean.getSeller_idx()));
+        model.addAttribute("orderList", orderService.getOrderListBySeller(loginUserBean.getSeller_idx()));
         return "seller/seller_order";
     }
 
@@ -80,11 +86,6 @@ public class SellerController {
         model.addAttribute("goodsList", goodsService.getMyGoodsList(loginUserBean.getSeller_idx()));
         return "seller/seller_list";
     }
-    @GetMapping("/seller_regular")
-    public String sellerReview(Model model){
-        model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(loginUserBean.getSeller_idx()));
-        return "seller/seller_regular";
-    }
 
     @GetMapping("/seller_product_read")
     public String sellerProductRead(@RequestParam("goods_idx") int goods_idx, Model model){
@@ -92,6 +93,7 @@ public class SellerController {
         model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(loginUserBean.getSeller_idx()));
         return "seller/seller_product_read";
     }
+
     @GetMapping("/seller_product_delete")
     public String sellerProductDelete(){
         return "seller/seller_product_delete";

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>달다구리스</title>
+<!-- Bootstrap -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<style>
+	.card-main{
+		margin-top: 88px; 
+		padding-left: 186px; 
+		padding-right: 186px;
+	}
+	.dropdown-menu {
+		display: none;
+		position: absolute;
+		background-color: #f9f9f9;
+		border: 1px solid #ddd;
+	}
+	.dropdown-menu a:hover {
+		background-color: #f1f1f1;
+	}
+	.show {
+		display: block;
+	}
+	#board_info{
+		margin-top: 90px;
+		padding-left: 12%;
+	}
+	#board_text{
+		background-color: white;
+	}
+	       
+</style>
+</head>
+<body>
+
+<!-- 상단메뉴 -->
+<div id="header">
+	<div th:replace="page_header/header.html :: header-head"></div>
+	<div th:replace="page_header/header.html :: header-body"></div>
+</div>
+	
+<!-- 게시글 확인 -->
+<div class="container mt-12" id="board_info">
+	<div class="row g-0">
+		<div class="col-md-10">
+
+			<h6 class="card-title"><b>&ensp;《공지사항》</b></h6>
+			<div class="card">
+				<div class="card-body">
+					<form action="notice_normal.html" method="post">
+
+						<div class="form-group">
+							<label for="user_id">이름</label>
+							<input type="text" id="user_id" class="form-control" value="관리자" readonly />
+						</div>
+						
+						<div class="form-group">
+							<label for="board_title">*제목</label>
+							<input type="text" id="board_title" class="form-control"/>
+						</div>
+						
+						<div class="form-group">
+							<label for="board_text">*내용</label>
+							<textarea id="board_text" class="form-control" rows="10" style="resize:none" readonly>
+								생명 그건 단지 우연일 뿐, 큰 우주의 아주 작은 사건일 뿐
+								미세한 세포를 복제하는 화학적 유전자 돌연변이
+								그것이 생명의 정체
+
+								생명, 그건 신의 자연섭리. 함부로 다가설 수 없는 세계
+							</textarea>
+						</div>
+						
+						<div class="form-group">
+							<label for="board_file">첨부 이미지</label>
+							<div class="card">
+									<div class="card-body">
+									<img th:src="@{/img/sample5.jpg}" width="100%" id="board_file"/> <br />
+								</div>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="text-right">
+								<a href="/admin/notice_modify" class="btn btn-outline-warning">뒤로가기</a>
+								&nbsp;
+								<button type="submit" class="btn btn-outline-success" onclick="message()">수정하기</button>
+
+								<script>
+									function message() {
+										alert("수정이 완료되었습니다.");
+									}
+								</script>
+
+							</div>
+						</div>
+						
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<br /><hr />
+	
+<!-- 하단 -->
+<div id="footer">
+	<div th:replace="page_footer/footer.html :: footer-head"></div>
+	<div th:replace="page_footer/footer.html :: footer-body"></div>
+</div>
+	
+</body>
+</html>

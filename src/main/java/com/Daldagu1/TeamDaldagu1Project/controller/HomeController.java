@@ -40,6 +40,12 @@ public class HomeController {
         return "main";
     }
 
+    //관리자 메인
+    @GetMapping("/admin_page")
+    public String admin_home(){
+        return "admin_page";
+    }
+
     @GetMapping("/not_login")
     public String logout(HttpServletRequest request){
 
