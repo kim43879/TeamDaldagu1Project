@@ -223,6 +223,11 @@ public class UserController {
         return "user/user_pay";
     }
 
+    @GetMapping("/user/user_point")
+    public String user_point(){
+        return "user/user_point";
+    }
+
     @ModelAttribute("searchBean")
     public SearchBean getSearchBean() {
         return new SearchBean();

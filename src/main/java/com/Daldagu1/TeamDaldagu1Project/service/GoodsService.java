@@ -106,6 +106,15 @@ public class GoodsService {
         return goodsMapper.searchGoodsList(searchBean,rowBounds);
     }
 
+    public void updateGoodsInfo(GoodsBean updateGoodsBean){
+        if(updateGoodsBean.getGoods_img2() == null){
+            updateGoodsBean.setGoods_img2(goodsMapper.getPurchaseGoods(updateGoodsBean.getGoods_idx()).getGoods_img2());
+        }else{
+            updateGoodsBean.setGoods_img2(saveApplyGoodsInfo(updateGoodsBean.getPage_img()));
+        }
+        goodsMapper.updateGoodsInfo(updateGoodsBean);
+    }
+
     public AddGoodsInfo getAddGoodsInfo(int info_idx){
         return goodsMapper.getAddGoodsByIdx(info_idx);
     }

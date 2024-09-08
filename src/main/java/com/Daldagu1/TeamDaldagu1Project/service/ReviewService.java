@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.util.List;
 
+@PropertySource("classpath:imgPath.properties")
 @Service
 public class ReviewService {
 
@@ -25,14 +26,15 @@ public class ReviewService {
     //@Value("#{page.paginationCnt}")
     private int paginationcnt = 10;
 
-    private String path_upload = "D:/soldesk/SpringBoot/TeamDaldagu1Project/src/main/resources/static/img/upload";
+    @Value("${imgPath}")
+    private String path_upload;
 
     private String saveUploadFile(MultipartFile upload_file) {
 
         String file_name = System.currentTimeMillis() + "_" + upload_file.getOriginalFilename();
 
         try {
-            upload_file.transferTo(new File(path_upload + "/" + file_name));
+            upload_file.transferTo(new File(path_upload + "/upload/" + file_name));
         } catch (Exception e) {
             e.printStackTrace();
         }

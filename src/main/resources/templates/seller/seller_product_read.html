@@ -80,12 +80,12 @@
 						<div class="row">
 						 <div class="col-md-7 col-lg-8 text-center" style="margin:0 auto;">
 							<div class="form-group productInfo text-left" >
-								<form action="/goods/goods_update" method="post" th:object="${goodsBean}">
+								<form action="/goods/goods_update" method="post" th:object="${goodsBean}" enctype="multipart/form-data">
 									<div class="row g-3">
 										<input type="hidden" id="goods_idx" th:field="*{goods_idx}">
 										<div class="form-group hidden-xs" id="fileDrop">
 											<label for="goods_img">상점 이미지 변경.</label> <br>
-											<input type="file" id="goods_img" th:field="*{goods_img2}">
+											<input type="file" id="goods_img" th:field="*{page_img}">
 										</div>
 										<div class="col-sm-6">
 											<label for="goods_name">상품명</label>

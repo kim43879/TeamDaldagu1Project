@@ -3,10 +3,7 @@ package com.Daldagu1.TeamDaldagu1Project.mapper;
 import com.Daldagu1.TeamDaldagu1Project.beans.AddGoodsInfo;
 import com.Daldagu1.TeamDaldagu1Project.beans.GoodsBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.SearchBean;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
@@ -59,6 +56,11 @@ public interface GoodsMapper {
 
     @Select("select count(*) from goods_table where seller_idx = #{seller_idx}")
     int goodsCountBySellerIdx(int seller_idx);
+
+    @Update("update goods_table " +
+            "set goods_img2 = #{goods_img2}, goods_name = #{goods_name}, goods_price = #{goods_price}, goods_stock = #{goods_stock}, goods_text = #{goods_text} " +
+            "where goods_idx = #{goods_idx}")
+    void updateGoodsInfo(GoodsBean updateGoodsBean);
 
     @Delete("delete from add_goods_info_table where info_idx = #{info_idx}")
     void deleteAddGoods(int info_idx);

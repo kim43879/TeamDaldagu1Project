@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>달다구리스</title>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
         .card-main{
         margin-top: 88px;
@@ -82,7 +82,7 @@
 
     <div class="image-container" style="border-color: Gray;">
         <img th:src="@{'/img/user_profile/' + ${loginUserBean.user_profile_img}}" class="card-img-top" id="img" style="width:240px; height:240px;">
-        <button class="btn btn-outline-info hidden-button" id="change-image-btn" style="width:100%;">이미지 변경</button>
+        <button type="button" class="btn btn-outline-info hidden-button" id="change-image-btn" style="width:100%;">이미지 변경</button>
         <input type="file" id="image-input" style="display: none;" accept="image/*">
 
         <script>

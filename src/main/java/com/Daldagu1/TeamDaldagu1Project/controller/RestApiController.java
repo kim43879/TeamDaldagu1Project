@@ -158,6 +158,9 @@ public class RestApiController {
     public String add_order(@RequestParam("user_idx") int user_idx, @RequestParam("seller_idx") int seller_idx){
         int addr_idx = addrService.getMainAddrIdx(user_idx);
 
+        System.out.println(user_idx);
+        System.out.println(seller_idx);
+
         String order_idx = orderService.getOrder_idx();
         OrderBean tempOrderBean = new OrderBean();
         tempOrderBean.setOrder_idx(order_idx);

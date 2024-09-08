@@ -9,7 +9,9 @@ import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
@@ -18,12 +20,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@PropertySource("classpath:imgPath.properties")
 @Service
 public class UserService {
     private static final Logger log = LoggerFactory.getLogger(UserService.class);
 
     @Resource(name = "loginUserBean")
     private UserBean loginUserBean;
+
+    @Value("${imgPath}")
+    private String ImgPath;
 
     @Autowired
     private UserMapper userMapper;
@@ -96,6 +102,7 @@ public class UserService {
         userMapper.modifyUser(modifyUserBean);
 
     }
+    
 
 }
 

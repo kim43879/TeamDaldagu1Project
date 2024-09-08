@@ -92,7 +92,7 @@
                             <td style="padding-top: 35px;" th:text="${cart.goods_quantity}"></td>
                             <td style="padding-top: 35px;" th:text="${cart.cart_price}"></td>
                             <td style="padding-top: 20px;">
-                                <button th:onclick="buy_cart([[${cart.seller_idx}]])" class="btn btn-outline-info btn-sm">상품주문</button>
+                                <button th:onclick="buy_cart([[${cart}]], [[${index.index}]])" class="btn btn-outline-info btn-sm">상품주문</button>
                                 <br/>
 
                                 <button type="submit" class="btn btn-outline-secondary btn-sm"
@@ -135,46 +135,45 @@
                                 }
                             }
 
-                            function buy_cart(sellerIdx) {
-                                let items = [[${cartBeanList}]];
+                            function buy_cart(item,num) {
+
                                 let result = confirm("주문하시겠습니까?");
-                                let userIdx = [[loginUserBean.user_idx]];
-                                console.log(userIdx);
+                                let userIdx = [[${loginUserBean.user_idx}]];
                                 if(result){
                                       $.ajax({
                                            url: "/rest/add_order",
                                            type: "post",
                                            data: {
                                                 "user_idx": userIdx,
-                                                "seller_idx": sellerIdx
+                                                "seller_idx": item.seller_idx
                                            },
                                            success: function(response) {
                                                console.log("주문추가 성공");
                                                orderIdx = response;
-                                               items.forEach(function() {
-                                                    let itemQuantity = item.goods_quantity;
-                                                    let price = item.cart_price;
 
-                                                    $.ajax({
-                                                        url: "/rest/add_order_goods",
-                                                        type: "post",
-                                                        data: {
-                                                            "goods_idx": item.goods_idx,
-                                                            "goods_quantity": itemQuantity,
-                                                            "selected_option": item.selected_option,
-                                                            "result_price": (price * itemQuantity),
-                                                            "order_idx" : orderIdx
-                                                        },
-                                                        success: function() {
-                                                            console.log("성공");
-                                                        },
-                                                        error: function(error) {
-                                                            console.log(error);
-                                                            alert("오류");
-                                                        }
-                                                    });
+                                                let itemQuantity = item.goods_quantity;
+                                                let price = item.cart_price;
+
+                                                $.ajax({
+                                                    url: "/rest/add_order_goods",
+                                                    type: "post",
+                                                    data: {
+                                                        "goods_idx": item.goods_idx,
+                                                        "goods_quantity": itemQuantity,
+                                                        "selected_option": item.selected_option,
+                                                        "result_price": (price * itemQuantity),
+                                                        "order_idx" : orderIdx
+                                                    },
+                                                    success: function() {
+                                                        console.log("성공");
+                                                    },
+                                                    error: function(error) {
+                                                        console.log(error);
+                                                        alert("오류");
+                                                    }
                                                })
-                                                   location.href="/order/goods_buy?order_idx=" + orderIdx + "&user_idx=" + [[loginUserBean.user_idx]];
+                                                   remove_cart(num);
+                                                   location.href="/order/goods_buy?order_idx=" + orderIdx + "&user_idx=" + [[${loginUserBean.user_idx}]];
                                            }
                                       })
                                 }else{

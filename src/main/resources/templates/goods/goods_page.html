@@ -172,7 +172,7 @@
                     <hr/>
                     <h6 th:text="'상품코드: ' + ${goods.goods_idx}" style="display: none;">상품코드: goods_idx</h6>
                     <h6>금액: <strong th:text="${goods.goods_price}">goods_price</strong></h6>
-                    <h6>적립금: point</h6>
+                    <h6 id="point">적립금: 0원</h6>
                     <hr/>
 
                     <!-- 제품 옵션 -->
@@ -287,6 +287,7 @@
                                 function countProduction(){
                                     const numberList = document.querySelectorAll(".productNumber");  // .productNumber 클래스를 가진 모든 요소 선택
                                     let currentNumber = 0;  // currentNumber 초기화
+                                    let membershipPoint = (totalPrice / 100) * [[${point}]];
 
                                     // numberList를 반복하는 forEach문
                                     numberList.forEach(function(number) {
@@ -296,6 +297,7 @@
 
                                     // 결과 출력
                                     $("#item-num").text("("+ currentNumber +"개)");
+                                    $("#point").text("적립금: " + membershipPoint + "원");
                                     itemNum = currentNumber;
                                     console.log(itemNum);
                                     console.log(totalPrice);

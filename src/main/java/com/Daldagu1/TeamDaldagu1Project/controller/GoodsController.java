@@ -1,18 +1,11 @@
 package com.Daldagu1.TeamDaldagu1Project.controller;
 
 import com.Daldagu1.TeamDaldagu1Project.beans.*;
-import com.Daldagu1.TeamDaldagu1Project.service.GoodsService;
-import com.Daldagu1.TeamDaldagu1Project.service.OptionService;
-import com.Daldagu1.TeamDaldagu1Project.service.ReviewService;
-import com.Daldagu1.TeamDaldagu1Project.service.SellerService;
+import com.Daldagu1.TeamDaldagu1Project.service.*;
 import jakarta.annotation.Resource;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +25,9 @@ public class GoodsController {
 
     @Autowired
     ReviewService reviewService;
+
+    @Autowired
+    MembershipService membershipService;
 
     @Resource(name = "loginUserBean")
     private UserBean loginUserBean;
@@ -56,6 +52,8 @@ public class GoodsController {
 
         model.addAttribute("user_idx", loginUserBean.getUser_idx());
         model.addAttribute("option_list", optionService.getOptionList(goods_idx));
+
+        model.addAttribute("point", loginUserBean.getMembership_idx());
 
         return "goods/goods_page";
     }
@@ -151,6 +149,12 @@ public class GoodsController {
     public String addGoodsPro(@ModelAttribute("addGoodsInfoBean")AddGoodsInfo addGoodsInfo, Model model){
         goodsService.addGoodsInfoApply(addGoodsInfo);
         return "redirect:/seller/seller_product_insert";
+    }
+
+    @PostMapping("/goods_update")
+    public String goodsUpdate(@ModelAttribute("updateGoodsBean") GoodsBean updateGoodsBean, Model model){
+        goodsService.updateGoodsInfo(updateGoodsBean);
+        return "redirect:/seller/seller_page";
     }
 
     @ModelAttribute("searchBean")
