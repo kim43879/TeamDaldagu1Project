@@ -92,7 +92,7 @@
 											<img th:src="@{'/img/goods/' + ${order.sample_img}}" style="width:100px; height:100px">
 										</td>
 										<td colspan="2" style="text-align: center;">
-											<a href="#" th:text="${order.order_idx}"></a>
+											<a th:href="@{/seller/order_read(order_idx = ${order.order_idx})}" th:text="${order.order_idx}"></a>
 										</td>
 										<td th:text="${order.quantity} + '개'"></td>
 										<td th:text="${order.order_price} + '원'"></td>

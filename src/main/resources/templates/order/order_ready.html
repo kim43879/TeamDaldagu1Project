@@ -95,20 +95,27 @@
 	<div class="card" id="tab3">
 		<table class="table">
 			<thead>
-				<tr>
-					<th> 주문일자<br>[주문번호]</th>
-					<th>상품정보</th>
-					<th>수량</th>
-					<th>상품구매금액</th>
-					<th>주문처리상태</th>
-					<th>취소/교환/반품</th>
-				</tr>
+			<tr>
+				<th> 주문일자<br>[주문번호]</th>
+				<th>상품정보</th>
+				<th>수량</th>
+				<th>상품구매금액</th>
+			</tr>
 			</thead>
 
 			<tbody>
-				<tr>
-					<td colspan="6" class="empty-row">주문 내역이 없습니다.</td>
-				</tr>
+			<tr th:each="order : ${orderList}">
+				<td>
+					<span th:text="${order.order_date}"></span><br>
+					<a th:href="@{/user/order_read(order_idx = ${order.order_idx})}" th:text="${order.order_idx}"></a>
+				</td>
+				<td th:text="${order.goods_name}"></td>
+				<td th:text="${order.quantity}"></td>
+				<td th:text="${order.order_price}"></td>
+			</tr>
+			<tr th:if="${#lists.isEmpty(orderList)}">
+				<td colspan="6" class="empty-row">주문 내역이 없습니다.</td>
+			</tr>
 			</tbody>
 
 		</table>

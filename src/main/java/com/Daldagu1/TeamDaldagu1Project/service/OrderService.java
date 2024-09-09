@@ -5,6 +5,7 @@ import com.Daldagu1.TeamDaldagu1Project.beans.OrderGoodsBean;
 import com.Daldagu1.TeamDaldagu1Project.mapper.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -73,6 +74,28 @@ public class OrderService {
         return orderMapper.getOrderGoodsList(order_idx);
     }
 
+    public List<OrderBean> getOrderListByOrderStat(int user_idx, int order_stat){
+        List<OrderBean> list = orderMapper.getOrderListByOrderStat(user_idx, order_stat);
+        for(OrderBean orderBean : list){
+            int quantity = 0;
+            int price = 0;
+
+            List<OrderGoodsBean> goodsList = orderMapper.getOrderGoodsList(orderBean.getOrder_idx());
+            orderBean.setGoods_name(goodsList.get(0).getGoods_name());
+            orderBean.setGoods_idx(goodsList.get(0).getGoods_idx());
+            for(OrderGoodsBean goodsBean : goodsList){
+                quantity += goodsBean.getOrder_goods_num();
+                price += goodsBean.getPrice();
+            }
+            orderBean.setQuantity(quantity);
+            orderBean.setOrder_price(price);
+            orderBean.setOrder_statText(setOrderStatMessage(orderBean.getOrder_stat()));
+
+            System.out.println("OrderIdx : " + orderBean.getOrder_idx());
+        }
+        return list;
+    }
+
     public String getOrder_idx(){
         LocalDate now = LocalDate.now();
         String uuid = UUID.randomUUID().toString();
@@ -101,6 +124,10 @@ public class OrderService {
 
     public void setOrderMessage(String message, String order_idx){
         orderMapper.setOrderMessage(message, order_idx);
+    }
+
+    public int getOrderCount(int order_stat, int user_idx){
+        return orderMapper.getOrderCount(order_stat, user_idx);
     }
 
     public void deleteOrder(String order_idx){
@@ -136,5 +163,11 @@ public class OrderService {
                 orderStatText = "오류";
         }
         return orderStatText;
+    }
+
+    public void nextOrderProcess(String order_idx){
+        int currentProcess = orderMapper.getOrderStat(order_idx);
+        currentProcess += 1;
+        orderMapper.nextOrderProcess(currentProcess, order_idx);
     }
 }

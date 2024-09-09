@@ -76,7 +76,7 @@
                            <div class="card-body">
                               <h6>&emsp;<b>입금전</b>&emsp;</h6>
                               <hr />
-                              <a href="/order/order_before_check" class="card-link">0</a>
+                              <a href="/order/order_before_check" class="card-link" th:text="${order_before_pay_cnt}">0</a>
                            </div>
                         </div>
                      </div>
@@ -87,7 +87,7 @@
                            <div class="card-body">
                               <h6><b>배송준비중</b></h6>
                               <hr />
-                              <a href="/order/order_ready" class="card-link">2</a>
+                              <a href="/order/order_ready" class="card-link" th:text="${order_ready_cnt}">2</a>
                            </div>
                         </div>
                      </div>
@@ -98,7 +98,7 @@
                            <div class="card-body">
                               <h6>&emsp;<b>배송중</b>&emsp;</h6>
                               <hr />
-                              <a href="/order/order_delivering" class="card-link">1</a>
+                              <a href="/order/order_delivering" class="card-link" th:text="${order_going_cnt}">1</a>
                            </div>
                         </div>
                      </div>
@@ -109,7 +109,7 @@
                            <div class="card-body">
                               <h6>&nbsp;<b>배송완료</b>&nbsp;</h6>
                               <hr />
-                              <a href="/order/order_finished" class="card-link">5</a>
+                              <a href="/order/order_finished" class="card-link" th:text="${order_complete_cnt}">5</a>
                            </div>
                         </div>
                      </div>

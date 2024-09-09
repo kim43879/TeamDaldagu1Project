@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>달다구리스</title>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+  <style>
+    .card-main{
+        margin-top: 88px;
+        padding-left: 186px;
+        padding-right: 186px;
+    }
+    .dropdown-menu {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+    }
+    .dropdown-menu a:hover {
+        background-color: #f1f1f1;
+    }
+    #dropdownMenu1 {
+        width: 10%;
+    }
+    #dropdownMenu2 {
+        width: 10%;
+    }
+    .show {
+        display: block;
+    }
+    #cardd{
+        width: 80%;
+        padding-top: 70px; padding-left: 50px;
+    }
+    #cardd1{
+        padding-left: 50px;
+    }
+    #card1{
+        margin-top: -80px;
+        margin-bottom: 10px;
+    }
+    #sample{
+        padding-top: 10px;
+    }
+    .resize{
+        width: 35%;
+        height: auto;
+    }
+    #text{
+        text-align: center;
+    }
+    #order_message{
+        text-align: center;
+        width: 800px;
+        margin-top: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        padding-left: 4%;
+        padding-right: 4%;
+    }
+    #pay_info{
+        margin: 0 auto;
+        margin-top: 50px;
+        padding-left: 12%;
+    }
+    #order_info{
+        margin: 0 auto;
+        padding-left: 12%;
+    }
+    #addr_info{
+        margin: 0 auto;
+        padding-left: 12%;
+    }
+    .form-control{
+        width: 300px;
+    }
+
+  </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+
+<!-- 상단메뉴 -->
+<div id="header">
+  <div th:replace="page_header/header.html :: header-head"></div>
+  <div th:replace="page_header/header.html :: header-body"></div>
+</div>
+
+<br /><hr />
+
+<!-- 상품구매 정보 -->
+<div class="container mt-12" id="pay_info">
+  <div class="row g-0">
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-header"><strong>&ensp;주문 리스트</strong></div>
+        <div class="card-body">
+          <table class="table">
+            <tr>
+              <th>주문정보</th>
+              <th scope="col">제품명</th>
+              <th scope="col">수량</th>
+              <th scope="col">금액</th>
+            </tr>
+
+            <tr th:each="item : ${goodsList}">
+              <th scope="row">
+                <img th:src="@{'/img/goods/' + ${item.img}}" style="width:100px; height:100px;">
+              </th>
+              <td>
+                <a th:href="@{/goods/goods_page(goods_idx=${item.goods_idx})}"
+                   th:text="${item.goods_name}">goods_name</a><br>
+                <span th:text="${item.selected_option}"></span>
+              </td>
+              <td th:text="${item.order_goods_num}  + '개'">goods_amount</td>
+              <td class="item-price" th:text="${item.price} + '원'">goods_price</td>
+            </tr>
+
+          </table>
+          <hr />
+          <h6 th:text="'금액합계 : ' + ${amount}" style="float: left">&ensp;*옵션: goods_option</h6>
+          <button th:onclick="orderProcess([[${orderBean.order_idx}]])" style="float: right">주문 단계 진행</button>
+        </div>
+
+      </div>
+      <br />
+
+    </div>
+  </div>
+</div> <br />
+
+<!-- 배송지 정보 -->
+<div class="container" id="addr_info">
+  <div class="row">
+    <div class="col-md-10">
+      <div class="card">
+        <div class="card-body">
+          <div class="mb-4">
+            <h6 class="fw-bold">&emsp;배송지 정보</h6>
+            <hr/>
+          </div>
+          <!-- 이름 -->
+          <div class="mb-3 row">
+            <label for="addr_name" class="col-sm-2 col-form-label">&ensp;이름</label>
+            <div class="col-sm-10">
+              <input type="text" id="addr_name" class="form-control" th:value="${addrBean.addr_name}" readonly
+                     style="background-color:white;"/>
+            </div>
+          </div>
+
+          <!-- 연락처 -->
+          <div class="mb-3 row">
+            <label for="addr_phone" class="col-sm-2 col-form-label">&ensp;연락처</label>
+            <div class="col-sm-10">
+              <input type="text" id="addr_phone" class="form-control" th:value="${addrBean.addr_phone}" readonly
+                     style="background-color:white;"/>
+            </div>
+          </div>
+
+          <!-- 주소 -->
+          <div class="mb-3 row">
+            <label for="user_addr" class="col-sm-2 col-form-label">&ensp;주소</label>
+            <div class="col-sm-3">
+              <input type="text" id="user_post" class="form-control" th:value="${addrBean.user_post}" readonly
+                     style="background-color:white;"/>
+            </div>
+            <div class="col-sm-7">
+              <input type="text" id="user_addr" class="form-control" th:value="${addrBean.user_addr}" readonly
+                     style="background-color:white;"/>
+            </div>
+          </div>
+
+          <!-- 메모 -->
+          <div class="mb-3 row">
+            <label for="user_memo" class="col-sm-2 col-form-label">&ensp;메모</label>
+            <div class="col-sm-8">
+              <input type="text" id="user_memo" class="form-control" th:value="${orderBean.order_message}" readonly style="background-color:white;"/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> <br />
+
+<div class="text-center">
+  <a href="/user/user_order" type="button" class="btn btn-outline-success">주문현황</a> &ensp;
+  <a href="/" type="button" class="btn btn-outline-info">메인으로</a>
+</div> &nbsp;
+<hr />
+
+<script th:inline="javascript">
+  function orderProcess(orderIdx){
+    $.ajax({
+      url: '/rest/next_order_process',
+      type: 'POST',
+      data: {order_idx : orderIdx},
+      success: function() {
+        alert('주문이 다음단계로 넘어갔습니다.');
+        window.reload();
+      }
+    });
+  }
+</script>
+
+<!-- 하단 -->
+<div id="footer">
+  <div th:replace="page_footer/footer.html :: footer-head"></div>
+  <div th:replace="page_footer/footer.html :: footer-body"></div>
+</div>
+
+<!-- Bootstrap JS, Popper.js, jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>

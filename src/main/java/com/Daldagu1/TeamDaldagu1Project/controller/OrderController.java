@@ -56,22 +56,27 @@ public class OrderController {
 
     //주문처리 페이지 전환
     @GetMapping("/order_ready")
-    public String order_ready() {
+    public String order_ready(Model model) {
+        model.addAttribute("orderList", orderService.getOrderListByOrderStat(loginUserBean.getUser_idx(), 2));
         return "order/order_ready";
     }
 
     @GetMapping("/order_before_check")
-    public String order_before_check() {
+    public String order_before_check(Model model) {
+        model.addAttribute("orderList", orderService.getOrderListByOrderStat(loginUserBean.getUser_idx(),1));
+        model.addAttribute("loginUserBean", loginUserBean);
         return "order/order_before_check";
     }
 
     @GetMapping("/order_delivering")
-    public String order_delivering() {
+    public String order_delivering(Model model) {
+        model.addAttribute("orderList", orderService.getOrderListByOrderStat(loginUserBean.getUser_idx(), 3));
         return "order/order_delivering";
     }
 
     @GetMapping("/order_finished")
-    public String order_finished() {
+    public String order_finished(Model model) {
+        model.addAttribute("orderList", orderService.getOrderListByOrderStat(loginUserBean.getUser_idx(), 4));
         return "order/order_finished";
     }
 

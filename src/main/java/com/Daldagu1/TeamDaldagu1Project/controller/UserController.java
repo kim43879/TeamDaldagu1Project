@@ -160,6 +160,10 @@ public class UserController {
     @GetMapping("/user/user_order")
     public String user_order(Model model){
         model.addAttribute("orderList", orderService.getOrderListByUser(loginUserBean.getUser_idx()));
+        model.addAttribute("order_before_pay_cnt", orderService.getOrderCount(1, loginUserBean.getUser_idx()));
+        model.addAttribute("order_ready_cnt", orderService.getOrderCount(2, loginUserBean.getUser_idx()));
+        model.addAttribute("order_going_cnt", orderService.getOrderCount(3, loginUserBean.getUser_idx()));
+        model.addAttribute("order_complete_cnt",orderService.getOrderCount(4, loginUserBean.getUser_idx()));
         return "user/user_order";
     }
 

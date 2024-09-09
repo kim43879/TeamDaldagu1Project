@@ -100,9 +100,10 @@
                     reader.readAsDataURL(file);
                 }
             });
+
         </script>
     </div>
-
+    <input type="file">
     <div class="card-body">
         <h5 class="card-title" th:text="${loginUserBean.user_id}"></h5>
         <p class="card-text" th:text="${loginUserBean.user_profile_text}">동쑦이 15주년 데뷔축하링~</p>
@@ -116,10 +117,6 @@
         <h6 style="border: thin;"><b>주문관리</b></h6>
         <a href="/user/user_order" class="card-link">주문/배송 내역</a> <br/><br/>
 
-        <h6 style="border: thin;"><b>나의 알림</b></h6>
-        <a href="#" class="card-link">알림</a> <br/>
-        <a href="#" class="card-link">메시지</a> <br/>
-        <a href="/board/board_list" class="card-link">게시글</a> <br/><br/>
 
         <h6 style="border: thin;"><b>구매상품</b></h6>
         <a href="/user/user_review" class="card-link">리뷰작성</a> <br/><br/>

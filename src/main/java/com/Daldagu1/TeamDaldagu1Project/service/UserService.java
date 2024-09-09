@@ -98,9 +98,7 @@ public class UserService {
 
     }
     public void modifyUser(UserBean modifyUserBean){
-
         userMapper.modifyUser(modifyUserBean);
-
     }
     
 

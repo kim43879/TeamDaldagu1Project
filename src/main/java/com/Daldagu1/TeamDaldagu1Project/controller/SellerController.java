@@ -1,10 +1,7 @@
 package com.Daldagu1.TeamDaldagu1Project.controller;
 
 import com.Daldagu1.TeamDaldagu1Project.beans.*;
-import com.Daldagu1.TeamDaldagu1Project.service.GoodsService;
-import com.Daldagu1.TeamDaldagu1Project.service.OrderService;
-import com.Daldagu1.TeamDaldagu1Project.service.SellerService;
-import com.Daldagu1.TeamDaldagu1Project.service.UserService;
+import com.Daldagu1.TeamDaldagu1Project.service.*;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -12,6 +9,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller()
 @RequestMapping("/seller")
@@ -31,6 +30,9 @@ public class SellerController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private AddrService addrService;
 
     @GetMapping("/seller_join")
     public String sellerJoinForm(Model model){
@@ -78,6 +80,22 @@ public class SellerController {
         model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(loginUserBean.getSeller_idx()));
         model.addAttribute("orderList", orderService.getOrderListBySeller(loginUserBean.getSeller_idx()));
         return "seller/seller_order";
+    }
+
+    @GetMapping("/order_read")
+    public String sellerOrderRead(@RequestParam("order_idx") String order_idx, Model model){
+        OrderBean orderBean = orderService.getOrder(order_idx);
+        List<OrderGoodsBean> list = orderService.getOrderGoodsList(order_idx);
+        int amount = 0;
+        for(OrderGoodsBean bean : list){
+            amount += bean.getPrice();
+        }
+
+        model.addAttribute("orderBean", orderBean);
+        model.addAttribute("goodsList", list);
+        model.addAttribute("addrBean", addrService.getAddrByAddrIdx(orderBean.getAddr_idx()));
+        model.addAttribute("amount", amount);
+        return "seller/order_read";
     }
 
     @GetMapping("/seller_list")

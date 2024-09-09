@@ -18,11 +18,14 @@ public interface OrderMapper {
             "values(order_goods_seq.nextval, #{order_goods_num}, #{price}, #{selected_option}, #{goods_idx}, #{order_idx})")
     void addOrderGoods(OrderGoodsBean orderGoodsBean);
 
-    @Select("select * from order_table where seller_idx = #{seller_idx} and order_stat > 1")
+    @Select("select * from order_table where seller_idx = #{seller_idx} and order_stat > 1 order by order_date desc")
     List<OrderBean> getOrderListBySeller(int seller_idx);
 
     @Select("select * from order_table where user_idx = #{user_idx} and order_stat > 1")
     List<OrderBean> getOrderListByUser(int user_idx);
+
+    @Select("select * from order_table where user_idx = #{user_idx} and ORDER_STAT = #{order_stat}")
+    List<OrderBean> getOrderListByOrderStat(@Param("user_idx") int user_idx, @Param("order_stat") int order_stat);
 
     @Select("select o.order_goods_idx as order_goods, " +
             "o.order_goods_num as order_goods_num, " +
@@ -39,6 +42,15 @@ public interface OrderMapper {
             "from order_table " +
             "where order_idx=#{order_idx}")
     OrderBean getOrder(String order_idx);
+
+    @Select("select count(*) from order_table where ORDER_STAT = #{order_stat} and user_idx = #{user_idx}")
+    int getOrderCount(@Param("order_stat") int order_stat, @Param("user_idx") int user_idx);
+
+    @Select("select order_stat from order_table where order_idx = #{order_idx}")
+    int getOrderStat(String order_idx);
+
+    @Update("update order_table set order_stat = #{order_stat} where order_idx = #{order_idx}")
+    void nextOrderProcess(@Param("order_stat") int order_stat, @Param("order_idx") String order_idx);
 
     @Update("update order_table set order_date = sysdate, order_stat = 2 where order_idx = #{order_idx}")
     void orderPaymentSuccess(String order_idx);

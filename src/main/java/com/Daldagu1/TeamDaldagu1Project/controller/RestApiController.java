@@ -217,4 +217,9 @@ public class RestApiController {
         reviewService.addReview(reviewBean);
 
     }
+
+    @PostMapping("rest/next_order_process")
+    public void next_order_process(@RequestParam("order_idx") String order_idx){
+        orderService.nextOrderProcess(order_idx);
+    }
 }//class
