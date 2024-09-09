@@ -104,46 +104,6 @@ public class UserController {
         return "user/status/join_success";
     }
 
-    @PostMapping("/user/modify")
-    public String modify(@RequestParam("user_pw") String user_pw, Model model){
-        System.out.println(user_pw);
-        UserBean modifyUserBean = userService.getModifyUser(user_pw);
-
-        if(modifyUserBean != null){
-            //modifyUserBean.setUser_addr1("주소1");
-            modifyUserBean.setId_check("체크");
-            model.addAttribute("modifyUserBean", modifyUserBean);
-            return "user/user_info2";
-        }else{
-
-            model.addAttribute("fail", "fail");
-            return "user/user_info";
-        }
-    }
-
-    @PostMapping("/user/modify_pro")
-    public String modify_pro(@Valid @ModelAttribute("modifyUserBean") UserBean modifyUserBean, BindingResult result, Model model){
-
-        System.out.println(modifyUserBean.getUser_pw());
-        System.out.println(modifyUserBean.getUser_pw2());
-        System.out.println(modifyUserBean.getUser_addr1());
-        System.out.println(modifyUserBean.getUser_addr2());
-
-        if(result.hasErrors()){
-
-            for (FieldError error : result.getFieldErrors()) {
-                System.out.println("Field: " + error.getField() + ", Error: " + error.getDefaultMessage());
-            }
-            //model.addAttribute("modifyUserBean", modifyUserBean);
-
-            return "user/user_info2";
-        }else {
-            System.out.println("수정완료");
-            userService.modifyUser(modifyUserBean);
-            return "user/status/modify_success";
-        }
-    }
-
     @GetMapping("/user/user_page")
     public String user_page(Model model){
         List<OrderBean> orderList = orderService.getOrderListByUser(loginUserBean.getUser_idx());
@@ -217,11 +177,6 @@ public class UserController {
         return "user/user_wish";
     }
 
-    @GetMapping("/user/user_info")
-    public String user_info(){
-        return "user/user_info";
-    }
-
     @GetMapping("/user/user_pay")
     public String user_pay(){
         return "user/user_pay";
@@ -237,9 +192,89 @@ public class UserController {
         return new SearchBean();
     }
 
-    @InitBinder("modifyUserBean")
-    public void initBinder(WebDataBinder binder) {
-        UserValidator uservalidator = new UserValidator();
-        binder.addValidators(uservalidator);
+    @GetMapping("/user/user_info")
+    public String user_info() {
+        return "user/user_info";
+    }
+
+    ///////////// - 문태일 수정
+    //user_modify , user_modify_pro , initBinder 삭제
+
+    // - 문태일 수정
+    @PostMapping("/user/user_info_pro")
+    public String user_info_pro(HttpServletRequest request, Model model) {
+
+        String user_pw = request.getParameter("user_pw");
+        ;
+        System.out.println(user_pw);
+
+        if (userService.checkPassword(user_pw)) {
+
+            //UserBean modifyUserBean = userService.getModifyUserInfo(modifyUserBean);
+            UserBean modifyUserBean = userService.getModifyUserBean();
+            if (modifyUserBean != null) {
+                System.out.println("유저 이름 : " + modifyUserBean.getUser_name());
+            } else {
+                System.out.println("null");
+            }
+
+            model.addAttribute("modifyUserBean", modifyUserBean);
+            System.out.println(modifyUserBean.getUser_name());
+
+            return "user/user_modify";
+        } else {
+            System.out.println("너 실패했어.");
+            return "user/status/user_info_fail";
+        }
+    }
+    // - 문태일 수정
+    @GetMapping("/user/user_modify")
+    private String user_modify(@ModelAttribute("modifyUserBean") UserBean modifyUserBean) { //수정된 회원의 값 주입
+
+        userService.getModifyUserInfo(modifyUserBean);
+
+        return "user/user_modify";
+    }
+    // - 문태일 수정
+    @PostMapping("/user/update_password")
+    public String updatePassword(@RequestParam("user_pw") String userPw,
+                                 @RequestParam("user_pw2") String userPw2, UserBean modifyUserBean, Model model) {
+        if (userPw == null || userPw2 == null || userPw.isEmpty() || !userPw.equals(userPw2)) {
+            return "user/status/user_modify_fail_pw";
+        }
+        // 비밀번호 길이 검사
+        if (userPw.length() < 8 || userPw.length() > 20 ||
+                !userPw.matches(".*[A-Z].*") || !userPw.matches(".*\\d.*") ||
+                !userPw.matches(".*[~!@#$%^&*()+|=].*")) {
+            return "user/status/user_modify_fail_pw";
+        }
+
+        userService.modifyPassword(loginUserBean.getUser_idx(), userPw);
+        return "user/status/user_modify_success";
+    }
+    // - 문태일 수정
+    @PostMapping("/user/update_email")
+    public String updateEmail(@RequestParam("user_email") String userEmail, UserBean modifyUserBean, Model model) {
+        if (userEmail == null || userEmail.trim().isEmpty() ||
+                !userEmail.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            return "user/status/user_modify_fail_email";
+        }
+
+        userService.modifyEmail(loginUserBean.getUser_idx(), userEmail);
+        return "user/status/user_modify_success";
+    }
+    // - 문태일 수정
+    @PostMapping("/user/update_phone")
+    public String updatePhone(@RequestParam("user_phone") String userPhone, UserBean modifyUserBean, Model model) {
+        if (userPhone == null || userPhone.trim().isEmpty()) {
+            return "user/status/user_modify_fail_phone";
+        }
+        if (userPhone.length() < 9 || userPhone.length() > 12 ||
+                !userPhone.matches(".*[0-9].*")) {
+            return "user/status/user_modify_fail_phone";
+
+        }
+        userService.modifyPhone(loginUserBean.getUser_idx(), userPhone);
+        return "user/status/user_modify_success";
     }
 }

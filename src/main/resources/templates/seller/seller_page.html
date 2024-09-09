@@ -79,6 +79,40 @@ a {
 	color: #343434;
 	text-decoration: none;
 }
+
+#orders::-webkit-scrollbar{
+    display: none;
+}
+
+#reviewScore{
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center;
+}
+#reviewScore > input{
+    display:none;
+}
+#reviewScore > label {
+    position: relative;
+    width: 1.1em;
+    color: #FFD700;
+    cursor: pointer;
+}
+#reviewScore > label::before{
+    content: "\2605";
+    position: absolute;
+    opacity: 0;
+}
+#reviewScore > label:hover:before,
+#reviewScore > label:hover ~ label:before {
+    opacity: 1 !important;
+}
+#reviewScore > input:checked ~ label:before{
+    opacity:1;
+}
+#reviewScore:hover > input:checked ~ label:before{
+    opacity: 0.4;
+}
 </style>
 </head>
 <body>
@@ -119,7 +153,6 @@ a {
 
 							<div class="card-body">
                                 <h5 class="card-title pricing-card-title" th:text="${goodsCount}">3</h5>
-                                <a th:href="@{/goods/goods_seller(seller_idx=${sellerBean.seller_idx})}" class="btn btn-outline-dark">보러가기</a>
 							</div>
 						</div>
 					</div>
@@ -131,10 +164,9 @@ a {
 							</div>
 
 							<div class="card-body">
-								<h5 class="card-title pricing-card-title">
+								<h5 class="card-title pricing-card-title" th:text="${orderCnt}">
 									15<small class="text-muted fw-light"></small>
 								</h5>
-								<button type="button" class="btn btn-outline-dark">보러가기</button>
 							</div>
 						</div>
 					</div>
@@ -142,14 +174,13 @@ a {
 					<div class="col">
 						<div class="card mb-4 rounded-3 shadow-sm">
 							<div class="card-header py-3">
-								<h6 class="my-0 fw-normal">월 판매량</h6>
+								<h6 class="my-0 fw-normal">당일 판매량</h6>
 							</div>
 
 							<div class="card-body">
-								<h5 class="card-title pricing-card-title">
-									3<small class="text-muted fw-light">/month</small>
+								<h5 class="card-title pricing-card-title" th:text="${todayOrderCount}">
+									3<small class="text-muted fw-light">/day</small>
 								</h5>
-								<button type="button" class="btn btn-outline-dark">보러가기</button>
 							</div>
 						</div>
 					</div>
@@ -161,7 +192,6 @@ a {
 							</div>
 							<div class="card-body">
 								<h5 class="card-title pricing-card-title">3</h5>
-								<button type="button" class="btn btn-outline-dark">보러가기</button>
 							</div>
 						</div>
 					</div>
@@ -169,44 +199,31 @@ a {
 				<hr />
 				<br /> <br />
 
-				<h5 class="display-5 fw-normal text-left">판매 완료 내역</h5>
+				<h5 class="display-5 fw-normal text-left">리뷰 작성 내역</h5>
 				<hr />
 				<br />
 					
 				<div id="order-list" class="order-list"></div>
-				<div class="orders">
-					<p id="order-message">최근 판매내역이 없습니다.</p>
-					<button onclick="showOrders()" class="btn btn-secondary">최근
-						판매내역 더보기</button>
+				<div class="orders" style="overflow-x:hidden; height:450px;">
+					<div class="review-container card mb-12" th:each="review : ${reviewList}" style="height: 40%;">
+						<div class="row">
+							<div class="col-md-3" style="width: 5%;">
+								<img th:src="@{'/img/upload/' + ${review.review_img}}" id="img" class="img-fluid rounded-start"/>
+							</div>
+							<div class="col-md-8">
+								<div class="card-body">
+									<h6 class="card-title" th:text="${review.user_id}">user_name</h6>
+									<span th:text="${review.review_score}">★★★★★</span>
+									<!--<span><small th:text="${review.review_date}">review_date</small></span>-->
+									<hr/>
+									<p class="card-text text-body-secondary" th:text="${review.review_title}">: review_title</p>
+									<p class="card-text text-body-secondary" th:text="${review.review_content}">: review_text</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<p id="order-message" th:if="${#lists.isEmpty(reviewList)}">최근 작성된 리뷰가 없습니다.</p>
 				</div>
-			</div>
-
-			<div class="container">
-				<script>
-					const orders = [
-						{ orderNumber: '12345', date: '2023-08-10', item: '티셔츠', price: '₩20,000' },
-						{ orderNumber: '12346', date: '2023-08-12', item: '바지', price: '₩30,000' },
-						{ orderNumber: '12347', date: '2023-08-15', item: '신발', price: '₩50,000' }
-					];	// orders: 최근 주문내역 객체형태로 저장 나중에 링크달고 나머지 삭제
-
-					function showOrders() {
-						const orderList = document.getElementById('order-list');
-						const orderMessage = document.getElementById('order-message');
-						orderMessage.style.display = 'none';  // 저장된 리스트 출력시 메시지 숨김
-
-						orders.forEach(order => {
-							const orderItem = document.createElement('div');
-							orderItem.classList.add('order-item');
-							orderItem.innerHTML = `
-								<strong>상품 번호:</strong> ${order.orderNumber}<br>
-								<strong>등록 날짜:</strong> ${order.date}<br>
-								<strong>상품명:</strong> ${order.item}<br>
-								<strong>가격:</strong> ${order.price}`;
-							orderList.appendChild(orderItem);
-						});//서버에 등록된 상품 가져오기
-					}
-    			</script>
-
 			</div>
 		</div>
 	</div>

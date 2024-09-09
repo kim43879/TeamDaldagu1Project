@@ -34,6 +34,9 @@ public class SellerController {
     @Autowired
     private AddrService addrService;
 
+    @Autowired
+    private ReviewService reviewService;
+
     @GetMapping("/seller_join")
     public String sellerJoinForm(Model model){
 
@@ -60,8 +63,18 @@ public class SellerController {
 
     @GetMapping("/seller_page")
     public String sellerPage(Model model){
+
+        List<OrderBean> list = orderService.getOrderListBySeller(loginUserBean.getSeller_idx());
+        List<ReviewBean> reviewList = reviewService.getReviewListForSeller(loginUserBean.getSeller_idx());
+
+        System.out.println(reviewList.size());
+
+
+        model.addAttribute("reviewList", reviewList);
         model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(loginUserBean.getSeller_idx()));
         model.addAttribute("goodsCount", goodsService.goodsCountBySellerIdx(loginUserBean.getSeller_idx()));
+        model.addAttribute("orderCnt", list.size());
+        model.addAttribute("todayOrderCount", orderService.getTodayOrderCount(loginUserBean.getSeller_idx()));
 
         return "seller/seller_page";
     }

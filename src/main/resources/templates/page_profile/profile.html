@@ -103,7 +103,6 @@
 
         </script>
     </div>
-    <input type="file">
     <div class="card-body">
         <h5 class="card-title" th:text="${loginUserBean.user_id}"></h5>
         <p class="card-text" th:text="${loginUserBean.user_profile_text}">동쑦이 15주년 데뷔축하링~</p>
@@ -128,7 +127,6 @@
         <h6 style="border: thin;"><b>나의 정보</b></h6>
         <a href="/user/user_info" class="card-link">회원정보 관리</a> <br/>
         <a th:href="@{/user/user_addr(user_idx=${loginUserBean.user_idx})}" class="card-link">배송지 관리</a> <br/>
-        <a href="/user/user_pay" class="card-link">결제수단 관리</a> <br/>
         <hr/>
 
         <a th:href="@{/seller/seller_join(user_idx=${loginUserBean.user_idx})}" class="card-link" th:if="${loginUserBean.user_role == 'D'}">브랜드 등록</a>

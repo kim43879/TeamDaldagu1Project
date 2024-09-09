@@ -60,6 +60,11 @@ public class ReviewService {
 
         return reviewMapper.getReviewList(goods_idx, rowBounds);
     }
+
+    public List<ReviewBean> getReviewListForSeller(int seller_idx){
+
+        return reviewMapper.getReviewListForSeller(seller_idx);
+    }
     public PageBean getReviewCount(int goods_idx, int current_page){
 
         int reviewCount = reviewMapper.getReviewCount(goods_idx);

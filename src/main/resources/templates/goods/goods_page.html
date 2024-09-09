@@ -461,7 +461,7 @@
                 <img class="resize" th:src="@{'/img/goods/' + ${goods.goods_img2}}" alt=""/>
             </p>
             <div>
-                <span th:text="${goods.goods_text}" th:if="${goods.goods_text != null}">내용</span>
+                <span th:text="${goods.goods_text}" th:if="${goods.goods_text != null}" style="white-space: pre-wrap;">내용</span>
                 <span th:if="${goods.goods_text == null}">설명글이 아직 없습니다.</span>
             </div>
         </div>

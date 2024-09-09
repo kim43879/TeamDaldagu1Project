@@ -114,6 +114,10 @@ public class OrderService {
         return order_idx;
     }
 
+    public int getTodayOrderCount(int seller_idx){
+        return orderMapper.getTodayOrderCount(seller_idx);
+    }
+
     public OrderBean getOrder(String order_idx){
         return orderMapper.getOrder(order_idx);
     }

@@ -27,14 +27,31 @@ public interface UserMapper {
     @Select("select seller_idx from seller_table where user_idx = #{user_idx}")
     int getSellerIdx(int user_idx);
 
-    @Select("select user_name, user_id, user_email, user_birth " +
-            "from user_table where user_id = #{user_id} and user_pw = #{user_pw}")
-    UserBean getModifyUser(@Param("user_id") String user_id, @Param("user_pw") String user_pw);
+    /////////////문태일 수정
+    /// getModifyUser , modifyUser 삭제
+    //DB에서 수정할 회원의 정보를 가져오기 - 문태일 수정
+    @Select("select user_id, user_name from user_table where user_idx = #{user_idx}")
+    UserBean getModifyUserInfo(int user_idx); //매개변수로 user_idx(회원의 기본키)를 보냄
 
-    @Update("update user_table set " +
-            "user_pw = #{user_pw}," +
-            "user_email = #{user_email}, " +
-            "user_phone = #{user_phone} " +
-            "where user_id = #{user_id}" )
-    void modifyUser(UserBean modifyUserBean);
+    //회원정보 수정(DB에 수정된 정보 업데이트)- 문태일 수정
+    @Update("update user_table set user_pw = #{user_pw}, user_email = #{user_email}, user_phone = #{user_phone} where user_idx = #{user_idx}")
+    void modifyUserInfo(UserBean modifyUserBean);
+
+    //user_info 패스워드 체크 - 문태일 수정
+    @Select("select user_id from user_table where user_id = #{user_id} and user_pw = #{user_pw}")
+    String checkPassword(@Param("user_id") String user_id,@Param("user_pw") String user_pw);
+
+    //이 아래는 UserService(user_modify 뷰 출력정보들) - 문태일 수정
+    @Select("select user_id as user_id, user_name as user_name, user_pw as user_pw, user_phone as user_phone, user_birth as user_birth  , user_email as user_email " +
+            "from user_table where user_idx = #{user_idx}")
+    UserBean getModifyUserBean(@Param("user_idx") int user_idx);
+
+    @Update("update user_table set user_pw = #{user_pw} where user_idx = #{user_idx}")
+    void modifyPassword(@Param("user_idx") int userIdx, @Param("user_pw") String newPassword);
+
+    @Update("update user_table set user_email = #{user_email} where user_idx = #{user_idx}")
+    void modifyEmail(@Param("user_idx") int userIdx, @Param("user_email") String newEmail);
+
+    @Update("update user_table set user_phone = #{user_phone} where user_idx = #{user_idx}")
+    void modifyPhone(@Param("user_idx") int userIdx, @Param("user_phone") String newPhone);
 }

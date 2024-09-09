@@ -24,6 +24,12 @@ public interface ReviewMapper {
             "order by r.review_idx desc")
     List<ReviewBean> getReviewList(int goods_idx, RowBounds rowBounds);
 
+    @Select("select r.review_img, r.review_score, r.review_content, u.user_id, r.review_title " +
+            "from review_table r, goods_table g, user_table u " +
+            "where r.goods_idx = g.goods_idx and u.user_idx = r.user_idx " +
+            "and g.seller_idx = #{seller_idx} order by r.review_date desc")
+    List<ReviewBean> getReviewListForSeller(int seller_idx);
+
     //리뷰개수
     @Select("select count(*) from review_table where goods_idx = #{goods_idx}")
     int getReviewCount(int goods_idx);

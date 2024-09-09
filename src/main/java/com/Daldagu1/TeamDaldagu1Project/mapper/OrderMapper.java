@@ -18,6 +18,9 @@ public interface OrderMapper {
             "values(order_goods_seq.nextval, #{order_goods_num}, #{price}, #{selected_option}, #{goods_idx}, #{order_idx})")
     void addOrderGoods(OrderGoodsBean orderGoodsBean);
 
+    @Select("select count(*) from order_table where to_char(order_date, 'YYYY-MM-DD') =  to_char(sysdate, 'YYYY-MM-DD') and seller_idx = ${seller_idx}")
+    int getTodayOrderCount(@Param("seller_idx") int seller_idx);
+
     @Select("select * from order_table where seller_idx = #{seller_idx} and order_stat > 1 order by order_date desc")
     List<OrderBean> getOrderListBySeller(int seller_idx);
 
