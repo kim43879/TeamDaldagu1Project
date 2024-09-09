@@ -9,8 +9,8 @@ import java.util.List;
 @Mapper
 public interface SellerMapper {
     //판매자 추가
-    @Insert("insert into seller_table (seller_idx, sell_calc_num, sell_calc_account, selling_page_title, user_idx)" +
-            " values(seller_seq.nextval, 0, #{calc_account}, #{selling_page_title}, #{user_idx})")
+    @Insert("insert into seller_table (seller_idx, sell_calc_num, sell_calc_account, selling_page_title, user_idx, seller_available)" +
+            " values(seller_seq.nextval, 0, #{calc_account}, #{selling_page_title}, #{user_idx}, 'T')")
     void addSeller(SellerBean sellerBean);
 
     //판매자 등록 대기목록 추가
@@ -40,4 +40,7 @@ public interface SellerMapper {
 
     @Delete("delete seller_join_info_table where user_idx = #{user_idx}")
     void deleteSellerJoinInfo(int user_idx);
+
+    @Update("update seller_table set seller_available = 'F' where seller_idx = #{seller_idx}")
+    void deSignUp(int seller_idx);
 }

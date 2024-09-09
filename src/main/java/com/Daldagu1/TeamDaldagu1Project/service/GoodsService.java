@@ -68,6 +68,9 @@ public class GoodsService {
     //구매상품 호출
     public GoodsBean getPurchaseGoods(int goods_idx) {
         GoodsBean tempGoodsBean = goodsMapper.getPurchaseGoods(goods_idx);
+        if(tempGoodsBean == null){
+            return null;
+        }
         tempGoodsBean.setGoods_option(optionMapper.getOptionList(goods_idx));
         return tempGoodsBean;
     }
@@ -144,5 +147,9 @@ public class GoodsService {
             return goodsMapper.searchGoodsListOrder_price2Cnt(searchBean);
         }
         return goodsMapper.searchGoodsListCnt(searchBean);
+    }
+
+    public void deleteGoods(int goods_idx){
+        goodsMapper.deleteGoods(goods_idx);
     }
 }

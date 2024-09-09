@@ -126,7 +126,7 @@
 									<br />
 									<div class="btns text-center">
 										<button type="submit" class="btn btn-outline-secondary" id="btn_product_update">상품정보 수정</button>
-										<button type="button" class="btn btn-outline-danger" id="btn_product_delete" >상품 삭제</button>
+										<button type="button" class="btn btn-outline-danger" id="btn_product_delete" onclick="deleteGoods()">상품 삭제</button>
 										<!--삭제고려-->
 										<button class="btn btn-outline-secondary" id="btn_product_back">상품 정보 페이지로 돌아가기</button>
 									</div>
@@ -187,6 +187,19 @@
                 }
             });
         }
+
+		function deleteGoods(){
+			let result = confirm('해당상품을 삭제하시겠습니까?');
+			$.ajax({
+				url: '/rest/goods/delete',
+				type: 'POST',
+                data: {goods_idx: $("#goods_idx").val()},
+                success: function(data){
+                	alert('상품정보를 삭제했습니다.');
+                	location.href = '/seller/seller_list';
+                }
+			});
+		}
 	</script>
 	<!-- 하단 -->
 	<div id="footer">

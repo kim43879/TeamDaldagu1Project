@@ -2,9 +2,7 @@ package com.Daldagu1.TeamDaldagu1Project.service;
 
 import com.Daldagu1.TeamDaldagu1Project.beans.AddrBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.UserBean;
-import com.Daldagu1.TeamDaldagu1Project.mapper.AddrMapper;
-import com.Daldagu1.TeamDaldagu1Project.mapper.MembershipMapper;
-import com.Daldagu1.TeamDaldagu1Project.mapper.UserMapper;
+import com.Daldagu1.TeamDaldagu1Project.mapper.*;
 import jakarta.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,11 +33,18 @@ public class UserService {
     private UserMapper userMapper;
 
     @Autowired
+    private SellerMapper sellerMapper;
+
+    @Autowired
+    private GoodsMapper goodsMapper;
+
+    @Autowired
     private AddrMapper addrMapper;
 
     @Autowired
     private MembershipMapper membershipMapper;
 
+    //회원가입 로직
     public void addUser(UserBean userBean){
 
         String phone1 = userBean.getUser_phone().substring(0,3);
@@ -63,15 +68,16 @@ public class UserService {
 
         addrMapper.addAddr(addrBean);
     }
-
+    //유저 아이디 반환(id 중복체크에 사용)
     public String getUserId(String user_id){
         return userMapper.getUserId(user_id);
     }
-
+    //idx로 유저객체 반환
     public UserBean getUserbyIdx(int user_idx){
         return userMapper.getUserbyIdx(user_idx);
     }
 
+    // 로그인 로직
     public UserBean getUserbyId(String user_id){
         UserBean tempLoginUserBean = userMapper.getUserbyId(user_id);
         if(tempLoginUserBean != null) {
@@ -151,7 +157,13 @@ public class UserService {
         System.out.println("로그인한 회원의 IDX " + loginUserBean.getUser_idx());
         return userMapper.getModifyUserBean(loginUserBean.getUser_idx());
     }
-    
 
+    //회원탈퇴 로직(유저)
+    public void deSignUp(int user_idx){
+        int seller_idx = userMapper.getSellerIdx(user_idx);
+        userMapper.deSignUp(user_idx);
+        sellerMapper.deSignUp(seller_idx);
+        goodsMapper.deSignUp(seller_idx);
+    }
 }
 

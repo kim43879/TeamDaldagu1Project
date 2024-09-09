@@ -217,9 +217,9 @@ public class UserController {
             } else {
                 System.out.println("null");
             }
-
             model.addAttribute("modifyUserBean", modifyUserBean);
-            System.out.println(modifyUserBean.getUser_name());
+            model.addAttribute("user_idx", loginUserBean.getUser_idx());
+            System.out.println(modifyUserBean.getUser_idx());
 
             return "user/user_modify";
         } else {

@@ -37,6 +37,10 @@ public class GoodsController {
                              @RequestParam(value = "page", defaultValue = "1") int page, Model model) {
         GoodsBean tempGoodsBean = goodsService.getPurchaseGoods(goods_idx);
 
+        if(tempGoodsBean == null){
+            return "error/goodsNotFound";
+        }
+
         //상품페이지에 리뷰목록 등록
         List<ReviewBean> reviewList = reviewService.getReviewList(goods_idx, page);
         PageBean pageBean = reviewService.getReviewCount(goods_idx, page);

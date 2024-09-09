@@ -8,20 +8,25 @@ import java.util.List;
 
 @Mapper
 public interface UserMapper {
+    //회원가입
     @Insert("insert into user_table (user_idx, user_id, user_pw, user_name, user_email, user_phone, user_role, user_available, user_daily, membership_idx, user_birth,user_profile_img, user_profile_text)" +
             "values (user_seq.nextval, #{user_id}, #{user_pw}, #{user_name}, #{user_email}, #{user_phone}, 'D', 'T', 0, 1, #{user_birth}, 'default_profile.png', '메세지가 아직 없습니다.')")
     void addUser(UserBean userBean);
 
+    //id로 idx 가져오기
     @Select("select user_idx from user_table where user_id=#{user_id}")
     int getUserIdx(String user_id);
 
+    //id중복체크 mapper
     @Select("select user_id from user_table where user_id = #{user_id}")
     String getUserId(String user_id);
 
+    //idx로 유저객체 반환
     @Select("select * from user_table where user_idx = #{user_idx}")
     UserBean getUserbyIdx(int user_idx);
 
-    @Select("select * from user_table where user_id = #{user_id}")
+    // id로 유저객체 반환(로그인)
+    @Select("select * from user_table where user_id = #{user_id} and user_available = 'T'")
     UserBean getUserbyId(String user_id);
 
     @Select("select seller_idx from seller_table where user_idx = #{user_idx}")
@@ -54,4 +59,8 @@ public interface UserMapper {
 
     @Update("update user_table set user_phone = #{user_phone} where user_idx = #{user_idx}")
     void modifyPhone(@Param("user_idx") int userIdx, @Param("user_phone") String newPhone);
+
+    //회원탈퇴
+    @Update("update user_table set user_available = 'F' where user_idx = #{user_idx}")
+    void deSignUp(int user_idx);
 }

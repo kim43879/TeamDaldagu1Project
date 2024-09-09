@@ -2,6 +2,7 @@ package com.Daldagu1.TeamDaldagu1Project.controller;
 
 import com.Daldagu1.TeamDaldagu1Project.beans.*;
 import com.Daldagu1.TeamDaldagu1Project.service.*;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -9,6 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 public class RestApiController {
+
+    @Resource(name = "loginUserBean")
+    private UserBean loginUserBean;
 
     @Autowired
     private UserService userService;
@@ -218,8 +222,22 @@ public class RestApiController {
 
     }
 
-    @PostMapping("rest/next_order_process")
+    @PostMapping("/rest/next_order_process")
     public void next_order_process(@RequestParam("order_idx") String order_idx){
         orderService.nextOrderProcess(order_idx);
+    }
+
+    @PostMapping("/rest/deSignUp")
+    public void deSignUp(@RequestParam("user_idx") int user_idx){
+        userService.deSignUp(user_idx);
+        if(userService.getUserbyIdx(user_idx).getUser_role() == "S"){
+            sellerService.deSignUp(1);
+        }
+        loginUserBean.clearUserBean();
+    }
+
+    @PostMapping("/rest/goods/delete")
+    public void deleteGoods(@RequestParam("goods_idx") int goods_idx){
+        goodsService.deleteGoods(goods_idx);
     }
 }//class
