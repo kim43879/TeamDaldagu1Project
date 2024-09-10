@@ -257,6 +257,14 @@ public class RestApiController {
         loginUserBean.clearUserBean();
     }
 
+    //프로필 이미지 변경
+    @PostMapping("/rest/profile_modify")
+    public void profile_modify(@RequestParam("userIdx") int user_idx,
+                              @RequestParam("profile") MultipartFile profile){
+        System.out.println(profile.getName());
+        userService.updateProfile(user_idx, profile);
+    }
+
     @PostMapping("/rest/goods/delete")
     public void deleteGoods(@RequestParam("goods_idx") int goods_idx){
         goodsService.deleteGoods(goods_idx);

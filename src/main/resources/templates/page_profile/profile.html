@@ -76,6 +76,7 @@
             color: #f1c232;
         }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body th:fragment="profile-body">
 <div class="card-profile" style="width: 18rem;">
@@ -85,19 +86,33 @@
         <button type="button" class="btn btn-outline-info hidden-button" id="change-image-btn" style="width:100%;">이미지 변경</button>
         <input type="file" id="image-input" style="display: none;" accept="image/*">
 
-        <script>
+        <script th:inline="javascript">
             document.getElementById('change-image-btn').addEventListener('click', function() {
                 document.getElementById('image-input').click();
             });
 
             document.getElementById('image-input').addEventListener('change', function(event) {
                 const file = event.target.files[0];
+                let userIdx = [[${loginUserBean.user_idx}]];
                 if(file) {
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        document.querySelector('.image-container img').src = e.target.result;
-                    };
-                    reader.readAsDataURL(file);
+                    const formData = new FormData();
+                    formData.append('profile', file);
+                    formData.append('userIdx', userIdx);
+
+                    $.ajax({
+                        url: '/rest/profile_modify',
+                        type: 'POST',
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            alert('프로필이 변경되었습니다.');
+                            location.reload();
+                        }, error: function(){
+                            alert('프로필 변경에 실패했습니다.');
+                        }
+                    });
+
                 }
             });
         </script>

@@ -15,6 +15,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -167,8 +168,21 @@ public class UserService {
         goodsMapper.deSignUp(seller_idx);
     }
 
-    public void updateProfile(MultipartFile profile_img, String profile_text){
+    private String saveProfileImageFile(MultipartFile profileImg){
+        String file_name = System.currentTimeMillis() + "_" + profileImg.getOriginalFilename();
+        try{
+            profileImg.transferTo(new File(ImgPath + "/user_profile/" + file_name));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return file_name;
+    }
 
+    public void updateProfile(int user_idx, MultipartFile profileImg){
+        String profile_name = saveProfileImageFile(profileImg);
+        userMapper.updateProfile(profile_name, user_idx);
+
+        loginUserBean.setUser_profile_img(profile_name);
     }
 
     public void calcPoint(int add_point, int point_to_use){
