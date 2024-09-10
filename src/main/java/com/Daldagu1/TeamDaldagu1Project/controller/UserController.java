@@ -146,21 +146,22 @@ public class UserController {
     public String add_user_wish(@RequestParam("goods_idx") int goods_idx,
                             @RequestParam("user_idx") int user_idx,
                             @RequestParam("result") boolean result, Model model){
-
-        wishService.addUserWish(goods_idx, user_idx);
+        if(wishService.checkWish(goods_idx,user_idx)) {
+            wishService.addUserWish(goods_idx, user_idx);
+        }
 
         if(result) {
             List<WishBean> wishBeanList = wishService.getUserWishList(user_idx);
             model.addAttribute("wishBeanList", wishBeanList);
 
-            return "user/user_wish";
+            return "redirect:/user/user_wish";
         }
         GoodsBean tempGoodsBean = goodsService.getPurchaseGoods(goods_idx);
         model.addAttribute("goods", tempGoodsBean);
         model.addAttribute("seller_id",sellerService.getSellerId(tempGoodsBean.getSeller_idx()));
         model.addAttribute("user_idx", loginUserBean.getUser_idx());
 
-        return "goods/goods_page";
+        return "redirect:/goods/goods_page";
     }
 
     //관심상품

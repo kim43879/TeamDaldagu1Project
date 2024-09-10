@@ -4,115 +4,138 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>관리자</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <style>
-    body {
-        margin: 0;
-        padding: 0;
-    }
-    table {
-        width: 100%;
-        max-width: 100%;
-        border-collapse: collapse;
-        border-width: 1px;
-        border-color: #ddd;
-        border-style: solid;
-        text-align: center;
-    }
-    .table-container {
-        width: 100%;
-        overflow-x: auto;
-    }
-    th, td {
-        border-width: 1px;
-        border-color: #ddd;
-        border-style: solid;
-        padding: 8px;
-        text-align: center;
-    }
-    .container {
-        margin-top: 0;
-        margin-left: 200px;
-        padding: 10px;
-    }
-  </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        table {
+            width: 100%;
+            max-width: 100%;
+            border-collapse: collapse;
+            border-width: 1px;
+            border-color: #ddd;
+            border-style: solid;
+            text-align: center;
+        }
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+        th, td {
+            border-width: 1px;
+            border-color: #ddd;
+            border-style: solid;
+            padding: 8px;
+            text-align: center;
+        }
+        .container {
+            margin-top: 0;
+            margin-left: 200px;
+            padding: 10px;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            align-items: center;
+        }
+        .submitBtn, .denialBtn {
+            padding: 5px;
+            background-color: white;
+            border: 1.5px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .submitBtn:hover{
+			background-color: #daf2f2;
+		}
+        .denialBtn:hover{
+			background-color: #f2dada;
+		}
+    </style>
 </head>
 <body>
+
 <!--메뉴-->
 <div id="administration">
-  <div th:replace="admin/admin_import/admin_menu.html :: administration-style"></div>
-  <div th:replace="admin/admin_import/admin_menu.html :: administration-head"></div>
-  <div th:replace="admin/admin_import/admin_menu.html :: administration-body"></div>
+    <div th:replace="admin/admin_import/admin_menu.html :: administration-style"></div>
+    <div th:replace="admin/admin_import/admin_menu.html :: administration-head"></div>
+    <div th:replace="admin/admin_import/admin_menu.html :: administration-body"></div>
 </div>
 
 <!--메인-->
 <div class="main">
-  <div class="dashboard">
-    <div class="container">
-      <h3>판매자 등록 신청 리스트</h3>
-      <div class="card">
-        <table>
-          <thead>
-          <tr>
-            <th>no.</th>
-            <th>유저ID</th>
-            <th>유저 이메일</th>
-            <th>유저 연락처</th>
-            <th>브랜드명</th>
-            <th>주 판매 상품</th>
-            <th>상품 샘플 이미지</th>
-            <th>승인/거부</th>
-          </tr>
-          </thead>
+    <div class="dashboard">
+        <div class="container">
+            <h3>판매자 등록 신청 리스트</h3>
+            <div class="card">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>no.</th>
+                            <th>유저ID</th>
+                            <th>유저 이메일</th>
+                            <th>유저 연락처</th>
+                            <th>브랜드명</th>
+                            <th>주 판매 상품</th>
+                            <th>상품 샘플 이미지</th>
+                            <th>승인/거부</th>
+                        </tr>
+                    </thead>
 
-          <tbody>
-          <tr th:each="info : ${sellerInfoList}">
-            <td th:text="${info.info_idx}"></td>
-            <td th:text="${info.seller_id}"></td>
-            <td th:text="${info.seller_email}"></td>
-            <td th:text="${info.seller_phone}"></td>
-            <td th:text="${info.seller_page_title}"></td>
-            <td th:text="${info.goods_tag}"></td>
-            <td>
-              <img th:src="@{'/img/goods/' + ${info.sample_img}}">
-            </td>
-            <td>
-              <input type="hidden" id="user_idx" th:value="${info.user_idx}" />
-              <button class="btn btn-outline-primary btn-sm-sm" onclick="submit()">승인</button>
-              <button class="btn btn-outline-danger btn-sm-sm" onclick="denial()">거부</button>
-            </td>
-          </tr>
-          </tbody>
-        </table>
+                    <tbody>
+                        <tr th:each="info : ${sellerInfoList}">
+                            <td th:text="${info.info_idx}"></td>
+                            <td th:text="${info.seller_id}"></td>
+                            <td th:text="${info.seller_email}"></td>
+                            <td th:text="${info.seller_phone}"></td>
+                            <td th:text="${info.seller_page_title}"></td>
+                            <td th:text="${info.goods_tag}"></td>
+                            <td>
+                                <img th:src="@{'/img/goods/' + ${info.sample_img}}">
+                            </td>
+                            <td>
+                                <div class="action-buttons">
+                                    <input type="hidden" id="user_idx" th:value="${info.user_idx}" />
+                                    <button class="submitBtn" onclick="submit()" style="margin-left: 5px;">승인</button>
+                                    <button class="denialBtn" onclick="denial()" style="margin-right: 5px;">거부</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-        <script>
-          function submit() {
-              $.ajax({
-                  type: "post",
-                  url: "/rest/approve_seller",
-                  data:{user_idx: $("#user_idx").val()},
-                  success: function(data){
-                    alert("승인되었습니다.");
-                    location.reload();
-                  }
-              });
-          }
+                <script>
+                    function submit() {
+                        $.ajax({
+                            type: "post",
+                            url: "/rest/approve_seller",
+                            data:{user_idx: $("#user_idx").val()},
+                            success: function(data){
+                              alert("승인되었습니다.");
+                              location.reload();
+                            }
+                        });
+                    }
 
-          function denial() {
-              $.ajax({
-                  type: "post",
-                  url: "/rest/denial_seller",
-                  data:{user_idx: $("#user_idx").val()},
-                  success: function(data){
-                    alert("거부되었습니다.");
-                    location.reload();
-                  }
-              });
-          }
-        </script>
-      </div>
+                    function denial() {
+                        $.ajax({
+                            type: "post",
+                            url: "/rest/denial_seller",
+                            data:{user_idx: $("#user_idx").val()},
+                            success: function(data){
+                              alert("거부되었습니다.");
+                              location.reload();
+                            }
+                        });
+                    }
+                </script>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
+
 </body>
 </html>

@@ -14,7 +14,7 @@ public interface CartMapper {
     void addUserCart(CartBean addCartBean);
 
     //물품 호출
-    @Select("select * from cart_table where user_idx = #{user_idx}")
+    @Select("select c.*, g.goods_img as goods_img from cart_table c,goods_table g where c.goods_idx = g.goods_idx and user_idx = #{user_idx}")
     List<CartBean> getCartList(int user_idx);
 
     //물품 확인

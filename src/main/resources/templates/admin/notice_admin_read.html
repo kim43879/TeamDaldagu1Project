@@ -1,115 +1,109 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>달다구리스</title>
-<!-- Bootstrap -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-<style>
-	.card-main{
-		margin-top: 88px; 
-		padding-left: 186px; 
-		padding-right: 186px;
-	}
-	.dropdown-menu {
-		display: none;
-		position: absolute;
-		background-color: #f9f9f9;
-		border: 1px solid #ddd;
-	}
-	.dropdown-menu a:hover {
-		background-color: #f1f1f1;
-	}
-	.show {
-		display: block;
-	}
-	#board_info{
-		margin-top: 90px;
-		padding-left: 12%;
-	}
-	#board_text{
-		background-color: white;
-	}
-	       
-</style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>달다구리스 공지사항</title>
+	<!--Bootstrap-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+	<style>
+		body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h3 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+        input[type="text"], textarea {
+        	width: 95%;
+        	margin-left: 10px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        textarea {
+            resize: none;
+        }
+        .form-action {
+            text-align: right;
+        }
+        .form-action a, .form-actions button {
+            padding: 10px 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+	</style>
 </head>
 <body>
 
-<!-- 상단메뉴 -->
-<div id="header">
-	<div th:replace="page_header/header.html :: header-head"></div>
-	<div th:replace="page_header/header.html :: header-body"></div>
-</div>
-	
-<!-- 게시글 확인 -->
-<div class="container mt-12" id="board_info">
-	<div class="row g-0">
-		<div class="col-md-10">
-
-			<h6 class="card-title"><b>&ensp;《공지사항》</b></h6>
-			<div class="card">
-				<div class="card-body">
-					<form action="notice_normal.html" method="post">
-
-						<div class="form-group">
-							<label for="user_id">이름</label>
-							<input type="text" id="user_id" class="form-control" value="관리자" readonly />
-						</div>
-						
-						<div class="form-group">
-							<label for="board_title">*제목</label>
-							<input type="text" id="board_title" class="form-control"/>
-						</div>
-						
-						<div class="form-group">
-							<label for="board_text">*내용</label>
-							<textarea id="board_text" class="form-control" rows="10" style="resize:none" readonly>
-								생명 그건 단지 우연일 뿐, 큰 우주의 아주 작은 사건일 뿐
-								미세한 세포를 복제하는 화학적 유전자 돌연변이
-								그것이 생명의 정체
-
-								생명, 그건 신의 자연섭리. 함부로 다가설 수 없는 세계
-							</textarea>
-						</div>
-						
-						<div class="form-group">
-							<label for="board_file">첨부 이미지</label>
-							<div class="card">
-									<div class="card-body">
-									<img th:src="@{/img/sample5.jpg}" width="100%" id="board_file"/> <br />
-								</div>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="text-right">
-								<a href="/admin/notice_modify" class="btn btn-outline-warning">뒤로가기</a>
-								&nbsp;
-								<button type="submit" class="btn btn-outline-success" onclick="message()">수정하기</button>
-
-								<script>
-									function message() {
-										alert("수정이 완료되었습니다.");
-									}
-								</script>
-
-							</div>
-						</div>
-						
-					</form>
-				</div>
-			</div>
+<div class="container">
+	<h3>공지사항</h3>
+		<div class="form-group">
+			<label for="notice_title">*공지명</label>
+			<input type="text" id="notice_title" th:value="${noticeBean.notice_title}" style="background-color: white;" readonly/>
 		</div>
-	</div>
+
+		<div class="form-group">
+			<label for="admin_id">*작성자</label>
+			<input type="text" id="admin_id" class="form-control" th:value="${noticeBean.notice_writer_idx}" style="background-color: white;" readonly />
+		</div>
+
+		<div class="form-group">
+			<label for="notice_text">*내용</label>
+			<textarea id="notice_text" class="form-control" rows="10" style="resize:none; background-color: white; width: 95%;" th:text="${noticeBean.notice_text}" readonly>
+			</textarea>
+		</div>
+
+		<div class="form-action">
+			<div class="d-flex justify-content-end">
+				<div class="form-action">
+					<button class="btn btn-outline-secondary" onclick="location.href='/admin/notice_admin_list'">뒤로가기</button>
+					<button class="btn btn-outline-secondary" th:onclick="location.href='/admin/notice_modify?notice_idx=' + [[${noticeBean.notice_idx}]]">공지수정</button>
+					&nbsp;
+				</div>
+
+				<form action="/admin/notice_delete" method="get" style="margin-right: 25px; display:inline;">
+					<input type="hidden" name="notice_idx" th:value="${noticeBean.notice_idx}" />
+					<button class="btn btn-outline-secondary" onclick="alert('삭제가 완료되었습니다.')">공지삭제</button>
+				</form>
+			</div>
+
+			<script>
+				document.getElementById('edit-button').addEventListener('click', function() {
+					var noticeIdx = /*[[${noticeBean.notice_idx}]]*/ '';
+					if (noticeIdx) {
+						location.href = '/admin/notice_modify?notice_idx=' + encodeURIComponent(noticeIdx);
+					}
+				});
+			</script>
+
+		</div>
 </div>
-<br /><hr />
-	
-<!-- 하단 -->
-<div id="footer">
-	<div th:replace="page_footer/footer.html :: footer-head"></div>
-	<div th:replace="page_footer/footer.html :: footer-body"></div>
-</div>
-	
+
 </body>
 </html>

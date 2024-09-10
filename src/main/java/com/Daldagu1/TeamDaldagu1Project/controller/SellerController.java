@@ -37,6 +37,9 @@ public class SellerController {
     @Autowired
     private ReviewService reviewService;
 
+    @Autowired
+    private BannerService bannerService;
+
     @GetMapping("/seller_join")
     public String sellerJoinForm(Model model){
 
@@ -61,10 +64,11 @@ public class SellerController {
         return "user/user_page";
     }
 
+    //판매자 페이지
     @GetMapping("/seller_page")
     public String sellerPage(Model model){
 
-        List<OrderBean> list = orderService.getOrderListBySeller(loginUserBean.getSeller_idx(),1);
+        int orderCnt = orderService.getOrderCnt(loginUserBean.getSeller_idx());
         List<ReviewBean> reviewList = reviewService.getReviewListForSeller(loginUserBean.getSeller_idx());
 
         System.out.println(reviewList.size());
@@ -73,12 +77,13 @@ public class SellerController {
         model.addAttribute("reviewList", reviewList);
         model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(loginUserBean.getSeller_idx()));
         model.addAttribute("goodsCount", goodsService.goodsCountBySellerIdx(loginUserBean.getSeller_idx()));
-        model.addAttribute("orderCnt", list.size());
+        model.addAttribute("orderCnt", orderCnt);
         model.addAttribute("todayOrderCount", orderService.getTodayOrderCount(loginUserBean.getSeller_idx()));
 
         return "seller/seller_page";
     }
 
+    //상품추가
     @GetMapping("/seller_product_insert")
     public String sellerProductInsertForm(Model model){
         model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(loginUserBean.getSeller_idx()));
@@ -88,6 +93,7 @@ public class SellerController {
         return "seller/seller_product_insert";
     }
 
+    //판매현황
     @GetMapping("/seller_order")
     public String sellerOrder(@RequestParam(name = "page", defaultValue = "1")int page, Model model){
 
@@ -100,6 +106,7 @@ public class SellerController {
         return "seller/seller_order";
     }
 
+    //판매상태 수정
     @GetMapping("/order_read")
     public String sellerOrderRead(@RequestParam("page")int page, @RequestParam("order_idx") String order_idx, Model model){
         OrderBean orderBean = orderService.getOrder(order_idx);
@@ -118,6 +125,7 @@ public class SellerController {
         return "seller/order_read";
     }
 
+    //상품조회
     @GetMapping("/seller_list")
     public String sellerPresent(Model model){
         model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(loginUserBean.getSeller_idx()));
@@ -125,20 +133,43 @@ public class SellerController {
         return "seller/seller_list";
     }
 
+    //상품목록
     @GetMapping("/seller_product_read")
     public String sellerProductRead(@RequestParam("goods_idx") int goods_idx, Model model){
         model.addAttribute("goodsBean", goodsService.getPurchaseGoods(goods_idx));
         model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(loginUserBean.getSeller_idx()));
         return "seller/seller_product_read";
     }
-
     @GetMapping("/seller_product_delete")
     public String sellerProductDelete(){
         return "seller/seller_product_delete";
+    }
+
+    //배너 등록
+    @GetMapping("/seller_add_banner")
+    public String sellerAddBanner(@RequestParam("goods_idx") int goods_idx, Model model) {
+
+        BannerBean sellerBannerBean = new BannerBean();
+        sellerBannerBean.setBanner_name(loginUserBean.getUser_id());
+        sellerBannerBean.setGoods_idx(goods_idx);
+
+        SellerBean sellerBean = sellerService.getSellerbyUserIdx(loginUserBean.getSeller_idx());
+
+        model.addAttribute("sellerBean",sellerBean);
+        model.addAttribute("addBannerInfoBean",sellerBannerBean);
+
+        return "seller/seller_add_banner";
+    }
+
+    @PostMapping("/add_banner_pro")
+    public String addBanner_pro(@ModelAttribute("addBannerInfoBean")BannerBean bannerBean) {
+        bannerService.addBannerInfo(bannerBean);
+        return "redirect:/seller/seller_list";
     }
 
     @ModelAttribute("searchBean")
     public SearchBean getSearchBean() {
         return new SearchBean();
     }
-}
+
+}//class

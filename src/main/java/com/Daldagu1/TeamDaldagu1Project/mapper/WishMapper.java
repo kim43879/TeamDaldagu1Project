@@ -23,4 +23,7 @@ public interface WishMapper {
 
     @Delete("delete from wish_table where wish_idx= #{wish_idx}")
     void deleteUserWish(int wish_idx);
+
+    @Select("select * from wish_table where goods_idx = #{goods_idx} and user_idx = #{user_idx}")
+    WishBean checkWish(WishBean wishBean);
 }

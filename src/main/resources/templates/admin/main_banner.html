@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>관리자</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        table {
+            width: 100%;
+            max-width: 100%;
+            border-collapse: collapse;
+            border-width: 1px;
+            border-color: #ddd;
+            border-style: solid;
+            text-align: center;
+        }
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+        th, td {
+            border-width: 1px;
+            border-color: #ddd;
+            border-style: solid;
+            padding: 8px;
+            text-align: center;
+        }
+        .container {
+            margin-top: 0;
+            margin-left: 200px;
+            padding: 10px;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            align-items: center;
+        }
+        .submitBtn, .denialBtn, .removeBtn {
+            padding: 5px;
+            background-color: white;
+            border: 1.5px solid #ccc;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .submitBtn:hover{
+         background-color: #daf2f2;
+      }
+        .denialBtn:hover{
+         background-color: #f2dada;
+      }
+        .removeBtn:hover{
+            background-color: #f2d0d0;
+        }
+        .container::-webkit-scrollbar{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<!--메뉴-->
+<div id="administration">
+    <div th:replace="admin/admin_import/admin_menu.html :: administration-style"></div>
+    <div th:replace="admin/admin_import/admin_menu.html :: administration-head"></div>
+    <div th:replace="admin/admin_import/admin_menu.html :: administration-body"></div>
+</div>
+
+<!--배너 관리-->
+<div class="main">
+    <div class="dashboard">
+        <div class="container" style="overflow-x:hidden; height: 820px;">
+            <h3>메인 배너 관리</h3>
+            <div class="card" >
+                <table>
+                    <thead>
+                    <tr>
+                        <th style="width: 100px;">no.</th>
+                        <th style="width: 150px;">판매자ID</th>
+                        <th style="width: 300px;">상품명</th>
+                        <th style="width: 700px;">배너 이미지</th>
+                        <th style="width: 150px;">승인/거부</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr th:each="banner : ${bannerList}">
+                        <td th:text="${banner.banner_idx}" id="banner_idx">1</td>
+                        <td th:text="${banner.banner_name}" style="width: 150px;">판매자ID</td>
+                        <td th:text="${banner.goods_name}">첫 번째 선물</td>
+                        <td style="width: 500px;">
+                            <img th:src="@{'/img/banner/' + ${banner.banner_img}}" style="width: 80%;">
+                        </td>
+                        <td style="width: 150px;" th:if="${banner.banner_status == 0}">
+                            <div class="action-buttons">
+                                <input type="hidden" th:value="${banner.goods_idx}" />
+                                <button class="submitBtn" th:onclick="submit([[${banner.banner_idx}]])">승인</button>
+                                <button class="denialBtn" th:onclick="denial([[${banner.banner_idx}]])">거부</button>
+                            </div>
+                        </td>
+
+                        <td style="width: 150px;" th:if="${banner.banner_status == 1}">
+                            <div class="action-buttons">
+                                <input type="hidden" th:value="${banner.goods_idx}" />
+                                <button class="removeBtn" th:onclick="deleteBanner([[${banner.banner_idx}]])">삭제</button>
+                            </div>
+                        </td>
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+                <script th:inline="javascript">
+                    function submit(bannerIdx) {
+                        $.ajax({
+                            type: "post",
+                            url: "/rest/approve_banner",
+                            data: { banner_idx: bannerIdx },
+                            success: function(data) {
+                                alert("승인되었습니다.");
+                                location.reload();
+
+                            }
+                        });
+                    }
+
+                    function denial(bannerIdx) {
+                        $.ajax({
+                            type: "post",
+                            url: "/rest/denial_banner",
+                            data: { banner_idx: bannerIdx },
+                            success: function(data) {
+                                alert("거부되었습니다.");
+                                location.reload();
+
+                            }
+                        });
+                    }
+
+                    function deleteBanner(bannerIdx) {
+                        $.ajax({
+                            type: "post",
+                            url: "/rest/delete_banner",
+                            data: { banner_idx: bannerIdx },
+                            success: function(data) {
+                                alert("삭제되었습니다.");
+                                location.reload();
+                            }
+                        });
+                    }
+                </script>
+
+                <br />
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

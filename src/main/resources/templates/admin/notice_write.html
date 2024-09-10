@@ -1,106 +1,100 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>달다구리스</title>
-<!-- Bootstrap -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
-<style>
-	.card-main{
-		margin-top: 88px; 
-		padding-left: 186px; 
-		padding-right: 186px;
-	}
-	.dropdown-menu {
-		display: none;
-		position: absolute;
-		background-color: #f9f9f9;
-		border: 1px solid #ddd;
-	}
-	.dropdown-menu a:hover {
-		background-color: #f1f1f1;
-	}
-	.show {
-		display: block;
-	}
-	#board_info{
-		margin-top: 90px;
-		padding-left: 12%;
-	}
-	       
-</style>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>달다구리스 공지사항</title>
+	<!--Bootstrap-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+	<style>
+		body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h3 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+        }
+        input[type="text"], textarea {
+        	width: 95%;
+        	margin-left: 10px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        textarea {
+            resize: none;
+        }
+        .form-action {
+            text-align: right;
+        }
+        .form-action a, .form-actions button {
+            padding: 10px 20px;
+            border: 1px solid #e6e6e6;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+	</style>
 </head>
 <body>
 
-<!-- 상단메뉴 -->
-<div id="header">
-	<div th:replace="page_header/header.html :: header-head"></div>
-	<div th:replace="page_header/header.html :: header-body"></div>
-</div>
-	
-<!-- 공지작성 -->
-<div class="container mt-12" id="board_info">
-	<div class="row g-0">
-		<div class="col-md-10">
-			<h6 class="card-title"><b>&ensp;《공지작성》</b></h6>
-				<div class="card">
-					<div class="card-body">
-						<form action="admin_list.html" method="post">
-							<div class="form-group">
-								<label for="user_id">이름</label>
-								<input type="text" id="user_id" class="form-control" value="user_name" readonly />
-							</div>
+<div class="container">
+	<h3>공지사항</h3>
+	<form action="/admin/notice_write_pro" method="post" th:object="${noticeBean}">
 
-							<div class="form-group">
-								<label for="user_email">*이메일</label>
-								<input type="text" id="user_email" class="form-control"/>
-							</div>
-
-							<div class="form-group">
-								<label for="board_title">*제목</label>
-								<input type="text" id="board_title" class="form-control"/>
-							</div>
-
-							<div class="form-group">
-								<label for="board_text">*내용</label>
-								<textarea id="board_text" class="form-control" rows="10" style="resize:none"></textarea>
-							</div>
-
-							<div class="form-group">
-								<label for="board_file">첨부 이미지</label>
-								<input type="file" id="board_file" class="form-control" accept="image/*"/>
-							</div>
-
-							<div class="form-group">
-								<div class="text-right">
-									<a href="admin_list.html" class="btn btn-outline-warning">뒤로가기</a>
-									&nbsp;
-									<a href="admin_read.html" class="btn btn-outline-primary" onclick="message()">작성하기</a>
-
-									<script>
-										function message() {
-											alert("작성이 완료되었습니다.");
-										}
-									</script>
-
-								</div>
-							</div>
-
-						</form>
-
-					</div>
-				</div>
+		<div class="form-group">
+			<label for="admin_id">*작성자</label>
+			<input type="text" id="admin_id" th:field="*{notice_writer_idx}" style="background-color: white;" />
 		</div>
-	</div>
+
+		<div class="form-group">
+			<label for="notice_title">*공지명</label>
+			<input type="text" id="notice_title" th:field="*{notice_title}" required/>
+		</div>
+
+		<div class="form-group">
+			<label for="notice_text">*내용</label>
+			<textarea id="notice_text" th:field="*{notice_text}" rows="10" style="resize:none;"></textarea>
+		</div>
+
+		<div class="form-action" style="margin-right: 25px;">
+			<button class="btn btn-outline-secondary" onclick="location.href='/admin/notice_admin_list'">뒤로가기</button>
+			<button class="btn btn-outline-secondary" onclick="write_notice()">공지등록</button>
+		</div>
+
+		<script>
+			function write_notice() {
+				alert('공지가 등록되었습니다.')
+
+				location.href = '/admin/notice_write?admin_idx=1' + [[${noticeBean.notice_idx}]];
+			}
+
+		</script>
+	</form>
 </div>
-<br /><hr />
-	
-<!-- 하단 -->
-<div id="footer">
-	<div th:replace="page_footer/footer.html :: footer-head"></div>
-	<div th:replace="page_footer/footer.html :: footer-body"></div>
-</div>
-	
+
 </body>
 </html>

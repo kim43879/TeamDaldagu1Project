@@ -46,49 +46,32 @@
 <div class="container mt-12" id="board_info">
 	<div class="row g-0">
 		<div class="col-md-10">
-
 			<h6 class="card-title"><b>&ensp;《공지사항》</b></h6>
 			<div class="card">
 				<div class="card-body">
-					<form action="notice_normal.html" method="post">
 
-						<div class="form-group">
-							<label for="user_id">이름</label>
-							<input type="text" id="user_id" class="form-control" value="관리자" readonly />
-						</div>
-						
-						<div class="form-group">
-							<label for="board_title">*제목</label>
-							<input type="text" id="board_title" class="form-control"/>
-						</div>
-						
-						<div class="form-group">
-							<label for="board_text">*내용</label>
-							<textarea id="board_text" class="form-control" rows="10" style="resize:none" readonly>
-								생명 그건 단지 우연일 뿐, 큰 우주의 아주 작은 사건일 뿐
-								미세한 세포를 복제하는 화학적 유전자 돌연변이
-								그것이 생명의 정체
+					<div class="form-group">
+						<label for="notice_title">*제목</label>
+						<input type="text" id="notice_title" class="form-control" th:value="${notice.notice_title}" style="background-color: white;" readonly/>
+					</div>
 
-								생명, 그건 신의 자연섭리. 함부로 다가설 수 없는 세계
-							</textarea>
-						</div>
-						
-						<div class="form-group">
-							<label for="board_file">첨부 이미지</label>
-							<div class="card">
-									<div class="card-body">
-									<img th:src="@{/img/sample5.jpg}" width="100%" id="board_file"/> <br />
-								</div>
-							</div>
-						</div>
+					<div class="form-group">
+						<label for="admin_id">*작성자</label>
+						<input type="text" id="admin_id" class="form-control" th:value="${notice.notice_writer_idx}" style="background-color: white;" readonly />
+					</div>
 
-						<div class="form-group">
-							<div class="text-right">
-								<a href="admin_list.html" class="btn btn-outline-info">뒤로가기</a>
-							</div>
+					<div class="form-group">
+						<label for="notice_text">*내용</label>
+						<textarea id="notice_text" class="form-control" rows="10" style="resize:none; background-color: white;" th:text="${notice.notice_text}" readonly>
+						</textarea>
+					</div>
+
+					<div class="form-group">
+						<div class="text-right">
+							<a href="/board/notice_normal" class="btn btn-outline-info">뒤로가기</a>
 						</div>
-						
-					</form>
+					</div>
+
 				</div>
 			</div>
 		</div>

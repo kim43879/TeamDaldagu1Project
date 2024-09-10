@@ -60,20 +60,21 @@
 <div class="main">
     <div class="dashboard">
         <h4>대시보드</h4>
-        <div class="card">
+        <div class="card" >
             <h5>사용자 수</h5>
-            <p>현재 총 사용자: 1023명</p>
+            <p th:text="'현재 총 사용자: ' +${user_cnt}+ '명'">현재 총 사용자: 1023명</p>
         </div>
 
         <div class="card">
             <h5>상품 수</h5>
-            <p>현재 총 상품: 432개</p>
+            <p th:text="'현재 총 상품: ' + ${goods_cnt} + '개'">현재 총 상품: 432개</p>
         </div>
 
         <div class="card">
             <h5>오늘의 주문</h5>
-            <p>오늘 총 주문: 58건</p>
+            <p th:text="'오늘 총 주문: ' + ${order_cnt} + '건'">오늘 총 주문: 58건</p>
         </div>
+
     </div>
 </div>
 

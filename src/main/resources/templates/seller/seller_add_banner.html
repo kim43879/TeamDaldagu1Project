@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>달다구리스</title>
+  <!-- bootstrap -->
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+  <script
+          src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script
+          src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script
+          src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+  <style>
+    .card-profile {
+        margin-top: 88px;
+        padding-left: 50px;
+    }
+
+    .card-wrapper {
+        margin-top: 20px;
+    }
+
+    #card1 {
+        width: 90%;
+        margin-top: -890px;
+        margin-left: 250px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    #card2 {
+        width: 90%;
+        margin-top: -690px;
+        margin-left: 250px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    #card3 {
+        width: 90%;
+        margin-top: -390px;
+        margin-left: 250px;
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- 상단메뉴 -->
+<div id="header">
+  <div th:replace="page_header/header.html :: header-head"></div>
+  <div th:replace="page_header/header.html :: header-body"></div>
+</div>
+
+<!-- 유저프로필 라인 -->
+<div id="profile">
+  <div th:replace="page_profile/profile.html :: profile-body"></div>
+</div>
+
+<!-- 판매자 메인 -->
+<main>
+  <div class="container mt-2 card-wrapper">
+    <div class="row">
+      <div class="col-md-9 text-center" id="card1">
+        <br /> <br />
+        <h4 class="display-5 fw-normal text-left" th:text="${sellerBean.selling_page_title}">판매자 MyPage</h4>
+        <br />
+        <div class="btn-group" role="group"
+             aria-label="Basic outlined example" th:replace="seller/import/menu_bar.html :: menu(flag=3,seller_idx=${sellerBean.seller_idx})">
+        </div>
+        <hr />
+        <br />
+
+        <!-- 디자인 수정하기 -->
+        <div class="container admin_container">
+          <h4 class="display-5 fw-normal text-left">상품 등록</h4>
+          <hr />
+
+          <div class="row ">
+            <div class="col-md-7 col-lg-8 text-center" style="margin: 0 auto;">
+
+              <div class="form-group productInfo text-left">
+                <form action="/seller/add_banner_pro" method="post" th:object="${addBannerInfoBean}" enctype="multipart/form-data">
+
+                  <div class="row g-3">
+                    <div class="col-sm-6">
+                      <label>판매자ID</label>
+                      <input name="bannerName" th:field="*{banner_name}" class="form-control" readonly required>
+                    </div>
+                    <br />
+
+                    <div class="form-group hidden-xs" id="fileDrop">
+                      <label for="input-img">대표 이미지.</label> <br>
+                      <input id="input-img" th:field="*{banner_file}" type="file" accept="image/*">
+                    </div>
+
+                  <input type="hidden" th:field="*{goods_idx}">
+                  <br /><br />
+
+                  </div>
+
+                  <div class="btn text-center">
+                    <button type="submit" class="btn btn-outline-info" id="btn_add_banner">배너신청</button>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- class = row -->
+      </div>
+    </div>
+  </div>
+</main>
+<br /> <br /> <br />
+<hr />
+
+<!-- 하단 -->
+<div id="footer">
+  <div th:replace="page_footer/footer.html :: footer-head"></div>
+  <div th:replace="page_footer/footer.html :: footer-body"></div>
+</div>
+
+</body>
+</html>

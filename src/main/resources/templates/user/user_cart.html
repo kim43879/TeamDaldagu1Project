@@ -81,7 +81,7 @@
                                 <input type="hidden" th:value="${cart.cart_idx}"
                                        th:attr="id='cart_idx' + ${index.index}"/>
                                 <div class="check" style="padding-top: 20px;">
-                                    <input type="checkbox" style="margin-left: 10px;" checked/>
+                                    <img th:src="@{'/img/goods/' + ${cart.goods_img}}" style="width: 150px; height: 150px">
                                     &emsp;
                                     <a th:href="@{/goods/goods_page(goods_idx=${cart.goods_idx})}"
                                        style="margin-left: 20px;" th:text="${cart.goods_name}"></a>

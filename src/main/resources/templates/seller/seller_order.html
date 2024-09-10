@@ -10,71 +10,62 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 	<style>
-		.card-profile {
-			margin-top: 88px;
-			padding-left: 50px;
-		}
+	.card-profile {
+		margin-top: 88px;
+		padding-left: 50px;
+	}
 
-		.card-wrapper {
-			margin-top: 20px;
-		}
+	.card-wrapper {
+		margin-top: 20px;
+	}
 
-		#card1 {
-			width: 90%;
-			margin-top: -990px;
-			margin-left: 250px;
-			padding-left: 20px;
-			padding-right: 20px;
-		}
-
-		#card2 {
-			width: 90%;
-			margin-top: -690px;
-			margin-left: 250px;
-			padding-left: 20px;
-			padding-right: 20px;
-		}
-
-		#card3 {
-			width: 90%;
-			margin-top: -390px;
-			margin-left: 250px;
-			padding-left: 20px;
-			padding-right: 20px;
-		}
+	#card1 {
+		width: 90%;
+		margin-top: -890px;
+		margin-left: 250px;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
+	#card2 {
+		width: 100%;
+		padding-left: 20px;
+		padding-right: 20px;
+	}
 	</style>
 </head>
 <body>
-	<!-- 상단메뉴 -->
-	<div id="header">
-		<div th:replace="page_header/header.html :: header-head"></div>
-		<div th:replace="page_header/header.html :: header-body"></div>
-	</div>
 
-	<!-- 유저프로필 라인 -->
-	<div id="profile">
-		<div th:replace="page_profile/profile.html :: profile-body"></div>
-	</div>
+<!-- 상단메뉴 -->
+<div id="header">
+	<div th:replace="page_header/header.html :: header-head"></div>
+	<div th:replace="page_header/header.html :: header-body"></div>
+</div>
 
+<!-- 유저프로필 라인 -->
+<div id="profile">
+	<div th:replace="page_profile/profile.html :: profile-body"></div>
+</div>
 
-	<!-- 판매자 메인 -->
-	<main>
-		<div class="container mt-2 card-wrapper">
-			<div class="row">
-				<div class="col-md-9 text-center" id="card1">
-					<br /> <br />
-					<h4 class="display-5 fw-normal text-left" th:text="${sellerBean.selling_page_title}">판매자 MyPage</h4>
-					<br />
+<!-- 판매자 메인 -->
+<main>
+	<div class="container mt-2 card-wrapper">
+		<div class="row">
+			<div class="col-md-9 text-center" id="card1">
+				<br /> <br />
+				<h4 class="display-5 fw-normal text-left" th:text="${sellerBean.selling_page_title}">판매자 MyPage</h4>
+				<br />
 
-					<div class="btn-group" role="group"
-						 aria-label="Basic outlined example" th:replace="seller/import/menu_bar.html :: menu(flag=2,seller_idx=${sellerBean.seller_idx})">
-					</div>
-					<hr /><br />
-					<!-- 디자인 수정하기 -->
-					<div class="container admin_container">
+				<div class="btn-group" role="group"
+					 aria-label="Basic outlined example" th:replace="seller/import/menu_bar.html :: menu(flag=2,seller_idx=${sellerBean.seller_idx})">
+				</div>
+				<hr /><br />
+
+				<!-- 디자인 수정하기 -->
+				<div class="container admin_container">
 					<h4 class="display-5 fw-normal text-left">받은 주문 내역</h4><hr />
-					
+
 					<div class="row">
+						<div class="card" id="card2">
 							<table class="table table-hover">
 								<thead>
 									<tr >

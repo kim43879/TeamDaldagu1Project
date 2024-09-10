@@ -142,6 +142,10 @@ public class OrderService {
         return orderMapper.getOrderCount(order_stat, user_idx);
     }
 
+    public int getOrderCnt(int seller_idx){
+        return orderMapper.getOrderCnt(seller_idx);
+    }
+
     public void deleteOrder(String order_idx){
         orderMapper.deleteOrderGoods(order_idx);
         orderMapper.deleteOrder(order_idx);

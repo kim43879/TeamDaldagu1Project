@@ -44,28 +44,20 @@
     <div th:replace="page_header/header.html :: header-body"></div>
 </div>
 
-<!-- 상품 메인 -->
-<div id="carouselExampleControls" class="carousel slide mt-5" data-ride="carousel" style="margin-left: 20%; margin-right: 20%;">
+<!-- 배너 -->
+<div id="carouselExampleControls" class="carousel slide mt-5" data-ride="carousel" style="margin-left: 20%; margin-right: 20%; padding-top: 2%;">
+    <!--상품 사진-->
     <div class="carousel-inner">
-        <div class="carousel-item active" id="carouselExampleControls1">
-            <a href="/goods/goods_page">
-            	<img th:src="@{/img/sample.jpg}" class="d-block w-100" alt="...">
-            </a>
-        </div>
-        
-        <div class="carousel-item" id="carouselExampleControls2">
-            <a href="/goods/goods_page">
-            	<img th:src="@{/img/sample.jpg}" class="d-block w-100" alt="...">
-            </a>
-        </div>
-        
-        <div class="carousel-item" id="carouselExampleControls3">
-            <a href="/goods/goods_page">
-            	<img th:src="@{/img/sample.jpg}" class="d-block w-100" alt="...">
+        <div class="carousel-item" th:each="banner, iterStat : ${bannerList}"
+             th:classappend="${iterStat.index == 0} ? 'active' : ''"
+             id="carouselExampleControls1">
+            <a th:href="@{/goods/goods_page(goods_idx=${banner.goods_idx})}">
+                <img th:src="@{'/img/banner/' + ${banner.banner_img}}" class="d-block w-100" alt="...">
             </a>
         </div>
     </div>
-    
+
+    <!--버튼-->
     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
@@ -74,7 +66,9 @@
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
         <span class="sr-only">Next</span>
     </a>
+
 </div>
+<br />
 <hr />
 
 <!-- 목록1 -->

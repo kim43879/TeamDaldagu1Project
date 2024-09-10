@@ -22,6 +22,8 @@ public class CartBean {
 
     private int option_idx; //옵션 idx
 
+    private String goods_img;
+
     public void addInfo(CartBean cartBean){
         this.goods_idx = cartBean.getGoods_idx();
         this.user_idx = cartBean.getUser_idx();

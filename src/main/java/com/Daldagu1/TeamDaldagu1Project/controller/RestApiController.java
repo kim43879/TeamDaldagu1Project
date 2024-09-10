@@ -3,6 +3,7 @@ package com.Daldagu1.TeamDaldagu1Project.controller;
 import com.Daldagu1.TeamDaldagu1Project.beans.*;
 import com.Daldagu1.TeamDaldagu1Project.service.*;
 import jakarta.annotation.Resource;
+import oracle.jdbc.proxy.annotation.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +41,9 @@ public class RestApiController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private BannerService bannerService;
 
     @PostMapping("/rest/idCheck")
     public String IdCheck(@RequestParam("user_id")String user_id){
@@ -102,6 +106,23 @@ public class RestApiController {
     @PostMapping("/rest/delete_wish")
     public void delete_wish(@RequestParam("wish_idx") int wish_idx) {
         wishService.deleteUserWish(wish_idx);
+    }
+
+    //배너 승인
+    @PostMapping("/rest/approve_banner")
+    public void approve_banner(@RequestParam("banner_idx") int banner_idx) {
+        bannerService.getBannerInfo(banner_idx);
+    }
+
+    //배너 반려
+    @PostMapping("/rest/denial_banner")
+    public void denial_banner(@RequestParam("banner_idx") int banner_idx) {
+        bannerService.refusedBanner(banner_idx);
+    }
+
+    @PostMapping("/rest/delete_banner")
+    public void delete_banner(@RequestParam("banner_idx") int banner_idx){
+        bannerService.deleteBanner(banner_idx);
     }
 
     //장바구니 추가

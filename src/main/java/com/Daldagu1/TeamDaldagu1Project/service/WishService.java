@@ -35,4 +35,15 @@ public class WishService {
     public void deleteUserWish(int wish_idx) {
         wishMapper.deleteUserWish(wish_idx);
     }
+
+    public boolean checkWish(int goods_idx, int user_idx){
+        WishBean wishBean = new WishBean();
+        wishBean.setGoods_idx(goods_idx);
+        wishBean.setUser_idx(user_idx);
+        if (wishMapper.checkWish(wishBean) == null){
+            return true;
+        } else{
+            return false;
+        }
+    }
 }

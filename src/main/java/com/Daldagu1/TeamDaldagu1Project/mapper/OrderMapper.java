@@ -73,4 +73,7 @@ public interface OrderMapper {
     @Delete("delete from order_table where order_idx = #{order_idx}")
     void deleteOrder(String order_idx);
 
+    @Select("select count(*) from order_table where seller_idx = #{seller_idx}")
+    int getOrderCnt(int seller_idx);
+
 }

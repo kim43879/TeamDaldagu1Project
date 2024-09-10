@@ -24,7 +24,6 @@
             padding-left: 20px;
             padding-right: 20px;
         }
-
         #card2 {
             width: 100%;
             padding-left: 20px;
@@ -64,33 +63,40 @@
                 <div class="container admin_container">
                     <h4 class="display-5 fw-normal text-left">상품 리스트</h4>
                     <hr/>
-                    <!-- 검색창 넣어 말어 -->
-                    <div class="row">
-                        <table class="table table-hover">
-                            <thead>
-                            <tr>
-                                <th>상품ID</th>
-                                <th>상품명</th>
-                                <th>상품가격</th>
-                                <th>재고</th>
-                                <th>상품분류</th>
-                                <th>상품 등록일</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr th:onclick="location.href='/seller/seller_product_read?goods_idx=' + [[${goods.goods_idx}]]" th:each="goods : ${goodsList}">
-                                    <td th:text="${goods.goods_idx}">12345</td>
-                                    <td th:text="${goods.goods_name}">티셔츠</td>
-                                    <td th:text="${goods.goods_price}">₩20,000</td>
-                                    <td th:text="${goods.goods_stock}">200</td>
-                                    <td th:text="${goods.goods_tag}">상의</td>
-                                    <td>ex)2023-05-08</td>
-                                </tr>
-                            </tbody>
-                        </table>
+
+                    <div class="row" style="text-align: center;">
+                        <div class="card" id="card2">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>상품ID</th>
+                                        <th>상품명</th>
+                                        <th>상품가격</th>
+                                        <th>재고</th>
+                                        <th>상품분류</th>
+                                        <th>수정/배너</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    <tr th:each="goods : ${goodsList}">
+                                        <td th:text="${goods.goods_idx}">12345</td>
+                                        <td th:text="${goods.goods_name}">티셔츠</td>
+                                        <td th:text="${goods.goods_price}">₩20,000</td>
+                                        <td th:text="${goods.goods_stock}">200</td>
+                                        <td th:text="${goods.goods_tag}">상의</td>
+                                        <td>
+                                            <button class="btn btn-outline-info btn-sm" th:onclick="location.href='/seller/seller_product_read?goods_idx=' + [[${goods.goods_idx}]]">수정</button>
+                                            <button class="btn btn-outline-success btn-sm" th:onclick="location.href='/seller/seller_add_banner?goods_idx=' + [[${goods.goods_idx}]]">등록</button>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <!-- class = row -->
                 </div>
+
             </div>
         </div>
     </div>

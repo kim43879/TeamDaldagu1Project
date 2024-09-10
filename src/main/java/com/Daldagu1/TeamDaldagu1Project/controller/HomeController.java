@@ -3,6 +3,8 @@ package com.Daldagu1.TeamDaldagu1Project.controller;
 import com.Daldagu1.TeamDaldagu1Project.beans.GoodsBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.SearchBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.UserBean;
+import com.Daldagu1.TeamDaldagu1Project.service.AdminService;
+import com.Daldagu1.TeamDaldagu1Project.service.BannerService;
 import com.Daldagu1.TeamDaldagu1Project.service.GoodsService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,7 +28,13 @@ public class HomeController {
     private UserBean loginUserBean;
 
     @Autowired
-    GoodsService goodsService;
+    private GoodsService goodsService;
+
+    @Autowired
+    private BannerService bannerService;
+
+    @Autowired
+    private AdminService adminService;
 
     @GetMapping("/")
     public String home(Model model){
@@ -37,12 +45,19 @@ public class HomeController {
             goodsList = goodsService.getGoodsListByTag(tag[i-1]);
             model.addAttribute("goodsList" + i, goodsList);
         }
+        model.addAttribute("bannerList", bannerService.getBannerList());
+
         return "main";
     }
 
     //관리자 메인
     @GetMapping("/admin_page")
-    public String admin_home(){
+    public String admin_home(Model model) {
+
+        model.addAttribute("user_cnt", adminService.getUserCnt());
+        model.addAttribute("goods_cnt", adminService.getGoodsCnt());
+        model.addAttribute("order_cnt", adminService.getOrderCnt());
+
         return "admin_page";
     }
 

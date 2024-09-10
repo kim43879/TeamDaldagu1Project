@@ -1,131 +1,113 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>달다구리스</title>
-  <!-- Bootstrap -->
-  <style>
-    body {
-        margin: 0;
-        padding: 0;
-    }
-    table {
-        width: 100%;
-        max-width: 100%;
-        border-collapse: collapse;
-        border-width: 1px;
-        border-color: #ddd;
-        border-style: solid;
-        text-align: center;
-    }
-    .table-container {
-        width: 100%;
-        overflow-x: auto;
-    }
-    th, td {
-        border-width: 1px;
-        border-color: #ddd;
-        border-style: solid;
-        padding: 8px;
-        text-align: center;
-    }
-    .container {
-        margin-top: 0;
-        margin-left: 200px;
-        padding: 10px;
-    }
-  </style>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>달다구리스</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        table {
+            width: 100%;
+            max-width: 100%;
+            border-collapse: collapse;
+            border-width: 1px;
+            border-color: #ddd;
+            border-style: solid;
+            text-align: center;
+        }
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+        }
+        th, td {
+            border-width: 1px;
+            border-color: #ddd;
+            border-style: solid;
+            padding: 8px;
+            text-align: center;
+        }
+        .container {
+            margin-top: 0;
+            margin-left: 200px;
+            padding: 10px;
+        }
+		#fixedBtn{
+			position: fixed;
+			padding: 8px;
+			background-color: white;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			right: 15px;
+			cursor: pointer;
+			z-index: 1000;
+		}
+		#fixedBtn:hover{
+			background-color: #e8eded;
+		}
+		.aLink {
+			color: #4e4f4f; !important;
+		}
+		.aLink:hover {
+			color: #26bdb3; !important;
+		}
+	</style>
+
 </head>
 <body>
 
 <!--메뉴-->
 <div id="administration">
-  <div th:replace="admin/admin_import/admin_menu.html :: administration-style"></div>
-  <div th:replace="admin/admin_import/admin_menu.html :: administration-head"></div>
-  <div th:replace="admin/admin_import/admin_menu.html :: administration-body"></div>
+	<div th:replace="admin/admin_import/admin_menu.html :: administration-style"></div>
+	<div th:replace="admin/admin_import/admin_menu.html :: administration-head"></div>
+	<div th:replace="admin/admin_import/admin_menu.html :: administration-body"></div>
 </div>
 
 <!-- 게시글 리스트 -->
 <div class="main">
-  <div>
-    <div class="container">
-      <h3>판매자 등록 신청 리스트</h3>
-      <div class="card">
-        <table>
-          <thead style="text-align: center;">
-          <tr>
-            <th>번호</th>
-            <th class="w-50">제목</th>
-            <th>작성자</th>
-            <th>작성일</th>
-            <th>조회수</th>
-          </tr>
-          </thead>
+	<div class="dashboard">
+		<div class="container">
+			<h3>공지사항</h3>
+				<div class="card">
+					<table>
+						<thead style="text-align: center;">
+							<tr>
+								<th>no.</th>
+								<th style="width: 750px;">제목</th>
+								<th>작성자</th>
+								<th>작성일</th>
+							</tr>
+						</thead>
 
-          <tbody>
-          <tr th:each="notice : ${noticeList}">
-            <td th:text="${noticeList.notice_idx}" class="text-center d-none d-md-table-cell"><b>공지</b></td>
-            <td th:text="${noticeList.notice_title}">
-              <a href="/board/notice_read" style="text-decoration: none;">필수공지</a>
-            </td>
-            <td th:text="${noticeList.notice_writer}" class="text-center d-none d-md-table-cell">관리자</td>
-            <td th:text="${noticeList.notice_date}" class="text-center d-none d-md-table-cell">2024-09-06</td>
-            <td th:text="${noticeList.view_count}" class="text-center d-none d-md-table-cell">1</td>
-          </tr>
+						<tbody>
+							<tr th:each="notice : ${noticeList}">
+								<td th:text="${notice.notice_idx}" id="notice_idx"><b>공지</b></td>
+								<td>
+									<a th:href="@{/admin/notice_admin_read(notice_idx = ${notice.notice_idx})}" th:text="${notice.notice_title}"
+									   style="text-decoration: none;" class="aLink">필수공지</a>
+								</td>
+								<td th:text="${notice.notice_writer_idx}">관리자</td>
+								<td th:text="${notice.notice_date}">2024-09-06</td>
+							</tr>
 
-          </tbody>
-        </table>
-      </div>
-      <br />
+						</tbody>
 
-      <!-- 페이지 -->
-      <div class="d-none d-md-block">
-        <ul class="pagination justify-content-center">
-          <li class="page-item">
-            <a href="#" class="page-link">&laquo;</a>
-          </li>
-          <li class="page-item">
-            <a href="#" class="page-link">1</a>
-          </li>
-          <li class="page-item">
-            <a href="#" class="page-link">2</a>
-          </li>
-          <li class="page-item">
-            <a href="#" class="page-link">3</a>
-          </li>
-          <li class="page-item">
-            <a href="#" class="page-link">4</a>
-          </li>
-          <li class="page-item">
-            <a href="#" class="page-link">5</a>
-          </li>
-          <li class="page-item">
-            <a href="#" class="page-link">&raquo;</a>
-          </li>
-        </ul>
-      </div>
+					</table>
+					<br />
 
-      <div class="d-block d-md-none">
-        <ul class="pagination justify-content-center">
-          <li class="page-item">
-            <a href="#" class="page-link">이전</a>
-          </li>
-          <li class="page-item">
-            <a href="#" class="page-link">다음</a>
-          </li>
-        </ul>
-      </div>
+					<div class="text-right">
+						<button id="fixedBtn" th:onclick="location.href='/admin/notice_write'">공지작성</button>
+					</div>
 
-      <div class="text-right">
-        <a href="/admin/notice_write" class="btn btn-outline-info">글쓰기</a>
-      </div>
-
-    </div>
-  </div>
+				</div>
+		</div>
+	</div>
 </div>
-<br /><hr />
+<br />
 
 </body>
 </html>
