@@ -92,7 +92,7 @@
 								</td>
 							</tr>
 
-							<tr id="no-wish-message" style="display: none;">
+							<tr id="no-wish-message" th:if="${#lists.isEmpty(cartBeanList)}">
 								<td colspan="3" class="empty-row"><b>찜한 내역이 없습니다.</b></td>
 							</tr>
 						</tbody>

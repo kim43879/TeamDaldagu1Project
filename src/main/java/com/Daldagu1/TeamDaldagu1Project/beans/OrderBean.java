@@ -21,4 +21,7 @@ public class OrderBean {
     
     private String goods_name;          //대표 상품 이름
     private int goods_idx;
+
+    private int add_point;              //해당주문으로 적립된 적립금
+    private int used_point;             //해당 주문에서 사용한 적립금
 }

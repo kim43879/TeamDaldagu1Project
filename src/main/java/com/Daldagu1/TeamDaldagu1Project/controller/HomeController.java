@@ -51,6 +51,10 @@ public class HomeController {
 
         return "not_login";
     }
+    @GetMapping("/not_seller")
+    public String not_seller(){
+        return "not_seller";
+    }
 
     @ModelAttribute("searchBean")
     public SearchBean getSearchBean() {

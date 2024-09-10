@@ -7,7 +7,7 @@
 <body>
 <script>
   alert("결제가 완료되었습니다!");
-  window.opener.location.href = "/order/payment/pay_complete?order_idx=" + '[[${order_idx}]]' + "&addr_idx=" + [[${addr_idx}]];
+  window.opener.location.href = "/order/payment/pay_complete?order_idx=" + '[[${order_idx}]]' + "&addr_idx=" + [[${addr_idx}]] + '&used_point=' + [[${used_point}]];
   window.opener.focus();
   window.close();
 </script>

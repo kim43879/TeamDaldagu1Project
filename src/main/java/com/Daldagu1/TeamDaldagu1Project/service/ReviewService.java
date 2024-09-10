@@ -65,6 +65,10 @@ public class ReviewService {
 
         return reviewMapper.getReviewListForSeller(seller_idx);
     }
+
+    public List<ReviewBean> getReviewListForUser(int user_idx){
+        return reviewMapper.getReviewListForUser(user_idx);
+    }
     public PageBean getReviewCount(int goods_idx, int current_page){
 
         int reviewCount = reviewMapper.getReviewCount(goods_idx);
@@ -72,5 +76,15 @@ public class ReviewService {
         PageBean pageBean = new PageBean(reviewCount, current_page, page_list, paginationcnt);
 
         return pageBean;
+    }
+
+    public PageBean getReviewCountForUser(int user_idx, int current_page){
+        int reviewCount = reviewMapper.getReviewCountByUser(user_idx);
+        PageBean pageBean = new PageBean(reviewCount, current_page, page_list, paginationcnt);
+        return pageBean;
+    }
+
+    public int getReviewCountForUser(int user_idx){
+        return reviewMapper.getReviewCountByUser(user_idx);
     }
 }

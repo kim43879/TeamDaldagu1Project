@@ -120,7 +120,7 @@
 
           </table>
           <hr />
-          <h6 th:text="'금액합계 : ' + ${amount}" style="float: left">&ensp;*옵션: goods_option</h6>
+          <h6 th:text="'금액합계 : ' + ${amount} + '(' + ${amount} + '-' + ${orderBean.used_point} + ')'" style="float: left">&ensp;*옵션: goods_option</h6>
           <button th:onclick="orderProcess([[${orderBean.order_idx}]])" style="float: right">주문 단계 진행</button>
         </div>
 
@@ -199,7 +199,7 @@
       data: {order_idx : orderIdx},
       success: function() {
         alert('주문이 다음단계로 넘어갔습니다.');
-        window.reload();
+        location.href = "/seller/seller_order?page=" + [[${page}]];
       }
     });
   }

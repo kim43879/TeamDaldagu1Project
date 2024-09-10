@@ -63,6 +63,10 @@ public class UserBean {
     private int seller_idx;
 
     private String membership;
+    
+    private int total_user_point;   //총 적립금
+    private int used_user_point;    //사용한 적립금
+    private int current_point;      //사용 가능한 적립금
 
     //각 필드를 출력하는 메서드(seller_idx, loginCheck, id_check 제외)
     public void printUserBean(){
@@ -121,6 +125,9 @@ public class UserBean {
                     break;
             default: this.membership = "UnMembers";
         }
+        this.total_user_point = tempUserBean.getTotal_user_point();
+        this.used_user_point = tempUserBean.getUsed_user_point();
+        this.current_point = total_user_point - used_user_point;
     }
 
 

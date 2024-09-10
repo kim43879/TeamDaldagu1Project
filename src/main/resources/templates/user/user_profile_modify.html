@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>프로필 변경</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+<body>
+<div class="image-container" style="border-color: Gray;">
+    <img th:src="@{'/img/user_profile/' + ${loginUserBean.user_profile_img}}" class="card-img-top" id="img" style="width:240px; height:240px;">
+    <button type="button" class="btn btn-outline-info hidden-button" id="change-image-btn" style="width:100%;">이미지 변경</button>
+    <input type="file" id="image-input" style="display: none;" accept="image/*">
+
+    <script>
+        document.getElementById('change-image-btn').addEventListener('click', function() {
+            document.getElementById('image-input').click();
+        });
+
+        document.getElementById('image-input').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.querySelector('.image-container img').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+
+    <div>
+        <label for="profile_text">프로필 설명글</label>
+        <input type="text" id="profile_text">
+        <button type="button" class="btn btn-outline-info" id="save-btn" onclick="profileModify()">설명글 변경</button>
+    </div>
+
+    <script th:inline="javascript">
+        function profileModify() {
+            let newProfileText = $('#profile_text').val();
+
+            if(newProfileText === [[${loginUserBean.user_profile_text}]] || newProfileText === ''){
+                alert('변경하려는 글이 없거나 이전과 동일합니다.')
+            }else{
+                $.ajax({
+                    url: '/rest/modify_profile_text',
+                    type: 'post',
+                    data: {
+                        "user_idx": [[${loginUserBean.user_idx}]],
+                        "user_profile_text": newProfileText
+                    },
+                    success: function(response) {
+                        alert('프로필 정보를 성공적으로 변경하였습니다.');
+                        location.reload();
+                    }
+                })
+            }
+
+        }
+    </script>
+</div>
+</body>
+</html>

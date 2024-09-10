@@ -64,7 +64,7 @@ public class SellerController {
     @GetMapping("/seller_page")
     public String sellerPage(Model model){
 
-        List<OrderBean> list = orderService.getOrderListBySeller(loginUserBean.getSeller_idx());
+        List<OrderBean> list = orderService.getOrderListBySeller(loginUserBean.getSeller_idx(),1);
         List<ReviewBean> reviewList = reviewService.getReviewListForSeller(loginUserBean.getSeller_idx());
 
         System.out.println(reviewList.size());
@@ -89,25 +89,32 @@ public class SellerController {
     }
 
     @GetMapping("/seller_order")
-    public String sellerOrder(Model model){
+    public String sellerOrder(@RequestParam(name = "page", defaultValue = "1")int page, Model model){
+
+        PageBean pageBean = orderService.getOrderCountForSeller(loginUserBean.getSeller_idx(),page);
+
         model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(loginUserBean.getSeller_idx()));
-        model.addAttribute("orderList", orderService.getOrderListBySeller(loginUserBean.getSeller_idx()));
+        model.addAttribute("orderList", orderService.getOrderListBySeller(loginUserBean.getSeller_idx(),page));
+        model.addAttribute("pageBean", pageBean);
+        model.addAttribute("page", page);
         return "seller/seller_order";
     }
 
     @GetMapping("/order_read")
-    public String sellerOrderRead(@RequestParam("order_idx") String order_idx, Model model){
+    public String sellerOrderRead(@RequestParam("page")int page, @RequestParam("order_idx") String order_idx, Model model){
         OrderBean orderBean = orderService.getOrder(order_idx);
         List<OrderGoodsBean> list = orderService.getOrderGoodsList(order_idx);
         int amount = 0;
         for(OrderGoodsBean bean : list){
             amount += bean.getPrice();
         }
+        amount -= orderBean.getUsed_point();
 
         model.addAttribute("orderBean", orderBean);
         model.addAttribute("goodsList", list);
         model.addAttribute("addrBean", addrService.getAddrByAddrIdx(orderBean.getAddr_idx()));
         model.addAttribute("amount", amount);
+        model.addAttribute("page", page);
         return "seller/order_read";
     }
 

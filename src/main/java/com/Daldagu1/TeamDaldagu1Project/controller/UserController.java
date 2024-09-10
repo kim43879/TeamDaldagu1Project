@@ -48,6 +48,9 @@ public class UserController {
     @Autowired
     CartService cartService;
 
+    @Autowired
+    ReviewService reviewService;
+
     @GetMapping("/user/login")
     public String login(Model model, @RequestParam(name = "fail", defaultValue = "false") boolean fail){
         model.addAttribute("userBean", new UserBean());
@@ -111,8 +114,10 @@ public class UserController {
         model.addAttribute("userBean", loginUserBean);
         model.addAttribute("wishBeanList", wishService.getUserWishList(loginUserBean.getUser_idx()));
         model.addAttribute("orderList", orderList);
+        model.addAttribute("order_before_pay_cnt", orderService.getOrderCount(1, loginUserBean.getUser_idx()));
         model.addAttribute("orderCount", orderList.size());
         model.addAttribute("cartCount", cartService.getCartCnt(loginUserBean.getUser_idx()));
+        model.addAttribute("reviewCnt", reviewService.getReviewCountForUser(loginUserBean.getUser_idx()));
         return "user/user_page";
     }
 
@@ -128,7 +133,11 @@ public class UserController {
     }
 
     @GetMapping("/user/user_review")
-    public String user_review(){
+    public String user_review(@RequestParam(name = "page", defaultValue = "1") int page, Model model){
+
+        model.addAttribute("reviewList", reviewService.getReviewListForUser(loginUserBean.getUser_idx()));
+        model.addAttribute("pageBean", reviewService.getReviewCountForUser(loginUserBean.getUser_idx(), page));
+
         return "user/user_review";
     }
 
@@ -183,7 +192,11 @@ public class UserController {
     }
 
     @GetMapping("/user/user_point")
-    public String user_point(){
+    public String user_point(Model model){
+
+        model.addAttribute("loginUserBean", loginUserBean);
+        model.addAttribute("orderList", orderService.getOrderListByUser(loginUserBean.getUser_idx()));
+
         return "user/user_point";
     }
 

@@ -2,7 +2,9 @@ package com.Daldagu1.TeamDaldagu1Project.service;
 
 import com.Daldagu1.TeamDaldagu1Project.beans.OrderBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.OrderGoodsBean;
+import com.Daldagu1.TeamDaldagu1Project.beans.PageBean;
 import com.Daldagu1.TeamDaldagu1Project.mapper.OrderMapper;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +29,14 @@ public class OrderService {
     }
 
     //주문 리스트
-    public List<OrderBean> getOrderListBySeller(int seller_idx) {
-        List<OrderBean> list = orderMapper.getOrderListBySeller(seller_idx);
+    public List<OrderBean> getOrderListBySeller(int seller_idx, int page) {
+
+        int start = (page - 1) * 5;
+        RowBounds rowBounds = new RowBounds(start, 5);
+
+        System.out.println("start: " + start);
+
+        List<OrderBean> list = orderMapper.getOrderListBySellerPage(seller_idx, rowBounds);
         for (OrderBean orderBean : list){
             int quantity = 0;
             int price = 0;
@@ -40,7 +48,7 @@ public class OrderService {
                 price += goodsBean.getPrice();
             }
             orderBean.setQuantity(quantity);
-            orderBean.setOrder_price(price);
+            orderBean.setOrder_price(price - orderBean.getUsed_point());
             orderBean.setOrder_statText(setOrderStatMessage(orderBean.getOrder_stat()));
         }
         return list;
@@ -122,8 +130,8 @@ public class OrderService {
         return orderMapper.getOrder(order_idx);
     }
 
-    public void orderPaymentSuccess(String order_idx){
-        orderMapper.orderPaymentSuccess(order_idx);
+    public void orderPaymentSuccess(String order_idx, int add_point, int used_point){
+        orderMapper.orderPaymentSuccess(order_idx,add_point, used_point);
     }
 
     public void setOrderMessage(String message, String order_idx){
@@ -173,5 +181,13 @@ public class OrderService {
         int currentProcess = orderMapper.getOrderStat(order_idx);
         currentProcess += 1;
         orderMapper.nextOrderProcess(currentProcess, order_idx);
+    }
+
+    //판매자 페이징
+    public PageBean getOrderCountForSeller(int seller_idx, int current_page){
+        System.out.println(orderMapper.getOrderListBySeller(seller_idx).size());
+        int order_count = orderMapper.getOrderListBySeller(seller_idx).size();
+        PageBean pageBean = new PageBean(order_count, current_page, 5, 10);
+        return pageBean;
     }
 }

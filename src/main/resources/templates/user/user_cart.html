@@ -101,7 +101,7 @@
                             </td>
                         </tr>
 
-                        <tr id="no-cart-message" style="display: none;">
+                        <tr id="no-cart-message" th:if="${#lists.isEmpty(cartBeanList)}">
                             <td colspan="5" class="empty-row"><b>장바구니가 비었습니다.</b></td>
                         </tr>
 

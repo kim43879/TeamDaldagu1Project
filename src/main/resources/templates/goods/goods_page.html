@@ -535,7 +535,7 @@
 </div>
 <br/>
 <div class="d-none d-md-block">
-    <ul class="pagination justify-content-center">
+    <ul class="pagination justify-content-center" th:if="${!#lists.isEmpty(reviewList)}">
         <li class="page-item" th:classappend="${pageBean.currentPage == 1} ? 'disabled'">
             <a th:href="@{|/goods/goods_page?goods_idx=${goods.goods_idx}&page=${pageBean.prevPage}|}" class="page-link">&laquo;</a>
         </li>

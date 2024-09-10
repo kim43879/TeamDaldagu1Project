@@ -60,6 +60,12 @@ public interface UserMapper {
     @Update("update user_table set user_phone = #{user_phone} where user_idx = #{user_idx}")
     void modifyPhone(@Param("user_idx") int userIdx, @Param("user_phone") String newPhone);
 
+    @Select("select total_user_point, used_user_point from user_table where user_idx = #{user_idx}")
+    UserBean getPoint(@Param("user_idx") int user_idx);
+
+    @Update("update user_table set total_user_point = #{nextTotalPoint}, used_user_point = #{nextUsedPoint} where user_idx = #{user_idx}")
+    void calcPoint(@Param("nextTotalPoint") int nextTotalPoint,@Param("nextUsedPoint") int nextUsedPoint, @Param("user_idx") int user_idx);
+
     //회원탈퇴
     @Update("update user_table set user_available = 'F' where user_idx = #{user_idx}")
     void deSignUp(int user_idx);

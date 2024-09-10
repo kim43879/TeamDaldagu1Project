@@ -13,6 +13,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -164,6 +165,23 @@ public class UserService {
         userMapper.deSignUp(user_idx);
         sellerMapper.deSignUp(seller_idx);
         goodsMapper.deSignUp(seller_idx);
+    }
+
+    public void updateProfile(MultipartFile profile_img, String profile_text){
+
+    }
+
+    public void calcPoint(int add_point, int point_to_use){
+        int nextTotalPoint = loginUserBean.getTotal_user_point() + add_point;
+        int nextUsedPoint = loginUserBean.getUsed_user_point() + point_to_use;
+        userMapper.calcPoint(nextTotalPoint, nextUsedPoint, loginUserBean.getUser_idx());
+
+        UserBean tempUserBean = userMapper.getPoint(loginUserBean.getUser_idx());
+        loginUserBean.setTotal_user_point(tempUserBean.getTotal_user_point());
+        loginUserBean.setUsed_user_point(tempUserBean.getUsed_user_point());
+        int currentTotalPoint = tempUserBean.getTotal_user_point();
+        int currentUsedPoint = tempUserBean.getUsed_user_point();
+        loginUserBean.setCurrent_point(currentTotalPoint - currentUsedPoint);
     }
 }
 

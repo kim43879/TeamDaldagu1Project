@@ -85,21 +85,21 @@
                         <div class="tb-center border-secondary">총적립금:</div>
                     </th>
                     <td>
-                        <div class="tb-right"><b>0</b>원</div>
+                        <div class="tb-right"><b th:text="${loginUserBean.total_user_point}">0</b>원</div>
                     </td>
 
                     <th>
                         <div class="tb-center">사용 적립금:</div>
                     </th>
                     <td>
-                        <div class="tb-right"><b>0</b>원</div>
+                        <div class="tb-right"><b th:text="${loginUserBean.used_user_point}">0</b>원</div>
                     </td>
 
                     <th>
                         <div class="tb-center">사용가능 적립금:</div>
                     </th>
                     <td>
-                        <div class="rb-right"><b>0</b>원</div>
+                        <div class="rb-right"><b th:text="${loginUserBean.current_point}">0</b>원</div>
                     </td>
                 </tr>
              </tbody>
@@ -112,18 +112,17 @@
           <thead>
               <tr>
                   <th>주문일</th>
-                  <th>적립금</th>
                   <th>관련 주문</th>
-                  <th>적립내용</th>
+                  <th>적립금</th>
+
               </tr>
           </thead>
 
           <tbody>
-              <tr>
-                  <td>2024-08-18</td>
-                  <td>190원</td>
-                  <td>order_idx</td>
-                  <td>구매에 대한 적립</td>
+              <tr th:each="order : ${orderList}">
+                  <td th:text="${order.order_date}">2024-08-18</td>
+                  <td th:text="${order.order_idx}">order_idx</td>
+                  <td th:text="${order.add_point} + '원'">190원</td>
               </tr>
 
           </tbody>

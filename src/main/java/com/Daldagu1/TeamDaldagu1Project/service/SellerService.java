@@ -1,5 +1,6 @@
 package com.Daldagu1.TeamDaldagu1Project.service;
 
+import com.Daldagu1.TeamDaldagu1Project.beans.PageBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.SellerBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.SellerInfoBean;
 import com.Daldagu1.TeamDaldagu1Project.mapper.SellerMapper;
@@ -48,6 +49,6 @@ public class SellerService {
     }
 
     public void deSignUp(int seller_idx){
-        
+        sellerMapper.deSignUp(seller_idx);
     }
 }

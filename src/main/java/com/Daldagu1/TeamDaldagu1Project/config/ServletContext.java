@@ -48,7 +48,6 @@ public class ServletContext implements WebMvcConfigurer {
         UserPageAuthInterceptor userPageAuthInterceptor = new UserPageAuthInterceptor(loginUserBean);
         InterceptorRegistration reg2 = registry.addInterceptor(userPageAuthInterceptor);
         reg2.addPathPatterns("/user/*");
-        reg2.addPathPatterns("/seller/*");
         reg2.excludePathPatterns("/user/login","/user/join","user/status/*","/user/logout","/user/login_pro","/user/join_pro");
 
         SellerPageAuthInterceptor sellerPageAuthInterceptor = new SellerPageAuthInterceptor(loginUserBean);

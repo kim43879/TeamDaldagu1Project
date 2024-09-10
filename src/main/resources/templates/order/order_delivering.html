@@ -77,21 +77,10 @@
 <!-- 상품구매 정보 -->
 <div class="container-list">
 	<div class="tabs" id="tab1">
-		<h6><b>《주문조회》</b></h6>
+		<h6><b>《배송 중 주문조회》</b></h6>
 		<hr />
 
 	</div>
-
-	<div class="filter" id="tab2">
-		<select>
-			<option>배송중</option>
-		</select>
-		<input type="date" value="2024-05-24" style="text-align: center;">
-		~ &nbsp;
-		<input type="date" value="2024-08-22" style="text-align: center;">
-		<button class="btn btn-outline-info">조회</button>
-	</div>
-	<br />
 
 	<div class="card" id="tab3">
 		<table class="table">
@@ -111,8 +100,8 @@
 					<a th:href="@{/user/order_read(order_idx = ${order.order_idx})}" th:text="${order.order_idx}"></a>
 				</td>
 				<td th:text="${order.goods_name}"></td>
-				<td th:text="${order.quantity}"></td>
-				<td th:text="${order.order_price}"></td>
+				<td th:text="${order.quantity} + '개'"></td>
+				<td th:text="${order.order_price - order.used_point} + '원'"></td>
 			</tr>
 			<tr th:if="${#lists.isEmpty(orderList)}">
 				<td colspan="6" class="empty-row">주문 내역이 없습니다.</td>

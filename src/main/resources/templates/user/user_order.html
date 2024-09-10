@@ -154,7 +154,7 @@
                         <td>
                            <a th:href="@{/goods/goods_page(goods_idx=${order.goods_idx})}" th:text="${order.goods_name}" class="card-link">루안</a>
                         </td>
-                        <td th:text="${order.order_price} + '원'">1,212,980</td>
+                        <td th:text="${order.order_price - order.used_point} + '원'">1,212,980</td>
                      </tr>
                      <tr th:if="${#lists.isEmpty(orderList)}">
                         <td colspan="3" style="text-align: center;">관심상품이 없습니다.</td>

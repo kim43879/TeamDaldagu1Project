@@ -92,7 +92,7 @@
 											<img th:src="@{'/img/goods/' + ${order.sample_img}}" style="width:100px; height:100px">
 										</td>
 										<td colspan="2" style="text-align: center;">
-											<a th:href="@{/seller/order_read(order_idx = ${order.order_idx})}" th:text="${order.order_idx}"></a>
+											<a th:href="@{/seller/order_read(page= ${page},order_idx = ${order.order_idx})}" th:text="${order.order_idx}"></a>
 										</td>
 										<td th:text="${order.quantity} + '개'"></td>
 										<td th:text="${order.order_price} + '원'"></td>
@@ -106,27 +106,15 @@
 					<br><br>
 						<!-- 페이지 -->
 						<div class="d-none d-md-block">
-							<ul class="pagination justify-content-center">
-								<li class="page-item">
-									<a href="#" class="page-link">&laquo;</a>
+							<ul class="pagination justify-content-center" th:if="${!#lists.isEmpty(orderList)}">
+								<li class="page-item" th:classappend="${pageBean.currentPage == 1} ? 'disabled'">
+									<a th:href="@{|/seller/seller_order?page=${pageBean.prevPage}|}" class="page-link">&laquo;</a>
 								</li>
-								<li class="page-item">
-									<a href="#" class="page-link">1</a>
+								<li class="page-item" th:each="i : ${#numbers.sequence(pageBean.min, pageBean.max)}" th:classappend="${pageBean.currentPage == i} ? 'active'">
+									<a th:href="@{|/seller/seller_order?page=${i}|}" class="page-link" th:text="${i}"></a>
 								</li>
-								<li class="page-item">
-									<a href="#" class="page-link">2</a>
-								</li>
-								<li class="page-item">
-									<a href="#" class="page-link">3</a>
-								</li>
-								<li class="page-item">
-									<a href="#" class="page-link">4</a>
-								</li>
-								<li class="page-item">
-									<a href="#" class="page-link">5</a>
-								</li>
-								<li class="page-item">
-									<a href="#" class="page-link">&raquo;</a>
+								<li class="page-item" th:classappend="${pageBean.currentPage == pageBean.pageCnt} ? 'disabled'">
+									<a th:href="@{|/seller/seller_order?page=${pageBean.nextPage}|}" class="page-link">&raquo;</a>
 								</li>
 							</ul>
 						</div>
