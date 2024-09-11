@@ -9,8 +9,8 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
     //회원가입
-    @Insert("insert into user_table (user_idx, user_id, user_pw, user_name, user_email, user_phone, user_role, user_available, user_daily, membership_idx, user_birth,user_profile_img, user_profile_text)" +
-            "values (user_seq.nextval, #{user_id}, #{user_pw}, #{user_name}, #{user_email}, #{user_phone}, 'D', 'T', 0, 1, #{user_birth}, 'default_profile.png', '메세지가 아직 없습니다.')")
+    @Insert("insert into user_table (user_idx, user_id, user_pw, user_name, user_email, user_phone, user_role, user_available, user_daily, membership_idx, user_birth,user_profile_img, user_profile_text, total_user_point, used_user_point)" +
+            "values (user_seq.nextval, #{user_id}, #{user_pw}, #{user_name}, #{user_email}, #{user_phone}, 'D', 'T', 0, 1, #{user_birth}, 'default_profile.png', '메세지가 아직 없습니다.', 0, 0)")
     void addUser(UserBean userBean);
 
     //id로 idx 가져오기
@@ -70,6 +70,6 @@ public interface UserMapper {
     void updateProfile(@Param("user_profile_img") String user_profile_img,@Param("user_idx") int user_idx);
 
     //회원탈퇴
-    @Update("update user_table set user_available = 'F' where user_idx = #{user_idx}")
+    @Update("update user_table set user_available = 'F', user_id = '' where user_idx = #{user_idx}")
     void deSignUp(int user_idx);
 }

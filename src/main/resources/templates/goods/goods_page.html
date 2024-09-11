@@ -81,6 +81,13 @@
             max-height: 100%;              /* 이미지가 div를 넘어가지 않도록 설정 */
             object-fit: contain;           /* 이미지 비율을 유지하면서 적절히 맞춤 */
         }
+        .card-link {
+            color: #343434;
+            text-decoration: none;
+        }
+        .card-link:hover {
+            color: #b59e59;
+        }
 
         /*별점*/
                 #reviewScore{
@@ -166,12 +173,12 @@
         <div class="col-sm-6" id="cardd1">
             <div class="card">
                 <div class="card-body" style="margin-left: 5%; margin-right: 5%">
-                    <a th:href="@{/goods/goods_seller(seller_idx=${goods.seller_idx})}" th:text="${seller_id}" style="text-decoration: none;">판매자1</a> <br/>
+                    <h6 th:text="'판매자: ' + ${seller_id}">판매자1</h6>
                     <!-- user_name(seller) -->
                     <h5>상품명: <b th:text="${goods.goods_name}">goods_name</b></h5>
                     <hr/>
                     <h6 th:text="'상품코드: ' + ${goods.goods_idx}" style="display: none;">상품코드: goods_idx</h6>
-                    <h6>금액: <strong th:text="${goods.goods_price}">goods_price</strong></h6>
+                    <h6>금액: <strong th:text="${goods.goods_price}+원">goods_price</strong></h6>
                     <h6 id="point">적립금: 0원</h6>
                     <hr/>
 
@@ -486,7 +493,7 @@
         <div class="row" id="review">
             <div class="col-md-8">
                 <div class="card-body" style="text-align: center;">
-                    &emsp;<b>등록된 리뷰가 없습니다.</b>
+                    &emsp;<b style="text-align: center;">등록된 리뷰가 없습니다.</b>
                 </div>
             </div>
         </div>
@@ -495,12 +502,14 @@
 
     <div class="card mb-12" style="height: 100%;">
         <div class="row">
-            <div class="col-md-3" style="width: 5%;">
-                <img th:src="@{/img/upload/리뷰이미지등록.png}" id="review_img" class="img-fluid rounded-start"/>
+            <div class="col-md-3" style="width: 5%; display: flex; margin-left: 55px; margin-top: 55px;">
+                <img th:src="@{/img/upload/리뷰이미지등록.png}" id="review_img" style="width: 150px; height: 150px;"/>
             </div>
             <div class="col-md-8" style="height:100%;">
                 <div class="card-body">
                     <h6 th:text="${loginUserBean.user_id}" class="card-title">user_name</h6>
+                    <h6 th:if="${!loginUserBean.loginCheck}">Guest</h6>
+
                     <div id="reviewScore">
                         <input type="radio" name="review_score" value="5" id="rate5">
                         <label for="rate5">☆</label>
@@ -514,10 +523,14 @@
                         <label for="rate1">☆</label>
                     </div>
                     <input type="text" id="review_title" placeholder="리뷰 제목" class="form-control mb-2"/>
-                    <textarea id="review_content" placeholder="리뷰 내용을 입력하세요" class="form-control"></textarea>
+                    <textarea id="review_content" placeholder="리뷰 내용을 입력하세요." class="form-control"></textarea>
                     <input type="file" id="review_file" style="display: none;" accept="image/*">
-                    <button type="button" class="btn btn-outline-info mt-2" id="imgBtn">사진</button>
-                    <button type="button" class="btn btn-outline-info mt-2" onclick="addReview()">등록</button>
+
+                    <div style="text-align: right;">
+                        <button type="button" class="btn btn-outline-info mt-2" id="imgBtn">사진</button>
+                        <button type="button" class="btn btn-outline-info mt-2" onclick="addReview()">등록</button>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -526,8 +539,8 @@
     <!-- 기존 리뷰 반복 -->
     <div th:each="review : ${reviewList}" class="card mb-12" style="height: 100%;">
         <div class="row">
-            <div class="col-md-3" style="width: 5%;">
-                <img th:src="@{'/img/upload/' + ${review.review_img}}" id="img" class="img-fluid rounded-start"/>
+            <div class="col-md-3" style="width: 5%; display: flex; margin-left: 20px; margin-top: 20px;">
+                <img th:src="@{'/img/upload/' + ${review.review_img}}" id="img" style="width: 150px; height: 150px;"/>
             </div>
             <div class="col-md-8">
                 <div class="card-body">
@@ -544,6 +557,7 @@
 
 </div>
 <br/>
+
 <div class="d-none d-md-block">
     <ul class="pagination justify-content-center" th:if="${!#lists.isEmpty(reviewList)}">
         <li class="page-item" th:classappend="${pageBean.currentPage == 1} ? 'disabled'">
@@ -566,16 +580,18 @@
     <h6><b>‼상품추천‼ 이런상품은 어때요?</b></h6>
     <div class="row">
         <div class="col-md-3" th:each="goodsBean,state : ${goods_list}">
-            <div class="card" style="width: 100%;" th:if="${state.index < 4}">
-                <div class="card-img">
-                    <img th:src="@{'/img/goods/' + ${goodsBean.goods_img}}" class="card-img-top" alt="image" />
+            <a th:href="@{/goods/goods_page(goods_idx=${goodsBean.goods_idx})}" class="card-link" style="text-decoration: none;">
+                <div class="card" style="width: 100%; height:337.38px;" th:if="${state.index < 4}">
+                    <div class="card-img">
+                        <img th:src="@{'/img/goods/' + ${goodsBean.goods_img}}" class="card-img-top" alt="image" />
+                    </div>
+
+                    <div class="card-body" style="text-align: center;">
+                        <h6 class="card-title" th:text="${goodsBean.goods_name}" style="font-weight: bold;">goods_name</h6>
+                        <p class="card-text" th:text="${goodsBean.goods_price} + '원'">goods_price</p>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${goodsBean.goods_name}">goods_name</h5>
-                    <p class="card-text" th:text="${goodsBean.goods_price} + '원'">goods_price</p>
-                    <a th:href="@{/goods/goods_page(goods_idx=${goodsBean.goods_idx})}" class="btn btn-outline-info">상품보기</a>
-                </div>
-            </div>
+            </a>
         </div>
     </div>
 </div>
@@ -586,7 +602,6 @@
 <div id="footer">
     <div th:replace="page_footer/footer.html :: footer-head"></div>
     <div th:replace="page_footer/footer.html :: footer-body"></div>
-    <a href="https://www.flaticon.com/kr/free-icons/" title="등록 아이콘">리뷰 이미지 등록 아이콘 제작자: AlexViazovska - Flaticon</a>
 </div>
 
 <!-- Bootstrap JS, Popper.js, jQuery -->

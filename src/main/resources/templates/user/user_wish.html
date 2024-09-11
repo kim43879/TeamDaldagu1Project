@@ -32,7 +32,7 @@
         }
         #card1 {
             width: 100%;
-            margin-top: -890px; margin-left:300px; padding-left: 8%; padding-right: 8%;
+            margin-top: -850px; margin-left:300px; padding-left: 8%; padding-right: 8%;
         }
         .empty-row {
             text-align: center;
@@ -79,14 +79,14 @@
 									<div class="check" style="width: 200px; display: flex; align-items: center; margin-top: auto;">
 										&emsp;
 										<a th:href="@{/goods/goods_page(goods_idx=${wish.goods_idx})}">
-											<img th:src="@{'/img/goods/' + ${wish.goods_img}}" style="width: 90%;">
+											<img th:src="@{'/img/goods/' + ${wish.goods_img}}" style="width: 100px; height: 100px">
 										</a>
 										<h6 th:text="${wish.goods_name}" style="margin-left: 20px;"></h6>
 									</div>
 								</th>
 
-								<td style="padding-top: 35px;" th:text="${wish.goods_price}"></td>
-								<td style="padding-top: 35px;">
+								<td style="padding-top: 40px;" th:text="${wish.goods_price}"></td>
+								<td style="padding-top: 40px;">
 									<button type="submit" class="btn btn-outline-secondary btn-sm" th:onclick="delete_wish([[${index.index}]])">상품삭제</button>
 								</td>
 							</tr>

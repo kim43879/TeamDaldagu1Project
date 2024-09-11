@@ -32,21 +32,24 @@
 	}
 	#card1{
 		width: 90%;
-		margin-top: -890px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+		margin-top: -850px; margin-left:250px; padding-left: 20px; padding-right: 20px;
 	}
 	#card2 {
 		width: 90%;
-		margin-top: -665px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+		margin-top: -620px; margin-left:250px; padding-left: 20px; padding-right: 20px;
 	}
 	#card3 {
 		width: 90%;
-		margin-top: -400px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+		margin-top: -450px; margin-left:250px; padding-left: 20px; padding-right: 20px;
 	}
 	a {
 		color: #343434;
 		text-decoration: none;
 	}
-	
+	table {
+		text-align: center;
+	}
+
 </style>
 </head>
 <body>
@@ -57,17 +60,17 @@
 	<div th:replace="page_header/header.html :: header-body"></div>
 </div>
 	
-	<!-- 유저프로필 라인 -->
-	<div id="profile">
-		<div th:replace="page_profile/profile.html :: profile-head"></div>
-		<div th:replace="page_profile/profile.html :: profile-body"></div>
-	</div>
+<!-- 유저프로필 라인 -->
+<div id="profile">
+	<div th:replace="page_profile/profile.html :: profile-head"></div>
+	<div th:replace="page_profile/profile.html :: profile-body"></div>
+</div>
 
-   <!-- 주문현황 -->
-   <div class="container mt-4 card-wrapper">
-      <div class="row">
-         <div class="col-md-10">
-            <div class="card-wrapper1">
+<!-- 주문현황 -->
+<div class="container mt-4 card-wrapper">
+	<div class="row">
+		<div class="col-md-10">
+			<div class="card-wrapper1">
                <div class="card" id="card1">
                <h5 style="margin-top: 10px;">《나의 정보》</h5>
                   <div class="card-body d-flex justify-content-between">
@@ -76,7 +79,7 @@
 					  <div class="card-item text-center">
 						  <div class="card">
 							  <div class="card-body">
-								  <h6>&nbsp;결제 대기&nbsp;</h6>
+								  <h6>&nbsp;<b>결제 대기</b>&nbsp;</h6>
 								  <hr />
 								  <a href="/order/order_before_check" class="card-link" th:text="${order_before_pay_cnt}">3</a>
 							  </div>
@@ -87,7 +90,7 @@
                      <div class="card-item text-center">
                         <div class="card">
                            <div class="card-body">
-                              <h6>&nbsp;결제완료&nbsp;</h6>
+                              <h6>&nbsp;<b>결제완료</b>&nbsp;</h6>
                               <hr />
                               <a href="/user/user_order" th:text="${orderCount}" class="card-link">7</a>
                            </div>
@@ -98,7 +101,7 @@
                      <div class="card-item text-center">
                         <div class="card">
                            <div class="card-body">
-                              <h6>&nbsp;장바구니&nbsp;</h6>
+                              <h6>&nbsp;<b>장바구니</b>&nbsp;</h6>
                               <hr />
                               <a th:href="@{/user/user_cart(user_idx=${loginUserBean.user_idx})}" th:text="${cartCount}" class="card-link">0</a>
                            </div>
@@ -109,7 +112,7 @@
                      <div class="card-item text-center">
                         <div class="card">
                            <div class="card-body">
-                              <h6>&nbsp;작성리뷰&nbsp;</h6>
+                              <h6>&nbsp;<b>작성리뷰</b>&nbsp;</h6>
                               <hr />
                               <a href="/user/user_review" class="card-link" th:text="${reviewCnt}">1</a>
                            </div>
@@ -120,7 +123,7 @@
                      <div class="card-item text-center">
                         <div class="card">
                            <div class="card-body">
-                              <h6>&emsp;적립금&emsp;</h6>
+                              <h6>&emsp;<b>적립금</b>&emsp;</h6>
                               <hr />
                               <a href="/user/user_point" class="card-link" th:text="${loginUserBean.current_point}">7,299</a>
                            </div>
@@ -130,55 +133,57 @@
                </div>
             </div>
          </div>
-      </div>
+	</div>
+</div>
 
-   </div>
 
-
-	<!-- 주문정보 -->
-	<div class="container mt-2 card-wrapper">
-		<div class="row">
-			<div class="col-md-10">
-				<div class="card" id="card2">
+<!-- 주문정보 -->
+<div class="container mt-2 card-wrapper">
+	<div class="row">
+		<div class="col-md-10">
+			<div class="card" id="card2">
 				<table class="table">
 					<thead>
 						<tr>
 							<th>최근 주문 정보</th>
-							<th scope="col">주문일</th>
 							<th scope="col">상품명</th>
 	 						<th scope="col">금액</th>
+							<th scope="col">주문일</th>
 						</tr>
 					</thead>
 					
 					<tbody class="table-group-divider">
 						<tr th:each="order,index : ${orderList}" th:if="${index.index < 3}">
 							<th scope="row" th:text="${order.order_idx}">3</th>
-							<td th:text="${order.order_date}">2023.11.18</td>
 							<td>
 								<a th:href="@{/goods/goods_page(goods_idx=${order.goods_idx})}" th:text="${order.goods_name}" class="card-link">루안</a>
 							</td>
 							<td th:text="${order.order_price - order.used_point} + '원'">1,212,980</td>
+							<td th:text="${order.order_date}">2023.11.18</td>
 						</tr>
 						<tr th:if="${#lists.isEmpty(orderList)}">
-							<td colspan="3" style="text-align: center;">관심상품이 없습니다.</td>
+							<td colspan="4" style="text-align: center;">주문 내역이 없습니다.</td>
 						</tr>
 					</tbody>
 				</table>
 				
-					<div class="d-grid gap-2 d-md-flex justify-content-md-end">
-						<a href="/user/user_order" class="btn btn-outline-info" role="button" data-bs-toggle="button" aria-pressed="true">더보기</a>
-					</div>
-					
+				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+					<a href="/user/user_order" class="btn btn-outline-info" role="button" data-bs-toggle="button" aria-pressed="true">더보기</a>
 				</div>
+					
 			</div>
 		</div>
 	</div>
+</div>
+
+<br> <br> <br> <br> <br>
+
 	
-	<!-- 관심상품 -->
-	<div class="container mt-2 card-wrapper">
-		<div class="row">
-			<div class="col-md-10" >
-				<div class="card" id="card3">
+<!-- 관심상품 -->
+<div class="container mt-2 card-wrapper">
+	<div class="row">
+		<div class="col-md-10" >
+			<div class="card" id="card3">
 				<table class="table">
 					<thead>
 						<tr>
@@ -207,12 +212,12 @@
 					<a th:href="@{/user/user_wish}" class="btn btn-outline-info" role="button" data-bs-toggle="button" aria-pressed="true">더보기</a>
 				</div>
 			
-				</div>
-				<br /> <br />
 			</div>
+			<br /> <br />
 		</div>
 	</div>
-	<hr />
+</div>
+<hr />
 	
 	<!-- 하단 -->
 <div id="footer">

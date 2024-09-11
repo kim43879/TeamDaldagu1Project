@@ -163,6 +163,7 @@ public class UserService {
     //회원탈퇴 로직(유저)
     public void deSignUp(int user_idx){
         int seller_idx = userMapper.getSellerIdx(user_idx);
+
         userMapper.deSignUp(user_idx);
         sellerMapper.deSignUp(seller_idx);
         goodsMapper.deSignUp(seller_idx);

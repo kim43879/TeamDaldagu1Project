@@ -33,7 +33,15 @@
         max-height: 100%;              /* 이미지가 div를 넘어가지 않도록 설정 */
         object-fit: contain;           /* 이미지 비율을 유지하면서 적절히 맞춤 */
     }
-	
+
+    .card-link {
+        color: #343434;
+        text-decoration: none;
+    }
+
+    .card-link:hover {
+        color: #b59e59;
+    }
 </style>
 </head>
 <body>
@@ -75,17 +83,19 @@
 <div class="container mt-4">
     <label>장패드</label>
     <div class="row">
-        <div class="col-md-3" th:each="goods,stat : ${goodsList1}" th:if="${stat.index < 4}">
-            <div class="card" style="width: 100%; height:100%">
-                <div class="card-img">
-                    <img th:src="@{'/img/goods/' + ${goods.goods_img}}" class="card-img-top" alt="image" />
+        <div class="col-md-3" th:each="goodsBean,state : ${goodsList1}">
+            <a th:href="@{/goods/goods_page(goods_idx=${goodsBean.goods_idx})}" class="card-link" style="text-decoration: none;">
+                <div class="card" style="width: 100%; height:337.38px;" th:if="${state.index < 4}">
+                    <div class="card-img">
+                        <img th:src="@{'/img/goods/' + ${goodsBean.goods_img}}" class="card-img-top" alt="image" />
+                    </div>
+
+                    <div class="card-body" style="text-align: center;">
+                        <h6 class="card-title" th:text="${goodsBean.goods_name}" style="font-weight: bold;">goods_name</h6>
+                        <p class="card-text" th:text="${goodsBean.goods_price} + '원'">goods_price</p>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${goods.goods_name}">goods_name</h5>
-                    <p class="card-text" th:text="${goods.goods_price}+원">goods_price</p>
-                    <a th:href="@{/goods/goods_page(goods_idx=${goods.goods_idx})}" class="btn btn-outline-info">상품보기</a>
-                </div>
-            </div>
+            </a>
         </div>
     </div>
 </div>
@@ -95,17 +105,19 @@
 <div class="container mt-4">
     <label>펫 용품</label>
     <div class="row">
-        <div class="col-md-3" th:each="goods,stat : ${goodsList2}" th:if="${stat.index < 4}">
-            <div class="card" style="width: 100%; height:100%">
-                <div class="card-img">
-                    <img th:src="@{'/img/goods/' + ${goods.goods_img}}" class="card-img-top" alt="image" />
+        <div class="col-md-3" th:each="goodsBean,state : ${goodsList2}" >
+            <a th:href="@{/goods/goods_page(goods_idx=${goodsBean.goods_idx})}" class="card-link" style="text-decoration: none;">
+                <div class="card" style="width: 100%; height:337.38px;" th:if="${state.index < 4}">
+                    <div class="card-img">
+                        <img th:src="@{'/img/goods/' + ${goodsBean.goods_img}}" class="card-img-top" alt="image" />
+                    </div>
+
+                    <div class="card-body" style="text-align: center;">
+                        <h6 class="card-title" th:text="${goodsBean.goods_name}" style="font-weight: bold;">goods_name</h6>
+                        <p class="card-text" th:text="${goodsBean.goods_price} + '원'">goods_price</p>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${goods.goods_name}">goods_name</h5>
-                    <p class="card-text" th:text="${goods.goods_price}+원">goods_price</p>
-                    <a th:href="@{/goods/goods_page(goods_idx=${goods.goods_idx})}" class="btn btn-outline-info">상품보기</a>
-                </div>
-            </div>
+            </a>
         </div>
     </div>
 </div>
@@ -113,19 +125,21 @@
 
 <!-- 목록3 -->
 <div class="container mt-4">
-    <label>컵</label>
+    <label>액세서리</label>
     <div class="row">
-        <div class="col-md-3" th:each="goods,stat : ${goodsList3}" th:if="${stat.index < 4}">
-            <div class="card" style="width: 100%; height:100%">
-                <div class="card-img">
-                    <img th:src="@{'/img/goods/' + ${goods.goods_img}}" class="card-img-top" alt="image" />
+        <div class="col-md-3" th:each="goodsBean,state : ${goodsList3}">
+            <a th:href="@{/goods/goods_page(goods_idx=${goodsBean.goods_idx})}" class="card-link" style="text-decoration: none;">
+                <div class="card" style="width: 100%; height:337.38px;" th:if="${state.index < 4}">
+                    <div class="card-img">
+                        <img th:src="@{'/img/goods/' + ${goodsBean.goods_img}}" class="card-img-top" alt="image" />
+                    </div>
+
+                    <div class="card-body" style="text-align: center;">
+                        <h6 class="card-title" th:text="${goodsBean.goods_name}" style="font-weight: bold;">goods_name</h6>
+                        <p class="card-text" th:text="${goodsBean.goods_price} + '원'">goods_price</p>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${goods.goods_name}">goods_name</h5>
-                    <p class="card-text" th:text="${goods.goods_price}+원">goods_price</p>
-                    <a th:href="@{/goods/goods_page(goods_idx=${goods.goods_idx})}" class="btn btn-outline-info">상품보기</a>
-                </div>
-            </div>
+            </a>
         </div>
     </div>
 </div>

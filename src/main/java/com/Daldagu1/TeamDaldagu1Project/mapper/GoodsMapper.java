@@ -37,7 +37,7 @@ public interface GoodsMapper {
     @Select("select * from goods_table where seller_idx=#{seller_idx} and goods_available = 'T'")
     List<GoodsBean> getMyGoodsList(int seller_idx);
 
-    @Select("select * from goods_table where goods_tag=#{goods_tag} and goods_available = 'T'")
+    @Select("select * from goods_table where goods_tag=#{goods_tag} and goods_available = 'T' order by goods_idx desc")
     List<GoodsBean> getGoodsListByTag(String goods_tag);
 //  select * from (select * from goods_table where goods_name like '%' and goods_tag like '%' and goods_price > 0 and goods_price < 2147483647 order by goods_name) where rownum <= 8;
     @Select("select goods_idx, goods_name, goods_price, goods_img " +

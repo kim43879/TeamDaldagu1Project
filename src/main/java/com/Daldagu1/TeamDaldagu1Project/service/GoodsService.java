@@ -91,7 +91,7 @@ public class GoodsService {
 
         int start = (page - 1) * searchBean.getShowCount();
 
-        RowBounds rowBounds = new RowBounds(start,(start + searchBean.getShowCount()));
+        RowBounds rowBounds = new RowBounds(start,(searchBean.getShowCount()));
 
         if(searchBean.getSearchCategory().equals("전체")){
             searchBean.setSearchCategory("%");

@@ -15,10 +15,10 @@ public interface AdminMapper {
     @Select("select * from admin_table where admin_pw = #{admin_key}")
     AdminBean checkAdmin(String admin_key);
 
-    @Select("select count(*) from user_table")
+    @Select("select count(*) from user_table where user_available = 'T'")
     int getUserCnt();
 
-    @Select("select count(*) from goods_table")
+    @Select("select count(*) from goods_table where goods_available = 'T'")
     int getGoodsCnt();
 
     @Select("select count(*) from order_table where to_char(order_date, 'YYYY-MM-DD') =  to_char(sysdate, 'YYYY-MM-DD')")

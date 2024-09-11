@@ -59,7 +59,7 @@
 			<div class="col-sm-6">
 				<div class="card-shadow"id="card1">
 					<div class="card-body">
-						<form action="/seller/seller_join_pro" method="post" th:object="${sellerInfoBean}">
+						<form action="/seller/seller_join_pro" method="post" th:object="${sellerInfoBean}" enctype="multipart/form-data">
 							<input type="hidden" id="user_idx" th:field="*{user_idx}">
 							<div class="form-group">
 								<label for="user_name">이름</label>
@@ -102,7 +102,7 @@
 								
 							<div class="form-group">
 								<label for="goods_img">*작품 이미지</label>
-								<input type="file" id="goods_img" th:field="*{sample_img}" class="form-control" accept="image/*"/>
+								<input type="file" id="goods_img" th:field="*{sample_img_file}" class="form-control" accept="image/*"/>
 							</div>
 							<hr />
 								
@@ -147,7 +147,7 @@
 											alert("심사결과는 영업일 기준 10일 이내 기재하신 연락처로 안내 드립니다.");
 										}
 										function back() {
-                                            location.href="/user/user_page";
+                                            location.href="redirect:/user/user_page";
                                         }
 									</script>
 								</div>

@@ -38,7 +38,7 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model){
-        String[] tag = {"장패드", "펫 용품", "컵"};
+        String[] tag = {"장패드", "펫 용품", "액세서리"};
         System.out.println(loginUserBean.isLoginCheck());
         List<GoodsBean> goodsList;
         for (int i = 1; i < 4; i++){

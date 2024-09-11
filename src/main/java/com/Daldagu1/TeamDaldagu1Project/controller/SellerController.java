@@ -61,7 +61,7 @@ public class SellerController {
 
         sellerService.addSellerJoinInfo(sellerInfoBean);
 
-        return "user/user_page";
+        return "redirect:/user/user_page";
     }
 
     //판매자 페이지
@@ -89,6 +89,7 @@ public class SellerController {
         model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(loginUserBean.getSeller_idx()));
         AddGoodsInfo tempBean = new AddGoodsInfo();
         tempBean.setSeller_idx(loginUserBean.getSeller_idx());
+        tempBean.setGoods_tag("장패드");
         model.addAttribute("addGoodsInfoBean", tempBean);
         return "seller/seller_product_insert";
     }

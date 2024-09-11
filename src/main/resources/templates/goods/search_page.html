@@ -57,6 +57,13 @@
             max-height: 100%;              /* 이미지가 div를 넘어가지 않도록 설정 */
             object-fit: contain;           /* 이미지 비율을 유지하면서 적절히 맞춤 */
         }
+        .card-link {
+            color: #343434;
+            text-decoration: none;
+        }
+        .card-link:hover {
+            color: #b59e59;
+        }
     </style>
 </head>
 <body>
@@ -83,7 +90,7 @@
                     &ensp;
                     <input type="text" id="search_keyword" class="form-control border-secondary" th:field="*{searchKeyword}" style="width: 300px;">
                 </div>
-                <hr />
+                <br />
 
                 <div class="form-group" style="text-align:center;">
                     <label for="search_tag">상품분류</label> &nbsp;
@@ -149,22 +156,26 @@
     <hr />
 
     <div class="row">
-        <div class="col-md-3" th:each="goods,index : ${searchGoodsList}" style="margin-top:10px">
-            <div class="card" style="width: 100%; height: 100%;">
-                <div class="card-img">
-                    <img th:src="@{'/img/goods/' + ${goods.goods_img}}" class="card-img-top" alt="image" />
+        <div class="col-md-3" th:each="goods,index : ${searchGoodsList}" style="margin-top:10px;">
+            <a th:href="@{/goods/goods_page(goods_idx=${goods.goods_idx})}" class="card-link" style="text-decoration: none;">
+                <div class="card" style="width: 100%; height:337.38px;">
+                    <div class="card-img">
+                        <img th:src="@{'/img/goods/' + ${goods.goods_img}}" class="card-img-top" alt="image" />
+                    </div>
+
+                    <div class="card-body" style="text-align: center;">
+                        <h6 class="card-title" th:text="${goods.goods_name}" style="font-weight: bold;">goods_name</h6>
+                        <p class="card-text" th:text="${goods.goods_price}+원">goods_price</p>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <h5 class="card-title" th:text="${goods.goods_name}">goods_name</h5>
-                    <p class="card-text" th:text="${goods.goods_price}+원">goods_price</p>
-                    <a th:href="@{/goods/goods_page(goods_idx=${goods.goods_idx})}" class="btn btn-outline-info">상품보기</a>
-                </div>
-            </div>
+            </a>
+
             <div th:if="${(index.index + 1) % 4 == 0}" class="w-100"></div>
         </div>
     </div>
 </div>
-<br>
+<br />
+
 <div class="d-none d-md-block">
     <ul class="pagination justify-content-center">
         <li class="page-item">

@@ -5,8 +5,11 @@ import com.Daldagu1.TeamDaldagu1Project.beans.SellerBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.SellerInfoBean;
 import com.Daldagu1.TeamDaldagu1Project.mapper.SellerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.util.List;
 
 @Service
@@ -14,6 +17,9 @@ public class SellerService {
 
     @Autowired
     private SellerMapper sellerMapper;
+
+    @Value("${imgPath}")
+    private String ImgPath;
 
     //판매자 추가
     public void addSeller(SellerBean sellerBean) {
@@ -30,8 +36,19 @@ public class SellerService {
         return sellerMapper.getSellerInfoList();
     }
 
+    private String saveProfileImageFile(MultipartFile profileImg){
+        String file_name = System.currentTimeMillis() + "_" + profileImg.getOriginalFilename();
+        try{
+            profileImg.transferTo(new File(ImgPath + "/add_seller_info/" + file_name));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return file_name;
+    }
+
     //판매자 등록 정보 DB 추가
     public void addSellerJoinInfo(SellerInfoBean sellerInfoBean) {
+        sellerInfoBean.setSample_img(saveProfileImageFile(sellerInfoBean.getSample_img_file()));
         sellerMapper.addSellerJoinInfo(sellerInfoBean);
     }
 

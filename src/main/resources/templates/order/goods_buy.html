@@ -39,6 +39,11 @@
             margin-top: 100px;
             padding-left: 12%;
         }
+
+        #point_info{
+            padding-left: 12%;
+        }
+
         #user_info{
             padding-left: 12%;
         }
@@ -70,6 +75,20 @@
 
         #payBtn:active {
             background-color: #0044b3; /* 클릭 시 더 어두운 파란색 */
+        }
+
+        .flex-container {
+            display: flex;
+            justify-content: space-between; /* h6는 좌측, select는 우측으로 배치 */
+            align-items: center; /* 두 요소를 수직 중앙 정렬 */
+        }
+
+        .flex-container h6 {
+            margin: 0; /* 불필요한 여백 제거 */
+        }
+
+        .flex-container select {
+            width: auto; /* 필요한 경우 select의 크기를 조절 */
         }
 
     </style>
@@ -122,8 +141,8 @@
         </div>
     </div>
 </div>
-<br/>
 
+<!--적립금 필드-->
 <div class="container mt-12" id="point_info">
     <div class="row g-0">
         <div class="col-md-10"><br/>
@@ -253,10 +272,14 @@
             <div class="card">
                 <div class="card-body">
                     <div class="mb-4">
-                        <h6 class="fw-bold">&emsp;배송지 정보</h6>
-                        <select th:onchange="changeAddr()" id="selected-addr">
-                            <option th:each="addr : ${addrList}" th:value="${addr.addr_idx}" th:text="${addr.addr_name}"></option>
-                        </select>
+                        <div class="option-group">
+                            <div class="flex-container">
+                                <h6 class="fw-bold">&emsp;배송지 정보</h6>
+                                <select class="form-select custom-select" th:onchange="changeAddr()" id="selected-addr">
+                                    <option th:each="addr : ${addrList}" th:value="${addr.addr_idx}" th:text="${addr.addr_name}"></option>
+                                </select>
+                            </div>
+                        </div>
                         <hr/>
                     </div>
                     <!-- 이름 -->
@@ -314,23 +337,11 @@
             <div class="card">
                 <div class="card-body">
                     <div class="mb-4">
-                        <h6><b>&emsp;결제 정보</b></h6>
+                        <h6><b>&emsp;결제 수단</b></h6>
                         <hr/>
                     </div>
 
                     <div class="mb-3">
-                        <!--							<div class="form-check">-->
-                        <!--								&ensp;-->
-                        <!--								<input class="form-check-input" type="radio" name="paymentMethod" value="creditCard" id="flexCheckChecked" checked/>-->
-                        <!--								<label class="form-check-label" for="flexCheckChecked">&ensp;신용카드</label>-->
-                        <!--							</div>-->
-                        <!--							-->
-                        <!--							<div class="form-check">-->
-                        <!--								&ensp;-->
-                        <!--								<input class="form-check-input" type="radio" name="paymentMethod" value="bankTransfer" id="flexCheckDefault"/>-->
-                        <!--								<label class="form-check-label" for="flexCheckDefault">&ensp;무통장입금</label>-->
-                        <!--							</div>-->
-
                         <button id="payBtn" type="button" onclick="payment()">
                             TOSS 결제
                         </button>
@@ -389,7 +400,7 @@
                     },
                     success: function(){
                         alert("주문이 취소되었습니다.");
-                        location.href = "/";
+                        location.href = "/user/user_page";
                     }
                 })
             }

@@ -94,13 +94,13 @@
                             <td th:text="${info.seller_page_title}"></td>
                             <td th:text="${info.goods_tag}"></td>
                             <td>
-                                <img th:src="@{'/img/goods/' + ${info.sample_img}}">
+                                <img th:src="@{'/img/add_seller_info/' + ${info.sample_img}}" style="width:200px; height:200px;">
                             </td>
                             <td>
                                 <div class="action-buttons">
                                     <input type="hidden" id="user_idx" th:value="${info.user_idx}" />
-                                    <button class="submitBtn" onclick="submit()" style="margin-left: 5px;">승인</button>
-                                    <button class="denialBtn" onclick="denial()" style="margin-right: 5px;">거부</button>
+                                    <button class="submitBtn" th:onclick="submit([[${info.user_idx}]])" style="margin-left: 5px;">승인</button>
+                                    <button class="denialBtn" th:onclick="denial([[${info.user_idx}]])" style="margin-right: 5px;">거부</button>
                                 </div>
                             </td>
                         </tr>
@@ -108,11 +108,11 @@
                 </table>
 
                 <script>
-                    function submit() {
+                    function submit(userIdx) {
                         $.ajax({
                             type: "post",
                             url: "/rest/approve_seller",
-                            data:{user_idx: $("#user_idx").val()},
+                            data:{ user_idx: userIdx },
                             success: function(data){
                               alert("승인되었습니다.");
                               location.reload();
@@ -120,11 +120,11 @@
                         });
                     }
 
-                    function denial() {
+                    function denial(infoIdx) {
                         $.ajax({
                             type: "post",
                             url: "/rest/denial_seller",
-                            data:{user_idx: $("#user_idx").val()},
+                            data:{ user_idx: userIdx },
                             success: function(data){
                               alert("거부되었습니다.");
                               location.reload();

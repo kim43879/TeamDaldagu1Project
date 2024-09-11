@@ -32,7 +32,7 @@
         }
         #card1 {
             width: 100%;
-            margin-top: -890px; margin-left:300px; padding-left: 8%; padding-right: 8%;
+            margin-top: -850px; margin-left:300px; padding-left: 8%; padding-right: 8%;
         }
         .empty-row {
             text-align: center;
@@ -65,45 +65,46 @@
                 <div class="card">
                     <table class="table" id="table">
                         <thead>
-                        <tr>
-                            <th scope="col" style="text-align: center;">상품정보</th>
-                            <th scope="col" style="text-align: center;">옵션</th>
-                            <th scope="col" style="text-align: center;">수량</th>
-                            <th scope="col" style="text-align: center;">금액</th>
-                            <th scope="col">&emsp;&emsp;선택</th>
-                        </tr>
+                            <tr>
+                                <th scope="col" style="text-align: center;">상품정보</th>
+                                <th scope="col" style="text-align: center;">옵션</th>
+                                <th scope="col" style="text-align: center;">수량</th>
+                                <th scope="col" style="text-align: center;">금액</th>
+                                <th scope="col">&emsp;&emsp;선택</th>
+                            </tr>
                         </thead>
 
                         <tbody class="table-group-divider">
-                        <tr th:each="cart,index : ${cartBeanList}" style="text-align: center;"
-                            th:if="${#lists.size(cartBeanList) > 0}">
-                            <th scope="row">
-                                <input type="hidden" th:value="${cart.cart_idx}"
-                                       th:attr="id='cart_idx' + ${index.index}"/>
-                                <div class="check" style="padding-top: 20px;">
-                                    <img th:src="@{'/img/goods/' + ${cart.goods_img}}" style="width: 150px; height: 150px">
-                                    &emsp;
-                                    <a th:href="@{/goods/goods_page(goods_idx=${cart.goods_idx})}"
-                                       style="margin-left: 20px;" th:text="${cart.goods_name}"></a>
-                                </div>
-                            </th>
+                            <tr th:each="cart,index : ${cartBeanList}" style="text-align: center; white-space: nowrap;"
+                                th:if="${#lists.size(cartBeanList) > 0}">
 
-                            <td style="padding-top: 35px;" th:text="${cart.selected_option}"></td>
-                            <td style="padding-top: 35px;" th:text="${cart.goods_quantity}"></td>
-                            <td style="padding-top: 35px;" th:text="${cart.cart_price}"></td>
-                            <td style="padding-top: 20px;">
-                                <button th:onclick="buy_cart([[${cart}]], [[${index.index}]])" class="btn btn-outline-info btn-sm">상품주문</button>
-                                <br/>
+                                <th scope="row">
+                                    <input type="hidden" th:value="${cart.cart_idx}" th:attr="id='cart_idx' + ${index.index}"/>
+                                    <div class="check" style="padding-top: 5px;">
+                                        <a th:href="@{/goods/goods_page(goods_idx=${cart.goods_idx})}" style="text-decoration: none;">
+                                            <img th:src="@{'/img/goods/' + ${cart.goods_img}}" style="width: 100px; height: 100px">
+                                        </a>
+                                        &emsp;
+                                    </div>
+                                </th>
 
-                                <button type="submit" class="btn btn-outline-secondary btn-sm"
-                                        th:onclick="remove_cart([[${index.index}]],0)">상품삭제
-                                </button>
-                            </td>
-                        </tr>
+                                <td style="padding-top: 45px;" th:text="${cart.selected_option}"></td>
+                                <td style="padding-top: 45px;" th:text="${cart.goods_quantity}"></td>
+                                <td style="padding-top: 45px;" th:text="${cart.cart_price}"></td>
+                                <td style="padding-top: 30px;">
 
-                        <tr id="no-cart-message" th:if="${#lists.isEmpty(cartBeanList)}">
-                            <td colspan="5" class="empty-row"><b>장바구니가 비었습니다.</b></td>
-                        </tr>
+                                    <button th:onclick="buy_cart([[${cart}]], [[${index.index}]])" class="btn btn-outline-info btn-sm">상품주문</button>
+                                    <br/>
+
+                                    <button type="submit" class="btn btn-outline-secondary btn-sm"
+                                            th:onclick="remove_cart([[${index.index}]],0)">상품삭제
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr id="no-cart-message" th:if="${#lists.isEmpty(cartBeanList)}">
+                                <td colspan="5" class="empty-row"><b>장바구니가 비었습니다.</b></td>
+                            </tr>
 
                         </tbody>
 

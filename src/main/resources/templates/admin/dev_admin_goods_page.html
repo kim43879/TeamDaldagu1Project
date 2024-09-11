@@ -27,7 +27,7 @@
             border-width: 1px;
             border-color: #ddd;
             border-style: solid;
-            padding: 5px;
+            padding: 8px;
             text-align: center;
         }
         .container {
@@ -98,8 +98,8 @@
                             <td>
                                 <div class="action-buttons">
                                     <input type="hidden" id="info_idx" th:value="${info.info_idx}" />
-                                    <button class="submitBtn" onclick="submit()" style="margin-left: 5px;">승인</button>
-                                    <button class="denialBtn" onclick="denial()" style="margin-right: 5px;">거부</button>
+                                    <button class="submitBtn" th:onclick="submit([[${info.info_idx}]])" style="margin-left: 5px;">승인</button>
+                                    <button class="denialBtn" th:onclick="denial([[${info.info_idx}]])" style="margin-right: 5px;">거부</button>
                                 </div>
                             </td>
                         </tr>
@@ -108,11 +108,11 @@
                 </table>
 
                 <script>
-                    function submit() {
+                    function submit(infoIdx) {
                         $.ajax({
                             type: "post",
                             url: "/rest/approve_goods",
-                            data:{info_idx: $("#info_idx").val()},
+                            data:{info_idx: infoIdx},
                             success: function(data){
                                 alert("승인되었습니다.");
                                 location.reload();
@@ -124,7 +124,7 @@
                         $.ajax({
                             type: "post",
                             url: "/rest/denial_goods",
-                            data:{info_idx: $("#info_idx").val()},
+                            data:{info_idx: infoIdx},
                             success: function(data){
                                 alert("거부되었습니다.");
                                 location.reload();

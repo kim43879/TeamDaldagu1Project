@@ -33,11 +33,11 @@
 	}
 	#card1 {
 		width: 90%;
-		margin-top: -890px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+		margin-top: -850px; margin-left:250px; padding-left: 20px; padding-right: 20px;
 	}
 	#card2 {
 		width: 90%;
-		margin-top: -770px; margin-left:250px; padding-left: 20px; padding-right: 20px;
+		margin-top: -690px; margin-left:250px; padding-left: 20px; padding-right: 20px;
 	}
 	.card-item {
 		margin-left: 10px;
@@ -141,27 +141,28 @@
                   <thead>
                      <tr>
                         <th>주문번호</th>
-                        <th scope="col">주문일</th>
                         <th scope="col">상품명</th>
                         <th scope="col">금액</th>
+                        <th scope="col">주문일</th>
                      </tr>
                   </thead>
 
                   <tbody class="table-group-divider">
                      <tr th:each="order,index : ${orderList}">
                         <th scope="row" th:text="${order.order_idx}">3</th>
-                        <td th:text="${order.order_date}">2023.11.18</td>
                         <td>
                            <a th:href="@{/goods/goods_page(goods_idx=${order.goods_idx})}" th:text="${order.goods_name}" class="card-link">루안</a>
                         </td>
                         <td th:text="${order.order_price - order.used_point} + '원'">1,212,980</td>
+                        <td th:text="${order.order_date}">2023.11.18</td>
                      </tr>
                      <tr th:if="${#lists.isEmpty(orderList)}">
-                        <td colspan="3" style="text-align: center;">관심상품이 없습니다.</td>
+                        <td colspan="4" style="text-align: center; padding-top: 20px;">주문 내역이 없습니다.</td>
                      </tr>
                   </tbody>
                </table>
                <br />
+
             </div>
          </div>
       </div>
