@@ -78,7 +78,7 @@
 									<input type="hidden" th:value="${wish.wish_idx}" th:attr="id='wish_idx' + ${index.index}" />
 									<div class="check" style="width: 200px; display: flex; align-items: center; margin-top: auto;">
 										&emsp;
-										<a href="/goods/goods_page">
+										<a th:href="@{/goods/goods_page(goods_idx=${wish.goods_idx})}">
 											<img th:src="@{'/img/goods/' + ${wish.goods_img}}" style="width: 90%;">
 										</a>
 										<h6 th:text="${wish.goods_name}" style="margin-left: 20px;"></h6>
@@ -91,7 +91,7 @@
 								</td>
 							</tr>
 
-							<tr id="no-wish-message" th:if="${#lists.isEmpty(cartBeanList)}">
+							<tr id="no-wish-message" th:if="${#lists.isEmpty(wishBeanList)}">
 								<td colspan="3" class="empty-row"><b>찜한 내역이 없습니다.</b></td>
 							</tr>
 						</tbody>
@@ -127,20 +127,6 @@
 	</div>
 </div>
 
-<!-- 페이지 -->
-<div class="d-none d-md-block">
-	<ul class="pagination justify-content-center">
-		<li class="page-item">
-			<a href="#" class="page-link">&laquo;</a>
-		</li>
-		<li class="page-item">
-			<a href="#" class="page-link">1</a>
-		</li>
-		<li class="page-item">
-			<a href="#" class="page-link">&raquo;</a>
-		</li>
-	</ul>
-</div>
 <div style="margin-top: 88px;"></div>
 <hr />
 

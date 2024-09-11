@@ -325,48 +325,58 @@
 
                             <script>
                                 function addToCart() {
-                                    var divElement = document.getElementById('show_div');
-                                    divElement.style.visibility = 'visible';
-                                    $('#cart_num').text(itemNum);
                                     let goods_list = $(".item");
 
-                                    // Thymeleaf를 통해 JavaScript로 변수 전달
-                                    let goodsName = /*[[${goods.goods_name}]]*/ 'defaultName';  // 상품명이 없을 때를 대비해 기본값 설정
+                                    if(goods_list.length === 0){
+                                        alert("선택하신 상품이 없습니다.");
+                                        return 0;
+                                    }else if(![[${loginUserBean.loginCheck}]]){
+                                        alert("로그인을 해야 장바구니에 추가할 수 있습니다.")
+                                        return 0;
+                                    }else{
 
-                                    console.log(goodsName);
+                                        var divElement = document.getElementById('show_div');
+                                        divElement.style.visibility = 'visible';
+                                        $('#cart_num').text(itemNum);
 
-                                    let userIdx = [[${loginUserBean.user_idx}]];
-                                    let goodsIdx = [[${goods.goods_idx}]];
+                                        // Thymeleaf를 통해 JavaScript로 변수 전달
+                                        let goodsName = /*[[${goods.goods_name}]]*/ 'defaultName';  // 상품명이 없을 때를 대비해 기본값 설정
 
-                                    goods_list.each(function() {
-                                        let itemQuantity = $(this).find('.productNumber').val();
-                                        let price = $(this).find('.origin-price').val();
+                                        console.log(goodsName);
 
-                                        console.log(itemQuantity);
-                                        console.log(price * itemQuantity);
-                                        console.log($(this).find('.goods-name').text());
+                                        let userIdx = [[${loginUserBean.user_idx}]];
+                                        let goodsIdx = [[${goods.goods_idx}]];
 
-                                        // Ajax 요청 보내기
-                                        $.ajax({
-                                            url: "/rest/add_cart",
-                                            type: "post",
-                                            data: {
-                                                "user_idx": userIdx,
-                                                "goods_idx": goodsIdx,
-                                                "goods_quantity": itemQuantity,
-                                                "selected_option": $(this).find('.selected-option').text().slice(4),
-                                                "result_price": (price * itemQuantity),
-                                                "goods_name": goodsName
-                                            },
-                                            success: function() {
-                                                console.log("성공");
-                                            },
-                                            error: function(error) {
-                                                console.log(error);
-                                                alert("오류");
-                                            }
+                                        goods_list.each(function() {
+                                            let itemQuantity = $(this).find('.productNumber').val();
+                                            let price = $(this).find('.origin-price').val();
+
+                                            console.log(itemQuantity);
+                                            console.log(price * itemQuantity);
+                                            console.log($(this).find('.goods-name').text());
+
+                                            // Ajax 요청 보내기
+                                            $.ajax({
+                                                url: "/rest/add_cart",
+                                                type: "post",
+                                                data: {
+                                                    "user_idx": userIdx,
+                                                    "goods_idx": goodsIdx,
+                                                    "goods_quantity": itemQuantity,
+                                                    "selected_option": $(this).find('.selected-option').text().slice(4),
+                                                    "result_price": (price * itemQuantity),
+                                                    "goods_name": goodsName
+                                                },
+                                                success: function() {
+                                                    console.log("성공");
+                                                },
+                                                error: function(error) {
+                                                    console.log(error);
+                                                    alert("오류");
+                                                }
+                                            });
                                         });
-                                    });
+                                    }
                                 }
                                 function buy(){
                                     let items_number = $('.item').length;
