@@ -13,7 +13,7 @@
         // 클라이언트 키로 객체 초기화
         var clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
         var tossPayments = TossPayments(clientKey);
-        let successURL = 'https://ba5f-121-160-41-227.ngrok-free.app/order/payment/payment_success?order_idx=' + [[${order_idx}]] + '&addr_idx=' + [[${addr_idx}]] +
+        let successURL = 'https://fb85-121-160-41-227.ngrok-free.app/order/payment/payment_success?order_idx=' + [[${order_idx}]] + '&addr_idx=' + [[${addr_idx}]] +
                             '&add_point=' + [[${add_point}]] + '&point_to_use=' + [[${points_to_use}]];
         console.log(successURL);
         // 결제창 띄우기
@@ -23,7 +23,7 @@
             orderName: [[${goods_name}]], // 주문명
             customerName: [[${user_name}]], // 구매자 이름
             successUrl: successURL,
-            failUrl: 'http://localhost:8080/order/payment/payment_fail',
+            failUrl: 'https://fb85-121-160-41-227.ngrok-free.app/order/payment/payment_fail',
         }).catch(function (error) {
             // 에러 처리
             console.error(error);

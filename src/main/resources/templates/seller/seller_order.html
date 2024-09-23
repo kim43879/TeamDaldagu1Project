@@ -31,6 +31,10 @@
 		padding-left: 20px;
 		padding-right: 20px;
 	}
+
+		th {
+			text-align: center;
+		}
 	</style>
 </head>
 <body>
@@ -97,9 +101,9 @@
 					<br><br>
 						<!-- 페이지 -->
 						<div class="d-none d-md-block">
-							<ul class="pagination justify-content-center" th:if="${!#lists.isEmpty(orderList)}">
+							<ul class="pagination justify-content-center" th:if="${!#lists.isEmpty(orderList)}" style="item-align: center;">
 								<li class="page-item" th:classappend="${pageBean.currentPage == 1} ? 'disabled'">
-									<a th:href="@{|/seller/seller_order?page=${pageBean.prevPage}|}" class="page-link">&laquo;</a>
+									<a th:href="@{|/seller/seller_order?page=${pageBean.prevPage}|}" class="page-link" style="text-decoration: none;">&laquo;</a>
 								</li>
 								<li class="page-item" th:each="i : ${#numbers.sequence(pageBean.min, pageBean.max)}" th:classappend="${pageBean.currentPage == i} ? 'active'">
 									<a th:href="@{|/seller/seller_order?page=${i}|}" class="page-link" th:text="${i}"></a>
@@ -113,7 +117,8 @@
 				</div>
 			</div>
 		</div><!-- class=row -->
-	</main>
+	</div>
+</main>
 	<br /> <br /> <br />
 	<hr />
 	<!-- 하단 -->

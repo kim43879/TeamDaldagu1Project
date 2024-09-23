@@ -7,6 +7,9 @@
 	<!-- Bootstrap -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 	<style>
+		th {
+			text-align: center;
+		}
 		.card-main{
             margin-top: 88px;
             padding-left: 186px;
@@ -96,7 +99,7 @@
 			<tbody>
 			<tr th:each="order : ${orderList}">
 				<td>
-                    <a th:href="@{/order/goods_buy(order_idx = ${order.order_idx}, user_idx = ${loginUserBean.user_idx})}" th:text="${order.order_idx}"></a>
+                    <a th:href="@{/order/goods_buy(order_idx = ${order.order_idx}, user_idx = ${loginUserBean.user_idx})}" th:text="${order.order_idx}" style="text-decoration: none;"></a>
 				</td>
 				<td th:text="${order.goods_name}"></td>
 				<td th:text="${order.quantity} + '개'"></td>

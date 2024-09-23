@@ -65,57 +65,6 @@
 								<a href="/user/join" class="btn btn-outline-success" role="button" data-bs-toggle="button">회원가입</a>
 							</div>
 							&ensp;
-							
-							<!-- 카카오 로그인 -->
-							<div class="d-grid gap-2 col-6 mx-auto">
-							
-								<script src="https://developers.kakao.com/sdk/js/kakao.js">
-									integrity="sha384-TiCUE00h649CAMonG018J2ujOgDKW/kVWlChEuu4jK2vxfAAD0eZxzCKakxg55G4" crossorigin="anonymous">
-								</script>
-								
-								<script>
-									Kakao.init('1af9d3870d1996629e6e56328754216d');
-								</script>
-							
-								<a id="kakao-login-btn" href="javascript:loginWithKakao()">
-									<img th:src="@{/img/kakao_login_medium_narrow.png}"/>
-								</a>
-								<p id="token-result"></p>
-								
-								<script>
-									function loginWithKakao() {
-										Kakao.Auth.authorize({
-											redirectUri: 'https://developers.kakao.com/tool/demo/oauth',
-										});	
-									}
-									//데모용 UI 코드
-									displayToken()
-									function displayToken() {
-										var token = getCookie('authorize-access-token');
-										
-										
-										if(token) {
-											Kakao.Auth.setAccessToken(token);
-											Kakao.Auth.getStatusInfo().then(function(res) {
-												if(res.status === 'connected') {
-													document.getElementById('token-result').innerText
-													= 'login success, token: ' + Kakao.Auth.getAccessToken();
-												}
-											})
-											.catch(function(err) {
-												kakao.Auth.setAccessToken(null);
-											});
-										}
-									}
-									function getCookie(name) {
-										var parts = document.cookie.split(name + '=');
-										if (parts.length === 2) { 
-											return parts[1].split(';')[0];
-										}
-									}
-								</script>
-								
-							</div>
 						</form>
 						
 					</div>
