@@ -1,2 +1,2 @@
 
-imgPath = your_file_path ex> your_project_path/src/main/resources/static/img
+imgPath = {your_project_path}/src/main/resources/static/img
