@@ -1,6 +1,5 @@
 package com.Daldagu1.TeamDaldagu1Project.interceptor;
 
-import com.Daldagu1.TeamDaldagu1Project.beans.SearchBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.UserBean;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

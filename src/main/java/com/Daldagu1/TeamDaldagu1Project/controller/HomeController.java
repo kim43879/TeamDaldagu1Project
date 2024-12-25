@@ -8,8 +8,6 @@ import com.Daldagu1.TeamDaldagu1Project.service.BannerService;
 import com.Daldagu1.TeamDaldagu1Project.service.GoodsService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
@@ -18,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -38,27 +37,22 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model){
-        String[] tag = {"장패드", "펫 용품", "액세서리"};
+        String[] tags = goodsService.getMainTags(loginUserBean.getUser_idx());
+        if(tags.length > 3)
+            tags = Arrays.copyOfRange(tags, 0, 3);
         System.out.println(loginUserBean.isLoginCheck());
-        List<GoodsBean> goodsList;
-        for (int i = 1; i < 4; i++){
-            goodsList = goodsService.getGoodsListByTag(tag[i-1]);
-            model.addAttribute("goodsList" + i, goodsList);
+        List<List<GoodsBean>> goodsList = new ArrayList<List<GoodsBean>>();
+
+        for(String tag : tags) {
+            List<GoodsBean> list = new ArrayList<GoodsBean>();
+            list = goodsService.getGoodsListByTag(tag);
+            goodsList.add(list);
         }
+        model.addAttribute("goodsListList", goodsList);
+        model.addAttribute("tags", tags);
         model.addAttribute("bannerList", bannerService.getBannerList());
 
         return "main";
-    }
-
-    //관리자 메인
-    @GetMapping("/admin_page")
-    public String admin_home(Model model) {
-
-        model.addAttribute("user_cnt", adminService.getUserCnt());
-        model.addAttribute("goods_cnt", adminService.getGoodsCnt());
-        model.addAttribute("order_cnt", adminService.getOrderCnt());
-
-        return "admin_page";
     }
 
     @GetMapping("/not_login")
@@ -66,14 +60,9 @@ public class HomeController {
 
         return "not_login";
     }
+
     @GetMapping("/not_seller")
     public String not_seller(){
         return "not_seller";
     }
-
-    @ModelAttribute("searchBean")
-    public SearchBean getSearchBean() {
-        return new SearchBean();
-    }
-
 }

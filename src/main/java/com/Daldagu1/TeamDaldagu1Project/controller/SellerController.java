@@ -2,10 +2,13 @@ package com.Daldagu1.TeamDaldagu1Project.controller;
 
 import com.Daldagu1.TeamDaldagu1Project.beans.*;
 import com.Daldagu1.TeamDaldagu1Project.service.*;
+import com.Daldagu1.TeamDaldagu1Project.service.Order.OrderCountService;
+import com.Daldagu1.TeamDaldagu1Project.service.Order.OrderListService;
+import com.Daldagu1.TeamDaldagu1Project.service.Order.OrderService;
+import com.Daldagu1.TeamDaldagu1Project.service.User.UserMyPageService;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +26,19 @@ public class SellerController {
     private SellerService sellerService;
 
     @Autowired
-    private UserService userService;
+    private UserMyPageService userService;
 
     @Autowired
     private GoodsService goodsService;
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private OrderListService orderListService;
+
+    @Autowired
+    private OrderCountService orderCountService;
 
     @Autowired
     private AddrService addrService;
@@ -68,7 +77,7 @@ public class SellerController {
     @GetMapping("/seller_page")
     public String sellerPage(Model model){
 
-        int orderCnt = orderService.getOrderCnt(loginUserBean.getSeller_idx());
+        int orderCnt = orderCountService.getOrderCnt(loginUserBean.getSeller_idx());
         List<ReviewBean> reviewList = reviewService.getReviewListForSeller(loginUserBean.getSeller_idx());
 
         System.out.println(reviewList.size());
@@ -78,7 +87,7 @@ public class SellerController {
         model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(loginUserBean.getSeller_idx()));
         model.addAttribute("goodsCount", goodsService.goodsCountBySellerIdx(loginUserBean.getSeller_idx()));
         model.addAttribute("orderCnt", orderCnt);
-        model.addAttribute("todayOrderCount", orderService.getTodayOrderCount(loginUserBean.getSeller_idx()));
+        model.addAttribute("todayOrderCount", orderCountService.getTodayOrderCount(loginUserBean.getSeller_idx()));
 
         return "seller/seller_page";
     }
@@ -98,10 +107,10 @@ public class SellerController {
     @GetMapping("/seller_order")
     public String sellerOrder(@RequestParam(name = "page", defaultValue = "1")int page, Model model){
 
-        PageBean pageBean = orderService.getOrderCountForSeller(loginUserBean.getSeller_idx(),page);
+        PageBean pageBean = orderListService.getOrderCountForSeller(loginUserBean.getSeller_idx(),page);
 
         model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(loginUserBean.getSeller_idx()));
-        model.addAttribute("orderList", orderService.getOrderListBySeller(loginUserBean.getSeller_idx(),page));
+        model.addAttribute("orderList", orderListService.getOrderList(loginUserBean.getSeller_idx(),page, "SELLER", null));
         model.addAttribute("pageBean", pageBean);
         model.addAttribute("page", page);
         return "seller/seller_order";
@@ -111,7 +120,7 @@ public class SellerController {
     @GetMapping("/order_read")
     public String sellerOrderRead(@RequestParam("page")int page, @RequestParam("order_idx") String order_idx, Model model){
         OrderBean orderBean = orderService.getOrder(order_idx);
-        List<OrderGoodsBean> list = orderService.getOrderGoodsList(order_idx);
+        List<OrderGoodsBean> list = orderListService.getOrderGoodsList(order_idx);
         int amount = 0;
         for(OrderGoodsBean bean : list){
             amount += bean.getPrice();
@@ -134,16 +143,12 @@ public class SellerController {
         return "seller/seller_list";
     }
 
-    //상품목록
+    //상품 수정
     @GetMapping("/seller_product_read")
     public String sellerProductRead(@RequestParam("goods_idx") int goods_idx, Model model){
         model.addAttribute("goodsBean", goodsService.getPurchaseGoods(goods_idx));
         model.addAttribute("sellerBean", sellerService.getSellerbyUserIdx(loginUserBean.getSeller_idx()));
         return "seller/seller_product_read";
-    }
-    @GetMapping("/seller_product_delete")
-    public String sellerProductDelete(){
-        return "seller/seller_product_delete";
     }
 
     //배너 등록
@@ -167,10 +172,4 @@ public class SellerController {
         bannerService.addBannerInfo(bannerBean);
         return "redirect:/seller/seller_list";
     }
-
-    @ModelAttribute("searchBean")
-    public SearchBean getSearchBean() {
-        return new SearchBean();
-    }
-
 }//class

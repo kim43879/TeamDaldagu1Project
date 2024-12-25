@@ -2,6 +2,7 @@ package com.Daldagu1.TeamDaldagu1Project.service;
 
 import com.Daldagu1.TeamDaldagu1Project.beans.*;
 import com.Daldagu1.TeamDaldagu1Project.mapper.GoodsMapper;
+import com.Daldagu1.TeamDaldagu1Project.mapper.MainPageMapper;
 import com.Daldagu1.TeamDaldagu1Project.mapper.OptionMapper;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @PropertySource("classpath:imgPath.properties")
@@ -23,11 +26,11 @@ public class GoodsService {
     @Autowired
     private OptionMapper optionMapper;
 
+    @Autowired
+    private MainPageMapper mainPageMapper;
+
     @Value("${imgPath}")
     private String goodsApplyPath;
-
-    @Value("${page.paginationCnt}")
-    private int paginationCnt;
 
     //상품 추가
     public void addGoodsInfo(GoodsBean addGoodsBean) {
@@ -83,30 +86,37 @@ public class GoodsService {
         return goodsMapper.getMyGoodsList(seller_idx);
     }
 
-    public List<GoodsBean> getGoodsListByTag(String goods_tag){
-        return goodsMapper.getGoodsListByTag(goods_tag);
+    public String[] getMainTags(Integer user_idx){
+        if(user_idx == 0)
+            return mainPageMapper.getMainTagsByNormal();
+        else {
+            String[] tags = mainPageMapper.getMainTagsByUser(user_idx);
+            System.out.println("태그 개수 : " + tags.length);
+
+            if(tags.length == 0)
+                return mainPageMapper.getMainTagsByNormal();
+
+            Set<String> tagSet = new HashSet<String>();
+
+            for(String tag : tags){
+                tagSet.add(tag);
+                if(tagSet.size() == 3)
+                    return tagSet.toArray(new String[tagSet.size()]);
+            }
+
+            tags = mainPageMapper.getMainTagsByNormal();
+
+            for(String tag : tags){
+                tagSet.add(tag);
+                if(tagSet.size() == 3)
+                    return tagSet.toArray(new String[tagSet.size()]);
+            }
+            return tags;
+        }
     }
 
-    public List<GoodsBean> searchGoodsList(SearchBean searchBean,int page){
-
-        int start = (page - 1) * searchBean.getShowCount();
-
-        RowBounds rowBounds = new RowBounds(start,(searchBean.getShowCount()));
-
-        if(searchBean.getSearchCategory().equals("전체")){
-            searchBean.setSearchCategory("%");
-        }
-        if(searchBean.getSearchMaxPrice() == 0){
-            searchBean.setSearchMaxPrice(300000);
-        }
-
-        if(searchBean.getSortType().equals("goods_price1")){
-            return goodsMapper.searchGoodsListOrder_price1(searchBean, rowBounds);
-        }else if(searchBean.getSortType().equals("goods_price2")){
-            return goodsMapper.searchGoodsListOrder_price2(searchBean, rowBounds);
-        }
-
-        return goodsMapper.searchGoodsList(searchBean,rowBounds);
+    public List<GoodsBean> getGoodsListByTag(String goods_tag){
+        return goodsMapper.getGoodsListByTag(goods_tag);
     }
 
     public void updateGoodsInfo(GoodsBean updateGoodsBean){
@@ -129,27 +139,8 @@ public class GoodsService {
         return goodsMapper.goodsCountBySellerIdx(seller_idx);
     }
 
-    public PageBean getSearchPageCount(int currentPage,SearchBean searchBean){
-        if(searchBean.getSearchCategory().equals("goods_price1")){
-            return new PageBean(goodsMapper.searchGoodsListOrder_priceCnt(searchBean), currentPage, searchBean.getShowCount(), paginationCnt);
-        }
-        else if(searchBean.getSearchCategory().equals("goods_price2")){
-            return new PageBean(goodsMapper.searchGoodsListOrder_price2Cnt(searchBean), currentPage, searchBean.getShowCount(), paginationCnt);
-        }
-        return new PageBean(goodsMapper.searchGoodsListCnt(searchBean),currentPage,searchBean.getShowCount(),paginationCnt);
-    }
-
-    public int getTotalGoodsCnt(SearchBean searchBean){
-        if(searchBean.getSearchCategory().equals("goods_price1")){
-            return goodsMapper.searchGoodsListOrder_priceCnt(searchBean);
-        }
-        else if(searchBean.getSearchCategory().equals("goods_price2")){
-            return goodsMapper.searchGoodsListOrder_price2Cnt(searchBean);
-        }
-        return goodsMapper.searchGoodsListCnt(searchBean);
-    }
-
     public void deleteGoods(int goods_idx){
         goodsMapper.deleteGoods(goods_idx);
     }
+
 }

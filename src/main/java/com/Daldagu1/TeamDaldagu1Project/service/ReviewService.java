@@ -29,6 +29,7 @@ public class ReviewService {
     @Value("${imgPath}")
     private String path_upload;
 
+    //리뷰 이미지 등록(파일 저장)
     private String saveUploadFile(MultipartFile upload_file) {
 
         String file_name = System.currentTimeMillis() + "_" + upload_file.getOriginalFilename();
@@ -41,6 +42,7 @@ public class ReviewService {
         return file_name;
     }
 
+    //리뷰 등록
     public void addReview(ReviewBean reviewBean){
 
         MultipartFile upload_file = reviewBean.getReview_file();
@@ -53,6 +55,8 @@ public class ReviewService {
 
         reviewMapper.addReview(reviewBean);
     }
+
+    //상품 리뷰 출력(개별 상품)
     public List<ReviewBean> getReviewList(int goods_idx, int page){
 
         int start = (page - 1) * page_list;
@@ -61,14 +65,18 @@ public class ReviewService {
         return reviewMapper.getReviewList(goods_idx, rowBounds);
     }
 
+    //상품 리뷰 출력(판매자)
     public List<ReviewBean> getReviewListForSeller(int seller_idx){
 
         return reviewMapper.getReviewListForSeller(seller_idx);
     }
 
+    //상품 리뷰 출력(작성자)
     public List<ReviewBean> getReviewListForUser(int user_idx){
         return reviewMapper.getReviewListForUser(user_idx);
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////페이징
     public PageBean getReviewCount(int goods_idx, int current_page){
 
         int reviewCount = reviewMapper.getReviewCount(goods_idx);
@@ -87,4 +95,5 @@ public class ReviewService {
     public int getReviewCountForUser(int user_idx){
         return reviewMapper.getReviewCountByUser(user_idx);
     }
+    //////////////////////////////////////////////////////////////////////////////////////////////////////페이징
 }

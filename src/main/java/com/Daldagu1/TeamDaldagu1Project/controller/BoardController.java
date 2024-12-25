@@ -30,11 +30,5 @@ public class BoardController {
 
         return "board/notice_read";
     }
-
-    @ModelAttribute("searchBean")
-    public SearchBean getSearchBean() {
-        return new SearchBean();
-    }
-
 }//class
 

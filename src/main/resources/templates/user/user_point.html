@@ -71,67 +71,80 @@
 
 <!--적립금-->
 <div class="container-list">
-  <div class="tabs" id="tab1">
-    <h6><b>《적립금》</b></h6>
-    <hr />
+    <div class="tabs" id="tab1">
+      <h6><b>《적립금》</b></h6>
+      <hr />
 
-  </div>
+    </div>
 
-  <div class="card" id="tab2">
-      <table class="table">
-           <tbody>
+    <div class="card" id="tab2">
+        <table class="table">
+             <tbody>
+                  <tr>
+                      <th scope="row">
+                          <div class="tb-center border-secondary">총적립금:</div>
+                      </th>
+                      <td>
+                          <div class="tb-right"><b th:text="${loginUserBean.total_user_point}">0</b>원</div>
+                      </td>
+
+                      <th>
+                          <div class="tb-center">사용 적립금:</div>
+                      </th>
+                      <td>
+                          <div class="tb-right"><b th:text="${loginUserBean.used_user_point}">0</b>원</div>
+                      </td>
+
+                      <th>
+                          <div class="tb-center">사용가능 적립금:</div>
+                      </th>
+                      <td>
+                          <div class="rb-right"><b th:text="${loginUserBean.current_point}">0</b>원</div>
+                      </td>
+                  </tr>
+               </tbody>
+        </table>
+    </div>
+    <br />
+
+    <div class="card" id="tab3">
+        <table class="table">
+            <thead>
                 <tr>
-                    <th scope="row">
-                        <div class="tb-center border-secondary">총적립금:</div>
-                    </th>
-                    <td>
-                        <div class="tb-right"><b th:text="${loginUserBean.total_user_point}">0</b>원</div>
-                    </td>
+                    <th>주문일</th>
+                    <th>관련 주문</th>
+                    <th>적립금</th>
 
-                    <th>
-                        <div class="tb-center">사용 적립금:</div>
-                    </th>
-                    <td>
-                        <div class="tb-right"><b th:text="${loginUserBean.used_user_point}">0</b>원</div>
-                    </td>
-
-                    <th>
-                        <div class="tb-center">사용가능 적립금:</div>
-                    </th>
-                    <td>
-                        <div class="rb-right"><b th:text="${loginUserBean.current_point}">0</b>원</div>
-                    </td>
                 </tr>
-             </tbody>
-      </table>
-  </div>
-  <br />
+            </thead>
 
-  <div class="card" id="tab3">
-      <table class="table">
-          <thead>
-              <tr>
-                  <th>주문일</th>
-                  <th>관련 주문</th>
-                  <th>적립금</th>
+            <tbody>
+                <tr th:each="order : ${orderList}">
+                    <td th:text="${order.order_date}">2024-08-18</td>
+                    <td th:text="${order.order_idx}">order_idx</td>
+                    <td th:text="${order.add_point} + '원'">190원</td>
+                </tr>
 
-              </tr>
-          </thead>
+            </tbody>
+        </table>
+    </div>
 
-          <tbody>
-              <tr th:each="order : ${orderList}">
-                  <td th:text="${order.order_date}">2024-08-18</td>
-                  <td th:text="${order.order_idx}">order_idx</td>
-                  <td th:text="${order.add_point} + '원'">190원</td>
-              </tr>
-
-          </tbody>
-      </table>
-  </div>
-
+    <div class="d-none d-md-block" style="margin-top=50px">
+        <ul class="pagination justify-content-center" th:if="${!#lists.isEmpty(orderList)}" style="item-align: center;">
+            <li class="page-item" th:classappend="${pageBean.currentPage == 1} ? 'disabled'">
+                <a th:href="@{|/user/user_point?page=${pageBean.prevPage}|}" class="page-link" style="text-decoration: none;">&laquo;</a>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(pageBean.min, pageBean.max)}" th:classappend="${pageBean.currentPage == i} ? 'active'">
+                <a th:href="@{|/user/user_point?page=${i}|}" class="page-link" th:text="${i}"></a>
+            </li>
+            <li class="page-item" th:classappend="${pageBean.currentPage == pageBean.pageCnt} ? 'disabled'">
+                <a th:href="@{|/user/user_point?page=${pageBean.nextPage}|}" class="page-link">&raquo;</a>
+            </li>
+        </ul>
+    </div>
 </div>
-<hr />
 
+<hr />
 <!-- 하단 -->
 <div id="footer">
   <div th:replace="page_footer/footer.html :: footer-head"></div>

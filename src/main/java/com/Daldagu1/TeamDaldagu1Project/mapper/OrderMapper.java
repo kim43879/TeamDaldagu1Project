@@ -25,6 +25,9 @@ public interface OrderMapper {
     @Select("select * from order_table where seller_idx = #{seller_idx} and order_stat > 1 order by order_date desc")
     List<OrderBean> getOrderListBySellerPage(int seller_idx, RowBounds rowBounds);
 
+    @Select("select * from order_table where user_idx = #{user_idx} and order_stat > 1  order by order_date desc")
+    List<OrderBean> getOrderListByUserPage(int user_idx, RowBounds rowBounds);
+
     @Select("select * from order_table where seller_idx = #{seller_idx} and order_stat > 1 order by order_date desc")
     List<OrderBean> getOrderListBySeller(int seller_idx);
 
@@ -32,7 +35,10 @@ public interface OrderMapper {
     List<OrderBean> getOrderListByUser(int user_idx);
 
     @Select("select * from order_table where user_idx = #{user_idx} and ORDER_STAT = #{order_stat} order by order_date desc")
-    List<OrderBean> getOrderListByOrderStat(@Param("user_idx") int user_idx, @Param("order_stat") int order_stat);
+    List<OrderBean> getOrderListByOrderStat(@Param("user_idx") int user_idx, @Param("order_stat") int order_stat, RowBounds rowBounds);
+
+    @Select("select * from order_table where user_idx = #{user_idx} and ORDER_STAT = #{order_stat} order by order_date desc")
+    List<OrderBean> getOrderListByOrderStatCount(@Param("user_idx") int user_idx, @Param("order_stat") int order_stat);
 
     @Select("select o.order_goods_idx as order_goods, " +
             "o.order_goods_num as order_goods_num, " +
@@ -64,7 +70,6 @@ public interface OrderMapper {
 
     @Update("update order_table set order_message = #{message} where order_idx = #{order_idx}")
     void setOrderMessage(@Param("message") String message,@Param("order_idx") String order_idx);
-
 
     //결제 전 주문취소
     @Delete("delete from order_goods_table where order_idx = #{order_idx}")

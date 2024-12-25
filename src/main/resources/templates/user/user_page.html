@@ -8,8 +8,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <style>
 	.card-main{
-		margin-top: 88px; 
-		padding-left: 186px; 
+		margin-top: 88px;
+		padding-left: 186px;
 		padding-right: 186px;
 	}
 	.dropdown-menu {
@@ -59,7 +59,7 @@
 	<div th:replace="page_header/header.html :: header-head"></div>
 	<div th:replace="page_header/header.html :: header-body"></div>
 </div>
-	
+
 <!-- 유저프로필 라인 -->
 <div id="profile">
 	<div th:replace="page_profile/profile.html :: profile-head"></div>
@@ -81,7 +81,7 @@
 							  <div class="card-body">
 								  <h6>&nbsp;<b>결제 대기</b>&nbsp;</h6>
 								  <hr />
-								  <a href="/order/order_before_check" class="card-link" th:text="${order_before_pay_cnt}">3</a>
+								  <a href="/user/order_before_check" class="card-link" th:text="${order_before_pay_cnt}">3</a>
 							  </div>
 						  </div>
 					  </div>
@@ -96,7 +96,7 @@
                            </div>
                         </div>
                      </div>
-                     
+
                      <!-- 장바구니 -->
                      <div class="card-item text-center">
                         <div class="card">
@@ -107,7 +107,7 @@
                            </div>
                         </div>
                      </div>
-                     
+
                      <!-- 리뷰작성 -->
                      <div class="card-item text-center">
                         <div class="card">
@@ -118,7 +118,7 @@
                            </div>
                         </div>
                      </div>
-                     
+
                      <!-- 적립금 -->
                      <div class="card-item text-center">
                         <div class="card">
@@ -138,7 +138,7 @@
 
 
 <!-- 주문정보 -->
-<div class="container mt-2 card-wrapper">
+<div class="container mt-2 card-wrapper" style="margin-bottom: 200px;">
 	<div class="row">
 		<div class="col-md-10">
 			<div class="card" id="card2">
@@ -151,7 +151,7 @@
 							<th scope="col">주문일</th>
 						</tr>
 					</thead>
-					
+
 					<tbody class="table-group-divider">
 						<tr th:each="order,index : ${orderList}" th:if="${index.index < 3}">
 							<th scope="row" th:text="${order.order_idx}">3</th>
@@ -166,21 +166,18 @@
 						</tr>
 					</tbody>
 				</table>
-				
+
 				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 					<a href="/user/user_order" class="btn btn-outline-info" role="button" data-bs-toggle="button" aria-pressed="true">더보기</a>
 				</div>
-					
 			</div>
 		</div>
 	</div>
 </div>
 
-<br> <br> <br> <br> <br>
 
-	
 <!-- 관심상품 -->
-<div class="container mt-2 card-wrapper">
+<div class="container mt-2 card-wrapper" style="margin-bottom: 150px;">
 	<div class="row">
 		<div class="col-md-10" >
 			<div class="card" id="card3">
@@ -192,7 +189,7 @@
 	 						<th style="width:300px;" scope="col">금액</th>
 						</tr>
 					</thead>
-					
+
 					<tbody class="table-group-divider">
 						<tr th:each="wish,index : ${wishBeanList}" th:if="${index.index < 3}">
 							<input type="hidden" th:value="${wish.wish_idx}" th:attr="id='wish_idx' + ${index.index}" />
@@ -207,23 +204,23 @@
 						</tr>
 					</tbody>
 				</table>
-				
+
 				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
 					<a th:href="@{/user/user_wish}" class="btn btn-outline-info" role="button" data-bs-toggle="button" aria-pressed="true">더보기</a>
 				</div>
-			
+
 			</div>
 			<br /> <br />
 		</div>
 	</div>
 </div>
 <hr />
-	
+
 	<!-- 하단 -->
 <div id="footer">
 	<div th:replace="page_footer/footer.html :: footer-head"></div>
 	<div th:replace="page_footer/footer.html :: footer-body"></div>
 </div>
-	
+
 </body>
 </html>

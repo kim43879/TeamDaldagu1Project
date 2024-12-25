@@ -76,7 +76,7 @@
                            <div class="card-body">
                               <h6>&emsp;<b>입금전</b>&emsp;</h6>
                               <hr />
-                              <a href="/order/order_before_check" class="card-link" th:text="${order_before_pay_cnt}">0</a>
+                              <a href="/user/order_before_check" class="card-link" th:text="${order_before_pay_cnt}">0</a>
                            </div>
                         </div>
                      </div>
@@ -87,7 +87,7 @@
                            <div class="card-body">
                               <h6><b>배송준비중</b></h6>
                               <hr />
-                              <a href="/order/order_ready" class="card-link" th:text="${order_ready_cnt}">2</a>
+                              <a href="/user/order_ready" class="card-link" th:text="${order_ready_cnt}">2</a>
                            </div>
                         </div>
                      </div>
@@ -98,7 +98,7 @@
                            <div class="card-body">
                               <h6>&emsp;<b>배송중</b>&emsp;</h6>
                               <hr />
-                              <a href="/order/order_delivering" class="card-link" th:text="${order_going_cnt}">1</a>
+                              <a href="/user/order_delivering" class="card-link" th:text="${order_going_cnt}">1</a>
                            </div>
                         </div>
                      </div>
@@ -109,7 +109,7 @@
                            <div class="card-body">
                               <h6>&nbsp;<b>배송완료</b>&nbsp;</h6>
                               <hr />
-                              <a href="/order/order_finished" class="card-link" th:text="${order_complete_cnt}">5</a>
+                              <a href="/user/order_finished" class="card-link" th:text="${order_complete_cnt}">5</a>
                            </div>
                         </div>
                      </div>
@@ -162,6 +162,20 @@
                   </tbody>
                </table>
                <br />
+
+               <div class="d-none d-md-block">
+                  <ul class="pagination justify-content-center" th:if="${!#lists.isEmpty(orderList)}" style="item-align: center;">
+                     <li class="page-item" th:classappend="${pageBean.currentPage == 1} ? 'disabled'">
+                        <a th:href="@{|/user/user_order?page=${pageBean.prevPage}|}" class="page-link" style="text-decoration: none;">&laquo;</a>
+                     </li>
+                     <li class="page-item" th:each="i : ${#numbers.sequence(pageBean.min, pageBean.max)}" th:classappend="${pageBean.currentPage == i} ? 'active'">
+                        <a th:href="@{|/user/user_order?page=${i}|}" class="page-link" th:text="${i}"></a>
+                     </li>
+                     <li class="page-item" th:classappend="${pageBean.currentPage == pageBean.pageCnt} ? 'disabled'">
+                        <a th:href="@{|/user/user_order?page=${pageBean.nextPage}|}" class="page-link">&raquo;</a>
+                     </li>
+                  </ul>
+               </div>
 
             </div>
          </div>

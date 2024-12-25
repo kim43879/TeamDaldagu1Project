@@ -68,6 +68,8 @@ public class UserBean {
     private int used_user_point;    //사용한 적립금
     private int current_point;      //사용 가능한 적립금
 
+    private String usedMoneyByMonth;   //당월 사용금액
+
     //각 필드를 출력하는 메서드(seller_idx, loginCheck, id_check 제외)
     public void printUserBean(){
         System.out.println("아이디 : " + this.user_id);
@@ -79,6 +81,7 @@ public class UserBean {
         System.out.println("주소 : " + this.user_addr1);
         System.out.println("상세주소 : " + this.user_addr2);
         System.out.println("우편번호 : " + this.user_post);
+        System.out.println("당월 사용금액 : " + this.usedMoneyByMonth);
     }
     //각 필드 초기화메서드(로그아웃)
     public void clearUserBean(){
@@ -97,6 +100,7 @@ public class UserBean {
         this.user_role = null;
         this.user_idx = 0;
         this.membership = null;
+        this.usedMoneyByMonth = null;
     }
     //필드에 값 담기 매개변수는 UserBean
     public void login(UserBean tempUserBean){
@@ -128,6 +132,7 @@ public class UserBean {
         this.total_user_point = tempUserBean.getTotal_user_point();
         this.used_user_point = tempUserBean.getUsed_user_point();
         this.current_point = total_user_point - used_user_point;
+        this.usedMoneyByMonth = tempUserBean.usedMoneyByMonth;
     }
 
 

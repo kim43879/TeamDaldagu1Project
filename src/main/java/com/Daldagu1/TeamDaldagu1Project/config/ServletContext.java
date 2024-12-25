@@ -1,6 +1,8 @@
 package com.Daldagu1.TeamDaldagu1Project.config;
 
+import com.Daldagu1.TeamDaldagu1Project.beans.AdminBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.UserBean;
+import com.Daldagu1.TeamDaldagu1Project.interceptor.AdminInterceptor;
 import com.Daldagu1.TeamDaldagu1Project.interceptor.HeaderInterceptor;
 import com.Daldagu1.TeamDaldagu1Project.interceptor.SellerPageAuthInterceptor;
 import com.Daldagu1.TeamDaldagu1Project.interceptor.UserPageAuthInterceptor;
@@ -21,6 +23,9 @@ public class ServletContext implements WebMvcConfigurer {
     @Resource(name = "loginUserBean")
     private UserBean loginUserBean;
 
+    @Resource(name = "loginAdminBean")
+    private AdminBean adminBean;
+
     @Bean
     public ServletContextInitializer initializer() {
         return servletContext -> {
@@ -28,7 +33,6 @@ public class ServletContext implements WebMvcConfigurer {
             sessionCookieConfig.setSecure(true);
             sessionCookieConfig.setHttpOnly(true);
             //sessionCookieConfig.setSameSite("None"); // SameSite=None 설정
-
         };
     }
 
@@ -54,5 +58,10 @@ public class ServletContext implements WebMvcConfigurer {
         InterceptorRegistration reg3 = registry.addInterceptor(sellerPageAuthInterceptor);
         reg3.addPathPatterns("/seller/*");
         reg3.excludePathPatterns("/seller/seller_join","/seller/seller_join_pro");
+
+        AdminInterceptor adminInterceptor = new AdminInterceptor(adminBean);
+        InterceptorRegistration reg4 = registry.addInterceptor(adminInterceptor);
+        reg4.addPathPatterns("/admin/*");
+        reg4.excludePathPatterns("/admin/login");
     }
 }

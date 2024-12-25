@@ -8,13 +8,21 @@
 <body>
 <script th:inline="javascript">
     function initiatePayment() {
+
+        if([[${error_massage}]] != 'done'){
+            console.log('실행');
+            window.location.href = [[${urlPath}]] + '/order/payment/payment_fail?error_massage=' + [[${error_massage}]];
+        }
+
+        console.log('수량:' + [[${quantity}]]);
+
         var amount = [[${amount}]];
 
         // 클라이언트 키로 객체 초기화
-        var clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
+        var clientKey = [[${TossKey}]];
         var tossPayments = TossPayments(clientKey);
-        let successURL = 'https://fb85-121-160-41-227.ngrok-free.app/order/payment/payment_success?order_idx=' + [[${order_idx}]] + '&addr_idx=' + [[${addr_idx}]] +
-                            '&add_point=' + [[${add_point}]] + '&point_to_use=' + [[${points_to_use}]];
+        let successURL = [[${urlPath}]] + '/order/payment/payment_success?order_idx=' + [[${order_idx}]] + '&addr_idx=' + [[${addr_idx}]] +
+                            '&add_point=' + [[${add_point}]] + '&point_to_use=' + [[${points_to_use}]] + '&quantity=' + [[${quantity}]];
         console.log(successURL);
         // 결제창 띄우기
         tossPayments.requestPayment('카드', {
@@ -23,7 +31,7 @@
             orderName: [[${goods_name}]], // 주문명
             customerName: [[${user_name}]], // 구매자 이름
             successUrl: successURL,
-            failUrl: 'https://fb85-121-160-41-227.ngrok-free.app/order/payment/payment_fail',
+            failUrl: [[${urlPath}]] + '/order/payment/payment_fail?error_massage=결제진행에_실패했습니다.',
         }).catch(function (error) {
             // 에러 처리
             console.error(error);

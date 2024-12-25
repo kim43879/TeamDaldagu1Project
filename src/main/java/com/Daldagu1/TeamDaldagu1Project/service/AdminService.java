@@ -15,8 +15,14 @@ public class AdminService {
         adminMapper.addAdmin(adminBean);
     }
 
-    public AdminBean checkAdmin(String adminKey){
-        return adminMapper.checkAdmin(adminKey);
+    public AdminBean getLoginAdminBean(AdminBean adminBean){
+        AdminBean tempAdminBean = adminMapper.getLoginAdminBean(adminBean);
+
+        if(tempAdminBean.getAdmin_id() != null){
+            if(tempAdminBean.getAdmin_pw().equals(adminBean.getAdmin_pw()))
+                tempAdminBean.setLoginSuccess(true);
+        }
+        return tempAdminBean;
     }
 
     //사용자 수

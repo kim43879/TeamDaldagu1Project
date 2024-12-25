@@ -1,0 +1,14 @@
+spring.application.name=TeamDaldagu1Project
+
+#DB연결 정보
+spring.datasource.driver-class-name = your_used_db_driver
+spring.datasource.url = your_db_url
+spring.datasource.username = your_username
+spring.datasource.password = your_password
+
+page.paginationCnt = 10
+
+spring.config.import = classpath:imgPath.properties, classpath:addressAndKey.properties
+
+spring.messages.basename=error_message
+spring.messages.encoding=UTF-8

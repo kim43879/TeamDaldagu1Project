@@ -18,8 +18,6 @@ public class BannerController {
     public String addBannerInfo(Model model) {
 
         model.addAttribute("bannerList", bannerService.adminGetBannerList());
-
         return "admin/main_banner";
     }
-
 }//class

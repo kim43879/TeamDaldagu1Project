@@ -1,4 +1,4 @@
-package com.Daldagu1.TeamDaldagu1Project.controller;
+package com.Daldagu1.TeamDaldagu1Project.controller.User;
 
 import com.Daldagu1.TeamDaldagu1Project.beans.CartBean;
 import com.Daldagu1.TeamDaldagu1Project.beans.SearchBean;
@@ -13,11 +13,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
 @Controller
+@RequestMapping("/user")
 public class CartController {
 
     @Resource(name = "loginUserBean")
@@ -39,7 +41,7 @@ public class CartController {
     }
 
     //장바구니 출력
-    @GetMapping("/user/user_cart")
+    @GetMapping("/user_cart")
     public String user_cart(@RequestParam("user_idx") int user_idx, Model model) {
 
         List<CartBean> cartBeanList = cartService.getCartList(user_idx);

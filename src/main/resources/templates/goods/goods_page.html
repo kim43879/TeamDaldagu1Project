@@ -217,7 +217,6 @@
                                 function change(price) {
                                     let newNumber;
 
-                                    console.log("changed");
                                     let selectValue1 = $('#select_option1').val();
                                     let selectOption1 = $("#select_option1 option:checked").text()
                                     let itemList = $('.item');
@@ -244,7 +243,6 @@
                                             addCart(tempPrice, selectOption1,newNumber);
                                         }
                                         totalPrice += tempPrice;
-                                        console.log(totalPrice);
                                         $("#total-price").text(totalPrice + "원");
                                         countProduction();
                                         document.getElementById('select_option1').selectedIndex = 0;
@@ -303,16 +301,15 @@
                                     });
 
                                     // 결과 출력
+                                    console.log(membershipPoint);
                                     $("#item-num").text("("+ currentNumber +"개)");
                                     $("#point").text("적립금: " + membershipPoint + "원");
                                     itemNum = currentNumber;
-                                    console.log(itemNum);
-                                    console.log(totalPrice);
                                 }
                             </script>
 
                             <p>*총 상품금액(수량): <strong id="total-price">0원</strong>
-                                <span id="item-num">0</span>
+                                <span id="item-num">(0개)</span>
                             </p>
                             <hr/>
 
@@ -321,12 +318,30 @@
                             <button class="btn btn-outline-primary position-relative" type="button" onclick="addToCart()">장바구니</button>
                             &ensp;
                             <button type="button" class="btn btn-outline-info" onclick="buy()">구매하기</button>
+                            &ensp;
+                            <button type="button" class="btn btn-outline-danger" onclick="declaration()">신고하기</button>
 
-                            <script>
+                            <script th:inline="javascript">
                                 function wish_message() {
                                     var result = confirm("관심상품에 추가되었습니다. 확인하시겠습니까?");
 
                                     location.href= '/user/add_user_wish?goods_idx=' + [[${goods.goods_idx}]] + '&user_idx=' + [[${loginUserBean.user_idx}]] + '&result=' + result;
+                                }
+
+                                function declaration(){
+                                    const check = confirm('해당상품을 신고하시겠습니까?');
+                                    let goodsIdx = [[${goods.goods_idx}]];
+                                    console.log(goodsIdx);
+                                    if(check){
+                                        $.ajax({
+                                            url: '/rest/report',
+                                            type: 'POST',
+                                            data: {'goods_idx' : goodsIdx},
+                                            success: function(data){
+                                                alert("신고가 완료되었습니다.");
+                                            }
+                                        });
+                                    }
                                 }
                             </script>
 
@@ -341,7 +356,6 @@
                                         alert("로그인을 해야 장바구니에 추가할 수 있습니다.")
                                         return 0;
                                     }else{
-
                                         var divElement = document.getElementById('show_div');
                                         divElement.style.visibility = 'visible';
                                         $('#cart_num').text(itemNum);
@@ -349,18 +363,12 @@
                                         // Thymeleaf를 통해 JavaScript로 변수 전달
                                         let goodsName = /*[[${goods.goods_name}]]*/ 'defaultName';  // 상품명이 없을 때를 대비해 기본값 설정
 
-                                        console.log(goodsName);
-
                                         let userIdx = [[${loginUserBean.user_idx}]];
                                         let goodsIdx = [[${goods.goods_idx}]];
 
                                         goods_list.each(function() {
                                             let itemQuantity = $(this).find('.productNumber').val();
                                             let price = $(this).find('.origin-price').val();
-
-                                            console.log(itemQuantity);
-                                            console.log(price * itemQuantity);
-                                            console.log($(this).find('.goods-name').text());
 
                                             // Ajax 요청 보내기
                                             $.ajax({

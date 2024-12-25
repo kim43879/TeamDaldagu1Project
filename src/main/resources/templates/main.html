@@ -17,6 +17,8 @@
 		align-content: center;
 		max-width: 1200px;
 		max-height: 350;
+        border-color: black;
+        border-style: solid;
 	}
 
     .card-img {
@@ -48,7 +50,6 @@
 
 <!-- 상단메뉴 -->
 <div id="header">
-<!--    <div th:replace="page_header/header.html :: header-head"></div>-->
     <div th:replace="page_header/header.html :: header-body"></div>
 </div>
 
@@ -79,71 +80,31 @@
 <br />
 <hr />
 
-<!-- 목록1 -->
-<div class="container mt-4">
-    <label>장패드</label>
-    <div class="row">
-        <div class="col-md-3" th:each="goodsBean,state : ${goodsList1}">
-            <a th:href="@{/goods/goods_page(goods_idx=${goodsBean.goods_idx})}" class="card-link" style="text-decoration: none;">
-                <div class="card" style="width: 100%; height:337.38px;" th:if="${state.index < 4}">
-                    <div class="card-img">
-                        <img th:src="@{'/img/goods/' + ${goodsBean.goods_img}}" class="card-img-top" alt="image" />
-                    </div>
+<div th:each="tag, iterStat : ${tags}">
+    <!-- 각 카테고리 라벨 -->
+    <div class="container mt-4">
+        <label th:text="${tag}">카테고리명</label>
+        <div class="row">
+            <!-- 태그별 상품 카드 반복 -->
+            <div class="col-md-3" th:each="goodsBean, goodsStat : ${goodsListList[iterStat.index]}" th:if="${goodsStat.index} < 4">
+                <a th:href="@{/goods/goods_page(goods_idx=${goodsBean.goods_idx})}" class="card-link" style="text-decoration: none;">
+                    <div class="card" style="width: 100%; height:337.38px;">
+                        <div class="card-img">
+                            <img th:src="@{'/img/goods/' + ${goodsBean.goods_img}}" class="card-img-top" alt="image" />
+                        </div>
 
-                    <div class="card-body" style="text-align: center;">
-                        <h6 class="card-title" th:text="${goodsBean.goods_name}" style="font-weight: bold;">goods_name</h6>
-                        <p class="card-text" th:text="${goodsBean.goods_price} + '원'">goods_price</p>
+                        <div class="card-body" style="text-align: center;">
+                            <h6 class="card-title" th:text="${goodsBean.goods_name}" style="font-weight: bold;">goods_name</h6>
+                            <p class="card-text" th:text="${goodsBean.goods_price} + '원'">goods_price</p>
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
     </div>
+    <hr />
 </div>
-<hr />
 
-<!-- 목록2 -->
-<div class="container mt-4">
-    <label>펫 용품</label>
-    <div class="row">
-        <div class="col-md-3" th:each="goodsBean,state : ${goodsList2}" >
-            <a th:href="@{/goods/goods_page(goods_idx=${goodsBean.goods_idx})}" class="card-link" style="text-decoration: none;">
-                <div class="card" style="width: 100%; height:337.38px;" th:if="${state.index < 4}">
-                    <div class="card-img">
-                        <img th:src="@{'/img/goods/' + ${goodsBean.goods_img}}" class="card-img-top" alt="image" />
-                    </div>
-
-                    <div class="card-body" style="text-align: center;">
-                        <h6 class="card-title" th:text="${goodsBean.goods_name}" style="font-weight: bold;">goods_name</h6>
-                        <p class="card-text" th:text="${goodsBean.goods_price} + '원'">goods_price</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-</div>
-<hr />
-
-<!-- 목록3 -->
-<div class="container mt-4">
-    <label>액세서리</label>
-    <div class="row">
-        <div class="col-md-3" th:each="goodsBean,state : ${goodsList3}">
-            <a th:href="@{/goods/goods_page(goods_idx=${goodsBean.goods_idx})}" class="card-link" style="text-decoration: none;">
-                <div class="card" style="width: 100%; height:337.38px;" th:if="${state.index < 4}">
-                    <div class="card-img">
-                        <img th:src="@{'/img/goods/' + ${goodsBean.goods_img}}" class="card-img-top" alt="image" />
-                    </div>
-
-                    <div class="card-body" style="text-align: center;">
-                        <h6 class="card-title" th:text="${goodsBean.goods_name}" style="font-weight: bold;">goods_name</h6>
-                        <p class="card-text" th:text="${goodsBean.goods_price} + '원'">goods_price</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-    </div>
-</div>
-<hr />
 
 <!-- 하단 -->
 <div id="footer">

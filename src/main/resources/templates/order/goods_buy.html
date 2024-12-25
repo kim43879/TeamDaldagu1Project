@@ -352,7 +352,8 @@
                             let pointToUse = $('#points_to_use').val();
                             if(pointToUse === '') {pointToUse = 0}
                             let url = '/order/payment/goods_buy_window?order_idx=' + [[${order_idx}]] + '&message=' + message + '&addr_idx=' + $('#selected-addr').val() +
-                                        '&amount=' + $('#final_payment').val() + '&add_point=' + $('#add_point').val() + '&points_to_use=' + pointToUse;
+                                        '&amount=' + $('#final_payment').val() + '&add_point=' + $('#add_point').val() + '&points_to_use=' + pointToUse +
+                                        '&quantity=' + [[${totalQuantity}]];
                             window.open(url,"","width=650,height=650");
                         }
 

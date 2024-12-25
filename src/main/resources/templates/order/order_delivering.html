@@ -111,8 +111,20 @@
 				<td colspan="6" class="empty-row">주문 내역이 없습니다.</td>
 			</tr>
 			</tbody>
-
 		</table>
+	</div>
+	<div class="d-none d-md-block">
+		<ul class="pagination justify-content-center" th:if="${!#lists.isEmpty(orderList)}" style="item-align: center;">
+			<li class="page-item" th:classappend="${pageBean.currentPage == 1} ? 'disabled'">
+				<a th:href="@{|/user/order_delivering?page=${pageBean.prevPage}|}" class="page-link" style="text-decoration: none;">&laquo;</a>
+			</li>
+			<li class="page-item" th:each="i : ${#numbers.sequence(pageBean.min, pageBean.max)}" th:classappend="${pageBean.currentPage == i} ? 'active'">
+				<a th:href="@{|/user/order_delivering?page=${i}|}" class="page-link" th:text="${i}"></a>
+			</li>
+			<li class="page-item" th:classappend="${pageBean.currentPage == pageBean.pageCnt} ? 'disabled'">
+				<a th:href="@{|/user/order_delivering?page=${pageBean.nextPage}|}" class="page-link">&raquo;</a>
+			</li>
+		</ul>
 	</div>
 </div>
 <hr />

@@ -12,8 +12,8 @@ public interface AdminMapper {
             "values(admin_seq.nextval, #{admin_id}, #{admin_pw}, #{admin_task}, #{notice_writer_idx})")
     void addAdmin(AdminBean adminBean);
 
-    @Select("select * from admin_table where admin_pw = #{admin_key}")
-    AdminBean checkAdmin(String admin_key);
+    @Select("select * from admin_table where admin_id = #{admin_id}")
+    AdminBean getLoginAdminBean(AdminBean adminBean);
 
     @Select("select count(*) from user_table where user_available = 'T'")
     int getUserCnt();

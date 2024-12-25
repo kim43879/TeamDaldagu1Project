@@ -39,6 +39,4 @@ public interface AddrMapper {
     @Select("select count(*) from addr_table where user_idx = #{user_idx}")
     int getAddrCount(int uesr_idx);
 
-
-
 }

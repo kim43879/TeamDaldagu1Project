@@ -119,7 +119,7 @@
     </div>
     <div class="card-body">
         <h5 class="card-title" th:text="${loginUserBean.user_id}"></h5>
-        <p class="card-text" th:text="${loginUserBean.user_profile_text}">동쑦이 15주년 데뷔축하링~</p>
+        <p class="card-text" th:text="${'당월 사용금액 : ' + loginUserBean.usedMoneyByMonth + '원'}">동쑦이 15주년 데뷔축하링~</p>
         <p class="card-text" th:text="${'멤버쉽 등급 : ' + loginUserBean.membership}"></p>
     </div>
     <ul class="list-group list-group-flush">

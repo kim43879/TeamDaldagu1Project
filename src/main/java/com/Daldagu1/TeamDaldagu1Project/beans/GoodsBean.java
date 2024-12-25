@@ -18,6 +18,7 @@ public class GoodsBean {
     private int goods_stock;        //상품 재고
     private String goods_available; //상품 삭제여부
     private String goods_text;      //상픔 설명글
+    private int report_count;       //신고 누적수
 
     private MultipartFile page_img;
 
